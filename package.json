@@ -6,9 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.4",
+    "@metamask/jazzicon": "^2.0.0",
+    "@usedapp/core": "^0.5.2",
+    "moralis": "^0.0.68",
     "next": "latest",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-moralis": "^0.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

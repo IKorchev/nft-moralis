@@ -1,82 +1,66 @@
-import Head from 'next/head'
+import Head from "next/head"
+import Navbar from "../components/Navbar"
+import { useEffect, useState } from "react"
+import { useMoralis, useWeb3Transfer } from "react-moralis"
+import NFTCard from "../components/NFTCard"
+import { truncate } from "../utils/common"
+const Home = () => {
+  const [userNFTS, setUserNFTS] = useState([])
+  const { isInitialized, auth, user, authenticate, logout, Moralis } = useMoralis()
+  const [walletAddress, setWalletAddress] = useState("")
 
-export default function Home() {
+  const fetchNFTs = async (query) => {
+    const options = { q: query, chain: "polygon", filter: "global", limit: "50" }
+    const NFTs = await Moralis.Web3API.token.searchNFTs(options)
+    // console.log(NFTs)
+    setUserNFTS(NFTs.result)
+    console.log(NFTs.result)
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className='w-full bg-gradient-to-bl from-blue-100 to-purple-100'>
       <Head>
         <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
+      <Navbar searchHandler={fetchNFTs} />
+      <main className='flex flex-col text-center'>
+        <h1 className='font-semibold text-lg'>{walletAddress}</h1>
+        <div className='flex flex-wrap justify-evenly mt-12'>
+          {userNFTS.length > 0 &&
+            userNFTS.map((el) => {
+              const metadata = JSON.parse(el.metadata)
+              const { image, name, description, token_uri } = metadata
+              let newimg
+              metadata.image === null && <></>
+              if (image?.startsWith("ipfs") || image === null) {
+                // newimg = image?.replace("ipfs://", "https://ipfs.moralis.io:2053/ipfs/")
+                newimg =
+                  "https://thumbs.dreamstime.com/b/image-unavailable-icon-simple-illustration-129166551.jpg"
+              } else {
+                newimg = image
+              }
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
-
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+              return (
+                <NFTCard
+                  key={token_uri}
+                  img={newimg}
+                  name={name.substring(0, 20)}
+                  description={
+                    typeof description === "string"
+                      ? description.substring(0, 60)
+                      : "Description is not available for this NFT"
+                  }
+                  token_address={el.token_address}
+                  token_uri={el.token_uri}
+                  token_id={el.token_id}
+                />
+              )
+            })}
         </div>
       </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
     </div>
   )
 }
+
+export default Home
