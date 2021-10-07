@@ -3,4 +3,40 @@
 @tailwind utilities;
 
 @layer base {
+  h2 {
+    @apply font-semibold text-2xl text-black;
+  }
+}
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+.custom-scroll::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: #ffd1fd;
+}
+
+/* Handle */
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #8f1f89;
+  border-radius: 100vh;
+}
+
+/* Handle on hover */
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #5a2157;
 }

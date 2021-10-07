@@ -4,58 +4,33 @@ import { useEffect, useState } from "react"
 import { useMoralis, useWeb3Transfer } from "react-moralis"
 import NFTCard from "../components/NFTCard"
 import { truncate } from "../utils/common"
-const Home = () => {
-  const [userNFTS, setUserNFTS] = useState([])
-  const { isInitialized, auth, user, authenticate, logout, Moralis } = useMoralis()
-  const [walletAddress, setWalletAddress] = useState("")
-
+import { useEthers } from "@usedapp/core"
+const Home = ({ data }) => {
+  const [nfts, setNFTs] = useState(data.result)
+  const { Moralis } = useMoralis()
+  const { account } = useEthers()
+  console.log(nfts)
   const fetchNFTs = async (query) => {
-    const options = { q: query, chain: "polygon", filter: "global", limit: "50" }
+    const options = { q: query, filter: "global", limit: "50", chain: "0x1" }
     const NFTs = await Moralis.Web3API.token.searchNFTs(options)
     // console.log(NFTs)
-    setUserNFTS(NFTs.result)
-    console.log(NFTs.result)
+    setNFTs(NFTs.result)
   }
 
   return (
-    <div className='w-full bg-gradient-to-bl from-blue-100 to-purple-100'>
+    <div className='w-full bg-gradient-to-bl from-blue-200 to-purple-300'>
       <Head>
-        <title>Create Next App</title>
+        <title>AVAX Marketplace</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Navbar searchHandler={fetchNFTs} />
       <main className='flex flex-col text-center'>
-        <h1 className='font-semibold text-lg'>{walletAddress}</h1>
-        <div className='flex flex-wrap justify-evenly mt-12'>
-          {userNFTS.length > 0 &&
-            userNFTS.map((el) => {
+        <div className='container mx-auto flex flex-wrap justify-evenly mt-12'>
+          {nfts.length > 0 &&
+            nfts.map((el) => {
               const metadata = JSON.parse(el.metadata)
-              const { image, name, description, token_uri } = metadata
-              let newimg
-              metadata.image === null && <></>
-              if (image?.startsWith("ipfs") || image === null) {
-                // newimg = image?.replace("ipfs://", "https://ipfs.moralis.io:2053/ipfs/")
-                newimg =
-                  "https://thumbs.dreamstime.com/b/image-unavailable-icon-simple-illustration-129166551.jpg"
-              } else {
-                newimg = image
-              }
 
-              return (
-                <NFTCard
-                  key={token_uri}
-                  img={newimg}
-                  name={name.substring(0, 20)}
-                  description={
-                    typeof description === "string"
-                      ? description.substring(0, 60)
-                      : "Description is not available for this NFT"
-                  }
-                  token_address={el.token_address}
-                  token_uri={el.token_uri}
-                  token_id={el.token_id}
-                />
-              )
+              return <NFTCard metadata={el} key={metadata.token_uri} />
             })}
         </div>
       </main>
@@ -64,3 +39,19 @@ const Home = () => {
 }
 
 export default Home
+
+export async function getServerSideProps() {
+  const Moralis = require("moralis/node")
+
+  const result = await fetch(
+    ` https://deep-index.moralis.io/api/v2/nft/search?chain=0x1&format=decimal&q=avalanche&filter=global`,
+    { headers: { "X-API-KEY": process.env.API_KEY, accept: "application/json" } }
+  )
+  const data = await result.json()
+
+  return {
+    props: {
+      data,
+    },
+  }
+}

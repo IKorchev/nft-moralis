@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css"
+import "../styles/Globals.css"
 import { MoralisProvider } from "react-moralis"
 import { DAppProvider } from "@usedapp/core"
 const SERVER_URL = "https://ygd29vv4jadp.moralishost.com:2053/server",
