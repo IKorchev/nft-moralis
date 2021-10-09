@@ -1,55 +1,47 @@
 import { useEffect, useState } from "react"
 import NFTModal from "./NFTModal"
 import SkeletonComponent from "./NFTCardSkeleton"
-
+import { formatImage } from "../utils/common"
 const NFTCard = ({ metadata }) => {
   const [isShown, setIsShown] = useState(false)
   const parsedMetadata = JSON.parse(metadata.metadata)
-  const { name, description, image } = parsedMetadata
+  const { name, title, Name, description, image, image_url } = parsedMetadata
 
   const [loading, setLoading] = useState(true)
   useEffect(() => {
+    console.log(formatImage(image, image_url))
     setTimeout(() => {
       setLoading(false)
-    }, 2000)
+    }, 500)
     return () => clearTimeout()
   }, [name])
-  let newimg
-  if (image?.startsWith("ipfs") || image === null) {
-    // newimg = image?.replace("ipfs://", "https://ipfs.moralis.io:2053/ipfs/")
-    newimg =
-      "https://thumbs.dreamstime.com/b/image-unavailable-icon-simple-illustration-129166551.jpg"
-  } else {
-    newimg = image
-  }
 
   return !loading ? (
     <div
       className='flex flex-col items-center rounded-lg w-60 overflow-hidden 
-    shadow-lg bg-white mt-2  translate duration-300 transform hover:shadow-3xl hover:scale-102'>
+    shadow-lg bg-white mt-4  translate duration-200 transform hover:shadow-3xl hover:-translate-y-1 border-t-4 hover:border-pink-400 border-light-tealish'>
       <button
         onClick={(e) => {
           e.preventDefault()
           setIsShown(true)
         }}>
         <img
-          src={
-            newimg ||
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuDq7-cziw6BRNcnmaDB_fBOrnL8WN6Zp4HFLSC3PlWl9zap0X95n0kS5q__yA5tF15as&usqp=CAU"
-          }
+          src={formatImage(image || image_url)}
           alt=''
           className='h-48 cursor-pointer'
         />
       </button>
-      <div className='flex flex-col h-36 justify-between text-left w-full px-4'>
-        <h1 className='text-lg font-bold truncate'>{name || "Title"}</h1>
+      <div className='flex flex-col bg-gradient-to-b from-white to-green-100 h-36 justify-between text-left w-full px-4'>
+        <h1 className='text-lg font-bold truncate'>
+          {name || Name || title || "Unnamed"}
+        </h1>
         <p className='w-full h-12 overflow-hidden'>
           {description || "No available description for this NFT."}
         </p>
         <button
           onClick={() => setIsShown(true)}
           role='button'
-          className='w-1/2 text-center border-purple-600 border rounded-lg text-purple-600 bg-purple-100'>
+          className='w-1/2 text-center border-green-900 border rounded-lg text-green-900 hover:text-white hover:bg-green-500'>
           Learn more
         </button>
         <NFTModal tokenInfo={metadata} isShown={isShown} setIsShown={setIsShown} />

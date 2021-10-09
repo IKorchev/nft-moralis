@@ -8,11 +8,14 @@
   }
 }
 .ReactModal__Overlay {
+  background-color: black;
   opacity: 0;
   transition: opacity 200ms ease-in-out;
 }
 
 .ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+
   opacity: 1;
 }
 
@@ -27,16 +30,16 @@
 /* Track */
 .custom-scroll::-webkit-scrollbar-track {
   border-radius: 100vh;
-  background: #ffd1fd;
+  background: black;
 }
 
 /* Handle */
 .custom-scroll::-webkit-scrollbar-thumb {
-  background: #8f1f89;
+  background: gray;
   border-radius: 100vh;
 }
 
 /* Handle on hover */
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: #5a2157;
+  background: #646464;
 }

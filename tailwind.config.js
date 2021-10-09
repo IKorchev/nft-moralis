@@ -4,6 +4,14 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        blackish: "#131515",
+        grayish: "#2B2C28",
+        "light-grayish": "#404241",
+        tealish: "#339989",
+        "light-tealish": "#7DE2D1",
+        light: "#FFFAFB",
+      },
       scale: {
         102: "1.02",
       },
