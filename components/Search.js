@@ -2,9 +2,7 @@ import SearchIcon from "@heroicons/react/outline/SearchIcon"
 import { useState } from "react"
 import Select from "react-select"
 
-const Search = ({ searchHandler }) => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [blockchain, setBlockchain] = useState("")
+const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
   const options = [
     {
       value: "eth",
@@ -25,40 +23,41 @@ const Search = ({ searchHandler }) => {
   ]
   return (
     <form
-      className=' mt-10 flex h-10 items-center mx-auto'
+      className=' mt-10 flex h-10 items-center mx-auto '
       onSubmit={(e) => {
         e.preventDefault()
-        searchHandler(searchTerm, blockchain)
-        setSearchTerm("")
+        searchHandler(term, chain, 0)
+        setTerm("")
       }}>
-      <label htmlFor='search' className='text-white font-semibold mx-5'>
-        <h2 className='text-white'>Search</h2>
+      <label
+        htmlFor='search'
+        className='text-white grid place-items-center font-semibold px-5 h-full border-2 rounded-lg rounded-r-none border-r-0  border-primary-lightest  z-10'>
+        <h2 className='text-white text-lg'>Search</h2>
       </label>
       <input
         type='text'
-        className='h-full text-white px-2 bg-grayish text-lg focus:border rounded-l-lg border-2 border-r-0 border-light-tealish'
-        placeholder='Search'
+        className='h-full text-white px-2 bg-primary text-lg focus:border rounded-l-none border-2 border-r-0  border-primary-lightest'
         onChange={(e) => {
-          setSearchTerm(e.target.value)
+          setTerm(e.target.value)
         }}
-        value={searchTerm}
+        value={term}
       />
       <select
         onChange={(e) => {
           console.log(e.target.value)
-          setBlockchain(e.target.value)
+          setChain(e.target.value)
         }}
         name='chain'
         id='chain'
-        className='text-md p-1.5 h-full text-white font-semibold bg-grayish border-t-2 border-b-2 border-light-tealish'>
+        className='text-md p-1.5 h-full text-white font-semibold bg-primary border-t-2 border-b-2 border-primary-lightest'>
         {options.map((el) => {
           return <option value={el.value}>{el.label}</option>
         })}
       </select>
       <button
         type='submit'
-        className='px-4 py-1 h-full text-lg font-semibold bg-light-tealish rounded-r-lg border-light-tealish hover:bg-green-200'>
-        <SearchIcon className='h-full w-6 text-grayish ' />
+        className='px-4 py-1 h-full text-lg font-semibold bg-primary-lightest rounded-r-lg border-2 border-l-0 border-primary-lightest hover:bg-primary-light'>
+        <SearchIcon className='h-full w-6 text-white ' />
       </button>
     </form>
   )

@@ -6,6 +6,10 @@
   h2 {
     @apply font-semibold text-2xl text-black;
   }
+  .card {
+    @apply flex flex-col items-center rounded-lg w-72 overflow-hidden 
+    bg-white mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4 hover:border-pinkish;
+  }
 }
 .ReactModal__Overlay {
   background-color: black;

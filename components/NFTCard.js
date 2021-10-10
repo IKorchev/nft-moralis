@@ -9,7 +9,6 @@ const NFTCard = ({ metadata }) => {
 
   const [loading, setLoading] = useState(true)
   useEffect(() => {
-    console.log(formatImage(image, image_url))
     setTimeout(() => {
       setLoading(false)
     }, 500)
@@ -17,9 +16,7 @@ const NFTCard = ({ metadata }) => {
   }, [name])
 
   return !loading ? (
-    <div
-      className='flex flex-col items-center rounded-lg w-60 overflow-hidden 
-    shadow-lg bg-white mt-4  translate duration-200 transform hover:shadow-3xl hover:-translate-y-1 border-t-4 hover:border-pink-400 border-light-tealish'>
+    <div className='card'>
       <button
         onClick={(e) => {
           e.preventDefault()
@@ -28,10 +25,10 @@ const NFTCard = ({ metadata }) => {
         <img
           src={formatImage(image || image_url)}
           alt=''
-          className='h-48 cursor-pointer'
+          className='h-72 max-h-72 cursor-pointer'
         />
       </button>
-      <div className='flex flex-col bg-gradient-to-b from-white to-green-100 h-36 justify-between text-left w-full px-4'>
+      <div className='flex flex-col h-36 justify-between text-left w-full px-4'>
         <h1 className='text-lg font-bold truncate'>
           {name || Name || title || "Unnamed"}
         </h1>
@@ -41,7 +38,7 @@ const NFTCard = ({ metadata }) => {
         <button
           onClick={() => setIsShown(true)}
           role='button'
-          className='w-1/2 text-center border-green-900 border rounded-lg text-green-900 hover:text-white hover:bg-green-500'>
+          className='w-1/2 text-center bg-primary shadow-3xl py-1 rounded-md text-white font-semibold hover:bg-pinkish'>
           Learn more
         </button>
         <NFTModal tokenInfo={metadata} isShown={isShown} setIsShown={setIsShown} />
