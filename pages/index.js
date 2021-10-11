@@ -23,12 +23,7 @@ const Home = ({ data }) => {
     return clearTimeout()
   }
   //init moralis plugin
-  useEffect(async () => {
-    try {
-      await Moralis.initPlugins()
-    } catch (error) {
-      console.log(error)
-    }
+  useEffect(() => {
     return setProgress((old) => ({ ...old, now: 100 }))
   }, [])
   //fetch data
@@ -53,7 +48,7 @@ const Home = ({ data }) => {
   }
 
   return (
-    <div className='w-full bg-gradient-to-l from-primary to-primary-900   pb-12'>
+    <div className='w-full pb-12'>
       <div className='h-1 overflow-hidden'>
         <Progress color={progress.color} completed={progress.now} />
       </div>
@@ -78,7 +73,7 @@ const Home = ({ data }) => {
 
 export default Home
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const result = await fetch(
     ` https://deep-index.moralis.io/api/v2/nft/search?chain=0x1&format=decimal&q=punk&filter=global&limit=50`,
     { headers: { "X-API-KEY": process.env.API_KEY, accept: "application/json" } }

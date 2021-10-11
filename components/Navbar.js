@@ -1,31 +1,42 @@
 import jazzicon from "@metamask/jazzicon"
 import UserIcon from "@heroicons/react/solid/UserIcon"
-import { useMoralis, useWeb3Transfer } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { useEffect, useRef, useState } from "react"
 import { shortenAddress, useEtherBalance, useEthers } from "@usedapp/core"
 import { formatEther } from "@ethersproject/units"
-
+import Link from "next/link"
 const Navbar = () => {
   const iconRef = useRef()
-  const { account } = useEthers()
-  const { user, authenticate, logout, Moralis } = useMoralis()
-  const etherBalance = useEtherBalance(account)
+  const { chainId } = useEthers()
+  const { user, authenticate, logout, Moralis, isAuthenticated, isInitialized } =
+    useMoralis()
   const [showMenu, setShowMenu] = useState(false)
-
+  const [balance, setBalance] = useState(false)
   useEffect(async () => {
-    if (account && iconRef.current) {
+    isInitialized && Moralis.initPlugins()
+
+    if (user && iconRef.current) {
+      const { balance } = await Moralis.Web3API.account.getNativeBalance({
+        chain: chainId,
+      })
+      setBalance(parseInt(balance).toFixed(2))
       iconRef.current.innerHTML = ""
-      iconRef.current.appendChild(jazzicon(12, parseInt(account.slice(2, 10), 16)))
+      iconRef.current.appendChild(
+        jazzicon(12, parseInt(user.attributes.ethAddress.slice(2, 10), 16))
+      )
     }
   }, [user])
 
   return (
-    <nav className='bg-primary w-full shadow-lg'>
-      <div className=' flex justify-between py-4 items-center relative mx-auto px-32 container'>
-        <div className='grid place-items-center text-2xl font-bold bg-pinkish rounded-full w-12 h-12 text-white'>
-          <h1 className=''>NE</h1>
-        </div>
-        {!account ? (
+    <nav className='bg-primary-dark w-full shadow-lg'>
+      <div className=' flex justify-between py-4 items-center relative mx-auto lg:px-32 container'>
+        <Link href='/' passHref>
+          <h1 className='text-xl text-white cursor-pointer font-extrabold'>NE</h1>
+        </Link>
+        <Link href='/mint' passHref>
+          <h1 className='text-xl text-white cursor-pointer'>Mint</h1>
+        </Link>
+        {!isAuthenticated ? (
           <button
             className='bg-blue-50 p-1 px-3 text-lg font-semibold text-center text-black rounded-lg shadow'
             onClick={() => {
@@ -36,11 +47,9 @@ const Navbar = () => {
         ) : (
           <div className='flex items-center'>
             <div className='py-1 rounded-3xl bg-pinkish text-light font-semibold mx-6'>
-              <span className='px-2'>
-                Balance: {etherBalance && formatEther(etherBalance)}
-              </span>
+              <span className='px-2'>Balance: {balance}</span>
               <span className=' text-light bg-primary rounded-3xl py-1 px-2 mr-0.5'>
-                {shortenAddress(account)}
+                {shortenAddress(user.attributes.ethAddress)}
                 <span className='ml-2' ref={iconRef}></span>
               </span>
             </div>
@@ -49,23 +58,22 @@ const Navbar = () => {
                 className='text-lg font-semibold p-1 text-center shadow-md hover:opacity-90'
                 onClick={async () => {
                   setShowMenu((s) => !s)
-                  await logout()
-                  console.log(account)
                 }}>
                 <UserIcon className='h-6 w-6 text-primary-lightest' />
               </button>
               <div
                 className={`${
                   showMenu ? "" : "hidden"
-                } absolute rounded-md top-9 right-6 bg-primary-light text-light flex flex-col text-lg p-4 font-semibold z-50`}>
-                <a href='/account/nfts' className='my-2 hover:opacity-90'>
+                } divide-y absolute rounded-md top-9 px-12 right-6 bg-primary text-light flex flex-col text-lg p-4 font-semibold z-50`}>
+                <a href='/account/nfts' className='mt-1 hover:opacity-90'>
                   My NFT's
                 </a>
-                <a href='/account/nfts' className='my-2 hover:opacity-90'>
+                <a href='/account/nfts' className='mt-1 hover:opacity-90'>
                   Settings
                 </a>
-                <hr />
-                <button className='text-red-600 font-semibold mt-2 hover:text-red-900'>
+                <button
+                  onClick={logout}
+                  className='text-red-600 font-semibold mt-2 hover:text-red-900'>
                   Disconnect
                 </button>
               </div>

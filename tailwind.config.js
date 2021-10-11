@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#502675",
+        "primary-dark": "#28133a",
         "primary-900": "#271339",
         "primary-lightest": "#a43ad6",
         pinkish: "#e056eb",
@@ -21,15 +22,16 @@ module.exports = {
       },
       boxShadow: {
         "3xl": "0px 5px 8px rgba(0,0,0,0.4)",
-        "4xl": "5px 5px 15px 20px rgba(0,0,0,0.7)",
+        "4xl": "0px 0px 15px rgba(0,0,0,0.4)",
       },
     },
   },
   variants: {
     scrollbars: ["rounded"],
-
+    border: ["focus"],
+    outline: ["focus"],
     extend: {
-      boxShadow: ["hover"],
+      boxShadow: ["hover", "focus"],
     },
   },
   plugins: [require("tailwind-scrollbar")],

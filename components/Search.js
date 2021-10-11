@@ -1,6 +1,4 @@
 import SearchIcon from "@heroicons/react/outline/SearchIcon"
-import { useState } from "react"
-import Select from "react-select"
 
 const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
   const options = [
@@ -36,7 +34,7 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
       </label>
       <input
         type='text'
-        className='h-full text-white px-2 bg-primary text-lg focus:border rounded-l-none border-2 border-r-0  border-primary-lightest'
+        className='h-full text-white px-2 bg-primary text-lg focus:border rounded-l-none border-2 border-r-0  border-primary-lightest focus:border-red-400 focus:outline-none'
         onChange={(e) => {
           setTerm(e.target.value)
         }}

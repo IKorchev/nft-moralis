@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  input,
+  select,
+  textarea {
+    @apply focus:border-red-400 border-2 focus:outline-none;
+  }
+  button {
+    @apply focus:outline-none;
+  }
   h2 {
     @apply font-semibold text-2xl text-black;
   }

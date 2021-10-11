@@ -19,14 +19,14 @@ const NFTModal = ({ tokenInfo, isShown, setIsShown }) => {
         isOpen={isShown}
         onRequestClose={() => setIsShown(false)}
         contentLabel='Modal'>
-        <div className='relative max-w-max divide-solid divide-black text-light bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-lg mx-auto flex shadow-2xl rounded-md mt-24 overflow-y-auto overflow-x-hidden'>
+        <div className='relative max-w-max  text-light bg-primary-dark bg-opacity-90 backdrop-filter backdrop-blur-lg mx-auto flex shadow-2xl rounded-md mt-24 overflow-y-auto overflow-x-hidden'>
           <button
             className='absolute top-2 right-2 hover:opacity-90'
             onClick={() => setIsShown(false)}>
             <XIcon className='h-6 w-6' />
           </button>
           <img src={formatImage(image || image_url)} className='w-96 h-full' />
-          <div className='px-12 mt-5 py-5 w-96'>
+          <div className='px-12 mt-5 py-5 w-96 '>
             <h1 className='text-semibold font-bold text-2xl'>{name || "Unnamed"}</h1>
             <h1 className='font-semibold mt-5'>Description</h1>
             <p className='overflow-x-hidden text-sm max-h-24 leading-5 overflow-y-auto custom-scroll py-2 rounded-lg'>
