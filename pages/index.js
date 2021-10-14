@@ -63,7 +63,7 @@ const Home = ({ data }) => {
           chain={chain}
           setChain={setChain}
         />
-        <NFTList list={nfts} />
+        <NFTList list={nfts.result} />
       </main>
     </div>
   )
