@@ -16,13 +16,11 @@ const Home = ({ data }) => {
     color: "#7de2d1",
     now: 1,
   })
-  useEffect(() => {}, [])
   const showAlert = () => {
     setIsAlertShown(true)
     setTimeout(() => setIsAlertShown(false), 3000)
     return clearTimeout()
   }
-  //init moralis plugin
   useEffect(() => {
     return setProgress((old) => ({ ...old, now: 100 }))
   }, [])

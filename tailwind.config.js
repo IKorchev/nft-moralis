@@ -15,14 +15,14 @@ module.exports = {
         secondary: "#00AACB",
         "secondary-dark": "#1FDBDF",
         teal: "#339989",
-        light: "#FFFAFB",
+        light: "#faf7fc",
       },
       scale: {
         102: "1.01",
       },
       boxShadow: {
         "3xl": "0px 5px 8px rgba(0,0,0,0.4)",
-        "4xl": "0px 0px 15px rgba(0,0,0,0.4)",
+        "4xl": "-3px -3px 5px rgba(164,58,214, 0.4), 3px 3px 5px rgba(0,0,0,0.4)",
       },
     },
   },

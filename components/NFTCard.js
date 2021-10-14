@@ -38,7 +38,7 @@ const NFTCard = ({ metadata }) => {
         <button
           onClick={() => setIsShown(true)}
           role='button'
-          className='w-1/2 text-center bg-primary shadow-3xl py-1 rounded-md text-white font-semibold hover:bg-pinkish'>
+          className='w-1/2 text-center bg-primary-lightest py-1 rounded-md text-white font-semibold transition duration-1000 hover:bg-pinkish'>
           Learn more
         </button>
         <NFTModal tokenInfo={metadata} isShown={isShown} setIsShown={setIsShown} />
