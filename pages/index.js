@@ -71,8 +71,7 @@ const Home = ({ data }) => {
 
 export default Home
 
-export async function getStaticProps() {
-  
+export async function getServerSideProps() {
   const result = await fetch(
     ` https://deep-index.moralis.io/api/v2/nft/search?chain=0x1&format=decimal&q=punk&filter=global&limit=50`,
     { headers: { "X-API-KEY": process.env.API_KEY, accept: "application/json" } }

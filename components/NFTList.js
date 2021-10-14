@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import NFTCard from "./NFTCard"
 
 const NFTList = ({ list }) => {
