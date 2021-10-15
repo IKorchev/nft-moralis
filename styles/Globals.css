@@ -4,6 +4,9 @@
 @tailwind utilities;
 
 @layer base {
+  .footer a {
+    @apply hover:underline;
+  }
   body {
     @apply font-poppins;
   }

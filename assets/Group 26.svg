@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="117" height="116" viewBox="0 0 117 116">
+  <g id="Group_26" data-name="Group 26" transform="translate(-372 -486)">
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(372 486)" fill="none" stroke="#ff31ff" stroke-width="4">
+      <ellipse cx="58.5" cy="58" rx="58.5" ry="58" stroke="none"/>
+      <ellipse cx="58.5" cy="58" rx="56.5" ry="56" fill="none"/>
+    </g>
+    <g id="MDI_swap-horizontal-bold" data-name="MDI / swap-horizontal-bold" transform="translate(474.987 502.185) rotate(90)">
+      <g id="Boundary" fill="#ff31ff" stroke="rgba(0,0,0,0)" stroke-width="1" opacity="0">
+        <rect width="83.642" height="88.58" stroke="none"/>
+        <rect x="0.5" y="0.5" width="82.642" height="87.58" fill="none"/>
+      </g>
+      <path id="Path_swap-horizontal-bold" data-name="Path / swap-horizontal-bold" d="M21.758,27.075V37.393H41.516v17.2H21.758V64.908L2,45.992,21.758,27.075m46.1-5.159L48.1,3V13.318H28.344v17.2H48.1V40.833Z" transform="translate(6.891 10.336)" fill="#ff31ff"/>
+    </g>
+  </g>
+</svg>

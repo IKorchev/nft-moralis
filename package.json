@@ -11,6 +11,7 @@
     "@usedapp/core": "^0.5.2",
     "@walletconnect/web3-provider": "^1.6.6",
     "axios": "^0.23.0",
+    "gsap": "^3.8.0",
     "moralis": "^0.0.88",
     "next": "latest",
     "react": "^17.0.2",

@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <nav className='bg-primary-dark bg-opacity-90 w-full shadow-lg z-10'>
-      <div className='flex justify-between py-4 items-center relative mx-auto px-5 container'>
+      <div className='flex justify-between py-4 items-center relative mx-auto px-24 container'>
         <Link href='/' passHref>
           <h1 className='text-xl text-white cursor-pointer font-extrabold'>NE</h1>
         </Link>

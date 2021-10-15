@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="116" height="115" viewBox="0 0 116 115">
+  <g id="Group_27" data-name="Group 27" transform="translate(-629 -707)">
+    <g id="Ellipse_3" data-name="Ellipse 3" transform="translate(629 707)" fill="none" stroke="#ff31ff" stroke-width="4">
+      <ellipse cx="58" cy="57.5" rx="58" ry="57.5" stroke="none"/>
+      <ellipse cx="58" cy="57.5" rx="56" ry="55.5" fill="none"/>
+    </g>
+    <g id="MDI_image-plus" data-name="MDI / image-plus" transform="translate(655.938 733.241)" opacity="0.6">
+      <rect id="Boundary" width="62.355" height="62.355" fill="#ff31ff" opacity="0"/>
+      <path id="Path_image-plus" data-name="Path / image-plus" d="M8.2,3A5.2,5.2,0,0,0,3,8.2V44.57a5.2,5.2,0,0,0,5.2,5.2H31.813a14.423,14.423,0,0,1-.234-2.6,15.407,15.407,0,0,1,.909-5.2H8.2L17.29,30.28l6.5,7.794,9.093-11.691L38.672,34.1a15.632,15.632,0,0,1,8.5-2.52,14.423,14.423,0,0,1,2.6.234V8.2A5.2,5.2,0,0,0,44.57,3H8.2M44.57,36.775V44.57H36.775v5.2H44.57V57.56h5.2V49.766H57.56v-5.2H49.766V36.775Z" transform="translate(2.196 2.196)" fill="#f0f"/>
+    </g>
+  </g>
+</svg>
