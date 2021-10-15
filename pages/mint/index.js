@@ -479,13 +479,13 @@ const Mint = () => {
   }
 
   return (
-    <div className='h-screen '>
+    <div className='wrapper grid place-items-center py-36'>
       <form
         onSubmit={(e) => {
           e.preventDefault()
           uploadMetadata()
         }}
-        className='bg-primary-900 rounded-lg w-96 mt-32 mx-auto text-light flex flex-col shadow-4xl p-8 bg-opacity-10 backdrop-filter backdrop-blur-md'>
+        className='bg-primary-900 rounded-lg w-96 max-h-full  mx-auto text-light flex flex-col shadow-4xl p-8 bg-opacity-10 backdrop-filter backdrop-blur-md'>
         <h2 className='-mt-2 mb-5 text-pink-200'>Mint your NFT</h2>
         <div className='flex flex-col '>
           <label htmlFor='contract'>Contract Address</label>

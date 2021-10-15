@@ -10,10 +10,12 @@ const Navbar = () => {
   const { user, authenticate, logout, Moralis, isAuthenticated } = useMoralis()
   const [showMenu, setShowMenu] = useState(false)
   const [balance, setBalance] = useState(false)
+
   useEffect(async () => {
     if (isAuthenticated && user && iconRef.current) {
       const { balance } = await Moralis.Web3API.account.getNativeBalance({
         chain: chainId,
+        address: user.attributes.ethAddress,
       })
       setBalance(parseInt(balance).toFixed(2))
       iconRef.current.innerHTML = ""
@@ -24,17 +26,22 @@ const Navbar = () => {
   }, [isAuthenticated])
 
   return (
-    <nav className='bg-primary-dark bg-opacity-90 w-full shadow-lg'>
-      <div className=' flex justify-between py-4 items-center relative mx-auto lg:px-32 container'>
+    <nav className='bg-primary-dark bg-opacity-90 w-full shadow-lg z-10'>
+      <div className='flex justify-between py-4 items-center relative mx-auto px-5 container'>
         <Link href='/' passHref>
           <h1 className='text-xl text-white cursor-pointer font-extrabold'>NE</h1>
         </Link>
-        <Link href='/mint' passHref>
-          <h1 className='text-xl text-white cursor-pointer'>Mint</h1>
-        </Link>
-        <Link href='/swap' passHref>
-          <h1 className='text-xl text-white cursor-pointer'>Swap</h1>
-        </Link>
+        <div className='flex w-1/5 justify-between'>
+          <Link href='/explore'>
+            <h1 className='text-xl text-white cursor-pointer'>Explore</h1>
+          </Link>
+          <Link href='/mint'>
+            <h1 className='text-xl text-white cursor-pointer'>Mint</h1>
+          </Link>
+          <Link href='/swap'>
+            <h1 className='text-xl text-white cursor-pointer'>Swap</h1>
+          </Link>
+        </div>
         {!isAuthenticated ? (
           <button
             className='bg-blue-50 p-1 px-3 text-lg font-semibold text-center text-black rounded-lg shadow'
@@ -45,11 +52,11 @@ const Navbar = () => {
           </button>
         ) : (
           <div className='flex items-center'>
-            <div className='py-1 rounded-3xl bg-pinkish text-light font-semibold mx-6'>
-              <span className='px-2'>Balance: {balance}</span>
-              <span className=' text-light bg-primary rounded-3xl py-1 px-2 mr-0.5'>
+            <div className='bg-pinkish flex items-center rounded-full py-0.5 text-light mr-3'>
+              <span className='px-2'>{balance}</span>
+              <span className=' text-light bg-primary rounded-3xl px-2 mr-0.5'>
                 {shortenAddress(user.attributes.ethAddress)}
-                <span className='ml-2' ref={iconRef}></span>
+                <span className='mx-2' ref={iconRef}></span>
               </span>
             </div>
             <div className='relative'>

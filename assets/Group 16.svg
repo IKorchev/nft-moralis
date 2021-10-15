@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="166" height="112.848" viewBox="0 0 166 112.848">
+  <g id="Group_16" data-name="Group 16" transform="translate(-616 -684.152)" opacity="0.86">
+    <g id="Group_16-2" data-name="Group 16" transform="translate(701.078 605)">
+      <g id="Layer_2" data-name="Layer 2" transform="translate(200 -151)">
+        <g id="Layer_1" data-name="Layer 1">
+          <g id="Group_22" data-name="Group 22" transform="translate(70 -23)">
+            <g id="Group_21" data-name="Group 21" transform="translate(-370 253.152)">
+              <path id="Path_172" data-name="Path 172" d="M19.891,100.1,0,109.135,19.891,120.9l19.915-11.767Z" transform="translate(82.019 -76.111)" fill="#864197" opacity="0.6"/>
+              <path id="Path_173" data-name="Path 173" d="M0,33.023,19.891,44.79V0Z" transform="translate(82.019)" fill="#864197" opacity="0.45"/>
+              <path id="Path_174" data-name="Path 174" d="M83,0V44.79l19.915-11.767Z" transform="translate(18.91)" fill="#864197" opacity="0.8"/>
+              <path id="Path_175" data-name="Path 175" d="M0,153.6l19.891,28.039v-16.3Z" transform="translate(82.019 -116.79)" fill="#864197" opacity="0.45"/>
+              <path id="Path_176" data-name="Path 176" d="M83,165.343v16.3L102.915,153.6Z" transform="translate(18.91 -116.79)" fill="#864197" opacity="0.8"/>
+            </g>
+            <text id="Ethereum" transform="translate(-272.078 354)" fill="#864197" font-size="34" font-family="Poppins-Medium, Poppins" font-weight="500"><tspan x="-82.467" y="0">Ethereum</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

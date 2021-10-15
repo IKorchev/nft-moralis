@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
     await Moralis.start({ serverUrl: SERVER_URL, appId: APP_ID })
   }, [])
   return (
-    <div className='bg-gradient-to-l from-primary-dark to-primary-900 wrapper'>
+    <div className='bg-gradient-to-l from-primary-dark to-primary-900 w-full'>
       <Navbar />
       {children}
       <Footer />
