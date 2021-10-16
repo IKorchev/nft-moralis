@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+  input[type="text"],
+  textarea {
+    @apply focus:ring-1 ring-yellow-400;
+  }
   .footer a {
     @apply hover:underline;
   }

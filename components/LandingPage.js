@@ -28,11 +28,16 @@ const LandingPage = () => {
           </a>
         </div>
       </div>
-      <div className='flex py-24 mx-auto justify-around px-48 w-full'>
-        <img src={ETHLogo.src} className='h-24' />
-        <img src={MATICLogo.src} className='h-24' />
-        <img src={AVAXLogo.src} className='h-24' />
-        <img src={BSCLogo.src} className='h-24' />
+      <div className='py-12'>
+        <p className='text-center text-pinkish opacity-70 text-xl'>
+          Blockchains supported
+        </p>
+        <div className='flex mt-12 mx-auto justify-around px-48 w-full'>
+          <img src={ETHLogo.src} className='h-24' />
+          <img src={MATICLogo.src} className='h-24' />
+          <img src={AVAXLogo.src} className='h-24' />
+          <img src={BSCLogo.src} className='h-24' />
+        </div>
       </div>
     </main>
   )

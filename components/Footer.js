@@ -8,7 +8,7 @@ const Footer = () => {
     <div className='footer bg-primary-dark text-light border-t border-pinkish'>
       <div className='container px-32 mx-auto flex justify-between pt-12'>
         <div>
-          <h1 className='font-semibold text-3xl'>NFT Explorer</h1>
+          <h1 className='font-semibold text-3xl text-pink-400'>NFT Explorer</h1>
         </div>
         <div>
           <h1 className='text-xl font-semibold'>Quick Link</h1>
@@ -89,7 +89,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className='flex container px-24 mx-auto justify-between pt-8 pb-4 text-[rgba(255,255,255,0.5)]'>
+      <div className='flex container px-32 mx-auto justify-between pt-8 pb-4 text-[rgba(255,255,255,0.5)]'>
         <p>Copyright &copy; 2021</p>
         <a href='http://ikorchev.com' target='_blank' rel='noopener noreferrer'>
           ikorchev.com
