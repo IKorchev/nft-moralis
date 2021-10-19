@@ -5,6 +5,7 @@ import SkeletonDashboard from "../../components/SkeletonDashboard"
 
 const Account = () => {
   const { Moralis, user, isInitialized } = useMoralis()
+  const { token } = useMoralisWeb3Api()
   const [tokens, setTokens] = useState([])
   const [chain, setChain] = useState("bsc")
 
@@ -12,9 +13,10 @@ const Account = () => {
     const options = {
       address: "0x270cc76efcaed26308cf1919f0148e716b1cca83",
       chain: "0x3",
+      token_id: "2",
     }
-    const NFTs = await Moralis.Web3API.token.getAllTokenIds(options)
-    console.log(NFTs)
+    const price = await token.getTokenIdMetadata(options)
+    console.log(price)
   }
   useEffect(async () => {
     if (!user) return
