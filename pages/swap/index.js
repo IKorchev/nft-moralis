@@ -73,7 +73,7 @@ const Swap = () => {
       console.log(err)
     }
   }
-
+  console.log(fromToken)
   return (
     <div className='h-screen '>
       <Alert isAlertShown={isAlertShown} />
@@ -146,23 +146,25 @@ const Swap = () => {
             <PlusIcon className='h-3 w-4' />
           </button>
           {slippage}
-          <button onClick={() => setSlippage((old) => old + 1)}>
+          <button onClick={() => setSlippage((old) => (old > 1 ? old - 1 : old))}>
             <MinusIcon className='h-3 w-4 text-white' />
           </button>
         </p>
         <p className='mt-5'>
-          <span>Gas price: {gasPrice}</span>
+          <span>Gas price: {Moralis.Units.FromWei(gasPrice, fromToken.decimals)}</span>
         </p>
         <button
           type='submit'
           disabled={loading}
-          className=' bg-primary-lightest text-white font-bold border border-pinkish rounded-lg p-2 mt-2 transition shadow-4xl hover:bg-primary focus:border-red-400'
+          className=' bg-primary-lightest text-white font-bold border border-pinkish rounded-lg p-2 mt-2 transition shadow-3xl hover:bg-primary focus:border-red-400'
           onClick={async (e) => {
             e.preventDefault()
             executeSwap()
           }}>
           Swap
         </button>
+
+        <p className='opacity-50 mt-2 text-center'>Quotes are based on 1Inch exchange</p>
       </form>
     </div>
   )

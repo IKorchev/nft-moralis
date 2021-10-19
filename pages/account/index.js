@@ -7,6 +7,15 @@ const Account = () => {
   const { Moralis, user, isInitialized } = useMoralis()
   const [tokens, setTokens] = useState([])
   const [chain, setChain] = useState("bsc")
+
+  const getTokenMetadata = async () => {
+    const options = {
+      address: "0x270cc76efcaed26308cf1919f0148e716b1cca83",
+      chain: "0x3",
+    }
+    const NFTs = await Moralis.Web3API.token.getAllTokenIds(options)
+    console.log(NFTs)
+  }
   useEffect(async () => {
     if (!user) return
     const balances = await Moralis.Web3API.account.getTokenBalances({
@@ -14,13 +23,14 @@ const Account = () => {
       chain: chain,
     })
     setTokens(balances)
+    getTokenMetadata()
   }, [user])
 
   return (
     <div className='h-screen'>
       {!tokens.length && <SkeletonDashboard />}
       {tokens.length && (
-        <div className='lg:w-1/2 mx-auto mt-24 bg-primary-lightest backdrop-filter backdrop-blur-md bg-opacity-5 rounded-lg p-5 shadow-4xl'>
+        <div className='lg:w-1/2 mx-auto mt-24 min-h-[550px] bg-primary-lightest backdrop-filter backdrop-blur-md bg-opacity-5 rounded-lg p-5 shadow-4xl min-h-96'>
           <h1 className='font-semibold text-2xl text-light flex items-center justify-between'>
             <span>Dashboard</span>
             <span>

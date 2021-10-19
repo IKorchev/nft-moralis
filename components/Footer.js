@@ -14,24 +14,16 @@ const Footer = () => {
           <h1 className='text-xl font-semibold'>Quick Link</h1>
           <ul className='mt-4'>
             <li className='mb-1'>
-              <a href='/' target='_blank' rel='noopener noreferrer'>
-                Home
-              </a>
+              <a href='/'>Home</a>
             </li>
             <li className='mb-1'>
-              <a href='/' target='_blank' rel='noopener noreferrer'>
-                Explore
-              </a>
+              <a href='/'>Explore</a>
             </li>
             <li className='mb-1'>
-              <a href='/' target='_blank' rel='noopener noreferrer'>
-                Mint
-              </a>
+              <a href='/'>Mint</a>
             </li>
             <li className='mb-1'>
-              <a href='/' target='_blank' rel='noopener noreferrer'>
-                Swap
-              </a>
+              <a href='/'>Swap</a>
             </li>
           </ul>
         </div>

@@ -49,7 +49,11 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
         id='chain'
         className='text-md p-1.5  h-full text-white font-semibold bg-primary border-t-2 border-b-2 border-primary-lightest'>
         {options.map((el) => {
-          return <option value={el.value}>{el.label}</option>
+          return (
+            <option key={el.value} value={el.value}>
+              {el.label}
+            </option>
+          )
         })}
       </select>
       <button

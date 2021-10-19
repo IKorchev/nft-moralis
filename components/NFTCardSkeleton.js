@@ -2,7 +2,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton"
 
 const SkeletonComponent = () => (
   <SkeletonTheme color='#28133a' highlightColor='#a43ad6'>
-    <section className='flex flex-col mx-auto items-start mt-4 shadow-3xl bg-light m-1 rounded-lg'>
+    <section className='flex flex-col mx-auto items-start mt-4 shadow-3xl bg-primary m-1 rounded-lg'>
       <div className='mx-auto'>
         <Skeleton className='w-60 h-60 mx-auto' height={250} width={280} />
       </div>
