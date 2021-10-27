@@ -10,17 +10,8 @@ const Mint = () => {
   const [description, setDescription] = useState("")
 
   const onMintPressed = async () => {
-    const response = await fetch("/api/create", {
-      method: "POST",
-      body: JSON.stringify({
-        name: name,
-        description: description,
-        image: "google.com",
-      }),
-    })
-    console.log(response)
-    // const { success, tokenURI } = await uploadMetadata(file, name, description)
-    // console.log(tokenURI)
+    const { success, tokenURI } = await uploadMetadata(file, name, description)
+    console.log(tokenURI)
   }
 
   return (
