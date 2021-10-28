@@ -21,7 +21,7 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
   ]
   return (
     <form
-      className=' mt-10 flex h-10 items-center mx-auto '
+      className=' mt-24 flex flex-col lg:flex-row h-full lg:h-10 items-center mx-auto '
       onSubmit={(e) => {
         e.preventDefault()
         searchHandler(term, chain, 0)
@@ -29,7 +29,7 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
       }}>
       <label
         htmlFor='search'
-        className='text-white grid place-items-center font-semibold px-5 h-full border-2 rounded-lg rounded-r-none border-r-0 bg-primary border-primary-lightest'>
+        className='text-white w-full grid place-items-center font-semibold px-5 h-full border-2 rounded-lg rounded-r-none border-r-0 bg-primary border-primary-lightest'>
         <h2 className='text-white text-lg'>Search</h2>
       </label>
       <input

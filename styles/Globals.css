@@ -82,8 +82,18 @@ input[type="number"] {
 }
 
 .landing-page {
-  background-image: url("../assets/Illustration.svg");
+  background: url("../assets/Illustration.svg");
   background-position: right -100px top -200px;
   background-attachment: scroll;
   background-repeat: no-repeat;
+}
+
+@media (max-width: 1400px) {
+  .landing-page {
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)),
+      url("../assets/Illustration.svg");
+    background-position: center top;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+  }
 }

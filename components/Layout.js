@@ -1,4 +1,4 @@
-import Navbar from "./Navbar"
+import Navbar from "./Navbar/Navbar"
 import Footer from "./Footer"
 import { useEffect } from "react"
 import Moralis from "moralis"
@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
     await Moralis.start({ serverUrl: SERVER_URL, appId: APP_ID })
   }, [])
   return (
-    <div className='bg-gradient-to-l from-primary-dark to-primary-900 w-full'>
+    <div className='bg-gradient-to-l from-primary-dark to-primary-900 relative w-full'>
       <Navbar />
       {children}
       <Footer />

@@ -75,13 +75,13 @@ const Swap = () => {
   }
   console.log(fromToken)
   return (
-    <div className='h-screen '>
+    <div className='py-36'>
       <Alert isAlertShown={isAlertShown} />
       <form
         onSubmit={(e) => {
           e.preventDefault()
         }}
-        className='bg-primary-dark rounded-lg w-96 mt-32 mx-auto text-primary-lightest flex flex-col shadow-4xl p-8  backdrop-filter bg-opacity-10 backdrop-blur-md'>
+        className='bg-primary-dark rounded-lg w-96 mx-auto text-primary-lightest flex flex-col shadow-4xl p-8  backdrop-filter bg-opacity-10 backdrop-blur-md'>
         <h2 className='-mt-2 mb-5 text-primary-lightest'>Swap token</h2>
         <div className='flex focus-within:ring ring-purple-600 rounded-lg border border-pinkish'>
           <input

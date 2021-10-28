@@ -5,9 +5,9 @@ import ETHLogo from "../assets/Group 16.svg"
 import MATICLogo from "../assets/Group 17.svg"
 const LandingPage = () => {
   return (
-    <main className='text-center mx-auto container'>
-      <div className='lg:w-1/2 px-5 py-48 lg:px-24 text-white text-left'>
-        <div>
+    <main className='text-center relative mx-auto container'>
+      <div className=' px-5 py-48 lg:px-24 text-white text-left'>
+        <div className='w-full lg:w-1/2'>
           <p className='mb-2 text-lg text-pinkish'>Around the blockchain</p>
           <h1 className='text-5xl font-semibold text-white '>Explore the NFT space.</h1>
           <p className='text-lg mt-8 font-light'>
@@ -29,14 +29,12 @@ const LandingPage = () => {
         </div>
       </div>
       <div className='py-12'>
-        <p className='text-center text-pinkish opacity-70 text-xl'>
-          Blockchains supported
-        </p>
+        <p className='text-center text-pinkish text-xl'>Blockchains supported</p>
         <div className='flex mt-12 mx-auto justify-around px-48 w-full'>
-          <img src={ETHLogo.src} className='h-24' />
-          <img src={MATICLogo.src} className='h-24' />
-          <img src={AVAXLogo.src} className='h-24' />
-          <img src={BSCLogo.src} className='h-24' />
+          <img src={ETHLogo.src} className='h-12  mx-2 lg:h-24' />
+          <img src={MATICLogo.src} className='h-12 mx-2 lg:h-24' />
+          <img src={AVAXLogo.src} className='h-12 mx-2 lg:h-24' />
+          <img src={BSCLogo.src} className='h-12 mx-2 lg:h-24' />
         </div>
       </div>
     </main>

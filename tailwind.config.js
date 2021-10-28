@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      zIndex: {
+        "-1": "-1",
+      },
       animation: {
         "spin-slow": "spin 20s linear infinite",
       },
@@ -34,7 +37,7 @@ module.exports = {
   },
   variants: {
     scrollbars: ["rounded"],
-    border: ["focus"],
+    border: ["focus", "hover"],
     outline: ["focus"],
     extend: {
       boxShadow: ["hover", "focus"],
