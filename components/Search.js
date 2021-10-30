@@ -21,7 +21,7 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
   ]
   return (
     <form
-      className=' mt-24 flex flex-col lg:flex-row h-full lg:h-10 items-center mx-auto '
+      className='divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-primary-lightest mt-24 flex flex-col rounded-xl lg:flex-row border overflow-hidden border-primary-lightest h-full lg:h-10 items-center mx-auto '
       onSubmit={(e) => {
         e.preventDefault()
         searchHandler(term, chain, 0)
@@ -29,12 +29,12 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
       }}>
       <label
         htmlFor='search'
-        className='text-white w-full grid place-items-center font-semibold px-5 h-full border-2 rounded-lg rounded-r-none border-r-0 bg-primary border-primary-lightest'>
+        className='text-white py-1 w-full grid place-items-center font-semibold px-5 h-full   bg-primary '>
         <h2 className='text-white text-lg'>Search</h2>
       </label>
       <input
         type='text'
-        className='h-full text-white px-2 bg-primary text-lg focus:border rounded-l-none border-2 border-r-0 ring-inset ring-yellow-400 border-primary-lightest  focus:ring-1'
+        className='h-full text-white py-1 px-2 bg-primary text-lg ring-inset ring-yellow-400   focus:ring-1'
         onChange={(e) => {
           setTerm(e.target.value)
         }}
@@ -47,7 +47,7 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
         }}
         name='chain'
         id='chain'
-        className='text-md p-1.5  h-full text-white font-semibold bg-primary border-t-2 border-b-2 border-primary-lightest'>
+        className='text-md p-1.5 w-full h-full text-white font-semibold bg-primary -t-2 -b-2 '>
         {options.map((el) => {
           return (
             <option key={el.value} value={el.value}>
@@ -58,8 +58,9 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
       </select>
       <button
         type='submit'
-        className='px-4 py-1 h-full text-lg font-semibold bg-primary-lightest rounded-r-lg border-2 border-l-0 border-primary-lightest hover:bg-primary-dark ring-inset ring-yellow-400 focus:ring-1'>
-        <SearchIcon className='h-full w-6 text-white ' />
+        className='px-4 py-1 w-full lg:w-24 h-full flex justify-between text-lg text-white font-semibold bg-primary-lightest  -l-0  hover:bg-primary-dark ring-inset ring-yellow-400 focus:ring-1'>
+        <span className='lg:hidden mx-auto'>Search</span>
+        <SearchIcon className='h-full w-0 lg:w-6 text-white ' />
       </button>
     </form>
   )

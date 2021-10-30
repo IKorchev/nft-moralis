@@ -98,7 +98,7 @@ const Navbar = () => {
       <nav className='xl:hidden'>
         <div
           onClick={() => setShow(!show)}
-          className={`absolute top-0 left-0 w-full h-full z-30 bg-black bg-opacity-90 ${
+          className={`absolute top-0 left-0 shadow-4xl w-full h-full z-30 bg-black bg-opacity-90 ${
             !show ? "hidden" : ""
           }`}
         />
@@ -122,19 +122,25 @@ const Navbar = () => {
             </div>
             <div className='flex flex-grow flex-col mt-24 h-1/6 w-1/5 '>
               <Link href='/explore'>
-                <h1 className='text-xl text-white cursor-pointer mt-5'>Explore</h1>
+                <h1 className='text-3xl text-white cursor-pointer mt-5 hover:text-pinkish'>
+                  Explore
+                </h1>
               </Link>
               <Link href='/mint'>
-                <h1 className='text-xl text-white cursor-pointer mt-5'>Mint</h1>
+                <h1 className='text-3xl text-white cursor-pointer mt-12 hover:text-pinkish'>
+                  Mint
+                </h1>
               </Link>
               <Link href='/swap'>
-                <h1 className='text-xl text-white cursor-pointer mt-5'>Swap</h1>
+                <h1 className='text-3xl text-white cursor-pointer mt-12 hover:text-pinkish'>
+                  Swap
+                </h1>
               </Link>
             </div>
 
             {isAuthenticated ? (
               <button
-                className='text-red-400 border-2 border-red-400 px-4 py-2 text-lg mb-5 mt-24 rounded-full'
+                className='text-red-400 border-2 border-red-400 px-4 py-2 text-lg mb-5 mt-24 rounded-full '
                 onClick={() => {
                   logout()
                 }}>

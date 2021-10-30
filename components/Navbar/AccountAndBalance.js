@@ -21,19 +21,19 @@ const AccountAndBalance = () => {
     }
   }, [isAuthenticated])
   return (
-    <div className='bg-pinkish flex items-center rounded-full py-0.5 text-light mr-3'>
+    <div className='bg-pinkish flex-col xl:flex-row shadow-4xl rounded-xl inline-flex items-center justify-center rounded-lg py-0.5 text-light mr-3'>
       {balance && (
-        <span className='px-2'>
+        <span className='px-2 text-black font-bold'>
           {parseFloat(formatEther(balance)).toFixed(5)} {formatBalance(chainId)}
         </span>
       )}
       <span
-        className='relative text-light bg-primary rounded-3xl px-2 mr-0.5'
+        className='relative text-light bg-primary rounded-md cursor-pointer px-2 mx-1'
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}>
         <Tooltip shown={showTooltip} text={user.attributes.ethAddress} />
         {shortenAddress(user.attributes.ethAddress)}
-        <span className='mx-2' ref={iconRef}></span>
+        <span className='ml-2' ref={iconRef}></span>
       </span>
     </div>
   )

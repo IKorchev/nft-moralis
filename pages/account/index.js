@@ -29,14 +29,14 @@ const Account = () => {
   }, [user])
 
   return (
-    <div className='h-screen'>
+    <div className='h-screen flex items-center justify-center'>
       {!tokens.length && <SkeletonDashboard />}
       {tokens.length && (
-        <div className='lg:w-1/2 mx-auto mt-24 min-h-[550px] bg-primary-lightest backdrop-filter backdrop-blur-md bg-opacity-5 rounded-lg p-5 shadow-4xl min-h-96'>
+        <div className='pt-5 min-h-[550px] lg:min-w-[800px] bg-primary-lightest backdrop-filter backdrop-blur-md bg-opacity-5 rounded-lg p-5 shadow-4xl min-h-96'>
           <h1 className='font-semibold text-2xl text-light flex items-center justify-between'>
             <span>Dashboard</span>
             <span>
-              Chain: <span className=' uppercase'>{chain}</span>
+              Chain: <span className='uppercase'>{chain}</span>
             </span>
             <span className='text-sm'>
               Account: {user && shortenAddress(user?.attributes.ethAddress)}
