@@ -35,3 +35,19 @@ export const copyTextToClipboard = async (text) => {
     return document.execCommand("copy", true, text)
   }
 }
+
+export const formatChainForMoralis = (chainId) => {
+  switch (chainId) {
+    case 1:
+      return "eth"
+    case 56:
+      return "bsc"
+    case 137:
+      return "matic"
+    case 43113:
+      return "avax"
+
+    default:
+      return "eth"
+  }
+}

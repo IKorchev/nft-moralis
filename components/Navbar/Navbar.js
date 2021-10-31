@@ -1,13 +1,16 @@
 import UserIcon from "@heroicons/react/solid/UserIcon"
 import { useMoralis } from "react-moralis"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import AccountAndBalance from "./AccountAndBalance"
 const Navbar = () => {
+  const navRef = useRef()
   const { authenticate, logout, Moralis, isAuthenticated } = useMoralis()
   const [showMenu, setShowMenu] = useState(false)
   const [show, setShow] = useState(false)
-
+  useEffect(() => {
+    show && navRef.current.focus()
+  }, [show])
   return (
     <>
       {/* MOBILE MENU TOGGLER*/}
@@ -18,7 +21,10 @@ const Navbar = () => {
         <button
           aria-controls='sidebar'
           className='absolute top-8 right-5 z-50'
-          onClick={() => setShow(!show)}>
+          onClick={() => {
+            setShow(!show)
+            navRef.current.focus()
+          }}>
           <div
             className={` transition ease-in-out transform duration-1000 ${
               show && "-rotate-45   translate-y-2"
@@ -37,13 +43,13 @@ const Navbar = () => {
             <h1 className='text-xl text-white cursor-pointer font-extrabold'>NE</h1>
           </Link>
           <div className='flex w-1/5 justify-between'>
-            <Link href='/explore'>
+            <Link href='/explore' passHref>
               <h1 className='text-xl text-white cursor-pointer'>Explore</h1>
             </Link>
-            <Link href='/mint'>
+            <Link href='/mint' passHref>
               <h1 className='text-xl text-white cursor-pointer'>Mint</h1>
             </Link>
-            <Link href='/swap'>
+            <Link href='/swap' passHref>
               <h1 className='text-xl text-white cursor-pointer'>Swap</h1>
             </Link>
           </div>
@@ -70,12 +76,16 @@ const Navbar = () => {
                   className={`${
                     showMenu ? "" : "hidden"
                   } divide-y absolute rounded-md top-9 px-12 right-6 bg-primary text-light flex flex-col text-lg p-4 font-semibold z-50`}>
-                  <a href='/account' className='mt-1 hover:opacity-90 py-2'>
-                    Account
-                  </a>
-                  <a href='/account/nfts' className='mt-1 hover:opacity-90 py-2'>
-                    Settings
-                  </a>
+                  <Link href='/account'>
+                    <span className='mt-1 hover:opacity-90 py-2 cursor-pointer'>
+                      Account
+                    </span>
+                  </Link>
+                  <Link href='/account/nfts' className='mt-1 hover:opacity-90 py-2'>
+                    <span className='mt-1 hover:opacity-90 py-2 cursor-pointer'>
+                      NFTs
+                    </span>
+                  </Link>
                   <button
                     onClick={logout}
                     className='text-red-600 font-semibold mt-2 hover:text-red-900 py-2'>
@@ -95,7 +105,7 @@ const Navbar = () => {
         </div>
       </nav>
       {/* sidebar */}
-      <nav className='xl:hidden'>
+      <nav className='xl:hidden' tabIndex='1' ref={navRef}>
         <div
           onClick={() => setShow(!show)}
           className={`absolute top-0 left-0 shadow-4xl w-full h-full z-30 bg-black bg-opacity-90 ${
@@ -120,27 +130,39 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-            <div className='flex flex-grow flex-col mt-24 h-1/6 w-1/5 '>
-              <Link href='/explore'>
-                <h1 className='text-3xl text-white cursor-pointer mt-5 hover:text-pinkish'>
-                  Explore
-                </h1>
-              </Link>
-              <Link href='/mint'>
-                <h1 className='text-3xl text-white cursor-pointer mt-12 hover:text-pinkish'>
-                  Mint
-                </h1>
-              </Link>
-              <Link href='/swap'>
-                <h1 className='text-3xl text-white cursor-pointer mt-12 hover:text-pinkish'>
-                  Swap
-                </h1>
-              </Link>
+            <div className='flex flex-grow flex-col mt-24  justify-between'>
+              <div className='flex flex-col h-36 justify-between'>
+                <Link href='/explore' passHref>
+                  <h1 className='text-3xl text-white cursor-pointer  hover:text-pinkish'>
+                    Explore
+                  </h1>
+                </Link>
+                <Link href='/mint' passHref>
+                  <h1 className='text-3xl text-white cursor-pointer  hover:text-pinkish'>
+                    Mint
+                  </h1>
+                </Link>
+                <Link href='/swap' passHref>
+                  <h1 className='text-3xl text-white cursor-pointer  hover:text-pinkish'>
+                    Swap
+                  </h1>
+                </Link>
+              </div>
+              <div className='text-light flex justify-between text-lg w-full  font-semibold'>
+                <Link href='/account'>
+                  <span className='mt-1 hover:opacity-90 cursor-pointer'>Account</span>
+                </Link>
+                <Link href='/account/nfts' className='mt-1 hover:opacity-90 py-2'>
+                  <span className='mt-1 hover:opacity-90 cursor-pointer'>NFTs</span>
+                </Link>
+                <Link href='/account/nfts' className='mt-1 hover:opacity-90 py-2'>
+                  <span className='mt-1 hover:opacity-90 cursor-pointer'>Dashboard</span>
+                </Link>
+              </div>
             </div>
-
             {isAuthenticated ? (
               <button
-                className='text-red-400 border-2 border-red-400 px-4 py-2 text-lg mb-5 mt-24 rounded-full '
+                className='text-red-400 w-full border-2 border-red-400 px-4 py-2 text-lg mb-5 mt-5 rounded-full '
                 onClick={() => {
                   logout()
                 }}>

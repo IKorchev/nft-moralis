@@ -1,32 +1,23 @@
-import { shortenAddress } from "@usedapp/core"
+import { shortenAddress, useEthers } from "@usedapp/core"
 import { useEffect, useState } from "react"
 import { useMoralis, useMoralisWeb3Api } from "react-moralis"
 import SkeletonDashboard from "../../components/SkeletonDashboard"
-
+import { formatChainForMoralis } from "../../utils/common"
 const Account = () => {
   const { Moralis, user, isInitialized } = useMoralis()
   const { token } = useMoralisWeb3Api()
+  const { chainId, library, account } = useEthers()
   const [tokens, setTokens] = useState([])
-  const [chain, setChain] = useState("bsc")
 
-  const getTokenMetadata = async () => {
-    const options = {
-      address: "0x270cc76efcaed26308cf1919f0148e716b1cca83",
-      chain: "0x3",
-      token_id: "2",
-    }
-    const price = await token.getTokenIdMetadata(options)
-    console.log(price)
-  }
   useEffect(async () => {
     if (!user) return
     const balances = await Moralis.Web3API.account.getTokenBalances({
       address: user.attributes.ethAddress,
-      chain: chain,
+      chain: "bsc",
     })
+    console.log(library)
     setTokens(balances)
-    getTokenMetadata()
-  }, [user])
+  }, [user, chainId])
 
   return (
     <div className='h-screen flex items-center justify-center'>
@@ -36,7 +27,7 @@ const Account = () => {
           <h1 className='font-semibold text-2xl text-light flex items-center justify-between'>
             <span>Dashboard</span>
             <span>
-              Chain: <span className='uppercase'>{chain}</span>
+              Chain: <span className='uppercase'>{chainId}</span>
             </span>
             <span className='text-sm'>
               Account: {user && shortenAddress(user?.attributes.ethAddress)}
