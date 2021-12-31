@@ -1,11 +1,14 @@
 import UserIcon from "@heroicons/react/solid/UserIcon"
-import { useMoralis } from "react-moralis"
+import { useMoralis, useChain } from "react-moralis"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import AccountAndBalance from "./AccountAndBalance"
+
 const Navbar = () => {
   const navRef = useRef()
   const { authenticate, logout, Moralis, isAuthenticated } = useMoralis()
+  const { switchNetwork, chainId, chain, account } = useChain()
+
   const [showMenu, setShowMenu] = useState(false)
   const [show, setShow] = useState(false)
   useEffect(() => {

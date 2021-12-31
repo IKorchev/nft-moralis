@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react"
-import { useMoralis } from "react-moralis"
-
+import { useEffect } from "react"
+import { useNFTBalances } from "react-moralis"
+import NFTList from "../../components/NFTList"
 const Nfts = () => {
-  const { Moralis, account } = useMoralis()
-  const [nfts, setNfts] = useState()
-  const fetchAccountNFTs = async () => {
-    const options = { chain: "bsc", address: account, order: "desc", from_block: "0" }
-    const userEthNFTs = await Moralis.Web3API.account.getNFTs(options)
-    return userEthNFTs
-  }
+  const { getNFTBalances, data, error } = useNFTBalances()
+
   useEffect(() => {
-   
+    getNFTBalances()
   }, [])
-  return <div>{!nfts && <h2>You have no NFTs in your account</h2>}</div>
+
+  return (
+    <div>
+      {data?.result?.length === 0 ? (
+        <h2 className='text-center text-white'>You have no NFTs in your account</h2>
+      ) : (
+        <NFTList list={data?.result} />
+      )}
+    </div>
+  )
 }
 
 export default Nfts

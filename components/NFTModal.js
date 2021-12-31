@@ -3,10 +3,9 @@ import XIcon from "@heroicons/react/outline/XIcon"
 import ChevronUpIcon from "@heroicons/react/outline/ChevronUpIcon"
 import { useState } from "react"
 import { formatImage } from "../utils/common"
-const NFTModal = ({ tokenInfo, isShown, setIsShown }) => {
-  const metadata = JSON.parse(tokenInfo.metadata)
-  const { image_url, image, name, description, attributes } = metadata
-  const { token_uri, token_id, token_address } = tokenInfo
+const NFTModal = ({ data, tokenInfo, isShown, setIsShown }) => {
+  const { image_url, image, name, description, attributes } = tokenInfo || {}
+  const { token_uri, token_id, token_address } = data || {}
   const [showAttributes, setShowAttributes] = useState(false)
   const toggleAttributes = () => {
     setShowAttributes((state) => !state)
@@ -25,7 +24,7 @@ const NFTModal = ({ tokenInfo, isShown, setIsShown }) => {
             onClick={() => setIsShown(false)}>
             <XIcon className='h-6 w-6' />
           </button>
-          <img src={formatImage(image || image_url)} className='w-96 h-full' />
+          <img src={image || image_url} className='w-96 h-full' />
           <div className='px-12 mt-5 py-5 w-96 '>
             <h1 className='text-semibold font-bold text-2xl'>{name || "Unnamed"}</h1>
             <h1 className='font-semibold mt-5'>Description</h1>
