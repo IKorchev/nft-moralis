@@ -11,6 +11,7 @@
     "@usedapp/core": "^0.5.2",
     "@walletconnect/web3-provider": "^1.6.6",
     "axios": "^0.23.0",
+    "framer-motion": "^5.5.5",
     "gsap": "^3.8.0",
     "moralis": "^0.0.176",
     "next": "latest",
@@ -20,7 +21,8 @@
     "react-modal": "^3.14.3",
     "react-moralis": "^0.3.11",
     "react-progressbar": "^15.4.1",
-    "react-select": "^5.1.0"
+    "react-select": "^5.1.0",
+    "swr": "^1.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

@@ -30,7 +30,8 @@
   }
   .card {
     @apply flex flex-col items-center rounded-lg w-72 overflow-hidden 
-    bg-primary-dark mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4 text-white hover:border-pinkish backdrop-filter bg-opacity-80 backdrop-blur-sm;
+    bg-white mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4
+     text-black hover:border-pinkish backdrop-filter;
   }
 }
 .ReactModal__Overlay {

@@ -1,116 +1,75 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { formatImage } from "../utils/common"
-import NFTModal from "./NFTModal"
-import {
-  useChain,
-  useWeb3ExecuteFunction,
-} from "react-moralis"
-import { MARKET_ABI, NFT_ABI } from "../utils/getMarketItems"
+import marketInteractions from "../utils/marketInteractions"
+import Modal from "react-modal"
+import XIcon from "@heroicons/react/outline/XIcon"
+import Link from "next/link"
+export const SellModal = ({ sellItem, isOpen, setIsOpen, tokenInfo }) => {
+  const imageSource = formatImage(tokenInfo?.image) || formatImage(tokenInfo?.image_url)
+  const [price, setPrice] = useState(1)
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      className='w-max h-96 bg-white m-auto'
+      onRequestClose={() => setIsOpen(false)}
+      contentLabel='Example Modal'>
+      <div className='relative flex-col max-w-max text-black  bg-opacity-90 mx-auto flex  rounded-md mt-24 overflow-y-auto overflow-x-hidden'>
+        <button
+          className='absolute top-2 right-2 hover:opacity-90'
+          onClick={() => setIsOpen(false)}>
+          <XIcon className='h-6 w-6' color='black' />
+        </button>
+        <img
+          src={imageSource}
+          alt=''
+          className='h-72 max-h-72 cursor-pointer object-contain'
+        />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            sellItem(price)
+          }}
+          className='border'>
+          <label htmlFor='numberInput'>Price</label>
+          <input
+            type='number'
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            id='numberInput'
+            className='border'
+          />
+          <button type='submit'>List for sale</button>
+        </form>
+      </div>
+    </Modal>
+  )
+}
+
 const NFTCard = ({ data, metadata }) => {
-  const { account } = useChain()
   const [isShown, setIsShown] = useState(false)
   const [metaData, setMetadata] = useState()
-  const contractProcessor = useWeb3ExecuteFunction()
-  const MARKET_ADDRESS = "0xe6f1a815c66bac5f1d59f802BB2a73aa77b36621"
-
-  const getListingPriceAndList = async () => {
-    contractProcessor.fetch({
-      params: {
-        contractAddress: MARKET_ADDRESS,
-        abi: MARKET_ABI,
-        functionName: "getListingPrice",
-      },
-      onSuccess: (price) => {
-        list(price)
-      },
-      onError: () => {
-        alert("Unable to get listing price")
-      },
-    })
-  }
-
-  const list = async (listingPrice) => {
-    const options = {
-      contractAddress: MARKET_ADDRESS,
-      abi: MARKET_ABI,
-      functionName: "createMarketItem",
-      msgValue: listingPrice,
-      params: {
-        nftContract: data.token_address,
-        tokenId: parseInt(data.token_id),
-        price: String(1000000),
-      },
-    }
-    await contractProcessor.fetch({
-      params: options,
-      onSuccess: (data) => {
-        console.log(data)
-      },
-      onError: (data) => {
-        console.log(data)
-      },
-    })
-  }
-
-  const getApprovalAndList = async () => {
-    const options = {
-      contractAddress: data.token_address,
-      abi: NFT_ABI,
-      functionName: "setApprovalForAll",
-      params: {
-        operator: MARKET_ADDRESS,
-        approved: true,
-      },
-    }
-    await contractProcessor.fetch({
-      params: options,
-      onSuccess: (data) => {
-        getListingPriceAndList()
-      },
-      onError: (data) => {
-        alert("Something went wrong " + data)
-      },
-    })
-  }
-  const checkApproved = async () => {
-    const options = {
-      contractAddress: data.token_address,
-      abi: NFT_ABI,
-      functionName: "isApprovedForAll",
-      params: {
-        owner: account,
-        operator: MARKET_ADDRESS,
-      },
-    }
-    await contractProcessor.fetch({
-      params: options,
-      onSuccess: (isApproved) => {
-        if (isApproved) {
-          getListingPriceAndList()
-        } else {
-          getApprovalAndList()
-          console.log(isApproved + "else")
-        }
-      },
-      onError: (data) => {
-        alert("Couldn't check if contract is approved to transfer.")
-      },
-    })
-  }
-
+  const { listItem } = marketInteractions()
   useEffect(() => {
     const getData = async () => {
       if (metadata) {
         setMetadata(metadata)
       } else {
-        const tokenIdMetadata = await fetch(data.tokenUri)
-        const parsedMetadata = await tokenIdMetadata?.json()
-        setMetadata(JSON.parse(parsedMetadata))
+        try {
+          const tokenIdMetadata = await fetch(data.tokenUri)
+          const parsedMetadata = await tokenIdMetadata.json()
+          setMetadata(JSON.parse(parsedMetadata))
+          console.log(tokenIdMetadata)
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
     getData()
   }, [])
-
+  const listForSale = (price) => {
+    listItem(data.token_address, data.token_id, price)
+  }
   return (
     <div className='card'>
       <button
@@ -131,24 +90,27 @@ const NFTCard = ({ data, metadata }) => {
         <p className='w-full h-12 overflow-hidden'>
           {metaData?.description || "No available description for this NFT."}
         </p>
+        <Link href={`/assets/${data?.token_address}/`}>Goasd</Link>
+
         <button
           onClick={() => setIsShown(true)}
           role='button'
           className='w-1/2 text-center bg-primary-lightest py-1 rounded-md text-white font-semibold transition duration-1000 hover:bg-pinkish'>
           Learn more
         </button>
-        <NFTModal
+        {/* <NFTModal
+            tokenInfo={metaData}
+            data={data}
+            isShown={isShown}
+            setIsShown={setIsShown}
+          /> */}
+        <button onClick={() => setIsShown(true)}>Sell now</button>
+        <SellModal
+          sellItem={listForSale}
           tokenInfo={metaData}
-          data={data}
-          isShown={isShown}
-          setIsShown={setIsShown}
+          isOpen={isShown}
+          setIsOpen={setIsShown}
         />
-        <button
-          onClick={async () => {
-            checkApproved()
-          }}>
-          Sell now
-        </button>
       </div>
     </div>
   )

@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="184" height="108.354" viewBox="0 0 184 108.354">
-  <g id="Group_18" data-name="Group 18" transform="translate(-89.047 54.96)" opacity="0.86">
-    <g id="avax" transform="translate(151.802 -54.354)">
-      <path id="Path_178" data-name="Path 178" d="M29.2,0C45.324,0,58.4,12.839,58.4,28.677S45.324,57.354,29.2,57.354,0,44.515,0,28.677,13.072,0,29.2,0Z" transform="translate(0.047 0.393)" fill="none" stroke="#864197" stroke-width="2" opacity="0.4"/>
-      <path id="Path_161" data-name="Path 161" d="M67.828,54.468c1.006-1.737,2.628-1.737,3.634,0l6.263,10.994c1.006,1.737.183,3.154-1.829,3.154H63.279c-1.989,0-2.811-1.417-1.829-3.154ZM55.714,33.3c1.006-1.737,2.606-1.737,3.611,0l1.394,2.514L64.011,41.6a6.008,6.008,0,0,1,0,5.234L52.971,65.965a5.8,5.8,0,0,1-4.526,2.651H39.28c-2.011,0-2.834-1.394-1.829-3.154Z" transform="translate(-28.641 -24.703)" fill="#864197"/>
-    </g>
-    <text id="Avalanche" transform="translate(181.047 41.393)" fill="#864197" font-size="34" font-family="Poppins-Medium, Poppins" font-weight="500"><tspan x="-91.936" y="0">Avalanche</tspan></text>
-  </g>
-</svg>

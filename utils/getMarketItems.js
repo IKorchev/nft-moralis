@@ -1,3 +1,4 @@
+const MARKET_ADDRESS = "0xe6f1a815c66bac5f1d59f802BB2a73aa77b36621"
 const MARKET_ABI = [
   {
     inputs: [
@@ -590,4 +591,4 @@ const NFT_ABI = [
   },
 ]
 
-export { MARKET_ABI, NFT_ABI }
+export { MARKET_ABI, NFT_ABI,MARKET_ADDRESS }

@@ -1,23 +1,21 @@
 import { shortenAddress, useEthers } from "@usedapp/core"
 import { useEffect, useState } from "react"
-import { useMoralis, useMoralisWeb3Api } from "react-moralis"
+import { useChain, useMoralis, useMoralisWeb3Api } from "react-moralis"
 import SkeletonDashboard from "../../components/SkeletonDashboard"
 import { formatChainForMoralis } from "../../utils/common"
 const Account = () => {
-  const { Moralis, user, isInitialized } = useMoralis()
-  const { token } = useMoralisWeb3Api()
-  const { chainId, library, account } = useEthers()
+  const { Moralis } = useMoralis()
+  const { account, chainId } = useChain()
   const [tokens, setTokens] = useState([])
 
   useEffect(async () => {
-    if (!user) return
+    if (!account) return
     const balances = await Moralis.Web3API.account.getTokenBalances({
-      address: user.attributes.ethAddress,
-      chain: "bsc",
+      address: account,
+      chain: chainId,
     })
-    console.log(library)
     setTokens(balances)
-  }, [user, chainId])
+  }, [account, chainId])
 
   return (
     <div className='h-screen flex items-center justify-center'>
@@ -29,9 +27,7 @@ const Account = () => {
             <span>
               Chain: <span className='uppercase'>{chainId}</span>
             </span>
-            <span className='text-sm'>
-              Account: {user && shortenAddress(user?.attributes.ethAddress)}
-            </span>
+            <span className='text-sm'>Account: {account && shortenAddress(account)}</span>
           </h1>
           <div className='rounded-lg mt-12 overflow-hidden border border-primary shadow-lg'>
             <table className='text-white text-left mx-auto  w-full rounded-t-lg'>

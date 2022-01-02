@@ -1,25 +1,26 @@
 import "../styles/Globals.css"
 import { MoralisProvider } from "react-moralis"
 import { DAppProvider } from "@usedapp/core"
-import Moralis from "moralis"
 import Layout from "../components/Layout"
+import Moralis from "moralis"
 import { useEffect } from "react"
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
-
 //prettier-ignore"
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
-    Moralis.enableWeb3()
+    const startMoralis = async () => await Moralis.enableWeb3()
+    startMoralis()
   }, [])
+
   return (
-    <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
-      <DAppProvider>
+    <DAppProvider>
+      <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </DAppProvider>
-    </MoralisProvider>
+      </MoralisProvider>
+    </DAppProvider>
   )
 }
 

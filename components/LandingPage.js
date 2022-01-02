@@ -1,20 +1,58 @@
 import Link from "next/link"
-import BSCLogo from "../assets/Group 15.svg"
-import AVAXLogo from "../assets/Group 18.svg"
-import ETHLogo from "../assets/Group 16.svg"
-import MATICLogo from "../assets/Group 17.svg"
+import BSCLogo from "../assets/BSCLogo.svg"
+import AVAXLogo from "../assets/AVAXLogo.svg"
+import ETHLogo from "../assets/ETHLogo.svg"
+import MATICLogo from "../assets/MATICLogo.svg"
+import { motion } from "framer-motion"
+
 const LandingPage = () => {
+  const container = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+  const variants = {
+    hidden: {
+      y: -50,
+      x: -25,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 90,
+      },
+    },
+  }
+
   return (
     <main className='text-center relative mx-auto container'>
       <div className=' px-5 py-48 lg:px-24 text-white text-left'>
-        <div className='w-full lg:w-1/2'>
-          <p className='mb-2 text-lg text-pinkish'>Around the blockchain</p>
-          <h1 className='text-5xl font-semibold text-white '>Explore the NFT space.</h1>
-          <p className='text-lg mt-8 font-light'>
+        <motion.div
+          variants={container}
+          initial='hidden'
+          animate='visible'
+          className='w-full lg:w-1/2'>
+          <motion.p variants={variants} className='mb-2 text-lg text-pinkish'>
+            Around the blockchain
+          </motion.p>
+          <motion.h1 variants={variants} className='text-5xl font-semibold text-white '>
+            Explore the NFT space.
+          </motion.h1>
+          <motion.p variants={variants} className='text-lg mt-8 font-light'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse commodi
             consectetur, veniam dignissimos eum natus illo.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
         <div className='mt-12'>
           <a
             href='/explore'

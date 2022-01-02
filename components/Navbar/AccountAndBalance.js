@@ -15,9 +15,7 @@ const AccountAndBalance = () => {
   useEffect(async () => {
     if (isAuthenticated && user && iconRef.current) {
       iconRef.current.innerHTML = ""
-      iconRef.current.appendChild(
-        jazzicon(12, parseInt(user.attributes.ethAddress.slice(2, 10), 16))
-      )
+      iconRef.current.appendChild(jazzicon(12, parseInt(account.slice(2, 10), 16)))
     }
   }, [isAuthenticated])
   return (
@@ -42,7 +40,7 @@ const AccountAndBalance = () => {
             className='relative text-light bg-primary rounded-md cursor-pointer px-2 mx-1'
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}>
-            <Tooltip shown={showTooltip} text={user.attributes.ethAddress} />
+            <Tooltip shown={showTooltip} text={account} />
             {shortenAddress(account)}
             <span className='ml-2' ref={iconRef}></span>
           </span>
