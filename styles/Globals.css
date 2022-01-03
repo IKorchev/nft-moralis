@@ -33,9 +33,10 @@
     bg-white mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4
      text-black hover:border-pinkish backdrop-filter;
   }
+
 }
 .ReactModal__Overlay {
-  background-color: black;
+  background-color: rgb(48, 31, 31);
   opacity: 0;
   transition: opacity 200ms ease-in-out;
 }
@@ -82,14 +83,14 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.landing-page {
+/* .landing-page {
   background: url("../assets/Illustration.svg");
   background-position: right -100px top -200px;
   background-attachment: scroll;
   background-repeat: no-repeat;
-}
+} */
 
-@media (max-width: 1400px) {
+/* @media (max-width: 1400px) {
   .landing-page {
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)),
       url("../assets/Illustration.svg");
@@ -97,4 +98,4 @@ input[type="number"] {
     background-attachment: scroll;
     background-repeat: no-repeat;
   }
-}
+} */

@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <>
       {/* MOBILE MENU TOGGLER*/}
-      <div className='xl:hidden flex w-full fixed z-40 bg-primary-900 justify-between py-5 px-5 text-white'>
+      <div className='z-50 xl:hidden flex w-full fixed  bg-primary-900 justify-between py-5 px-5 text-white'>
         <Link href='/' passHref>
           <h1 className='text-xl my-auto z-10 cursor-pointer'>NFT Explorer</h1>
         </Link>

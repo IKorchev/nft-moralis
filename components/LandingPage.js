@@ -4,6 +4,7 @@ import AVAXLogo from "../assets/AVAXLogo.svg"
 import ETHLogo from "../assets/ETHLogo.svg"
 import MATICLogo from "../assets/MATICLogo.svg"
 import { motion } from "framer-motion"
+import Illustration from "../assets/Illustration"
 
 const LandingPage = () => {
   const container = {
@@ -36,7 +37,7 @@ const LandingPage = () => {
 
   return (
     <main className='text-center relative mx-auto container'>
-      <div className=' px-5 py-48 lg:px-24 text-white text-left'>
+      <div className='px-5 py-48 lg:px-24 text-white text-left'>
         <motion.div
           variants={container}
           initial='hidden'
@@ -66,7 +67,7 @@ const LandingPage = () => {
           </a>
         </div>
       </div>
-      <div className='py-12'>
+      <div>
         <p className='text-center text-pinkish text-xl'>Blockchains supported</p>
         <div className='flex mt-12 mx-auto justify-around px-48 w-full'>
           <img src={ETHLogo.src} className='h-12  mx-2 lg:h-24' />

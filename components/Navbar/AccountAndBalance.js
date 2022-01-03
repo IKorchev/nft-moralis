@@ -41,7 +41,7 @@ const AccountAndBalance = () => {
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}>
             <Tooltip shown={showTooltip} text={account} />
-            {shortenAddress(account)}
+            {account && shortenAddress(account)}
             <span className='ml-2' ref={iconRef}></span>
           </span>
         </div>

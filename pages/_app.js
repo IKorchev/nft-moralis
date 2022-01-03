@@ -6,13 +6,12 @@ import Moralis from "moralis"
 import { useEffect } from "react"
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
+
 //prettier-ignore"
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
-    const startMoralis = async () => await Moralis.enableWeb3()
-    startMoralis()
-  }, [])
-
+    Moralis.enableWeb3()
+  })
   return (
     <DAppProvider>
       <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>

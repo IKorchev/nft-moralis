@@ -1,10 +1,13 @@
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { formatImage } from "../utils/common"
-const NFTItem = ({ tokenUri, metadata }) => {
-  const [nftMetadata, setNftMetadata] = useState(JSON.parse(metadata))
+import { useRouter } from "next/router"
 
+import Link from "next/link"
+const NFTItem = ({ tokenUri, metadata, tokenId }) => {
+  const [nftMetadata, setNftMetadata] = useState(JSON.parse(metadata))
+  const router = useRouter()
   const getNftMetadata = async () => {
     try {
       const response = await fetch(tokenUri, { mode: "no-cors" })
@@ -20,7 +23,9 @@ const NFTItem = ({ tokenUri, metadata }) => {
   }, [])
   return (
     <div className='container py-12'>
-      <img src={formatImage(nftMetadata?.image)} alt='' className='h-72 w-72' />
+      <Link passHref={true} href={`/assets/${router.query.contract}/${tokenId}`}>
+        <img src={formatImage(nftMetadata?.image)} alt='' className='h-72 w-72' />
+      </Link>
       <h1 className='text-4xl'>{nftMetadata?.name || "Unknown"}</h1>
     </div>
   )

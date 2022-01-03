@@ -35,7 +35,7 @@ export const copyTextToClipboard = async (text) => {
     return document.execCommand("copy", true, text)
   }
 }
-
+export const formatIpfs = (str) => str.replace("ipfs://", "https://ipfs.io/ipfs/")
 export const formatChainForMoralis = (chainId) => {
   switch (chainId) {
     case 1:
