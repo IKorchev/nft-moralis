@@ -31,9 +31,12 @@
   .card {
     @apply flex flex-col items-center rounded-lg w-72 overflow-hidden 
     bg-white mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4
-     text-black hover:border-pinkish backdrop-filter;
+     text-black hover:border-pinkish backdrop-filter z-0;
   }
+}
 
+html {
+  scroll-behavior: smooth;
 }
 .ReactModal__Overlay {
   background-color: rgb(48, 31, 31);
@@ -82,20 +85,3 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
-/* .landing-page {
-  background: url("../assets/Illustration.svg");
-  background-position: right -100px top -200px;
-  background-attachment: scroll;
-  background-repeat: no-repeat;
-} */
-
-/* @media (max-width: 1400px) {
-  .landing-page {
-    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)),
-      url("../assets/Illustration.svg");
-    background-position: center top;
-    background-attachment: scroll;
-    background-repeat: no-repeat;
-  }
-} */

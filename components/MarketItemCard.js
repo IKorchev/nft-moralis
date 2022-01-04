@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { useChain, useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { formatImage } from "../utils/common"
-import { MARKET_ABI, MARKET_ADDRESS } from "../utils/getMarketItems"
 import useMarketInteractions from "../utils/marketInteractions"
 const MarketItemCard = ({ tokenId, tokenAddress, price, itemId }) => {
   const contractProcessor = useWeb3ExecuteFunction()
@@ -10,7 +9,8 @@ const MarketItemCard = ({ tokenId, tokenAddress, price, itemId }) => {
   const { Moralis } = useMoralis()
   const [metadata, setMetadata] = useState()
   const { image_url, name, Name, description } = metadata || {}
-  const { buyItem } = useMarketInteractions()
+  const { buyItem, updateItem } = useMarketInteractions()
+
   useEffect(() => {
     const getMetadata = async () => {
       try {
@@ -36,7 +36,8 @@ const MarketItemCard = ({ tokenId, tokenAddress, price, itemId }) => {
       <h1>{Moralis.Units.FromWei(price).toFixed(5)}</h1>
       <button
         onClick={() => {
-          buyItem(price, tokenAddress, itemId)
+          buyItem(tokenAddress, itemId, price)
+          updateItem()
         }}>
         Purchase
       </button>

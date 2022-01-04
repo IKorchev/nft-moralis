@@ -1,13 +1,14 @@
 const ethers = require("ethers")
-import NFTABI from "../../../utils/NFTABI"
-import React from "react"
+import { NFT_ABI, MARKET_ABI, MARKET_ADDRESS } from "../../../utils/ABIS"
+import React, { useState } from "react"
 import { formatIpfs } from "../../../utils/common"
 import { shortenAddress } from "@usedapp/core"
 import Moralis from "moralis"
 import { useChain } from "react-moralis"
+
 const Token = ({ nftData, contractAddress, tokenId, transactions, owner }) => {
   const { chain } = useChain()
-  console.log(nftData)
+  const [loaded, setLoaded] = useState(false)
   return (
     <div className='container px-24 pb-12 mx-auto  text-white'>
       <div className='items-start gap-1 grid grid-cols-5 mt-5'>
@@ -15,6 +16,8 @@ const Token = ({ nftData, contractAddress, tokenId, transactions, owner }) => {
           <img
             src={formatIpfs(nftData.url || nftData.image_url || nftData.image)}
             className='object-contain max-h-[500px] rounded-lg'
+            onLoad={(e) => setLoaded(true)}
+            placeholder='https://cdn.dribbble.com/users/1186261/screenshots/3718681/_______.gif'
           />
           <details className='bg-primary-900 mt-2 border p-5 rounded-lg shadow-lg text-white'>
             <summary className='text-lg font-semibold'>Details</summary>
@@ -78,21 +81,17 @@ const Token = ({ nftData, contractAddress, tokenId, transactions, owner }) => {
 export default Token
 
 export const getServerSideProps = async (context) => {
-  const provider = new ethers.providers.JsonRpcProvider(process.env.NODE_URL)
+  const chain = "ropsten"
+  const provider = new ethers.providers.JsonRpcProvider(process.env.NODE_URL + chain)
   const { tokenId, contract } = context.query
-  const web3contract = new ethers.Contract(contract, NFTABI, provider)
-  const tokenURI = await web3contract.tokenURI(tokenId)
-  const owner = await web3contract.ownerOf(tokenId)
+  const transactionsUrl = `https://deep-index.moralis.io/api/v2/nft/${contract}/${tokenId}/transfers?chain=${chain}&format=decimal`
+  const nftContract = new ethers.Contract(contract, NFT_ABI, provider)
+  const tokenURI = await nftContract.tokenURI(tokenId)
+  const owner = await nftContract.ownerOf(tokenId)
   const nftData = await fetch(formatIpfs(tokenURI)).then((res) => res.json())
-  const transactions = await fetch(
-    `https://deep-index.moralis.io/api/v2/nft/${contract}/${tokenId}/transfers?chain=0x3&format=decimal
-  `,
-    {
-      headers: {
-        "x-api-key": process.env.API_KEY,
-      },
-    }
-  ).then((res) => res.json())
+  //prettier-ignore
+  const transactions = await fetch(transactionsUrl, {headers: { "x-api-key": process.env.API_KEY },}).then((res) => res.json())
+
   return {
     props: {
       nftData,

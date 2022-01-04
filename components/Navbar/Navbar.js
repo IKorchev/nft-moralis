@@ -1,14 +1,14 @@
-import UserIcon from "@heroicons/react/solid/UserIcon"
 import { useMoralis, useChain } from "react-moralis"
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import AccountAndBalance from "./AccountAndBalance"
+import Dropdown from "./Dropdown"
 
 const Navbar = () => {
   const navRef = useRef()
   const { authenticate, logout, Moralis, isAuthenticated } = useMoralis()
   const { switchNetwork, chainId, chain, account } = useChain()
-
+  Moralis.enableWeb3()
   const [showMenu, setShowMenu] = useState(false)
   const [show, setShow] = useState(false)
   useEffect(() => {
@@ -68,13 +68,7 @@ const Navbar = () => {
             <div className='flex items-center'>
               <AccountAndBalance />
               <div className='relative'>
-                <button
-                  className='text-lg font-semibold p-1 text-center shadow-md rounded-full hover:opacity-90'
-                  onClick={async () => {
-                    setShowMenu((s) => !s)
-                  }}>
-                  <UserIcon className='h-6 w-6 text-primary-lightest ' />
-                </button>
+                <Dropdown />
                 <div
                   className={`${
                     showMenu ? "" : "hidden"

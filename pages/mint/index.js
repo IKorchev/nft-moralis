@@ -11,7 +11,6 @@ const Mint = () => {
 
   const onMintPressed = async () => {
     const { success, tokenURI } = await uploadMetadata(file, name, description)
-    console.log(tokenURI)
   }
 
   return (

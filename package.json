@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.4",
     "@metamask/jazzicon": "^2.0.0",
     "@usedapp/core": "^0.5.2",
@@ -21,6 +22,7 @@
     "react-loading-skeleton": "^2.2.0",
     "react-modal": "^3.14.3",
     "react-moralis": "^0.3.11",
+    "react-paginate": "^8.1.0",
     "react-progressbar": "^15.4.1",
     "react-select": "^5.1.0",
     "swr": "^1.1.2",

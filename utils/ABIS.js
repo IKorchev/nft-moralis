@@ -591,4 +591,8 @@ const NFT_ABI = [
   },
 ]
 
+const ERC721 = {
+  
+}
+
 export { MARKET_ABI, NFT_ABI,MARKET_ADDRESS }
