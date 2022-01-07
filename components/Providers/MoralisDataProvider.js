@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react"
+import { createContext, useContext } from "react"
 import { useChain, useMoralis, useMoralisQuery } from "react-moralis"
 const MoralisDataContext = createContext({})
 
@@ -12,12 +12,13 @@ const MoralisDataProvider = ({ children }) => {
   Moralis.enableWeb3()
   const { data: allListings } = useMoralisQuery(
     "createMarketSale",
-    (q) => q.notEqualTo("sold", true).equalTo("confirmed", true),
+    (q) => q.notEqualTo("sold", false).equalTo("confirmed", true),
     [],
     {
       live: true,
     }
   )
+
   const { data: soldListings } = useMoralisQuery(
     "createMarketSale",
     (q) => q.equalTo("confirmed", true).notEqualTo("sold", true).ascending("date"),
@@ -26,14 +27,10 @@ const MoralisDataProvider = ({ children }) => {
       live: true,
     }
   )
-
   const value = {
     allListings,
     soldListings,
   }
-  useEffect(() => {
-    console.log(allListings)
-  }, [allListings])
   return (
     <MoralisDataContext.Provider value={value}>{children}</MoralisDataContext.Provider>
   )

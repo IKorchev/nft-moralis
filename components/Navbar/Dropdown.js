@@ -1,10 +1,11 @@
 import { Menu, Transition } from "@headlessui/react"
-import { Fragment } from "react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
+import { useChain, useMoralis } from "react-moralis"
 import Link from "next/link"
-import { useChain } from "react-moralis"
+
 export default function Dropdown() {
   const { account } = useChain()
+  const { logout } = useMoralis()
   return (
     <Menu as='div' className='relative inline-block text-left '>
       <div>
@@ -17,7 +18,7 @@ export default function Dropdown() {
         </Menu.Button>
       </div>
       <Transition
-        as={Fragment}
+        as='div'
         enter='transition ease-out duration-100'
         enterFrom='transform opacity-0 scale-95'
         enterTo='transform opacity-100 scale-100'
@@ -48,37 +49,14 @@ export default function Dropdown() {
                 </button>
               )}
             </Menu.Item>
-          </div>
-          <div className='px-1 py-1'>
             <Menu.Item>
               {({ active }) => (
                 <button
+                  onClick={logout}
                   className={`${
-                    active ? "bg-purple-500 text-white" : "text-gray-900"
+                    active ? "bg-red-500 text-white" : "text-gray-900 bg-red-300"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
-                  Archive
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? "bg-purple-500 text-white" : "text-gray-900"
-                  } group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
-                  Move
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-          <div className='px-1 py-1'>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? "bg-purple-500 text-white" : "text-gray-900"
-                  } group flex rounded-md items-center w-full px-2 py-2 text-sm`}>
-                  Delete
+                  Disconnect
                 </button>
               )}
             </Menu.Item>

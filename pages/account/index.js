@@ -2,7 +2,6 @@ import { shortenAddress, useEthers } from "@usedapp/core"
 import { useEffect, useState } from "react"
 import { useChain, useMoralis, useMoralisWeb3Api } from "react-moralis"
 import SkeletonDashboard from "../../components/SkeletonDashboard"
-import { formatChainForMoralis } from "../../utils/common"
 const Account = () => {
   const { Moralis } = useMoralis()
   const { account, chainId } = useChain()

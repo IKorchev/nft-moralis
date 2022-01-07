@@ -1,3 +1,5 @@
+import jazzicon from "@metamask/jazzicon"
+
 export const formatImage = (img) => {
   if (typeof img !== "string") {
     img =
@@ -33,19 +35,13 @@ export const copyTextToClipboard = async (text) => {
     return document.execCommand("copy", true, text)
   }
 }
-export const formatIpfs = (str) => str.replace("ipfs://", "https://ipfs.io/ipfs/")
-export const formatChainForMoralis = (chainId) => {
-  switch (chainId) {
-    case 1:
-      return "eth"
-    case 56:
-      return "bsc"
-    case 137:
-      return "matic"
-    case 43113:
-      return "avax"
+export const formatIpfs = (str) => {
+  if (typeof str !== "string") return 
+  return str.replace("ipfs://", "https://ipfs.io/ipfs/")
+}
 
-    default:
-      return "eth"
-  }
+export const createIcon = (ref, address, size) => {
+  if (!ref) return
+  ref.innerHTML = ""
+  ref.appendChild(jazzicon(size, parseInt(address.slice(2, 3), 16)))
 }

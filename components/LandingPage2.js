@@ -6,7 +6,7 @@ import SWAPIcon from "../assets/Group 26.svg"
 import MINTIcon from "../assets/Group 27.svg"
 gsap.registerPlugin(ScrollTrigger)
 import { useEffect, useRef } from "react"
-import Card from "./Card"
+// import Card from "./Card"
 const LandingPage2 = () => {
   const parentRef = useRef()
   useEffect(() => {
@@ -33,7 +33,7 @@ const LandingPage2 = () => {
         <div
           ref={parentRef}
           className='container mx-auto flex flex-col lg:flex-row items-center lg:justify-evenly mt-24 pb-24'>
-          <Card
+          {/* <Card
             image={MINTIcon.src}
             title='Mint your own'
             description='Upload a picture and Mint your own NFT easily'
@@ -52,7 +52,7 @@ const LandingPage2 = () => {
             title='Swap tokens'
             description='Get quotes from 1Inch and swap any token'
             buttonText='Swap'
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { copyTextToClipboard } from "../utils/common"
 import DuplicateIcon from "@heroicons/react/solid/DuplicateIcon"
 
-function Index({ text, shown }) {
+function Index({ text, shown, position, className }) {
   const textRef = useRef()
   const [showNotification, setShowNotification] = useState()
   return (
@@ -10,13 +10,15 @@ function Index({ text, shown }) {
       {shown && (
         <div
           role='tooltip'
-          className='z-20 absolute  top-6 -translate-x-1/2 left-1/2 shadow-lg bg-white p-2 rounded'>
+          className={`${className} z-20 absolute transform ${
+            position === "top" ? "-translate-y-full" : "translate-y-full"
+          } shadow-lg bg-white p-2 rounded w-max`}>
           <div className='flex'>
             <input
               ref={textRef}
               value={text}
               readOnly
-              className='text-sm w-96  text-gray-800 b-1'
+              className='text-sm block w-full text-gray-800 b-1'
             />
             <button
               className='text-black'
@@ -26,12 +28,14 @@ function Index({ text, shown }) {
                 setShowNotification(true)
                 setTimeout(() => {
                   setShowNotification(false)
-                }, 5000)
+                }, 2000)
               }}>
               <DuplicateIcon className='h-5 w-5' />
             </button>
           </div>
-          {showNotification && <div className='text-black text-center'>Text copied</div>}
+          {showNotification && (
+            <div className='text-black text-center text-lg'>Text copied</div>
+          )}
         </div>
       )}
     </>

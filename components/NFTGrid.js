@@ -19,4 +19,8 @@ const NFTGrid = ({ nfts }) => {
   )
 }
 
+const Item = ({}) => {
+
+}
+
 export default NFTGrid

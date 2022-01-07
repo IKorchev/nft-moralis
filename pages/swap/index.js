@@ -5,7 +5,6 @@ import Select from "react-select"
 import RefreshIcon from "@heroicons/react/outline/RefreshIcon"
 import PlusIcon from "@heroicons/react/outline/PlusIcon"
 import MinusIcon from "@heroicons/react/outline/MinusIcon"
-import Alert from "../../components/Alert"
 
 const Swap = () => {
   const [loading, setLoading] = useState(false)
@@ -16,19 +15,12 @@ const Swap = () => {
   const [gasPrice, setGasPrice] = useState("")
   const [fromAmount, setFromAmount] = useState(0)
   const [toAmount, setToAmount] = useState(0)
-  const [isAlertShown, setIsAlertShown] = useState(false)
   const [slippage, setSlippage] = useState(1)
 
   useEffect(() => {
     getSupportedTokens()
   })
-  const showAlert = () => {
-    setIsAlertShown(true)
-    setTimeout(() => {
-      setIsAlertShown(false)
-    }, 3000)
-    return clearTimeout()
-  }
+
   const executeSwap = async () => {
     const userAddress = user.attributes.ethAddress
     const result = await Moralis.Plugins.oneInch.swap({
@@ -76,7 +68,6 @@ const Swap = () => {
   console.log(fromToken)
   return (
     <div className='py-36'>
-      <Alert isAlertShown={isAlertShown} />
       <form
         onSubmit={(e) => {
           e.preventDefault()

@@ -2,9 +2,9 @@ import "../styles/Globals.css"
 import { MoralisProvider } from "react-moralis"
 import { DAppProvider } from "@usedapp/core"
 import Layout from "../components/Layout"
-import Moralis from "moralis"
 import { useEffect, useState } from "react"
 import MoralisDataProvider from "../components/Providers/MoralisDataProvider"
+import Moralis from "moralis"
 
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"

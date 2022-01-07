@@ -85,3 +85,11 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.collapse {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+
+.collapsed {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
