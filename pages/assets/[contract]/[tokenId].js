@@ -32,7 +32,7 @@ const Token = () => {
     })
   }
 
-  const { data, error, isValidating } = useSWR("/api/nft", fetcher)
+  const { data, error, isValidating } = useSWR(chain ? "/api/nft" : null, fetcher)
 
   if (error)
     return (
