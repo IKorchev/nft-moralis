@@ -26,7 +26,6 @@ const useMarketInteractions = () => {
   const updateItem = async (itemId) => {
     query.equalTo("itemId", itemId).equalTo("confirmed", true)
     const result = await query.first()
-    console.log(result)
     result.set("sold", true)
     result.save()
   }

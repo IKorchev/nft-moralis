@@ -1,12 +1,12 @@
-const fetcher = async (url) => {
+const fetcher = async (tokenURI) => {
   return fetch("/api/metadata", {
     method: "POST",
     body: JSON.stringify({
-      url: url,
+      tokenURI: tokenURI,
     }),
   }).then(async (res) => {
     const data = await res.json()
-    return data.data
+    return data
   })
 }
 

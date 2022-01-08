@@ -8,7 +8,7 @@ export const useMoralisData = () => {
 
 const MoralisDataProvider = ({ children }) => {
   const { Moralis } = useMoralis()
-  const { account } = useChain()
+  const { account, chain } = useChain()
   Moralis.enableWeb3()
   const { data: allListings } = useMoralisQuery(
     "createMarketSale",
@@ -30,6 +30,7 @@ const MoralisDataProvider = ({ children }) => {
   const value = {
     allListings,
     soldListings,
+    chain
   }
   return (
     <MoralisDataContext.Provider value={value}>{children}</MoralisDataContext.Provider>

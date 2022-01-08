@@ -6,23 +6,22 @@ import Tooltip from "../../components/Tooltip"
 import { useNFTBalances } from "react-moralis"
 import Jazzicon from "../../components/Jazzicon"
 import PaginatedItems from "../../components/PaginatedItems"
+import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 
 function UserAddress() {
-  const { chainId, account } = useChain()
+  const { chain } = useMoralisData()
   const { query } = useRouter()
   const [nfts, setNfts] = useState()
   const { getNFTBalances } = useNFTBalances()
-
   useEffect(() => {
     getNFTBalances({
-      params: { chain: chainId, address: query.userAddress },
+      params: { chain: chain?.chainId, address: query.userAddress },
       onSuccess: (data) => {
         setNfts(data.result)
-        console.log(data)
       },
       onError: (err) => console.log("33 [userAddress]" + err.message),
     })
-  }, [chainId, query])
+  }, [chain, query])
   const [tooltipShown, setTooltipShown] = useState(false)
   const toggleTooltip = () => {
     setTooltipShown(!tooltipShown)

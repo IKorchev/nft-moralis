@@ -1,15 +1,14 @@
-import { formatIpfs } from "../../../utils/common"
-import { shortenAddress } from "@usedapp/core"
-import Moralis from "moralis"
-import { useChain } from "react-moralis"
+import { formatChain, formatIpfs } from "../../../utils/common"
 import { useRouter } from "next/router"
-import Collapse from "../../../components/Collapse"
+import Collapse from "../../../components/tokenId/Collapse"
 import useSWR from "swr"
-import { Suspense } from "react"
-const imagePlaceholder = "https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"
+import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
+import Skeleton from "../../../components/tokenId/Skeleton"
+import TransactionsTable from "../../../components/tokenId/TransactionsTable"
+import TokenImage from "../../../components/tokenId/TokenImage"
 
 const Token = () => {
-  const { chain } = useChain()
+  const { chain } = useMoralisData()
   const { query } = useRouter()
 
   const fetcher = (url) => {
@@ -18,42 +17,49 @@ const Token = () => {
       body: JSON.stringify({
         contract: query.contract,
         tokenId: query.tokenId,
-        chain: "ropsten",
+        chain: formatChain(chain?.networkId) || "fantom/mainnet",
       }),
-    }).then((res) => res.json())
+    }).then(async (res) => {
+      if (!res.ok) {
+        const error = new Error("An error occurred while fetching the data.")
+        // Attach extra info to the error object.
+        error.info = await res.json()
+        error.status = res.status
+        throw error
+      }
+      return await res.json()
+    })
   }
 
-  const { data, error } = useSWR("/api/nft", fetcher)
-  console.log(data)
+  const { data, error, isValidating } = useSWR("/api/nft", fetcher)
 
+  if (isValidating) return <Skeleton />
   return (
-    <Suspense>
-      <div className='container px-24 pb-12 mx-auto  text-white'>
-        <div className='items-start gap-1 grid grid-cols-5 mt-5'>
-          <div className='col-span-2 '>
-            <div className='grid place-items-center bg-white max-w-full'>
-              <img
-                src={
-                  formatIpfs(data?.nftData.image || data?.nftData.image_url) ||
-                  imagePlaceholder
-                }
-                className='object-contain rounded-lg'
-              />
-            </div>
-            <Collapse >
-              <div className='bg-purple-900 h-full p-4'>
+    <div className='container px-24 pb-12 mx-auto  text-white'>
+      <div className='items-start gap-1 grid grid-cols-5 mt-5'>
+        <div className='col-span-2 '>
+          <TokenImage
+            format={data?.metadata?.format}
+            url={formatIpfs(data?.metadata?.image || data?.metadata?.image_url)}
+          />
+          <div className='mt-5'>
+            <Collapse buttonText='Token Information'>
+              <div className='bg-purple-100 text-black h-full p-4'>
                 <p>
                   <span className='font-bold'> Address:</span> {query.contract}
                 </p>
                 <p className='mt-2'>
                   <span className='font-bold'> Token ID:</span> {query.tokenId}
                 </p>
+                <p className='mt-2'>
+                  <span className='font-bold'> Token Symbol:</span> {data?.symbol}
+                </p>
               </div>
             </Collapse>
-            <Collapse>
-              <div className='grid grid-cols-3 gap-3 bg-purple-900 p-4'>
-                {data?.nftData?.attributes?.map((el) => (
-                  <div className='col-span-1 text-black grid place-items-center bg-purple-200 border-purple-300 text-center p-1 rounded-lg'>
+            <Collapse buttonText='Attributes'>
+              <div className='grid grid-cols-3 gap-3 bg-purple-100 p-4'>
+                {data?.metadata?.attributes?.map((el) => (
+                  <div className='col-span-1 border text-black grid place-items-center bg-purple-200 border-purple-300 text-center p-1 rounded-lg'>
                     <small className='font-bold'>{el.trait_type}</small>
                     <small>{el.value}</small>
                   </div>
@@ -61,44 +67,22 @@ const Token = () => {
               </div>
             </Collapse>
           </div>
-
-          <div className='bg-primary-900 col-span-3 text-white px-5 rounded-lg'>
-            <h2 className='text-white'>{data?.name || data?.nftData?.name}</h2>
-            <p className='mt-5'>Owned by: {data?.owner} </p>
-            <hr />
-            <h2 className='mt-12 text-white'>Description</h2>
-            <p className='mt-4'>
-              {data?.description || "There is no description for this item.  "}
-            </p>
-            <div className='mt-5'>
-              <h2 className='text-white'>Transactions</h2>
-              <table className='w-full border-separate border border-purple-400 mt-3'>
-                <tr className='bg-purple-800 border '>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Price</th>
-                  <th>Date</th>
-                </tr>
-                {data?.transactions?.result.length &&
-                  data?.transactions?.result.map((el) => {
-                    const d = new Date(el.block_timestamp)
-                    return (
-                      <tr className='w-full p-2  my-1 text-center'>
-                        <td>{shortenAddress(el.from_address)}</td>
-                        <td>{shortenAddress(el.to_address)}</td>
-                        <td>
-                          {Moralis.Units.FromWei(el.value)} {chain?.nativeCurrency.symbol}
-                        </td>
-                        <td>{d.toLocaleDateString("uk")}</td>
-                      </tr>
-                    )
-                  })}
-              </table>
-            </div>
+        </div>
+        <div className='bg-primary-900 col-span-3 text-white px-5 rounded-lg'>
+          <h2 className='text-white'>{data?.name || data?.metadata?.name}</h2>
+          <p className='mt-5'>Owned by: {data?.owner} </p>
+          <hr />
+          <h2 className='mt-12 text-white'>Description</h2>
+          <p className='mt-4'>
+            {data?.description || "There is no description for this item.  "}
+          </p>
+          <div className='mt-5'>
+            <h2 className='text-white'>Transactions</h2>
+            <TransactionsTable transactions={data?.transactions} />
           </div>
         </div>
       </div>
-    </Suspense>
+    </div>
   )
 }
 

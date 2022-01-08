@@ -43,7 +43,6 @@ const Search = ({ searchHandler, term, setTerm, chain, setChain }) => {
         />
         <select
           onChange={(e) => {
-            console.log(e.target.value)
             setChain(e.target.value)
           }}
           name='chain'

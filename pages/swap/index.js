@@ -65,7 +65,6 @@ const Swap = () => {
       console.log(err)
     }
   }
-  console.log(fromToken)
   return (
     <div className='py-36'>
       <form
