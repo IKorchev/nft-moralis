@@ -10,14 +10,15 @@ import TokenImage from "../../../components/tokenId/TokenImage"
 const Token = () => {
   const { chain } = useMoralisData()
   const { query } = useRouter()
-
   const fetcher = (url) => {
     return fetch(url, {
       method: "POST",
       body: JSON.stringify({
         contract: query.contract,
         tokenId: query.tokenId,
-        chain: formatChain(chain?.networkId) || "fantom/mainnet",
+        chain:
+          { chainString: formatChain(chain?.networkId), chainId: chain?.chainId } ||
+          "fantom/mainnet",
       }),
     }).then(async (res) => {
       if (!res.ok) {
@@ -33,7 +34,14 @@ const Token = () => {
 
   const { data, error, isValidating } = useSWR("/api/nft", fetcher)
 
+  if (error)
+    return (
+      <div className='h-[35rem] grid place-items-center'>
+        <h1 className='text-white text-3xl'>{error.message}</h1>
+      </div>
+    )
   if (isValidating) return <Skeleton />
+
   return (
     <div className='container px-24 pb-12 mx-auto  text-white'>
       <div className='items-start gap-1 grid grid-cols-5 mt-5'>

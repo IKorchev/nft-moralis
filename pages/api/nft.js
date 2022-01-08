@@ -9,8 +9,10 @@ import { getTokenMetadata } from "./metadata"
 export default async function handler(req, res) {
   try {
     const { tokenId, chain, contract } = JSON.parse(req.body)
-    const provider = new ethers.providers.JsonRpcProvider(process.env.NODE_URL + chain)
-    const transactionsUrl = `https://deep-index.moralis.io/api/v2/nft/${contract}/${tokenId}/transfers?chain=eth&format=decimal`
+    const provider = new ethers.providers.JsonRpcProvider(
+      process.env.NODE_URL + chain.chainString
+    )
+    const transactionsUrl = `https://deep-index.moralis.io/api/v2/nft/${contract}/${tokenId}/transfers?chain=${chain.chainId}&format=decimal`
     const transactions = await fetch(transactionsUrl, {
       headers: { "x-api-key": process.env.API_KEY },
     }).then((res) => res.json())

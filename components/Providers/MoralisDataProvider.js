@@ -30,7 +30,7 @@ const MoralisDataProvider = ({ children }) => {
   const value = {
     allListings,
     soldListings,
-    chain
+    chain,
   }
   return (
     <MoralisDataContext.Provider value={value}>{children}</MoralisDataContext.Provider>
