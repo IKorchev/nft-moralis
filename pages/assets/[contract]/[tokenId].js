@@ -6,9 +6,31 @@ import { useMoralisData } from "../../../components/Providers/MoralisDataProvide
 import Skeleton from "../../../components/tokenId/Skeleton"
 import TransactionsTable from "../../../components/tokenId/TransactionsTable"
 import TokenImage from "../../../components/tokenId/TokenImage"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js"
+import { Line } from "react-chartjs-2"
+
+import { chartOptions } from "../../../utils/chartOptions"
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 const Token = () => {
-  const { chain } = useMoralisData()
+  const { chain, Moralis } = useMoralisData()
   const { query } = useRouter()
   const fetcher = (url) => {
     return fetch(url, {
@@ -42,6 +64,26 @@ const Token = () => {
     )
   if (isValidating) return <Skeleton />
 
+  const labelsArr = data?.transactions?.result
+    ?.map((el) => {
+      return new Date(el.block_timestamp).toLocaleDateString("uk")
+    })
+    .reverse()
+  const dataArr = data?.transactions?.result
+    ?.map((el) => Moralis.Units.FromWei(el.value))
+    .reverse()
+  const chartData = {
+    labels: labelsArr,
+    datasets: [
+      {
+        label: "Price",
+        borderColor: "white",
+        data: dataArr,
+        borderColor: "black",
+        backgroundColor: "white",
+      },
+    ],
+  }
   return (
     <div className='container px-24 pb-12 mx-auto  text-white'>
       <div className='items-start gap-1 grid grid-cols-5 mt-5'>
@@ -84,10 +126,16 @@ const Token = () => {
           <p className='mt-4'>
             {data?.description || "There is no description for this item.  "}
           </p>
-          <div className='mt-5'>
-            <h2 className='text-white'>Transactions</h2>
-            <TransactionsTable transactions={data?.transactions} />
-          </div>
+          <Collapse buttonText='Price history'>
+            <div className='bg-white text-white h-[300px]'>
+              <Line data={chartData} options={chartOptions} />
+            </div>
+          </Collapse>
+          <Collapse buttonText='Transactions'>
+            <div className='text-black max-h-[20rem] overflow-y-scroll'>
+              <TransactionsTable transactions={data?.transactions} />
+            </div>
+          </Collapse>
         </div>
       </div>
     </div>

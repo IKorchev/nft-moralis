@@ -1,7 +1,6 @@
 module.exports = {
   mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       zIndex: {
@@ -46,4 +45,3 @@ module.exports = {
   plugins: [require("tailwind-scrollbar")],
 }
 
-// background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);

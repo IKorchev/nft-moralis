@@ -18,10 +18,8 @@ export default async function handler(req, res) {
     const transactions = await fetch(transactionsUrl, {
       headers: { "x-api-key": process.env.API_KEY },
     }).then((res) => res.json())
-    console.log(transactions)
     const nftContract = new ethers.Contract(contract, NFT_ABI, provider)
     const tokenURI = await nftContract.tokenURI(tokenId)
-    console.log(tokenURI)
     const symbol = await nftContract.symbol()
     const owner = await nftContract.ownerOf(tokenId)
     const { metadata, error } = await getTokenMetadata(tokenURI)

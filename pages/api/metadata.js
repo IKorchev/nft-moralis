@@ -15,7 +15,6 @@ export async function getTokenMetadata(tokenURI) {
       const data = Buffer.from(tokenURI.substring(29), "base64").toString()
       return { metadata: JSON.parse(data) }
     }
-    console.log(tokenURI)
     const response = await fetch(formatIpfs(tokenURI))
     const data = await response.json()
     const format = await isImageOrVideo(
@@ -27,6 +26,7 @@ export async function getTokenMetadata(tokenURI) {
     return { metadata: null, error: error }
   }
 }
+
 export default async function handler(req, res) {
   const { tokenURI } = JSON.parse(req.body)
   try {

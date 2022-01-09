@@ -2,6 +2,7 @@ import Illustration from "../assets/Illustration"
 import LandingPage from "../components/LandingPage"
 import LandingPage2 from "../components/LandingPage2"
 const Home = () => {
+
   return (
     <div className='landing-page relative '>
       <div className='absolute top-0 right-24 z-0 '>

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import NFTItem from "../../../components/NFTItem"
@@ -30,6 +30,7 @@ const Asset = ({ contractMetadata, nfts }) => {
             key={el.token_uri}
             tokenUri={formatImage(el.token_uri)}
             metadata={el.metadata}
+            tokenAddress={el.token_address}
           />
         ))}
       </div>
