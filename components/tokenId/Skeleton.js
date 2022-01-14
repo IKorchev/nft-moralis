@@ -2,10 +2,10 @@ import React from "react"
 
 const Skeleton = () => {
   return (
-    <div className='container px-24 pb-12 mx-auto  text-white'>
+    <div className='container lg:px-24 py-12 mx-auto  text-white'>
       <div className='items-start gap-1 grid grid-cols-5 mt-5'>
         <div className='col-span-2 '>
-          <div className='h-[35rem] w-full rounded-lg animate-pulse bg-gray-300'></div>
+          <div className='h-[20rem] lg:h-[35rem] w-full rounded-lg animate-pulse bg-gray-300'></div>
 
           <div className='mt-5'>
             <div className='h-14 bg-gray-300 w-full rounded-lg'></div>

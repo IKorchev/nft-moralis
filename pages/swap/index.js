@@ -5,6 +5,7 @@ import Select from "react-select"
 import RefreshIcon from "@heroicons/react/outline/RefreshIcon"
 import PlusIcon from "@heroicons/react/outline/PlusIcon"
 import MinusIcon from "@heroicons/react/outline/MinusIcon"
+import { motion } from "framer-motion"
 
 const Swap = () => {
   const [loading, setLoading] = useState(false)
@@ -66,7 +67,11 @@ const Swap = () => {
     }
   }
   return (
-    <div className='py-36'>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.4 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      className='py-36'>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -156,7 +161,7 @@ const Swap = () => {
 
         <p className='opacity-50 mt-2 text-center'>Quotes are based on 1Inch exchange</p>
       </form>
-    </div>
+    </motion.div>
   )
 }
 

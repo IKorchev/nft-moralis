@@ -28,6 +28,7 @@
     "react-paginate": "^8.1.0",
     "react-progressbar": "^15.4.1",
     "react-select": "^5.1.0",
+    "react-spinners": "^0.11.0",
     "swr": "^1.1.2",
     "web3": "^1.6.1"
   },

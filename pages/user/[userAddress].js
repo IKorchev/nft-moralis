@@ -1,7 +1,5 @@
 import { shortenIfAddress } from "@usedapp/core"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import Tooltip from "../../components/Tooltip"
 import { useNFTTransfers } from "react-moralis"
 import Jazzicon from "../../components/Jazzicon"
 import PaginatedItems from "../../components/PaginatedItems"
@@ -9,9 +7,11 @@ import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 import { Tab } from "@headlessui/react"
 import TransactionsTable from "../../components/tokenId/TransactionsTable"
 import useSWR from "swr"
+import Loading from "../../components/Loading"
+import NFTItem from "../../components/NFTItem"
 
 function UserAddress() {
-  const { chain, account, getNFTTrades, Moralis } = useMoralisData()
+  const { chain, Moralis } = useMoralisData()
   const router = useRouter()
   const fetcher = (url) => {
     return Moralis.Web3API.account
@@ -32,18 +32,15 @@ function UserAddress() {
     chain && router.query.userAddress && "noNeedForUrl",
     fetcher
   )
-  console.log(data, error, isValidating)
   const { data: transactions, getNFTTransfers } = useNFTTransfers()
 
-  // If user wanted to see their own nfts and changes account while on the page,
-  // they need to be redirected to the proper url so the above function gets triggered
-  // and fetches data for the correct account
-
-  const [tooltipShown, setTooltipShown] = useState(false)
-  const toggleTooltip = () => {
-    setTooltipShown(!tooltipShown)
-  }
-  if (isValidating) return null
+  if (isValidating)
+    return (
+      <Loading
+        containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
+        loaderProps={{ size: 200, color: "white" }}
+      />
+    )
   if (error) return null
   return (
     <div className='container mx-auto'>
@@ -51,17 +48,9 @@ function UserAddress() {
         <div className='border-4 rounded-full overflow-hidden border-white'>
           <Jazzicon address={router.query.userAddress} size={150} />
         </div>
-        <h2
-          onMouseEnter={toggleTooltip}
-          onMouseLeave={toggleTooltip}
-          className='text-xl cursor-pointer text-center -mt-4 bg-white rounded-full p-2 text-black'>
+        <h2 className='text-xl cursor-pointer text-center -mt-4 bg-white rounded-full p-2 text-black'>
           <span className='relative flex items-center justify-center'>
             {shortenIfAddress(router.query.userAddress)}
-            <Tooltip
-              text={router.query.userAddress}
-              shown={tooltipShown}
-              className='mt-1'
-            />
           </span>
         </h2>
       </div>
@@ -88,7 +77,21 @@ function UserAddress() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
-            <PaginatedItems items={data?.result} itemsPerPage={15} />
+            <PaginatedItems
+              items={data?.result}
+              itemsPerPage={15}
+              renderItem={(el, i) => (
+                <NFTItem
+                  index={i}
+                  key={el.token_uri}
+                  tokenUri={el.token_uri}
+                  metadata={el.metadata}
+                  tokenId={el.token_id}
+                  tokenAddress={el.token_address}
+                  contractName={el.name}
+                />
+              )}
+            />
           </Tab.Panel>
           <Tab.Panel>
             <TransactionsTable

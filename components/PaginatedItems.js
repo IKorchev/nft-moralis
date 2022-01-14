@@ -1,11 +1,9 @@
-import { AnimatePresence } from "framer-motion"
 import { useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import { useRef } from "react"
 import Dots from "@heroicons/react/solid/DotsHorizontalIcon"
-import NFT from "./NFT"
 
-function PaginatedItems({ items, itemsPerPage }) {
+function PaginatedItems({ items, itemsPerPage, renderItem }) {
   const [currentItems, setCurrentItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
@@ -26,16 +24,14 @@ function PaginatedItems({ items, itemsPerPage }) {
   }
 
   return (
-    <AnimatePresence>
-      <div className='mt-24 text-white'>
-        {currentItems && (
-          <div className='flex flex-col items-center justify-center'>
-            <div ref={scrollToRef} />
-            <div className='flex flex-wrap gap-5 w-full mx-auto justify-center'>
-              {currentItems.map((el, i) => {
-                return <NFT key={i} el={el} i={i} />
-              })}
-            </div>
+    <div className='mt-24 text-white'>
+      {currentItems && (
+        <div className='flex flex-col items-center justify-center'>
+          <div ref={scrollToRef} />
+          <div className='flex flex-wrap gap-5 w-full mx-auto justify-center'>
+            {currentItems.map(renderItem)}
+          </div>
+          {items?.length > itemsPerPage && (
             <ReactPaginate
               containerClassName='flex  h-12 my-5'
               pageLinkClassName='px-4 py-2'
@@ -53,10 +49,10 @@ function PaginatedItems({ items, itemsPerPage }) {
               previousLabel='< previous'
               renderOnZeroPageCount={null}
             />
-          </div>
-        )}
-      </div>
-    </AnimatePresence>
+          )}
+        </div>
+      )}
+    </div>
   )
 }
 export default PaginatedItems

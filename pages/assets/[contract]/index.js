@@ -1,61 +1,69 @@
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
+import NFTItem from "../../../components/NFTItem"
+import PaginatedItems from "../../../components/PaginatedItems"
+import { formatImage } from "../../../utils/common"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import NFTItem from "../../../components/NFTItem"
-import { formatImage } from "../../../utils/common"
-const Asset = ({ contractMetadata, nfts }) => {
-  const amountOfItems = 8
-  const router = useRouter()
-  const [limit, setLimit] = useState(amountOfItems)
+import { useChain } from "react-moralis"
+import Moralis from "moralis"
+import useSWR from "swr"
+import CollectionHeader from "../../../components/CollectionHeader"
+
+const fetcher = async ({ args }) => {
+  const { address, chain, offset } = args
+  const nfts = await Moralis.Web3API.token.getAllTokenIds({ address, chain, offset })
+  if (!collectionData || !nfts) throw new Error("Couldnt get data")
+  if (!nfts) throw new Error("Couldn't fetch NFTs")
+  return nfts
+}
+
+const Asset = () => {
+  const { query } = useRouter()
+  const { chain } = useChain()
+  const [offset, setOffset] = useState(0)
+  const [page, setPage] = useState(1)
+  const { data, error, isValidating } = useSWR(
+    {
+      url: "null",
+      args: { address: query?.contract, chain: chain?.chainId, offset: offset },
+    },
+    fetcher
+  )
 
   return (
-    <motion.div
-      exit={{ opacity: 0, scaleY: 0 }}
-      className='container px-24 mx-auto text-white'>
-      <h1 className='text-center text-4xl'>Collection</h1>
-      <div className='border-2 border-purple-900 p-12'>
-        <div className='flex-col'>
-          <span className='p-3 bg-purple-900 rounded-lg'>
-            Contract name: {contractMetadata?.name}
-          </span>
-          <span className='p-3 bg-purple-900 rounded-lg'>
-            Contract name: {contractMetadata?.symbol}
-          </span>
-        </div>
-      </div>
-      <div className='grid grid-cols-4 items-center justify-center'>
-        {nfts?.map((el, i) => (
-          <NFTItem
-            tokenId={el.token_id}
-            key={el.token_uri}
-            tokenUri={formatImage(el.token_uri)}
-            metadata={el.metadata}
-            tokenAddress={el.token_address}
-          />
-        ))}
+    <motion.div exit={{ opacity: 0, scaleY: 0 }} className='py-24 text-white'>
+      <CollectionHeader chain={chain} address={query.contract} />
+      <div className='flex flex-wrap gap-5 items-center justify-center p-12'>
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            const pagesCount = parseInt(data?.nfts.total) / data?.nfts.page_size
+            console.log(pagesCount)
+            console.log(offset)
+            setOffset((prev) => {
+              if (prev < parseInt(data?.nfts.total)) {
+                return prev + 500
+              }
+            })
+          }}>
+          Load more
+        </button>
+        <PaginatedItems
+          itemsPerPage={50}
+          items={data?.nfts?.result}
+          renderItem={(el, i) => (
+            <NFTItem
+              tokenId={el.token_id}
+              key={el.token_uri}
+              tokenUri={formatImage(el.token_uri)}
+              metadata={el.metadata}
+              tokenAddress={el.token_address}
+            />
+          )}
+        />
       </div>
     </motion.div>
   )
 }
 
 export default Asset
-
-export const getServerSideProps = async (context) => {
-  const { contract } = context.params
-  const API_KEY = process.env.API_KEY
-
-  // Contract/collection information
-  //prettier-ignore
-  const contractMetadata = await fetch(`https://deep-index.moralis.io/api/v2/nft/${contract}/metadata?chain=ropsten`,{headers: {"x-api-key": API_KEY,},}).then((res) => res.json())
-  const nfts = await fetch(
-    `https://deep-index.moralis.io/api/v2/nft/${contract}?chain=ropsten&format=decimal`,
-    { headers: { "x-api-key": API_KEY } }
-  ).then((res) => res.json())
-
-  return {
-    props: {
-      contractMetadata,
-      nfts: nfts.result,
-    },
-  }
-}

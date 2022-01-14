@@ -11,20 +11,12 @@ const MoralisDataProvider = ({ children }) => {
   const { account, chain } = useChain()
 
   Moralis.enableWeb3()
-  const { data: allListings } = useMoralisQuery(
-    "MarketItems",
-    (q) => q.equalTo("confirmed", true),
-    [],
-    {
-      live: true,
-    }
-  )
+ 
   const getItems = async (address, tokenId) => {
     const MarketItems = Moralis.Object.extend("MarketItems")
     const query = new Moralis.Query(MarketItems)
     query.equalTo("confirmed", true).equalTo("owner", account)
     const results = await query.find()
-    console.log(results)
   }
   const { data: soldListings } = useMoralisQuery(
     "MarketItems",
@@ -35,8 +27,6 @@ const MoralisDataProvider = ({ children }) => {
     }
   )
   const value = {
-    allListings,
-    soldListings,
     chain,
     account,
     Moralis,

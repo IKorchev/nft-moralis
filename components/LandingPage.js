@@ -20,8 +20,8 @@ const LandingPage = () => {
   }
   const variants = {
     hidden: {
-      y: -50,
-      x: -25,
+      y: -15,
+      x: -15,
       opacity: 0,
     },
     visible: {
@@ -36,7 +36,7 @@ const LandingPage = () => {
   }
 
   return (
-    <main className='text-center relative mx-auto container'>
+    <motion.main exit={{ opacity: 0 }} className='text-center relative mx-auto container'>
       <div className='px-5 py-48 lg:px-24 text-white text-left'>
         <motion.div
           variants={container}
@@ -55,16 +55,16 @@ const LandingPage = () => {
           </motion.p>
         </motion.div>
         <div className='mt-12'>
-          <a
-            href='/explore'
-            className=' w-max text-xl mt-5 px-5 py-2 rounded-lg bg-gradient-to-l  from-primary-lightest to-pinkish hover:opacity-90 focus:ring ring-white'>
-            Explore
-          </a>
-          <a
-            href='/mint'
-            className='animate-pulse text-pinkish w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 focus:ring ring-white'>
-            Mint NFT
-          </a>
+          <Link href='/explore'>
+            <a className=' w-max text-xl mt-5 px-5 py-2 rounded-lg bg-gradient-to-l  from-primary-lightest to-pinkish hover:opacity-90 focus:ring ring-white'>
+              Explore
+            </a>
+          </Link>
+          <Link href='/mint'>
+            <a className='animate-pulse text-pinkish w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 focus:ring ring-white'>
+              Mint NFT
+            </a>
+          </Link>
         </div>
       </div>
       <div>
@@ -76,7 +76,7 @@ const LandingPage = () => {
           <img src={BSCLogo.src} className='h-12 mx-2 lg:h-24' />
         </div>
       </div>
-    </main>
+    </motion.main>
   )
 }
 

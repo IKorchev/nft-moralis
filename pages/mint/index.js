@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { useRef, useState } from "react"
 import { useMoralis } from "react-moralis"
 import { uploadMetadata } from "../../utils/mintNFT"
@@ -14,7 +15,11 @@ const Mint = () => {
   }
 
   return (
-    <div className='wrapper grid place-items-center py-36'>
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+      className='wrapper grid place-items-center py-36'>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -71,7 +76,7 @@ const Mint = () => {
           MINT
         </button>
       </form>
-    </div>
+    </motion.div>
   )
 }
 

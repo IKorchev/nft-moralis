@@ -4,7 +4,7 @@ import ChevronIcon from "@heroicons/react/solid/ChevronDownIcon"
 const Collapse = ({ children, buttonText }) => {
   const [collapse, setCollapse] = useState(false)
 
-
+  //sdasd
   return (
     <Disclosure>
       {({ open }) => (
@@ -24,10 +24,10 @@ const Collapse = ({ children, buttonText }) => {
           </Disclosure.Button>
           <Transition
             show={open}
-            enter='transition-[max-height] duration-500'
+            enter='transition-all duration-500'
             enterFrom='max-h-0 opacity-0'
             enterTo='max-h-[20rem]'
-            leave='transition-[max-height] duration-500'
+            leave='transition-all duration-500'
             leaveFrom='max-h-[20rem] opacity-100'
             leaveTo='opacity-0 max-h-0'>
             <Disclosure.Panel className=' overflow-hidden '>{children}</Disclosure.Panel>

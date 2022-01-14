@@ -1,7 +1,6 @@
 import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
 import { useChain, useMoralis, useWeb3ExecuteFunction } from "react-moralis"
-import { useEffect, useState } from "react"
-import { ethers } from "ethers"
+
 const useMarketInteractions = () => {
   const contractFunctions = {
     BUY_ITEM: "createMarketSale",
@@ -15,8 +14,17 @@ const useMarketInteractions = () => {
   const { Moralis } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
   const { account, chain } = useChain()
-  const createMarketSale = Moralis.Object.extend("createMarketSale")
-  const query = new Moralis.Query(createMarketSale)
+  const MarketItems = Moralis.Object.extend("MarketItems")
+  const query = new Moralis.Query(MarketItems)
+
+  const updateItem = async (itemId) => {
+    console.log(itemId)
+    query.equalTo("itemId", itemId).equalTo("confirmed", true)
+    const result = await query.first()
+    console.log(result)
+    // result.set("sold", true)
+    // result.save()
+  }
 
   const fetchMarketItems = async () => {
     await contractProcessor.fetch({
@@ -28,12 +36,6 @@ const useMarketInteractions = () => {
       onSuccess: (data) => console.log(data),
       onError: (err) => console.log(err),
     })
-  }
-  const updateItem = async (itemId) => {
-    query.equalTo("itemId", itemId).equalTo("confirmed", true)
-    const result = await query.first()
-    result.set("sold", true)
-    result.save()
   }
 
   const buyItem = async (nftContract, itemId, price) => {
@@ -48,12 +50,12 @@ const useMarketInteractions = () => {
           itemId,
         },
       },
+      onSuccess: (data) => console.log(data),
       onError: (error) => {
         console.log("Something went wrong: " + error.message)
       },
       onComplete: () => {
         updateItem(itemId)
-        alert("Transaction completed")
       },
     })
   }

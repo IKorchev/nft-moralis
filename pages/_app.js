@@ -5,6 +5,7 @@ import Layout from "../components/Layout"
 import { useEffect, useState } from "react"
 import MoralisDataProvider from "../components/Providers/MoralisDataProvider"
 import Moralis from "moralis"
+import { AnimatePresence, AnimateSharedLayout } from "framer-motion"
 
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
@@ -25,7 +26,9 @@ const MyApp = ({ Component, pageProps }) => {
         <DAppProvider>
           <MoralisDataProvider>
             <Layout>
-              <Component {...pageProps} />
+              <AnimatePresence exitBeforeEnter>
+                <Component {...pageProps} />
+              </AnimatePresence>
             </Layout>
           </MoralisDataProvider>
         </DAppProvider>

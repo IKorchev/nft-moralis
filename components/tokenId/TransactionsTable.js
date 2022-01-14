@@ -17,9 +17,8 @@ const formatAddress = (address) => {
   }
 }
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
-  console.log(transactions)
   return (
-    <table className='w-full border-separate border mt-3' {...props}>
+    <table className='border-separate border mt-3' {...props}>
       <tbody>
         <tr className='border ' {...rowProps}>
           <th>Type</th>
