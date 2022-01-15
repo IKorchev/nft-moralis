@@ -1,9 +1,10 @@
 import Moralis from "moralis"
 import { NFT_ABI } from "../utils/ABIS"
 
-const fetcher = async (tokenUri, nftContract, tokenId) => {
+const fetcher = async ({ args }) => {
+  const { tokenUri, nftContract, tokenId } = args
   let data = tokenUri
-  if (data === "null") {
+  if (data === undefined) {
     data = await Moralis.Web3.executeFunction({
       abi: NFT_ABI,
       contractAddress: nftContract,

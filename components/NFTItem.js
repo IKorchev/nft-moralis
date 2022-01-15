@@ -8,19 +8,18 @@ import { shortenIfAddress } from "@usedapp/core"
 
 const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
   //prettier-ignore
-  const { data, error, isValidating } = useSWR(tokenUri ? tokenUri : "null", (tokenUri) =>fetcher(tokenUri, tokenAddress, tokenId))
+  const { data, error, isValidating } = useSWR({url: "notNeeded", args: {
+    tokenUri: tokenUri, nftContract: tokenAddress, tokenId:tokenId
+  }}, fetcher, {
+    revalidateOnFocus:false,
+    revalidateIfStale:false,
+  })
 
   return (
-    <motion.div
-      whileHover={{
-        scale: 1.0005,
-        y: -1,
-      }}
-      transition={{ duration: 0.5, delay: index * 0.03, delayChildren: 0.5 }}
-      className='flex rounded-lg bg-purple-900 shadow-3xl shadow-purple-400/20 overflow-hidden w-72 flex-col relative'>
+    <motion.div className='flex rounded-lg bg-purple-900 overflow-hidden w-60 flex-col relative'>
       <Link passHref={true} href={`/assets/${tokenAddress}/${tokenId}`}>
         {isValidating ? (
-          <div className='grid place-items-center h-72 bg-white/90'>
+          <div className='grid place-items-center h-60 bg-white/90'>
             <FadeLoader size={1} color='black' />
           </div>
         ) : data?.format === "video" ? (
@@ -30,13 +29,13 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
             controls
             src={formatIpfs(data?.image_url || data?.image || data?.url)}
             alt=''
-            className='rounded-lg cursor-pointer h-72 w-full object-scale-down'
+            className='rounded-lg cursor-pointer h-60 w-full object-scale-down'
           />
         ) : (
           <img
             src={formatIpfs(data?.image_url || data?.image || data?.url)}
             alt=''
-            className='object-scale-down cursor-pointer  h-72 w-full'
+            className='object-scale-down cursor-pointer  h-60 w-full'
           />
         )}
       </Link>

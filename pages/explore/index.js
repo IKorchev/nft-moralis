@@ -40,7 +40,6 @@ const Home = () => {
             items={allListings}
             itemsPerPage={15}
             renderItem={(el, i) => {
-              console.log(el)
               const { price, nftContract, tokenId, itemId, sold } = el.attributes
               return (
                 <MarketItem
