@@ -1,12 +1,12 @@
 import { Disclosure, Transition } from "@headlessui/react"
 import { useState } from "react"
 import ChevronIcon from "@heroicons/react/solid/ChevronDownIcon"
-const Collapse = ({ children, buttonText }) => {
+const Collapse = ({ children, buttonText, defaultOpen }) => {
   const [collapse, setCollapse] = useState(false)
 
   //sdasd
   return (
-    <Disclosure>
+    <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <div className=' rounded-lg overflow-hidden bg-white mt-2'>
           <Disclosure.Button

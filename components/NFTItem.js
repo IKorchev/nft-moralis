@@ -9,12 +9,9 @@ import { shortenIfAddress } from "@usedapp/core"
 const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
   //prettier-ignore
   const { data, error, isValidating } = useSWR(tokenUri ? tokenUri : "null", (tokenUri) =>fetcher(tokenUri, tokenAddress, tokenId))
-  
-  if (error) return null
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
       whileHover={{
         scale: 1.0005,
         y: -1,

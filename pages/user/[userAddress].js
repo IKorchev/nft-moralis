@@ -13,11 +13,12 @@ import NFTItem from "../../components/NFTItem"
 function UserAddress() {
   const { chain, Moralis } = useMoralisData()
   const router = useRouter()
-  const fetcher = (url) => {
+  const fetcher = ({ args }) => {
+    const { chain, address } = args
     return Moralis.Web3API.account
       .getNFTs({
-        address: router?.query.userAddress,
-        chain: chain?.chainId,
+        address: address,
+        chain: chain,
       })
       .then((data) => {
         if (!data) {
@@ -29,8 +30,19 @@ function UserAddress() {
   }
 
   const { data, error, isValidating } = useSWR(
-    chain && router.query.userAddress && "noNeedForUrl",
-    fetcher
+    {
+      url: "noNeedForUrl",
+      args: {
+        chain: chain?.chainId,
+        address: router.query.userAddress,
+      },
+    },
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+    }
   )
   const { data: transactions, getNFTTransfers } = useNFTTransfers()
 
@@ -43,7 +55,7 @@ function UserAddress() {
     )
   if (error) return null
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto overflow-hidden min-h-[50rem]'>
       <div className='flex flex-col items-center mt-12'>
         <div className='border-4 rounded-full overflow-hidden border-white'>
           <Jazzicon address={router.query.userAddress} size={150} />
@@ -93,10 +105,10 @@ function UserAddress() {
               )}
             />
           </Tab.Panel>
-          <Tab.Panel>
+          <Tab.Panel className='h-[40rem] overflow-auto my-12'>
             <TransactionsTable
               rowProps={{
-                className: "bg-purple-50 text-lg",
+                className:"bg-purple-50 text-lg",
               }}
               transactions={transactions}
             />

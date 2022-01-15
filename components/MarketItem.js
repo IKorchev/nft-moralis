@@ -1,12 +1,11 @@
 import NFTItem from "./NFTItem"
 import { useMoralis } from "react-moralis"
 import { useMoralisData } from "./Providers/MoralisDataProvider"
+import useMarketInteractions from "../hooks/useMarketInteraction"
 const MarketItem = ({ price, tokenUri, nftContract, tokenId, itemId, sold, index }) => {
   const { Moralis } = useMoralis()
-  const { buyItem, chain } = useMoralisData()
-
-
-  
+  const { chain } = useMoralisData()
+  const { buyItem } = useMarketInteractions()
   return (
     <NFTItem
       className='relative'
@@ -20,9 +19,9 @@ const MarketItem = ({ price, tokenUri, nftContract, tokenId, itemId, sold, index
             Available
           </p>
           <button
-            className='bg-emerald-100 py-2 w-full rounded-lg text-black font-bold'
-            onClick={() => buyItem(itemId)}>
-            Buy now{" "}
+            className=' bg-emerald-100 py-2 w-full rounded-lg text-black font-bold transition duration-300 hover:bg-purple-300'
+            onClick={() => buyItem(nftContract, itemId, price)}>
+            Buy now {"  "}
             <span>
               {Moralis.Units.FromWei(price)} {chain.nativeCurrency.symbol}
             </span>

@@ -54,7 +54,10 @@ const Token = () => {
     })
   }
 
-  const { data, error, isValidating } = useSWR(chain ? "/api/nft" : null, fetcher)
+  const { data, error, isValidating } = useSWR(chain ? "/api/nft" : null, fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+  })
 
   if (error)
     return (
@@ -85,47 +88,46 @@ const Token = () => {
     ],
   }
   return (
-    <div className='container px-24 pb-12 mx-auto  text-white'>
-      <div className='items-start gap-1 grid grid-cols-5 mt-5'>
-        <div className='col-span-2 '>
+    <div className='container xl:px-24 pb-12 mx-auto  text-white'>
+      <div className='flex flex-col lg:flex-row gap-5 px-5 lg:p-0'>
+        <div className='max-w-[50rem]'>
           <TokenImage
             format={data?.metadata?.format}
             url={formatIpfs(data?.metadata?.image || data?.metadata?.image_url)}
           />
-          <div className='mt-5'>
-            <Collapse buttonText='Token Information'>
-              <div className='bg-purple-100 text-black h-full p-4'>
-                <p>
-                  <span className='font-bold'> Address:</span> {query.contract}
-                </p>
-                <p className='mt-2'>
-                  <span className='font-bold'> Token ID:</span> {query.tokenId}
-                </p>
-                <p className='mt-2'>
-                  <span className='font-bold'> Token Symbol:</span> {data?.symbol}
-                </p>
-              </div>
-            </Collapse>
-            <Collapse buttonText='Attributes'>
-              <div className='grid grid-cols-3 gap-3 bg-purple-100 p-4'>
-                {data?.metadata?.attributes?.map((el) => (
-                  <div className='col-span-1 border text-black grid place-items-center bg-purple-200 border-purple-300 text-center p-1 rounded-lg'>
-                    <small className='font-bold'>{el.trait_type}</small>
-                    <small>{el.value}</small>
-                  </div>
-                ))}
-              </div>
-            </Collapse>
-          </div>
         </div>
-        <div className='bg-primary-900 col-span-3 text-white px-5 rounded-lg'>
-          <h2 className='text-white'>{data?.name || data?.metadata?.name}</h2>
-          <p className='mt-5'>Owned by: {data?.owner} </p>
-          <hr />
-          <h2 className='mt-12 text-white'>Description</h2>
-          <p className='mt-4'>
-            {data?.description || "There is no description for this item.  "}
-          </p>
+        <div className='bg-primary-900 flex-grow rounded-lg'>
+          <Collapse buttonText='Token Information' defaultOpen={true}>
+            <div className='bg-white text-black h-full p-4'>
+              <h2 className=''>{data?.name || data?.metadata?.name}</h2>
+              <p>Owned by: {data?.owner} </p>
+              <hr />
+              <h2 className='mt-5'>Description</h2>
+              <p className='mt-2'>
+                {data?.description || "There is no description for this item.  "}
+              </p>
+              <hr />
+              <p className='mt-5'>
+                <span className='font-bold'> Address:</span> {query.contract}
+              </p>
+              <p className='mt-2'>
+                <span className='font-bold'> Token ID:</span> {query.tokenId}
+              </p>
+              <p className='mt-2'>
+                <span className='font-bold'> Token Symbol:</span> {data?.symbol}
+              </p>
+            </div>
+          </Collapse>
+          <Collapse buttonText='Attributes'>
+            <div className='grid grid-cols-3 gap-3 bg-purple-100 p-4'>
+              {data?.metadata?.attributes?.map((el) => (
+                <div className='col-span-1 border text-black grid place-items-center bg-purple-200 border-purple-300 text-center p-1 rounded-lg'>
+                  <small className='font-bold'>{el.trait_type}</small>
+                  <small>{el.value}</small>
+                </div>
+              ))}
+            </div>
+          </Collapse>
           <Collapse buttonText='Price history'>
             <div className='bg-white text-white h-[300px]'>
               <Line data={chartData} options={chartOptions} />

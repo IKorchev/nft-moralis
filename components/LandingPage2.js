@@ -8,21 +8,6 @@ gsap.registerPlugin(ScrollTrigger)
 import { useEffect, useRef } from "react"
 // import Card from "./Card"
 const LandingPage2 = () => {
-  const parentRef = useRef()
-  useEffect(() => {
-    const childEls = parentRef.current.children
-    gsap.from(childEls, {
-      y: 50,
-      opacity: 0,
-      stagger: 0.2,
-      duration: 1,
-      ease: "back.out(2)",
-      scrollTrigger: {
-        trigger: childEls[0],
-        start: "center bottom",
-      },
-    })
-  }, [])
   return (
     <div className=''>
       <img src={Wave.src} className='-pt-24' />

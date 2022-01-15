@@ -14,21 +14,21 @@ const LandingPage = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.5,
       },
     },
   }
   const variants = {
     hidden: {
-      y: -15,
-      x: -15,
+      clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)",
+
       opacity: 0,
     },
     visible: {
-      y: 0,
-      x: 0,
+      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
       opacity: 1,
       transition: {
+        duration: 1,
         type: "spring",
         stiffness: 90,
       },

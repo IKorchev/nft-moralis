@@ -7,17 +7,14 @@ import { Menu, Transition } from "@headlessui/react"
 
 const Navbar = () => {
   const navRef = useRef()
-  const { authenticate, logout, Moralis, isAuthenticated } = useMoralis()
-  const { switchNetwork, chainId, chain, account } = useChain()
+  const { logout, Moralis } = useMoralis()
+  const { account } = useChain()
   Moralis.enableWeb3()
-  const [show, setShow] = useState(false)
-  useEffect(() => {
-    show && navRef.current.focus()
-  }, [show])
+
   return (
     <>
       {/* MOBILE MENU TOGGLER*/}
-      <Menu as='div' className='lg:hidden'>
+      <Menu as='div' className='lg:hidden  h-12'>
         {({ open }) => (
           <>
             <Menu.Button
