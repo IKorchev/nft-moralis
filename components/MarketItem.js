@@ -2,11 +2,12 @@ import NFTItem from "./NFTItem"
 import { useMoralis } from "react-moralis"
 import { useMoralisData } from "./Providers/MoralisDataProvider"
 import useMarketInteractions from "../hooks/useMarketInteraction"
+
 const MarketItem = ({ price, tokenUri, nftContract, tokenId, itemId, sold, index }) => {
   const { Moralis } = useMoralis()
   const { chain } = useMoralisData()
   const { buyItem } = useMarketInteractions()
-  
+
   return (
     <NFTItem
       className='relative'
@@ -16,7 +17,7 @@ const MarketItem = ({ price, tokenUri, nftContract, tokenId, itemId, sold, index
       index={index}>
       {!sold && (
         <div className='p-3'>
-          <p className='absolute top-3 right-0 cursor-default rounded-l-md pointer-events-none text-xs  bg-emerald-600 z-50 py-1.5 pl-2 pr-0.5'>
+          <p className='absolute top-3 right-0 cursor-default rounded-l-md pointer-events-none text-xs  bg-emerald-600 py-1.5 pl-2 pr-0.5'>
             Available
           </p>
           <div className='flex justify-between items-center -mt-3'>

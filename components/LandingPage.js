@@ -4,7 +4,6 @@ import AVAXLogo from "../assets/AVAXLogo.svg"
 import ETHLogo from "../assets/ETHLogo.svg"
 import MATICLogo from "../assets/MATICLogo.svg"
 import { motion } from "framer-motion"
-import Illustration from "../assets/Illustration"
 
 const LandingPage = () => {
   const container = {
@@ -50,18 +49,17 @@ const LandingPage = () => {
             Explore the NFT space.
           </motion.h1>
           <motion.p variants={variants} className='text-lg mt-8 font-light'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse commodi
-            consectetur, veniam dignissimos eum natus illo.
+            Buy and sell NFTs with minimal fees. New collections listed every week!
           </motion.p>
         </motion.div>
         <div className='mt-12'>
           <Link href='/explore'>
-            <a className=' w-max text-xl mt-5 px-5 py-2 rounded-lg bg-gradient-to-l  from-primary-lightest to-pinkish hover:opacity-90 focus:ring ring-white'>
+            <a className=' w-max text-xl mt-5 px-5 py-2 rounded-lg bg-gradient-to-l  from-primary-lightest to-pinkish hover:bg-opacity-90 focus:ring ring-white'>
               Explore
             </a>
           </Link>
           <Link href='/mint'>
-            <a className='animate-pulse text-pinkish w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 focus:ring ring-white'>
+            <a className=' text-pinkish bg-white w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 focus:ring ring-white'>
               Mint NFT
             </a>
           </Link>

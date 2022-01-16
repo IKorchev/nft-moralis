@@ -1,5 +1,4 @@
 import { useLayoutEffect, useRef } from "react"
-import { createIcon } from "../utils/common"
 import jazzicon from "@metamask/jazzicon"
 const Jazzicon = ({ address, size, ...props }) => {
   const iconRef = useRef()

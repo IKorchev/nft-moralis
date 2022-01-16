@@ -16,10 +16,10 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
   })
 
   return (
-    <motion.div className='flex rounded-lg bg-purple-900 overflow-hidden w-60 flex-col relative'>
+    <motion.div className='flex rounded-lg bg-purple-900 overflow-hidden w-72 h-[25rem] flex-col relative'>
       <Link passHref={true} href={`/assets/${tokenAddress}/${tokenId}`}>
         {isValidating ? (
-          <div className='grid place-items-center h-60 bg-white/90'>
+          <div className='grid place-items-center h-72 object-scale-down bg-white/90'>
             <FadeLoader size={1} color='black' />
           </div>
         ) : data?.format === "video" ? (
@@ -29,19 +29,23 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
             controls
             src={formatIpfs(data?.image_url || data?.image || data?.url)}
             alt=''
-            className='rounded-lg cursor-pointer h-60 w-full object-scale-down'
+            className='rounded-lg object-scale-down cursor-pointer min-h-72 h-72 '
           />
         ) : (
           <img
             src={formatIpfs(data?.image_url || data?.image || data?.url)}
             alt=''
-            className='object-scale-down cursor-pointer  h-60 w-full'
+            className='object-scale-down cursor-pointer h-72'
           />
         )}
       </Link>
       <div className='flex flex-col items-start p-3'>
         <p>{data?.name}</p>
-        <Link href={`/assets/${tokenAddress}`}>{shortenIfAddress(tokenAddress)}</Link>
+        <Link passHref href={`/assets/${tokenAddress}/`}>
+          <a href=''>
+            <small className=' text-xs'>{shortenIfAddress(tokenAddress)}</small>
+          </a>
+        </Link>
       </div>
       {children}
     </motion.div>
