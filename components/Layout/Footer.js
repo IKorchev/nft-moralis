@@ -1,7 +1,7 @@
-import COINBASEIcon from "../assets/coinbase.svg"
-import BINANCEIcon from "../assets/binance.svg"
-import BITMEXIcon from "../assets/bitmex.svg"
-import HUOBIIcon from "../assets/huobi.svg"
+import COINBASEIcon from "../../assets/coinbase.svg"
+import BINANCEIcon from "../../assets/binance.svg"
+import BITMEXIcon from "../../assets/bitmex.svg"
+import HUOBIIcon from "../../assets/huobi.svg"
 import Link from "next/link"
 const Footer = () => {
   return (

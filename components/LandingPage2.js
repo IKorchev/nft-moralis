@@ -11,6 +11,7 @@ const LandingPage2 = () => {
         <h1 className='text-pinkish pt-24 pb-12 text-center text-5xl font-semibold'>
           Featured collections
         </h1>
+        
         <div className='flex flex-wrap gap-10 justify-center items-center container mx-auto py-5 px-12 '>
           {collections.map((el) => (
             <Link href={`/assets/${el.contractAddress}`}>

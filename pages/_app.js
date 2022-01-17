@@ -1,7 +1,7 @@
 import "../styles/Globals.css"
 import { MoralisProvider } from "react-moralis"
 import { DAppProvider } from "@usedapp/core"
-import Layout from "../components/Layout"
+import Layout from "../components/Layout/Layout"
 import { useEffect, useState } from "react"
 import MoralisDataProvider from "../components/Providers/MoralisDataProvider"
 import Moralis from "moralis"
