@@ -5,7 +5,7 @@ import Layout from "../components/Layout/Layout"
 import { useEffect, useState } from "react"
 import MoralisDataProvider from "../components/Providers/MoralisDataProvider"
 import Moralis from "moralis"
-import { AnimatePresence, AnimateSharedLayout } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
@@ -18,12 +18,13 @@ const MyApp = ({ Component, pageProps }) => {
     setCalled(true)
   }
   useEffect(() => {
+    Moralis.enableWeb3()
     start()
   }, [])
   return (
     called && (
-      <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
-        <DAppProvider>
+      <DAppProvider>
+        <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
           <MoralisDataProvider>
             <Layout>
               <AnimatePresence exitBeforeEnter>
@@ -31,8 +32,8 @@ const MyApp = ({ Component, pageProps }) => {
               </AnimatePresence>
             </Layout>
           </MoralisDataProvider>
-        </DAppProvider>
-      </MoralisProvider>
+        </MoralisProvider>
+      </DAppProvider>
     )
   )
 }

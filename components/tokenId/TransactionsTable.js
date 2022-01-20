@@ -18,14 +18,14 @@ const formatAddress = (address) => {
 }
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
   return (
-    <table className='border-separate border  w-full' {...props}>
+    <table className='border-separate border w-full mx-auto ' {...props}>
       <tbody>
         <tr className='border ' {...rowProps}>
-          <th className='text-xs lg:text-base'>From</th>
-          <th className='text-xs lg:text-base'>To</th>
-          <th className='text-xs lg:text-base'>Price</th>
-          <th className='text-xs lg:text-base'>Date</th>
-          <th className='text-xs lg:text-base'>Tx Hash</th>
+          <th className='text-xs md:text-base'>From</th>
+          <th className='text-xs md:text-base'>To</th>
+          <th className='text-xs md:text-base'>Price</th>
+          <th className='text-xs md:text-base'>Date</th>
+          <th className='text-xs md:text-base'>Tx Hash</th>
         </tr>
         {transactions?.result.map((el) => (
           <TableRow
@@ -56,7 +56,7 @@ const TableRow = ({
     <tr key={transactionHash} className='w-full text-sm my-1 text-center ' {...props}>
       <td>
         <Link passHref href={`/user/${fromAddress}`}>
-          <span className='flex items-center justify-center cursor-pointer text-xs lg:text-base'>
+          <span className='flex items-center justify-center cursor-pointer text-xs md:text-base'>
             {formatAddress(fromAddress)}
             <ExternalLinkIcon className='ml-2 h-5 w-5' />
           </span>
@@ -64,22 +64,22 @@ const TableRow = ({
       </td>
       <td>
         <Link passHref href={`/user/${toAddress}`}>
-          <span className='flex items-center justify-center cursor-pointer text-xs lg:text-base'>
+          <span className='flex items-center justify-center cursor-pointer text-xs md:text-base'>
             {formatAddress(toAddress)}
             <ExternalLinkIcon className='ml-2 h-5 w-5' />
           </span>
         </Link>
       </td>
-      <td className='text-center text-xs lg:text-base'>
+      <td className='text-center text-xs md:text-base'>
         {Moralis.Units.FromWei(price)} {chain?.nativeCurrency?.symbol}
       </td>
-      <td className='text-center text-xs lg:text-base'>{date}</td>
+      <td className='text-center text-xs md:text-base'>{date}</td>
       <td>
         <a
           target='_blank'
           rel='noreferrer'
           href={`${chain.blockExplorerUrl}/tx/${transactionHash}`}>
-          <span className='flex items-center justify-center cursor-pointer text-xs lg:text-base'>
+          <span className='flex items-center justify-center cursor-pointer text-xs md:text-base'>
             {shortenTransactionHash(transactionHash)}
             <ExternalLinkIcon className='ml-2 h-5 w-5' />
           </span>

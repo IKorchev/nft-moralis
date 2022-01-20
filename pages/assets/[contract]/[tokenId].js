@@ -6,58 +6,29 @@ import { useMoralisData } from "../../../components/Providers/MoralisDataProvide
 import Skeleton from "../../../components/tokenId/Skeleton"
 import TransactionsTable from "../../../components/tokenId/TransactionsTable"
 import TokenImage from "../../../components/tokenId/TokenImage"
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js"
-import { Line } from "react-chartjs-2"
-
-import { chartOptions } from "../../../utils/chartOptions"
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
-
+import { tokenIdFetcher } from "../../../utils/fetcher"
+import Link from "next/link"
+import ActivityChart from "../../../components/ActivityChart"
+import { MoonLoader } from "react-spinners"
+import { motion } from "framer-motion"
 const Token = () => {
   const { chain, Moralis } = useMoralisData()
   const { query } = useRouter()
-  const fetcher = (url) => {
-    return fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
+  const { data, error, isValidating } = useSWR(
+    {
+      url: chain ? "/api/nft" : null,
+      args: {
         contract: query.contract,
         tokenId: query.tokenId,
-        chain:
-          { chainString: formatChain(chain?.networkId), chainId: chain?.chainId } ||
-          "fantom/mainnet",
-      }),
-    }).then(async (res) => {
-      if (!res.ok) {
-        const error = new Error("An error occurred while fetching the data.")
-        // Attach extra info to the error object.
-        error.info = await res.json()
-        error.status = res.status
-        throw error
-      }
-      return await res.json()
-    })
-  }
-
-  const { data, error, isValidating } = useSWR(chain ? "/api/nft" : null, fetcher, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-  })
+        chain: { chainString: formatChain(chain?.networkId), chainId: chain?.chainId },
+      },
+    },
+    tokenIdFetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+    }
+  )
 
   if (error)
     return (
@@ -65,48 +36,46 @@ const Token = () => {
         <h1 className='text-white text-3xl'>{error.message}</h1>
       </div>
     )
-  if (isValidating) return <Skeleton />
+  if (isValidating)
+    return (
+      <div className='min-h-[40rem] grid place-items-center'>
+        <MoonLoader color='white' width={150} height={150} />
+      </div>
+    )
 
-  const labelsArr = data?.transactions?.result
-    ?.map((el) => {
-      return new Date(el.block_timestamp).toLocaleDateString("uk")
-    })
-    .reverse()
-  const dataArr = data?.transactions?.result
-    ?.map((el) => Moralis.Units.FromWei(el.value))
-    .reverse()
-  const chartData = {
-    labels: labelsArr,
-    datasets: [
-      {
-        label: "Price",
-        borderColor: "white",
-        data: dataArr,
-        borderColor: "black",
-        backgroundColor: "white",
-      },
-    ],
-  }
   return (
-    <div className='container xl:px-24 pb-12 mx-auto  text-white'>
-      <div className='flex flex-col lg:flex-row gap-5 px-5 lg:p-0'>
-        <div className='max-w-[50rem]'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, delayChildren: 1, ease: "easeInOut" }}
+      className='container xl:px-24 py-12 mx-auto text-white'>
+      <div className='flex flex-col justify-evenly lg:flex-row gap-5 px-5 lg:p-0 w-full'>
+        <div className='w-[30rem]'>
           <TokenImage
             format={data?.metadata?.format}
             url={formatIpfs(data?.metadata?.image || data?.metadata?.image_url)}
           />
         </div>
-        <div className='bg-primary-900 flex-grow rounded-lg'>
+        <div className='bg-primary-900 flex-grow rounded-lg w-[40rem]'>
           <Collapse buttonText='Token Information' defaultOpen={true}>
             <div className='bg-white text-black h-full p-4'>
               <h2 className=''>{data?.name || data?.metadata?.name}</h2>
-              <p>Owned by: {data?.owner} </p>
-              <hr />
-              <h2 className='mt-5'>Description</h2>
-              <p className='mt-2'>
-                {data?.description || "There is no description for this item.  "}
+              <p>
+                Owned by:{" "}
+                <Link href={`${data?.owner}`} passHref>
+                  <a className='text-blue-900 font-semibold'>{data?.owner}</a>
+                </Link>
               </p>
               <hr />
+              {data?.description && (
+                <>
+                  <h2 className='mt-5'>Description</h2>
+                  <p className='mt-2'>
+                    {data?.description || "There is no description for this item.  "}
+                  </p>
+                  <hr />
+                </>
+              )}
               <p className='mt-5'>
                 <span className='font-bold'> Address:</span> {query.contract}
               </p>
@@ -128,19 +97,17 @@ const Token = () => {
               ))}
             </div>
           </Collapse>
-          <Collapse buttonText='Price history'>
-            <div className='bg-white text-white h-[300px]'>
-              <Line data={chartData} options={chartOptions} />
-            </div>
+          <Collapse buttonText='Price chart'>
+            <ActivityChart data={data} />
           </Collapse>
-          <Collapse buttonText='Transactions'>
-            <div className='text-black max-h-[20rem] overflow-y-scroll'>
+          <Collapse buttonText='Activity'>
+            <div className='text-black max-h-[20rem]  overflow-y-scroll styled-scrollbar '>
               <TransactionsTable transactions={data?.transactions} />
             </div>
           </Collapse>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

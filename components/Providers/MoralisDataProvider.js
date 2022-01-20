@@ -7,11 +7,10 @@ export const useMoralisData = () => {
 }
 
 const MoralisDataProvider = ({ children }) => {
-  const { Moralis } = useMoralis()
-  const { account, chain } = useChain()
+  const { Moralis, account, enableWeb3 } = useMoralis()
+  const { chain } = useChain()
+  
 
-  Moralis.enableWeb3()
- 
   const getItems = async (address, tokenId) => {
     const MarketItems = Moralis.Object.extend("MarketItems")
     const query = new Moralis.Query(MarketItems)

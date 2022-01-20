@@ -36,7 +36,11 @@
      text-black hover:border-pinkish backdrop-filter z-0;
   }
 }
-
+@layer utilities {
+  .styled-scrollbar {
+    @apply scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-pinkish;
+  }
+}
 html {
   scroll-behavior: smooth;
 }

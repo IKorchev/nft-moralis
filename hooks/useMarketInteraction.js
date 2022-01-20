@@ -11,9 +11,9 @@ const useMarketInteractions = () => {
     APPROVE: "approve",
     FETCH_MARKET_ITEMS: "fetchMarketItems",
   }
-  const { Moralis } = useMoralis()
+  const { Moralis, account } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const { account, chain } = useChain()
+  const { chain } = useChain()
   const MarketItems = Moralis.Object.extend("MarketItems")
   const query = new Moralis.Query(MarketItems)
 

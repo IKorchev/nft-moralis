@@ -54,13 +54,19 @@ const LandingPage = () => {
         </motion.div>
         <div className='mt-12'>
           <Link href='/explore'>
-            <a className=' w-max text-xl mt-5 px-5 py-2 rounded-lg bg-gradient-to-l  from-primary-lightest to-pinkish hover:bg-opacity-90 focus:ring ring-white'>
-              Explore
+            <a
+              className='transition duration-300 bg-pink-600  w-max text-xl mt-5 px-5 py-1.5 
+            rounded-lg border-pinkish border-2 focus:ring ring-white
+            hover:bg-pink-900
+            '>
+              Marketplace
             </a>
           </Link>
-          <Link href='/mint'>
-            <a className=' text-pinkish bg-white w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 focus:ring ring-white'>
-              Mint NFT
+          <Link href='/launchpad'>
+            <a
+              className='transition duration-300  text-pink-800 bg-light w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 hover:bg-purple-200
+              focus:ring ring-white'>
+              Launchpad
             </a>
           </Link>
         </div>

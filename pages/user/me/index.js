@@ -1,0 +1,120 @@
+import { shortenIfAddress } from "@usedapp/core"
+import { useRouter } from "next/router"
+import { useMoralis, useNFTTransfers } from "react-moralis"
+import Jazzicon from "../../../components/Jazzicon"
+import PaginatedItems from "../../../components/PaginatedItems"
+import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
+import { Tab } from "@headlessui/react"
+import TransactionsTable from "../../../components/tokenId/TransactionsTable"
+import useSWR from "swr"
+import Loading from "../../../components/Loading"
+import NFTItem from "../../../components/NFTItem"
+
+function Me() {
+  const { chain, Moralis, account } = useMoralisData()
+  const router = useRouter()
+
+  const fetcher = async ({ args }) => {
+    const { chain, address } = args
+    const data = await Moralis.Web3API.account.getNFTs({ chain: chain })
+    if (!data) {
+      const error = new Error("An error occurred while fetching the data.")
+      throw error
+    }
+    return data
+  }
+
+  const { data, error, isValidating } = useSWR(
+    {
+      url: "noNeedForUrl",
+      args: {
+        chain: chain?.chainId,
+        address: account,
+      },
+    },
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+    }
+  )
+  const { data: transactions, getNFTTransfers } = useNFTTransfers()
+
+  if (isValidating)
+    return (
+      <Loading
+        containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
+        loaderProps={{ size: 200, color: "white" }}
+      />
+    )
+  if (error) return null
+  return (
+    <div className='container mx-auto overflow-hidden min-h-[50rem]'>
+      <div className='flex flex-col items-center mt-12'>
+        <div className='border-4 rounded-full overflow-hidden border-white'>
+          <Jazzicon address={account} size={150} />
+        </div>
+        <h2 className='text-xl cursor-pointer text-center -mt-4 bg-white rounded-full p-2 text-black'>
+          <span className='relative flex items-center justify-center'>
+            {shortenIfAddress(account)}
+          </span>
+        </h2>
+      </div>
+      <Tab.Group as='div' className='container flex flex-col items-center'>
+        <Tab.List className='text-white bg-purple-900  justify-evenly rounded-lg  mt-5 '>
+          <Tab
+            className={({ selected }) =>
+              `${selected ? "bg-purple-100 text-black" : ""} p-3 rounded-lg `
+            }>
+            Collected
+          </Tab>
+          <Tab
+            className={({ selected }) =>
+              `${selected ? "bg-purple-100 text-black" : ""} p-3 rounded-lg `
+            }>
+            Activity
+          </Tab>
+          <Tab
+            className={({ selected }) =>
+              `${selected ? "bg-purple-100 text-black" : ""} p-3 rounded-lg `
+            }>
+            Collected
+          </Tab>
+        </Tab.List>
+        <Tab.Panels>
+          <Tab.Panel>
+            <PaginatedItems
+              items={data?.result}
+              itemsPerPage={5}
+              renderItem={(el, i) => {
+                console.log(el)
+                return (
+                  <NFTItem
+                    index={i}
+                    key={el.token_uri}
+                    tokenUri={el.token_uri}
+                    metadata={el.metadata}
+                    tokenId={el.token_id}
+                    tokenAddress={el.token_address}
+                    contractName={el.name}
+                  />
+                )
+              }}
+            />
+          </Tab.Panel>
+          <Tab.Panel className='h-[40rem] overflow-auto my-12'>
+            <TransactionsTable
+              rowProps={{
+                className: "bg-purple-50 text-lg",
+              }}
+              transactions={transactions}
+            />
+          </Tab.Panel>
+          <Tab.Panel></Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+    </div>
+  )
+}
+export default Me

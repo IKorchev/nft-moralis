@@ -13,7 +13,7 @@ const TokenImage = ({ format, url }) => {
         </div>
       ) : (
         <div className='grid place-items-center bg-white w-full'>
-          <img src={url} className='object-contain max-h-[35rem] rounded-lg' />
+          <img src={url} className='object-contain max-h-[35rem] w-full rounded-lg' />
         </div>
       )}
     </>

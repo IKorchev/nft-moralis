@@ -8,16 +8,13 @@ import { AiOutlineCopy, AiFillAppstore, AiOutlineDisconnect } from "react-icons/
 import { toast } from "react-toastify"
 
 export default function Dropdown() {
-  const { account } = useChain()
   const router = useRouter()
-  const { logout } = useMoralis()
-
+  const { logout, account, disconnect } = useMoralis()
   const notify = (text, type) => {
     toast[type](text, {
       autoClose: 1000,
       className: "mt-12 bg-light",
       closeButton: true,
-
       progressClassName: "bg-gradient-to-r from-pinkish to-purple-500",
     })
   }

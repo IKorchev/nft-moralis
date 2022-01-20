@@ -24,7 +24,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
   }
 
   return (
-    <div className='mt-24 text-white'>
+    <div className=' text-white'>
       {currentItems && (
         <div className='flex flex-col items-center justify-center'>
           <div ref={scrollToRef} />
@@ -33,7 +33,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
           </div>
           {items?.length > itemsPerPage && (
             <ReactPaginate
-              containerClassName='flex  h-12 my-5'
+              containerClassName='flex h-12 my-5'
               pageLinkClassName='px-4 py-2'
               nextLinkClassName='p-2'
               previousLinkClassName='p-2'

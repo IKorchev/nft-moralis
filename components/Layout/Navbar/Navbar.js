@@ -1,23 +1,20 @@
-import { useMoralis, useChain } from "react-moralis"
-import { useRef } from "react"
+import { useMoralis } from "react-moralis"
 import Link from "next/link"
 import AccountAndBalance from "./AccountAndBalance"
 import Dropdown from "./Dropdown"
 import { Menu } from "@headlessui/react"
 const Navbar = () => {
-  const { logout, Moralis } = useMoralis()
-  const { account } = useChain()
-  Moralis.enableWeb3()
+  const { logout, account, enableWeb3, deactivateWeb3 } = useMoralis()
 
   return (
     <>
-      {/* MOBILE MENU TOGGLER*/}
+      {/* MOBILE MENU */}
       <Menu as='div' className='lg:hidden h-16'>
         {({ open }) => (
           <>
             <Menu.Button
               as='div'
-              className='bg-pinkish rounded-lg fixed top-3 right-3 z-50 p-5 inline-block cursor-pointer'>
+              className='bg-pinkish rounded-lg fixed top-3 left-3 z-50 p-5 inline-block cursor-pointer'>
               <div
                 className={` transition ease-in-out transform duration-700 ${
                   open && "-rotate-45 translate-y-1"
@@ -38,8 +35,13 @@ const Navbar = () => {
                 </Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href='/explore' passHref>
-                  <h1 className='text-3xl my-4 cursor-pointer'>Explore</h1>
+                <Link href='/marketplace' passHref>
+                  <h1 className='text-3xl my-4 cursor-pointer'>Marketplace</h1>
+                </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link href='/marketplace' passHref>
+                  <h1 className='text-3xl my-4 cursor-pointer'>Launchpad</h1>
                 </Link>
               </Menu.Item>
               <Menu.Item>
@@ -48,7 +50,7 @@ const Navbar = () => {
                 </Link>
               </Menu.Item>
               <div className='mx-auto'>
-                <AccountAndBalance icon={false} />
+                <AccountAndBalance account={account} icon={false} />
               </div>
               <Menu.Item>
                 <button
@@ -73,11 +75,24 @@ const Navbar = () => {
           </Link>
         </div>
         <div className='flex flex-grow'>
-          <Link href='/explore' passHref>
+          <Link href='/marketplace' passHref>
             <h1 className='text-xl my-4 mx-5  cursor-pointer'>Marketplace</h1>
           </Link>
         </div>
-        <Dropdown />
+        <div className='flex flex-grow'>
+          <Link href='/launchpad' passHref>
+            <h1 className='text-xl my-4 mx-5  cursor-pointer'>Launchpad</h1>
+          </Link>
+        </div>
+        {account ? (
+          <Dropdown />
+        ) : (
+          <button
+            onClick={enableWeb3}
+            className='bg-yellow-400 px-3 py-1.5 rounded-md text-black'>
+            Connect
+          </button>
+        )}
       </div>
     </>
   )
