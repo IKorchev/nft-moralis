@@ -16,7 +16,7 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
   })
 
   return (
-    <motion.div className='flex rounded-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-3xl hover:shadow-purple-100/50 bg-light text-black overflow-hidden w-48 min-h-full flex-col relative'>
+    <motion.div className='flex rounded-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-3xl hover:shadow-purple-100/50 bg-light text-black overflow-hidden w-48 h-[18rem] flex-col relative'>
       <Link passHref={true} href={`/assets/${tokenAddress}/${tokenId}`}>
         {isValidating ? (
           <div className='grid place-items-center h-48 object-scale-down bg-white/90'>

@@ -1,6 +1,6 @@
 import PaginatedItems from "../../components/PaginatedItems"
 import Loading from "../../components/Loading"
-import MarketItem from "../../components/MarketItem"
+import MarketItem from "../../components/Marketplace/MarketItem"
 import { Fragment, useState } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import { sortBy } from "lodash"

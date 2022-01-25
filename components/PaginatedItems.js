@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import { useRef } from "react"
-import Dots from "@heroicons/react/solid/DotsHorizontalIcon"
 
 function PaginatedItems({ items, itemsPerPage, renderItem }) {
   const [currentItems, setCurrentItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
   const scrollToRef = useRef()
+
   useEffect(() => {
     if (items) {
       const endOffset = itemOffset + itemsPerPage
@@ -24,29 +24,33 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
   }
 
   return (
-    <div className=' text-white'>
+    <div className=' text-white '>
       {currentItems && (
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center '>
           <div ref={scrollToRef} />
-          <div className='flex flex-wrap gap-5 w-full mx-auto justify-center'>
+          <div className='flex flex-wrap gap-5 w-full justify-center  lg:justify-start  min-h-[40rem]'>
             {currentItems.map(renderItem)}
           </div>
           {items?.length > itemsPerPage && (
             <ReactPaginate
-              containerClassName='flex h-12 my-5'
-              pageLinkClassName='px-4 py-2'
-              nextLinkClassName='p-2'
-              previousLinkClassName='p-2'
-              pageClassName='grid w-12 h-12 place-items-center bg-purple-100 mx-0.5 text-black rounded-lg '
-              nextClassName='w-24 grid place-items-center bg-purple-100 mx-0.5 text-black rounded-lg '
-              previousClassName='w-26 grid place-items-center bg-purple-100 mx-0.5 text-black rounded-lg '
-              breakLabel={<Dots className='h-8 mt-5' color='white' />}
-              activeClassName='bg-purple-500 text-white'
-              nextLabel='next >'
+              containerClassName='flex my-5 rounded-lg  items-center overflow-hidden'
+              pageLinkClassName='bg-white border-gray-300 text-gray-500  inline-flex items-center px-4 py-2 border'
+              nextLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
+              previousLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
+              pageClassName=''
+              nextClassName=''
+              previousClassName=''
+              breakLabel={
+                <span className='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'>
+                  ...
+                </span>
+              }
+              activeLinkClassName='bg-purple-600 text-gray-100'
+              nextLabel='>'
               onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
+              pageRangeDisplayed={0}
               pageCount={pageCount}
-              previousLabel='< previous'
+              previousLabel='<'
               renderOnZeroPageCount={null}
             />
           )}

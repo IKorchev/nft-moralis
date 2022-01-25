@@ -42,4 +42,20 @@ export const tokenIdFetcher = async ({ url, args }) => {
   return await res.json()
 }
 
+export const getNFTsForUser = ({ args }) => {
+  const { chain, address } = args
+  return Moralis.Web3API.account
+    .getNFTs({
+      address: address,
+      chain: chain,
+    })
+    .then((data) => {
+      if (!data) {
+        const error = new Error("An error occurred while fetching the data.")
+        throw error
+      }
+      return data
+    })
+}
+
 export default fetcher

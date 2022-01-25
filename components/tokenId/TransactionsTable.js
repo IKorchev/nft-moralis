@@ -1,7 +1,9 @@
+import { LinkIcon } from "@heroicons/react/solid"
 import ExternalLinkIcon from "@heroicons/react/solid/ExternalLinkIcon"
 import { shortenIfAddress, shortenTransactionHash } from "@usedapp/core"
 import Moralis from "moralis"
 import Link from "next/link"
+import { FiLink, FiLink2 } from "react-icons/fi"
 import { useChain } from "react-moralis"
 import { MARKET_ADDRESS } from "../../utils/ABIS"
 const formatAddress = (address) => {
@@ -18,27 +20,44 @@ const formatAddress = (address) => {
 }
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
   return (
-    <table className='border-separate border w-full mx-auto ' {...props}>
-      <tbody>
-        <tr className='border ' {...rowProps}>
-          <th className='text-xs md:text-base'>From</th>
-          <th className='text-xs md:text-base'>To</th>
-          <th className='text-xs md:text-base'>Price</th>
-          <th className='text-xs md:text-base'>Date</th>
-          <th className='text-xs md:text-base'>Tx Hash</th>
-        </tr>
-        {transactions?.result.map((el) => (
-          <TableRow
-            {...rowProps}
-            blockTimestamp={el.block_timestamp}
-            transactionHash={el.transaction_hash}
-            fromAddress={el.from_address}
-            toAddress={el.to_address}
-            price={el.value}
-          />
-        ))}
-      </tbody>
-    </table>
+    <div className='align-middle inline-block min-w-full '>
+      <div className='shadow  border-b border-gray-200 sm:rounded-lg '>
+        <table className='min-w-full  divide-y divide-gray-200  '>
+          <thead className='bg-purple-900 text-xs  text-pink-500 font-medium uppercase '>
+            <tr>
+              <th scope='col' className='lg:px-6 py-3'>
+                Date
+              </th>
+              <th scope='col' className='lg:px-6 py-3'>
+                From
+              </th>
+              <th scope='col' className='lg:px-6 py-3'>
+                To
+              </th>
+              <th scope='col' className='lg:px-6 py-3'>
+                Transaction Hash
+              </th>
+              <th scope='col' className='lg:px-6 py-3'>
+                Amount
+              </th>
+            </tr>
+          </thead>
+          <tbody className='bg-white divide-y divide-gray-200 '>
+            {transactions.result?.map((el) => (
+              <TableRow
+                {...rowProps}
+                key={el.transaction_hash}
+                blockTimestamp={el.block_timestamp}
+                transactionHash={el.transaction_hash}
+                fromAddress={el.from_address}
+                toAddress={el.to_address}
+                price={el.value}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   )
 }
 
@@ -53,38 +72,34 @@ const TableRow = ({
   const { chain } = useChain()
   const date = new Date(blockTimestamp).toLocaleDateString("uk")
   return (
-    <tr key={transactionHash} className='w-full text-sm my-1 text-center ' {...props}>
-      <td>
-        <Link passHref href={`/user/${fromAddress}`}>
-          <span className='flex items-center justify-center cursor-pointer text-xs md:text-base'>
-            {formatAddress(fromAddress)}
-            <ExternalLinkIcon className='ml-2 h-5 w-5' />
-          </span>
+    <tr className=' text-xs text-center whitespace-nowrap bg-purple-700 text-white'>
+      <td className='lg:px-6 py-2'>{date}</td>
+      <td className='lg:px-6 py-2'>
+        <Link href={`/user/${fromAddress}`}>
+          <a className='flex items-center justify-center'>
+            {shortenIfAddress(fromAddress)} <ExternalLinkIcon className='h-5 w-5' />
+          </a>
         </Link>
       </td>
-      <td>
-        <Link passHref href={`/user/${toAddress}`}>
-          <span className='flex items-center justify-center cursor-pointer text-xs md:text-base'>
-            {formatAddress(toAddress)}
-            <ExternalLinkIcon className='ml-2 h-5 w-5' />
-          </span>
+      <td className='lg:px-6 py-2'>
+        <Link href={`/user/${toAddress}`}>
+          <a className='flex items-center justify-center'>
+            {shortenIfAddress(toAddress)} <ExternalLinkIcon className='h-5 w-5' />
+          </a>
         </Link>
       </td>
-      <td className='text-center text-xs md:text-base'>
-        {Moralis.Units.FromWei(price)} {chain?.nativeCurrency?.symbol}
-      </td>
-      <td className='text-center text-xs md:text-base'>{date}</td>
-      <td>
+      <td className='lg:px-6 py-2'>
         <a
+          href={`${chain.blockExplorerUrl}tx/${transactionHash}`}
           target='_blank'
           rel='noreferrer'
-          href={`${chain.blockExplorerUrl}/tx/${transactionHash}`}>
-          <span className='flex items-center justify-center cursor-pointer text-xs md:text-base'>
-            {shortenTransactionHash(transactionHash)}
-            <ExternalLinkIcon className='ml-2 h-5 w-5' />
-          </span>
+          className='flex items-center justify-center'>
+          {shortenTransactionHash(transactionHash)}
+
+          <ExternalLinkIcon className='h-5 w-5' />
         </a>
       </td>
+      <td className='lg:px-6 py-2'>{Moralis.Units.FromWei(price)}</td>
     </tr>
   )
 }

@@ -53,7 +53,7 @@ const LandingPage = () => {
           </motion.p>
         </motion.div>
         <div className='mt-12'>
-          <Link href='/explore'>
+          <Link href='/marketplace'>
             <a
               className='transition duration-300 bg-pink-600  w-max text-xl mt-5 px-5 py-1.5 
             rounded-lg border-pinkish border-2 focus:ring ring-white

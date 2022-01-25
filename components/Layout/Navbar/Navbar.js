@@ -40,7 +40,7 @@ const Navbar = () => {
                 </Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href='/marketplace' passHref>
+                <Link href='/launchpad' passHref>
                   <h1 className='text-3xl my-4 cursor-pointer'>Launchpad</h1>
                 </Link>
               </Menu.Item>
