@@ -23,7 +23,7 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
     <div className='align-middle inline-block min-w-full '>
       <div className='shadow  border-b border-gray-200 sm:rounded-lg '>
         <table className='min-w-full  divide-y divide-gray-200  '>
-          <thead className='bg-purple-900 text-xs  text-pink-500 font-medium uppercase '>
+          <thead className='bg-primary-900 text-xs  text-pink-500 font-medium uppercase '>
             <tr>
               <th scope='col' className='lg:px-6 py-3'>
                 Date
@@ -72,7 +72,7 @@ const TableRow = ({
   const { chain } = useChain()
   const date = new Date(blockTimestamp).toLocaleDateString("uk")
   return (
-    <tr className=' text-xs text-center whitespace-nowrap bg-purple-700 text-white'>
+    <tr className=' text-xs text-center whitespace-nowrap bg-primary-700 text-white'>
       <td className='lg:px-6 py-2'>{date}</td>
       <td className='lg:px-6 py-2'>
         <Link href={`/user/${fromAddress}`}>

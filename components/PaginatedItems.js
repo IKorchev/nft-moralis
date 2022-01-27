@@ -45,7 +45,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
                   ...
                 </span>
               }
-              activeLinkClassName='bg-purple-600 text-gray-100'
+              activeLinkClassName='bg-primary-600 text-gray-100'
               nextLabel='>'
               onPageChange={handlePageClick}
               pageRangeDisplayed={0}

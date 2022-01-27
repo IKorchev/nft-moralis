@@ -40,7 +40,7 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
           </div>
           <button
             type='submit'
-            className='py-2 mt-5 text-white font-bold text-lg bg-gradient-to-r from-purple-700 rounded-lg to-purple-900 hover:opacity-90'>
+            className='py-2 mt-5 text-white font-bold text-lg bg-gradient-to-r from-primary-700 rounded-lg to-primary-900 hover:opacity-90'>
             List for sale
           </button>
         </form>

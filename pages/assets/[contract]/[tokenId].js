@@ -101,9 +101,9 @@ const Token = () => {
             </div>
           </Collapse>
           <Collapse buttonText='Attributes'>
-            <div className='grid grid-cols-3 gap-3 bg-purple-100 p-4'>
+            <div className='grid grid-cols-3 gap-3 bg-primary-100 p-4'>
               {data?.metadata?.attributes?.map((el) => (
-                <div className='col-span-1 border text-black grid place-items-center bg-purple-200 border-purple-300 text-center p-1 rounded-lg'>
+                <div className='col-span-1 border text-black grid place-items-center bg-primary-200 border-primary-300 text-center p-1 rounded-lg'>
                   <small className='font-bold'>{el.trait_type}</small>
                   <small>{el.value}</small>
                 </div>

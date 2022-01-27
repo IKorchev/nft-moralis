@@ -28,7 +28,7 @@ const Navbar = () => {
             </Menu.Button>
             <Menu.Items
               as='nav'
-              className='z-40 text-white fixed h-[35rem] w-screen bg-purple-800 py-24 rounded-b-xl  flex flex-col justify-evenly items-center'>
+              className='z-40 text-white fixed h-[35rem] w-screen bg-primary-800 py-24 rounded-b-xl  flex flex-col justify-evenly items-center'>
               <Menu.Item as={Link} href='/'>
                 <a className='text-3xl my-4 cursor-pointer'>Home</a>
               </Menu.Item>

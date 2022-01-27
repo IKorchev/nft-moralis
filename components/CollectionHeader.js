@@ -42,7 +42,7 @@ const CollectionHeader = ({ address, chain }) => {
           opacity: 1,
         }}
         exit={{ opacity: 0 }}
-        className='flex flex-col bg-gradient-to-b from-primary-dark/90   via-purple-900/70 to-primary-dark/90'>
+        className='flex flex-col'>
         <div className='flex gap-2 container mx-auto justify-center lg:justify-end px-5 pb-12 lg:pb-3'>
           {collection[address] &&
             Object?.values(collection[address])?.map((el, i) => (
@@ -56,7 +56,7 @@ const CollectionHeader = ({ address, chain }) => {
                 ) : i === 1 ? (
                   <BsTwitter className='text-2xl text-blue-400' />
                 ) : i === 2 ? (
-                  <BsInstagram className='text-2xl text-purple-800' />
+                  <BsInstagram className='text-2xl text-primary-800' />
                 ) : (
                   i === 3 && <BsDiscord className='text-2xl text-gray-900' />
                 )}
@@ -74,11 +74,11 @@ const CollectionHeader = ({ address, chain }) => {
           </h3>
         </div>
         <div className='container mx-auto my-5 px-5 max-w-[50rem]'>
-          <div className='bg-gradient-to-tr from-purple-900 via-purple-900 to-purple-300/30 border border-pinkish text-white px-5 py-5 rounded-lg '>
+          <div className='bg-gradient-to-b from-primary-900  via-primary-800 to-primary-900 border border-pinkish text-white px-5 py-5 rounded-lg '>
             <h4 className='text-xl text-center mb-5 border-b-4 border-pinkish w-max mx-auto'>
               Information
             </h4>
-            <div className='divide-y divide-primary-lightest'>
+            <div className='divide-y divide-primary-100'>
               <p className='w-full flex justify-between items-center py-2 overflow-hidden'>
                 <span>Address:</span>
                 <span className='text-xs'>{data?.token_address}</span>

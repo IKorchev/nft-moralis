@@ -11,10 +11,10 @@ const Collapse = ({ children, buttonText, defaultOpen }) => {
         <div className=' rounded-lg overflow-hidden bg-white mt-2'>
           <Disclosure.Button
             className={`transition-all  duration-300 flex justify-between text-black w-full px-4 text-lg font-bold  py-5 ${
-              open ? "bg-purple-500 " : "bg-white"
+              open ? "bg-primary-500 " : "bg-white"
             }
-           text-left  rounded-lg hover:bg-purple-400  focus:outline-none
-            focus-visible:ring focus-visible:ring-purple-200 focus-visible:ring-opacity-75`}>
+           text-left  rounded-lg hover:bg-primary-400  focus:outline-none
+            focus-visible:ring focus-visible:ring-primary-200 focus-visible:ring-opacity-75`}>
             {buttonText}
             <ChevronIcon
               className={`h-8 w-8 transition-all duration-500 ${

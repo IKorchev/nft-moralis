@@ -16,11 +16,6 @@
   body {
     @apply font-poppins;
   }
-  td,
-  th {
-    @apply border border-primary p-2;
-  }
-
   input,
   button,
   select {
@@ -45,42 +40,6 @@
 }
 html {
   scroll-behavior: smooth;
-}
-.ReactModal__Overlay {
-  background-color: rgb(48, 31, 31);
-  opacity: 0;
-  transition: opacity 200ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open {
-  background-color: rgba(0, 0, 0, 0.4) !important;
-
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-}
-
-.custom-scroll::-webkit-scrollbar {
-  width: 0.5rem;
-}
-
-/* Track */
-.custom-scroll::-webkit-scrollbar-track {
-  border-radius: 100vh;
-  background: black;
-}
-
-/* Handle */
-.custom-scroll::-webkit-scrollbar-thumb {
-  background: gray;
-  border-radius: 100vh;
-}
-
-/* Handle on hover */
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: #646464;
 }
 
 input::-webkit-outer-spin-button,

@@ -25,8 +25,8 @@ const Skeleton = () => {
           </p>
           <div className='mt-5'>
             <h2 className='text-gray-300 bg-gray-300 animate-pulse'>Transactions</h2>
-            <table className='w-full border-separate border border-purple-400 mt-3 h-12 bg-purple-500 animate-pulse'></table>
-            <div className='bg-purple-500 animate-pulse h-48'></div>
+            <table className='w-full border-separate border border-primary-400 mt-3 h-12 bg-primary-500 animate-pulse'></table>
+            <div className='bg-primary-500 animate-pulse h-48'></div>
           </div>
         </div>
       </div>

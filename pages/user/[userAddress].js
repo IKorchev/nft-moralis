@@ -67,18 +67,18 @@ function UserAddress() {
         defaultChecked={1}
         as='div'
         className='container flex flex-col items-center mt-5'>
-        <Tab.List className='text-white bg-purple-900 flex  justify-evenly rounded-lg  mt-5  '>
+        <Tab.List className='text-white bg-primary-900 flex  justify-evenly rounded-lg  mt-5  '>
           <Tab
             className={({ selected }) =>
               `${
-                selected ? "bg-purple-100 text-black" : ""
+                selected ? "bg-primary-100 text-black" : ""
               } flex items-center px-12 py-3 rounded-lg `
             }>
             <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
           </Tab>
           <Tab
             //prettier-ignore
-            className={({ selected }) =>`${selected ? "bg-purple-100 text-black" : ""} flex items-center px-12 py-3 rounded-lg `}>
+            className={({ selected }) =>`${selected ? "bg-primary-100 text-black" : ""} flex items-center px-12 py-3 rounded-lg `}>
             <FiActivity className='mr-3 text-xl' /> Activity
           </Tab>
         </Tab.List>
@@ -102,7 +102,7 @@ function UserAddress() {
                     leave='transition ease-in-out duration-300 transform'
                     leaveFrom='translate-x-0'
                     leaveTo='translate-x-full'>
-                    <div className='ml-auto relative max-w-xs w-full h-full bg-purple-900  shadow-xl py-4 pb-5 flex flex-col overflow-y-auto'>
+                    <div className='ml-auto relative max-w-xs w-full h-full bg-primary-900  shadow-xl py-4 pb-5 flex flex-col overflow-y-auto'>
                       <div className='px-4 flex items-center justify-between'>
                         <h2 className='text-lg font-medium text-gray-100'>Filters</h2>
                         <button
@@ -200,7 +200,7 @@ function UserAddress() {
             className='h-[40rem] container max-w-[70rem] mx-auto my-12 overflow-y-auto styled-scrollbar'>
             <TransactionsTable
               rowProps={{
-                className: "bg-purple-50 text-lg ",
+                className: "bg-primary-50 text-lg ",
               }}
               transactions={transactions}
             />

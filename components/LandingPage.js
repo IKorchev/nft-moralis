@@ -55,7 +55,7 @@ const LandingPage = () => {
         <div className='mt-12'>
           <Link href='/marketplace'>
             <a
-              className='transition duration-300 bg-pink-600  w-max text-xl mt-5 px-5 py-1.5 
+              className='transition duration-300 bg-pinkish  w-max text-xl mt-5 px-5 py-1.5 
             rounded-lg border-pinkish border-2 focus:ring ring-white
             hover:bg-pink-900
             '>
@@ -64,7 +64,8 @@ const LandingPage = () => {
           </Link>
           <Link href='/launchpad'>
             <a
-              className='transition duration-300  text-pink-800 bg-light w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2 hover:bg-purple-200
+              className='transition duration-300  text-pinkish bg-light w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2
+              hover:bg-pink-900 hover:text-white
               focus:ring ring-white'>
               Launchpad
             </a>

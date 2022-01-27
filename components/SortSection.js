@@ -32,7 +32,7 @@ const SortSection = ({ sortOption, setSortOption }) => {
               </Disclosure.Button>
             </h3>
             <Disclosure.Panel
-              className={` py-2  bg-pink-800 scrollbar-thin  scrollbar-track-purple-900 overflow-auto scrollbar-thumb-pinkish `}>
+              className={` py-2  bg-pink-800 scrollbar-thin  scrollbar-track-primary-900 overflow-auto scrollbar-thumb-pinkish `}>
               <div className=''>
                 {sortOptions?.map((option, i) => (
                   <button

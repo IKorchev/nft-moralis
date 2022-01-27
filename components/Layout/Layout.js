@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
   return (
     <motion.div
       exit={{ opacity: 0, scale: 0, transition: { duration: 3 } }}
-      className='bg-gradient-to-l from-primary-dark to-primary-900 relative w-full'>
+      className='bg-primary-900 relative w-full'>
       <Navbar />
       <ToastContainer
         className=''

@@ -15,7 +15,7 @@ export default function Dropdown() {
       autoClose: 1000,
       className: "mt-12 bg-light",
       closeButton: true,
-      progressClassName: "bg-gradient-to-r from-pinkish to-purple-500",
+      progressClassName: "bg-gradient-to-r from-pinkish to-primary-500",
     })
   }
   return (
@@ -48,7 +48,7 @@ export default function Dropdown() {
                 notify("Address copied!", "success")
               }}
               className={`${
-                active ? "bg-purple-500 text-white" : "text-gray-900"
+                active ? "bg-primary-500 text-white" : "text-gray-900"
               } flex rounded-md items-center w-full px-2 py-2 text-md`}>
               <AiOutlineCopy className='mr-2 text-lg ' /> Copy address
             </button>
@@ -59,7 +59,7 @@ export default function Dropdown() {
             <button
               onClick={() => router.push(`/user/${account}`)}
               className={`${
-                active ? "bg-purple-500 text-white" : "text-gray-900"
+                active ? "bg-primary-500 text-white" : "text-gray-900"
               } flex rounded-md items-center w-full px-2 py-2 text-md`}>
               <AiFillAppstore className='mr-2 text-lg' /> NFTs
             </button>
