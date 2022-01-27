@@ -24,6 +24,8 @@ export default async function handler(req, res) {
     const owner = await nftContract.ownerOf(tokenId)
     const { metadata, error } = await getTokenMetadata(tokenURI)
     const data = {
+      contractAddress: contract,
+      tokenId,
       owner,
       symbol,
       metadata,

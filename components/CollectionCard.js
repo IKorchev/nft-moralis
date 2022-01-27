@@ -5,6 +5,3 @@ const CollectionCard = ({ contractAddress, image, name }) => {
 }
 
 export default CollectionCard
-{
-  contractAddress, image, name
-}

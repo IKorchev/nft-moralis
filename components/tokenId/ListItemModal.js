@@ -8,8 +8,10 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
   const { listItem } = useMarketInteractions()
   const onSubmit = (e) => {
     e.preventDefault()
+    console.log(data)
     listItem(data?.contractAddress, data?.tokenId, price)
   }
+  console.log(data)
   return (
     <Dialog
       as={motion.div}

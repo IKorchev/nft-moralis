@@ -3,7 +3,6 @@ import { useRouter } from "next/router"
 import Collapse from "../../../components/tokenId/Collapse"
 import useSWR from "swr"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
-import Skeleton from "../../../components/tokenId/Skeleton"
 import TransactionsTable from "../../../components/tokenId/TransactionsTable"
 import TokenImage from "../../../components/tokenId/TokenImage"
 import { tokenIdFetcher } from "../../../utils/fetcher"
@@ -11,9 +10,12 @@ import Link from "next/link"
 import ActivityChart from "../../../components/ActivityChart"
 import { MoonLoader } from "react-spinners"
 import { motion } from "framer-motion"
+import { useState } from "react"
+import ListItemModal from "../../../components/tokenId/ListItemModal"
 const Token = () => {
-  const { chain, Moralis } = useMoralisData()
+  const { chain, Moralis, account } = useMoralisData()
   const { query } = useRouter()
+  const [open, setOpen] = useState(false)
   const { data, error, isValidating } = useSWR(
     {
       url: chain ? "/api/nft" : null,
@@ -79,6 +81,17 @@ const Token = () => {
               <p className='mt-5'>
                 <span className='font-bold'> Address:</span> {query.contract}
               </p>
+
+              {data?.owner.toLowerCase() == account.toLowerCase() && (
+                <button
+                  onClick={() => {
+                    setOpen(true)
+                  }}
+                  className='bg-pinkish text-white p-2 m-2'>
+                  List item
+                </button>
+              )}
+
               <p className='mt-2'>
                 <span className='font-bold'> Token ID:</span> {query.tokenId}
               </p>
@@ -107,6 +120,12 @@ const Token = () => {
           </Collapse>
         </div>
       </div>
+      <ListItemModal
+        data={data}
+        chain={chain}
+        isOpen={open}
+        onClose={() => setOpen(false)}
+      />
     </motion.div>
   )
 }

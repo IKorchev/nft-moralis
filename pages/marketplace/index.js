@@ -34,7 +34,7 @@ const Home = () => {
   const { chain } = useMoralisData()
   const [sortOption, setSortOption] = useState("date-asc")
   //prettier-ignore
-  const {data: allListings,error,isFetching,isLoading} = useMoralisQuery("MarketItems",(q) => q.equalTo("confirmed", true).equalTo("sold", true),[],{live: true,})
+  const {data: allListings,error,isFetching,isLoading} = useMoralisQuery("MarketItems",(q) => q.equalTo("confirmed", true),[],{live: true,})
   if (chain?.chainId !== "0x3") return <ChangeNetwork />
   if (error) return null
   if (isFetching || isLoading) {
