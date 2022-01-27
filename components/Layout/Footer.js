@@ -5,7 +5,7 @@ import HUOBIIcon from "../../assets/huobi.svg"
 import Link from "next/link"
 const Footer = () => {
   return (
-    <div className='footer bg-primary-900 text-light border-t border-pinkish'>
+    <div className='footer bg-primary-900 text-light border-t border-secondary'>
       <div className='container px-12 xl:px-32 mx-auto flex flex-col xl:flex-row justify-between pt-12'>
         <div>
           <h1 className='font-semibold text-3xl text-pink-400 text-center xl:text-start'>

@@ -135,7 +135,7 @@ const ChangeNetwork = () => {
       exit={{ opacity: 0 }}
       className='grid place-items-center h-[70vh]'>
       <button
-        className='bg-pinkish p-3 text-lg rounded-lg'
+        className='bg-secondary p-3 text-lg rounded-lg'
         onClick={() => switchNetwork("0x3")}>
         Switch to ropsten
       </button>

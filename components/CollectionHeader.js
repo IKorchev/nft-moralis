@@ -74,8 +74,8 @@ const CollectionHeader = ({ address, chain }) => {
           </h3>
         </div>
         <div className='container mx-auto my-5 px-5 max-w-[50rem]'>
-          <div className='bg-gradient-to-b from-primary-900  via-primary-800 to-primary-900 border border-pinkish text-white px-5 py-5 rounded-lg '>
-            <h4 className='text-xl text-center mb-5 border-b-4 border-pinkish w-max mx-auto'>
+          <div className='bg-gradient-to-b from-primary-900  via-primary-800 to-primary-900 border border-secondary text-white px-5 py-5 rounded-lg '>
+            <h4 className='text-xl text-center mb-5 border-b-4 border-secondary w-max mx-auto'>
               Information
             </h4>
             <div className='divide-y divide-primary-100'>

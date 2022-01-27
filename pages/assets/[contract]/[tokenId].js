@@ -87,7 +87,7 @@ const Token = () => {
                   onClick={() => {
                     setOpen(true)
                   }}
-                  className='bg-pinkish text-white p-2 m-2'>
+                  className='bg-secondary text-white p-2 m-2'>
                   List item
                 </button>
               )}

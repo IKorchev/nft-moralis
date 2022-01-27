@@ -30,11 +30,11 @@ const Launchpad = () => {
                 const cost = await getMintCost(collectionAddress)
                 mintToken(collectionAddress, cost, 1)
               }}
-              className='bg-pinkish py-1 px-3 text-lg mt-12 rounded-full'>
+              className='bg-secondary  py-1 px-3 text-lg mt-12 rounded-full hover:bg-secondary-dark transition duration-500'>
               Mint now
             </button>
             <Link href={`/assets/${collectionAddress}`}>
-              <a className='bg-light text-pinkish ml-3 py-1 px-3 text-lg mt-12 rounded-full focus:ring-2 focus:ring-pinkish'>
+              <a className='bg-light text-secondary ml-3 py-1 px-3 text-lg mt-12 rounded-full focus:ring-2 focus:ring-secondary'>
                 Learn more
               </a>
             </Link>
@@ -43,7 +43,7 @@ const Launchpad = () => {
             <p className='text-center'>Minted</p>
             <div className='w-full flex h-5 bg-primary-700 my-3 rounded-full relative overflow-hidden'>
               <div
-                className='bg-pinkish/90 rounded-full  h-5 grid place-items-center absolute top-0 left-0 '
+                className='bg-secondary/90 rounded-full  h-5 grid place-items-center absolute top-0 left-0 '
                 style={{ width: `${percentage}%` }}></div>
               <span className='text-[12px] text-center w-full'>
                 {mintedAmount}/{totalAmount}
@@ -55,7 +55,7 @@ const Launchpad = () => {
         <div className='flex-1 w-full h-full relative'>
           <Link href={`/assets/${collectionAddress}`}>
             <img
-              className='object-contain w-full cursor-pointer shadow-lg shadow-pinkish/30'
+              className='object-contain w-full cursor-pointer shadow-lg shadow-secondary/30'
               src='https://lh3.googleusercontent.com/r-PVQ7JOzQDYECaSoy-lnlxajMdPbvj4z9FZbcJOay6WQUXJudY5kOKH8cTL2FUr4l5Hv-LzIzKti1YPi8CNZm_PTl09tn1GDzRJjQ=s550'
               alt=''
             />
@@ -63,7 +63,7 @@ const Launchpad = () => {
         </div>
       </div>
       <div className='container py-5 mx-auto mt-12'>
-        <h1 className='text-3xl text-white border-b border-pinkish py-3'>Upcoming</h1>
+        <h1 className='text-3xl text-white border-b border-secondary py-3'>Upcoming</h1>
         <div className='flex mt-5 px-2 gap-5 w-full overflow-auto styled-scrollbar py-4 scrollbar-thumb-primary-600'>
           {[0, 1, 2, 3, 1, 3, 4, 5, 6, 7].map((el) => (
             <Card
@@ -74,7 +74,7 @@ const Launchpad = () => {
         </div>
       </div>
       <div className='container py-12 mx-auto'>
-        <h1 className='text-3xl text-white border-b border-pinkish py-3'>Completed</h1>
+        <h1 className='text-3xl text-white border-b border-secondary py-3'>Completed</h1>
         <div className='flex mt-5 px-2 gap-5 w-full overflow-auto styled-scrollbar py-4 scrollbar-thumb-primary-600'>
           {[0, 1, 2, 3, 1, 3, 4, 5, 6, 7].map((el) => (
             <Card

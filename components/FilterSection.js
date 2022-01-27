@@ -40,7 +40,7 @@ const FilterSection = ({
               <Disclosure.Panel
                 className={`${variant === "desktop" ? "max-h-96" : ""} 
                   py-2  bg-pink-800 scrollbar-thin scrollbar-track-primary-900 overflow-auto
-                 scrollbar-thumb-pinkish `}>
+                 scrollbar-thumb-secondary `}>
                 <div className=''>
                   <h1 className='py-2 text-center text-white  border-b border-white'>
                     Collections

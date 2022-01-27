@@ -15,7 +15,7 @@ export default function Dropdown() {
       autoClose: 1000,
       className: "mt-12 bg-light",
       closeButton: true,
-      progressClassName: "bg-gradient-to-r from-pinkish to-primary-500",
+      progressClassName: "bg-gradient-to-r from-secondary to-primary-500",
     })
   }
   return (

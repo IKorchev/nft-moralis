@@ -60,7 +60,7 @@ const Asset = () => {
       </div>
       <div className='flex justify-center'>
         <button
-          className='bg-pinkish p-2 rounded-md'
+          className='bg-secondary p-2 rounded-md'
           onClick={(e) => {
             e.preventDefault()
             containerRef.current.scrollIntoView()

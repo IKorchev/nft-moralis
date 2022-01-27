@@ -42,7 +42,7 @@ const LandingPage = () => {
           initial='hidden'
           animate='visible'
           className='w-full lg:w-1/2'>
-          <motion.p variants={variants} className='mb-2 text-lg text-pinkish'>
+          <motion.p variants={variants} className='mb-2 text-lg text-secondary'>
             Around the blockchain
           </motion.p>
           <motion.h1 variants={variants} className='text-5xl font-semibold text-white '>
@@ -55,8 +55,8 @@ const LandingPage = () => {
         <div className='mt-12'>
           <Link href='/marketplace'>
             <a
-              className='transition duration-300 bg-pinkish  w-max text-xl mt-5 px-5 py-1.5 
-            rounded-lg border-pinkish border-2 focus:ring ring-white
+              className='transition duration-300 bg-secondary  w-max text-xl mt-5 px-5 py-1.5 
+            rounded-lg border-secondary border-2 focus:ring ring-white
             hover:bg-pink-900
             '>
               Marketplace
@@ -64,7 +64,7 @@ const LandingPage = () => {
           </Link>
           <Link href='/launchpad'>
             <a
-              className='transition duration-300  text-pinkish bg-light w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-pinkish border-2
+              className='transition duration-300  text-secondary bg-light w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-secondary border-2
               hover:bg-pink-900 hover:text-white
               focus:ring ring-white'>
               Launchpad
@@ -73,7 +73,7 @@ const LandingPage = () => {
         </div>
       </div>
       <div>
-        <p className='text-center text-pinkish text-xl'>Blockchains supported</p>
+        <p className='text-center text-secondary text-xl'>Blockchains supported</p>
         <div className='flex mt-12 mx-auto justify-around px-48 w-full'>
           <img src={ETHLogo.src} className='h-12  mx-2 lg:h-24' />
           <img src={MATICLogo.src} className='h-12 mx-2 lg:h-24' />

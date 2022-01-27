@@ -144,7 +144,7 @@ function UserAddress() {
                 <div className='flex items-center'>
                   <button
                     type='button'
-                    className='p-2 -m-2 ml-4 sm:ml-6 text-white hover:text-pinkish lg:hidden'
+                    className='p-2 -m-2 ml-4 sm:ml-6 text-white hover:text-secondary lg:hidden'
                     onClick={() => setMobileFiltersOpen(true)}>
                     <span className='sr-only'>Filters</span>
                     <FilterIcon className='w-5 h-5' aria-hidden='true' />

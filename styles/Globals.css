@@ -30,12 +30,12 @@
   .card {
     @apply flex flex-col items-center rounded-lg w-72 overflow-hidden 
     bg-white mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4
-     text-black hover:border-pinkish backdrop-filter z-0;
+     text-black hover:border-secondary backdrop-filter z-0;
   }
 }
 @layer utilities {
   .styled-scrollbar {
-    @apply scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-pinkish;
+    @apply scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-secondary;
   }
 }
 html {

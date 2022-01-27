@@ -1,6 +1,5 @@
 import { useMoralis } from "react-moralis"
 import Link from "next/link"
-import AccountAndBalance from "./AccountAndBalance"
 import Dropdown from "./Dropdown"
 import { Menu } from "@headlessui/react"
 const Navbar = () => {
@@ -13,7 +12,7 @@ const Navbar = () => {
         {({ open }) => (
           <>
             <Menu.Button as='div'>
-              <button className='bg-pinkish rounded-lg fixed top-3 left-3 z-50 p-5 inline-block cursor-pointer'>
+              <button className='bg-secondary rounded-lg fixed top-3 left-3 z-50 p-5 inline-block cursor-pointer'>
                 <div
                   className={` transition ease-in-out transform duration-700 ${
                     open && "-rotate-45 translate-y-1"

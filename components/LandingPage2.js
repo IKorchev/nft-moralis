@@ -8,7 +8,7 @@ const LandingPage2 = () => {
     <div className=''>
       <img src={Wave.src} className='-pt-24' />
       <div className='bg-light'>
-        <h1 className='text-pinkish pt-24 pb-12 text-center text-5xl font-semibold'>
+        <h1 className='text-secondary pt-24 pb-12 text-center text-5xl font-semibold'>
           Featured collections
         </h1>
 
