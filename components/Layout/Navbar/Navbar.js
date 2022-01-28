@@ -46,7 +46,7 @@ const Navbar = () => {
               <Menu.Item>
                 <button
                   className='text-red-400 inline border-2 border-red-400 px-4 py-2 text-lg mb-5 mt-5 rounded-full '
-                  onClick={logout}>
+                  onClick={deactivateWeb3}>
                   Disconnect
                 </button>
               </Menu.Item>

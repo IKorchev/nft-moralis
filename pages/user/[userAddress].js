@@ -22,6 +22,11 @@ import NFTItem from "../../components/NFTItem"
 import FilterSection from "../../components/FilterSection"
 import SortSection from "../../components/SortSection"
 
+const sortOptions = [
+  { name: "ID Ascending", data: "id-asc" },
+  { name: "ID Descending", data: "id-desc" },
+]
+
 const sortFunction = (object, attribute) => {
   switch (attribute) {
     case "id-asc":
@@ -117,6 +122,7 @@ function UserAddress() {
                         <SortSection
                           sortOption={sortOption}
                           setSortOption={setSortOption}
+                          sortOptions={sortOptions}
                         />
                         <FilterSection
                           variant='mobile'
@@ -153,7 +159,11 @@ function UserAddress() {
               </div>
               <div className='grid grid-cols-1 lg:grid-cols-4  gap-x-8 gap-y-10'>
                 <div className='hidden lg:block  h-max  space-y-1 '>
-                  <SortSection sortOption={sortOption} setSortOption={setSortOption} />
+                  <SortSection
+                    sortOption={sortOption}
+                    setSortOption={setSortOption}
+                    sortOptions={sortOptions}
+                  />
                   <FilterSection
                     filterOptions={filterOptions}
                     filterOption={filterOption}

@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react"
-import { useChain, useMoralis } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { useRouter } from "next/router"
 import AccountAndBalance from "./AccountAndBalance"
 import { motion } from "framer-motion"
@@ -9,7 +9,7 @@ import { toast } from "react-toastify"
 
 export default function Dropdown() {
   const router = useRouter()
-  const { logout, account, disconnect } = useMoralis()
+  const { account, deactivateWeb3 } = useMoralis()
   const notify = (text, type) => {
     toast[type](text, {
       autoClose: 1000,
@@ -68,7 +68,7 @@ export default function Dropdown() {
         <Menu.Item>
           {({ active }) => (
             <button
-              onClick={logout}
+              onClick={deactivateWeb3}
               className={`${
                 active ? "bg-red-500 text-white" : "text-gray-900 bg-red-300"
               }  flex rounded-md items-center w-full px-2 py-2 text-md mt-1`}>

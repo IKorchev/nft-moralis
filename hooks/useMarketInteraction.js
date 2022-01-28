@@ -1,7 +1,6 @@
 import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
 import { useChain, useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { toast } from "react-toastify"
-import { useMemo } from "react"
 
 const useMarketInteractions = () => {
   const contractFunctions = {
@@ -11,9 +10,10 @@ const useMarketInteractions = () => {
     IS_APPROVED_FOR_ALL: "isApprovedForAll",
     SET_APPROVAL_FOR_ALL: "setApprovalForAll",
     APPROVE: "approve",
-    FETCH_MARKET_ITEMS: "fetchMarketItems",
     COST: "cost",
     MINT: "mint",
+    MAX_SUPPLY: "maxSupply",
+    TOTAL_SUPPLY: "totalSupply",
     CREATE_MARKET_ITEM: "createMarketItem",
   }
   const { Moralis, account } = useMoralis()
@@ -24,12 +24,12 @@ const useMarketInteractions = () => {
 
   //update in moralis database
   const updateItem = async (itemId) => {
-    console.log(itemId)
     query.equalTo("itemId", itemId).equalTo("confirmed", true)
     const result = await query.first()
     console.log(result)
-    // result.set("sold", true)
-    // result.save()
+    result.set("sold", true)
+    result.set("owner", account)
+    result.save()
   }
 
   //get cost required for mint
@@ -47,6 +47,35 @@ const useMarketInteractions = () => {
     return cost
   }
 
+  //gets the amount of tokens that have been minted so far for a given contract
+  const getTotalSupply = async (contractAddress) => {
+    let mintedAmount
+    await contractProcessor.fetch({
+      params: {
+        abi: NFT_ABI,
+        contractAddress: contractAddress,
+        functionName: contractFunctions.TOTAL_SUPPLY,
+      },
+      onError: (err) => console.log(err),
+      onSuccess: (data) => (mintedAmount = data),
+    })
+    return mintedAmount
+  }
+
+  //gets max supply of tokens for given contract
+  const getMaxSupply = async (contractAddress) => {
+    let maxSupply
+    await contractProcessor.fetch({
+      params: {
+        abi: NFT_ABI,
+        contractAddress: contractAddress,
+        functionName: contractFunctions.MAX_SUPPLY,
+      },
+      onError: (err) => console.log(err),
+      onSuccess: (data) => (maxSupply = data),
+    })
+    return maxSupply
+  }
   //mints token to user address
   const mintToken = async (contractAddress, mintCost, mintAmount) => {
     await contractProcessor.fetch({
@@ -64,22 +93,9 @@ const useMarketInteractions = () => {
     })
   }
 
-  // get nfts inside market contract
-  const fetchMarketItems = async () => {
-    await contractProcessor.fetch({
-      params: {
-        abi: MARKET_ABI,
-        contractAddress: MARKET_ADDRESS,
-        functionName: contractFunctions.FETCH_MARKET_ITEMS,
-      },
-      onSuccess: (data) => console.log(data),
-      onError: (err) => console.log(err),
-    })
-  }
-
   // buy NFT from Market
   const buyItem = async (nftContract, itemId, price) => {
-    contractProcessor.fetch({
+  await  contractProcessor.fetch({
       params: {
         contractAddress: MARKET_ADDRESS,
         abi: MARKET_ABI,
@@ -91,7 +107,6 @@ const useMarketInteractions = () => {
         },
       },
       onSuccess: (data) => console.log(data),
-      onComplete: () => updateItem(itemId),
     })
   }
 
@@ -109,6 +124,9 @@ const useMarketInteractions = () => {
           price: Moralis.Units.ETH(price).toString(),
         },
       },
+      onSuccess: (data) => console.log("Success "),
+      onError: (err) => console.log("Error"),
+      onComplete: (data) => console.log("Complete"),
     })
   }
 
@@ -173,7 +191,15 @@ const useMarketInteractions = () => {
       createMarketItem(listingPrice, contractAddress, tokenId, price)
     }
   }
-  return { buyItem, listItem, updateItem, fetchMarketItems, mintToken, getMintCost }
+  return {
+    buyItem,
+    listItem,
+    updateItem,
+    mintToken,
+    getMintCost,
+    getMaxSupply,
+    getTotalSupply,
+  }
 }
 
 export default useMarketInteractions

@@ -2,16 +2,11 @@ import { Disclosure } from "@headlessui/react"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid"
 import { MdRadioButtonChecked, MdRadioButtonUnchecked, MdSort } from "react-icons/md"
 
-const sortOptions = [
-  { name: "ID Ascending", data: "id-asc" },
-  { name: "ID Descending", data: "id-desc" },
-]
-
-const SortSection = ({ sortOption, setSortOption }) => {
+const SortSection = ({ sortOption, setSortOption, sortOptions, defaultOpen }) => {
   return (
-    <Disclosure as='div' className='' defaultOpen={false}>
+    <Disclosure as='div' className='' defaultOpen={defaultOpen}>
       {({ open }) => (
-        <form className={`block`}>
+        <form className='block'>
           <h3 className='sr-only'>Sort</h3>
           <>
             <h3 className=' flow-root'>
