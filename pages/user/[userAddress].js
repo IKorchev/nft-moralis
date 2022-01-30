@@ -6,7 +6,7 @@ import { shortenIfAddress } from "@usedapp/core"
 import { useRouter } from "next/router"
 import { useNFTTransfers } from "react-moralis"
 import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
-import { getNFTsForUser } from "../../utils/fetcher"
+import { getNFTsForUser, revalidateOptions } from "../../utils/fetcher"
 import { Fragment, useLayoutEffect, useState } from "react"
 //ICONS
 import { FilterIcon, XIcon } from "@heroicons/react/solid"
@@ -39,15 +39,26 @@ const sortFunction = (object, attribute) => {
 function UserAddress() {
   const router = useRouter()
   const { chain } = useMoralisData()
+  const { getNFTTransfers } = useNFTTransfers()
   const [sortOption, setSortOption] = useState()
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [filterOptions, setFilterOptions] = useState([])
   const [filterOption, setFilterOption] = useState(null)
-  //prettier-ignore
-  const { data, error, isValidating } = useSWR({url: "noNeedForUrl",args: {chain: chain?.chainId,address: router.query.userAddress,},},getNFTsForUser,{revalidateOnFocus: false,revalidateOnReconnect: false,revalidateIfStale: false,})
-  const { data: transactions, getNFTTransfers } = useNFTTransfers()
+  const [transactions, setTransactions] = useState([])
 
+  const options = {
+    url: "noNeedForUrl",
+    args: { chain: chain?.chainId, address: router.query.userAddress },
+  }
+  //prettier-ignore
+  const { data, error, isValidating } = useSWR(options, getNFTsForUser,revalidateOptions)
+  
   useLayoutEffect(() => {
+    getNFTTransfers({
+      onSuccess: (data) => setTransactions(data),
+      onComplete: (result) => console.log(result),
+      onError: (result) => console.log(result),
+    })
     if (data) {
       setFilterOptions(uniq(data.result.map((el) => el.name)))
     }

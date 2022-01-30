@@ -1,19 +1,22 @@
 import { motion } from "framer-motion"
-import { formatIpfs } from "../utils/common"
+import { formatChain, formatIpfs } from "../utils/common"
 import Link from "next/link"
 import useSWR from "swr"
-import fetcher from "../utils/fetcher"
+import { tokenIdFetcher, revalidateOptions } from "../utils/fetcher"
 import { FadeLoader } from "react-spinners"
 import { shortenIfAddress } from "@usedapp/core"
-
+import { useChain } from "react-moralis"
+import ListItemModal from "./tokenId/ListItemModal"
+import { useState } from "react"
 const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
+  const { chain, account } = useChain()
+  const [isOpen, setIsOpen] = useState(false)
   //prettier-ignore
-  const { data, error, isValidating } = useSWR({url: "notNeeded", args: {
-    tokenUri: tokenUri, nftContract: tokenAddress, tokenId:tokenId
-  }}, fetcher, {
-    revalidateOnFocus:false,
-    revalidateIfStale:false,
-  })
+  const { data, error, isValidating } = useSWR({url: chain ? "/api/nft" : null,
+  args: { contract: tokenAddress,
+          tokenId: tokenId,
+          chain: { chainString: formatChain(chain?.networkId), chainId: chain?.chainId },},},
+          tokenIdFetcher,revalidateOptions)
 
   return (
     <motion.div
@@ -30,13 +33,21 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
             autoPlay
             muted
             controls
-            src={formatIpfs(data?.image_url || data?.image || data?.url)}
+            src={
+              formatIpfs(
+                data?.metadata?.image_url || data?.metadata.image || data?.metadata?.url
+              ) || ""
+            }
             alt=''
             className='rounded-lg object-scale-down cursor-pointer h-48 '
           />
         ) : (
           <img
-            src={formatIpfs(data?.image_url || data?.image || data?.url)}
+            src={
+              formatIpfs(
+                data?.metadata?.image_url || data?.metadata?.image || data?.metadata?.url
+              ) || ""
+            }
             alt=''
             className='object-scale-down cursor-pointer h-48'
           />
@@ -50,7 +61,22 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
             </small>
           </a>
         </Link>
-        <p className='font-bold'>{data?.name}</p>
+        <p className='font-bold'>{data?.metadata?.name}</p>
+        {data?.owner.toLowerCase() === account?.toLowerCase() && (
+          <>
+            <button
+              onClick={() => setIsOpen(true)}
+              className='bg-teal-800 text-white px-2 py-1 rounded-sm mt-1'>
+              List for sale
+            </button>
+            <ListItemModal
+              chain={chain}
+              data={data}
+              isOpen={isOpen}
+              onClose={() => setIsOpen(!isOpen)}
+            />
+          </>
+        )}
       </div>
       {children}
     </motion.div>

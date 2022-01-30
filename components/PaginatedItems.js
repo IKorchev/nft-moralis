@@ -24,11 +24,11 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
   }
 
   return (
-    <div className=' text-white '>
+    <div className=' text-white relative'>
       {currentItems && (
         <div className='flex flex-col items-center justify-center '>
-          <div ref={scrollToRef} />
-          <div className='flex flex-wrap gap-5 w-full justify-center  lg:justify-start  min-h-[40rem]'>
+          <div className='absolute -top-24' ref={scrollToRef} />
+          <div className='flex flex-wrap gap-5 w-full justify-start  lg:justify-start  min-h-[40rem]'>
             {currentItems.map(renderItem)}
           </div>
           {items?.length > itemsPerPage && (
@@ -45,7 +45,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
                   ...
                 </span>
               }
-              activeLinkClassName='bg-primary-600 text-gray-100'
+              activeLinkClassName='bg-gray-300 text-gray-900'
               nextLabel='>'
               onPageChange={handlePageClick}
               pageRangeDisplayed={0}

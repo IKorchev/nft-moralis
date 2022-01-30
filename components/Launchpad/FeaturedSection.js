@@ -1,22 +1,34 @@
 import Link from "next/link"
 import { useLayoutEffect } from "react"
 import { useState } from "react"
-import useMarketInteractions from "../../hooks/useMarketInteraction"
+import useMarketInteraction from "../../hooks/useMarketInteraction"
 import { useMoralis } from "react-moralis"
 import { BiRefresh } from "react-icons/bi"
 import { toast } from "react-toastify"
 import Loading from "../Loading"
+import Countdown from "./Countdown"
+import moment from "moment"
+
+//
 
 const FeaturedSection = ({ featuredCollection }) => {
-  const { mintToken, getMintCost, getMaxSupply, getTotalSupply } = useMarketInteractions()
+  const { mintToken, getMintCost, getMaxSupply, getTotalSupply } = useMarketInteraction()
+
   const { Moralis } = useMoralis()
-  const [cost, setCost] = useState(0)
+  const [cost, setCost] = useState()
   const [maxSupply, setMaxSupply] = useState()
   const [mintedAmount, setMintedAmount] = useState()
 
+  //calculating time left
+  const targetTime = moment(new Date(featuredCollection?.startDate))
+  const [currentTime, setCurrentTime] = useState(moment().utc())
+  const timeLeft = moment.duration(targetTime.diff(currentTime))
+  const countdownFinished = timeLeft.seconds() <= 0
+
+  // Handlers
   const getCostHandler = async () => {
     const mintCost = await getMintCost(featuredCollection?.contractAddress)
-    mintCost && setCost(Moralis.Units.FromWei(mintCost))
+    mintCost && setCost(mintCost)
   }
   const getMaxSupplyHandler = async () => {
     const maxSupply = await getMaxSupply(featuredCollection?.contractAddress)
@@ -26,21 +38,30 @@ const FeaturedSection = ({ featuredCollection }) => {
     const tokensMinted = await getTotalSupply(featuredCollection?.contractAddress)
     tokensMinted && setMintedAmount(Number(tokensMinted))
   }
-
-  const handleRefresh = () => {
+  const refreshDataHandler = () => {
     getCostHandler()
     getMaxSupplyHandler()
     getTotalSupplyHandler()
     toast.success("Data refreshed", { autoClose: 1000 })
   }
 
+  //get initial data and start countdown timer
   useLayoutEffect(() => {
     if (featuredCollection) {
       getCostHandler()
       getMaxSupplyHandler()
       getTotalSupplyHandler()
     }
+
+    //countdown timer
+    const interval = setInterval(() => {
+      setCurrentTime(moment().utc())
+    }, 1000)
+
+    return () => clearInterval(interval)
   }, [featuredCollection])
+
+  // While data is being fetched from moralis database
   if (!featuredCollection)
     return (
       <Loading
@@ -48,14 +69,15 @@ const FeaturedSection = ({ featuredCollection }) => {
         loaderProps={{ size: 200, color: "white" }}
       />
     )
+
   return (
     <section className='flex flex-col lg:justify-between border border-primary-700 bg-primary-800/30 rounded-md p-8 lg:p-12 xl:flex-row gap-5 min-h-24 text-white w-full mt-12'>
       <div className='flex-1 relative'>
-        <h1 className='inline text-xl my-2 bg-primary-700 text-center px-4 py-2 uppercase rounded-full '>
+        <h1 className='inline text-xl my-2 -ml-3 bg-primary-700 text-center px-4 py-2 uppercase rounded-full '>
           Featured launch
         </h1>
         <button
-          onClick={handleRefresh}
+          onClick={refreshDataHandler}
           className='w-max rounded-full absolute text-3xl p-1 text-secondary-light bg-primary-700 right-0'>
           <BiRefresh />
         </button>
@@ -63,35 +85,41 @@ const FeaturedSection = ({ featuredCollection }) => {
           {featuredCollection?.collectionName}
         </h2>
         <p className='text-sm mt-5'>{featuredCollection?.description}</p>
-        <div>
-          <button
-            onClick={async () => {
-              const cost = await getMintCost(featuredCollection?.contractAddress)
-              mintToken(featuredCollection?.contractAddress, cost, 1)
-            }}
-            className='bg-secondary  py-1 px-3 text-lg mt-12 rounded-full hover:bg-secondary-dark transition duration-500'>
-            Mint now {cost}
-          </button>
-          <Link href={`/assets/${featuredCollection?.contractAddress}`}>
-            <a className='bg-light text-secondary ml-3 py-1 px-3 text-lg mt-12 rounded-full focus:ring-2 focus:ring-secondary'>
-              Learn more
-            </a>
-          </Link>
-        </div>
-        <div className='mt-12 w-full xl:pr-16'>
-          <p className='text-center'>Minted</p>
-          <div className='w-full flex h-3 bg-primary-700 my-3 rounded-full relative overflow-hidden'>
-            <div
-              className='bg-secondary-dark rounded-full h-3 grid place-items-center absolute top-0 left-0 '
-              style={{ width: `${(mintedAmount / maxSupply) * 100}%` }}></div>
-            <span className='text-[10px] text-center w-full'>
-              {mintedAmount}/{maxSupply}
-            </span>
-          </div>
-          <p className='text-center text-white mt-3'>
-            ({(mintedAmount / maxSupply) * 100}%)
-          </p>
-        </div>
+
+        {/* IMPORTANT: This is not a safety check!
+          The contract owner needs to make sure the mint 
+          function in the smart contract is paused until the counter reaches 0. */}
+
+        {countdownFinished ? (
+          <>
+            <div className='bg-primary-700 rounded-full mt-12 w-max pr-5 border-2 border-primary-600'>
+              <button
+                onClick={async () => {
+                  mintToken(featuredCollection?.contractAddress, cost, 1)
+                }}
+                className='bg-secondary  py-1 px-3 text-lg rounded-full hover:bg-secondary-dark transition duration-500'>
+                Mint now
+              </button>
+              <span> {cost && Moralis.Units.FromWei(cost)} ETH </span>
+            </div>
+            <div className='mt-12 w-full xl:pr-16'>
+              <p className='text-center'>Minted</p>
+              <div className='w-full flex h-4 bg-primary-700 my-3 rounded-full relative overflow-hidden'>
+                <div
+                  className='bg-secondary-light rounded-full h-4 grid place-items-center absolute top-0 left-0 '
+                  style={{ width: `${(mintedAmount / maxSupply) * 100}%` }}></div>
+                <span className='text-[12px] text-center w-full'>
+                  {mintedAmount}/{maxSupply}
+                </span>
+              </div>
+              <p className='text-center text-white mt-3'>
+                ({(mintedAmount / maxSupply) * 100}%)
+              </p>
+            </div>
+          </>
+        ) : (
+          <Countdown timeLeft={timeLeft} />
+        )}
       </div>
       <div className='flex-1 w-full h-full relative'>
         <Link href={`/assets/${featuredCollection?.contractAddress}`}>

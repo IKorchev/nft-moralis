@@ -1,5 +1,5 @@
 import { Dialog } from "@headlessui/react"
-import { AnimatePresence, motion } from "framer-motion"
+import {  motion } from "framer-motion"
 import { useState } from "react"
 import useMarketInteractions from "../../hooks/useMarketInteraction"
 import { formatIpfs } from "../../utils/common"
@@ -9,9 +9,8 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
   const { listItem } = useMarketInteractions()
   const onSubmit = (e) => {
     e.preventDefault()
-    listItem(data?.contractAddress, data?.tokenId, price)
+    listItem(data, price)
   }
-  console.log(data)
   return (
     <Dialog
       as={motion.div}

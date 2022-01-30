@@ -2,7 +2,7 @@ import PaginatedItems from "../../components/PaginatedItems"
 import Loading from "../../components/Loading"
 import MarketItem from "../../components/Marketplace/MarketItem"
 import { useState } from "react"
-import { sortBy } from "lodash"
+import { sortBy, uniqBy } from "lodash"
 import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 import { useChain, useMoralisQuery } from "react-moralis"
 import { motion } from "framer-motion"
@@ -33,7 +33,7 @@ const Home = () => {
   const [sortOption, setSortOption] = useState("date-desc")
 
   //prettier-ignore
-  const {data: allListings,error,isFetching,isLoading} = useMoralisQuery("MarketItems",(q) => q.equalTo("confirmed", true),[],{live: true,})
+  const {data: allListings,error,isFetching,isLoading} = useMoralisQuery("MarketItems",(q) => q.descending('createdAt'),[],{live: true,})
 
   if (chain?.chainId !== "0x3") return <ChangeNetwork />
   if (error) return null
@@ -52,10 +52,11 @@ const Home = () => {
       </div>
       <section aria-labelledby='marketplace-heading' className='pt-6 pb-24'>
         <h2 id='marketplace-heading' className='sr-only'>
-          NFTs
+          Marketplace
         </h2>
-        <div className='flex flex-col lg:flex-row gap-5'>
-          <div className='w-96 mx-auto'>
+        <div className='flex flex-col lg:flex-row justify-start gap-5'>
+          {/* Desktop */}
+          <div className='w-60 hidden xl:flex'>
             <SortSection
               defaultOpen={true}
               sortOption={sortOption}
@@ -63,10 +64,16 @@ const Home = () => {
               sortOptions={sortOptions}
             />
           </div>
-          <div className=' '>
+          <div className=''>
             <PaginatedItems
-              items={sortBy(allListings, (object) => sortFunction(object, sortOption))}
-              itemsPerPage={15}
+              items={sortBy(
+                uniqBy(
+                  allListings,
+                  (el) => el.attributes.tokenId || el.attributes.nftContract
+                ),
+                (object) => sortFunction(object, sortOption)
+              )}
+              itemsPerPage={12}
               renderItem={(el, i) => (
                 <MarketItem
                   createdAt={el.createdAt}

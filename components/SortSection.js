@@ -4,7 +4,7 @@ import { MdRadioButtonChecked, MdRadioButtonUnchecked, MdSort } from "react-icon
 
 const SortSection = ({ sortOption, setSortOption, sortOptions, defaultOpen }) => {
   return (
-    <Disclosure as='div' className='' defaultOpen={defaultOpen}>
+    <Disclosure as='div' className='w-full' defaultOpen={defaultOpen}>
       {({ open }) => (
         <form className='block'>
           <h3 className='sr-only'>Sort</h3>
