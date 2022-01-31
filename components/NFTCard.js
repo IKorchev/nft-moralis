@@ -8,7 +8,7 @@ import { shortenIfAddress } from "@usedapp/core"
 import { useChain } from "react-moralis"
 import ListItemModal from "./tokenId/ListItemModal"
 import { useState } from "react"
-const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
+const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
   const { chain, account } = useChain()
   const [isOpen, setIsOpen] = useState(false)
   //prettier-ignore
@@ -82,4 +82,4 @@ const NFTItem = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
     </motion.div>
   )
 }
-export default NFTItem
+export default NFTCard

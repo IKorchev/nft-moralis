@@ -72,15 +72,6 @@ const LandingPage = () => {
           </Link>
         </div>
       </div>
-      <div>
-        <p className='text-center text-secondary text-xl'>Blockchains supported</p>
-        <div className='flex mt-12 mx-auto justify-around px-48 w-full'>
-          <img src={ETHLogo.src} className='h-12  mx-2 lg:h-24' />
-          <img src={MATICLogo.src} className='h-12 mx-2 lg:h-24' />
-          <img src={AVAXLogo.src} className='h-12 mx-2 lg:h-24' />
-          <img src={BSCLogo.src} className='h-12 mx-2 lg:h-24' />
-        </div>
-      </div>
     </motion.main>
   )
 }

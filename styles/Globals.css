@@ -21,6 +21,7 @@
   select {
     @apply focus:outline-none;
   }
+
   button {
     @apply focus:ring ring-white;
   }
@@ -36,6 +37,9 @@
 @layer utilities {
   .styled-scrollbar {
     @apply scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-secondary;
+  }
+  .react-select__menu-list {
+    @apply .styled-scrollbar;
   }
 }
 html {

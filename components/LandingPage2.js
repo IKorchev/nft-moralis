@@ -1,9 +1,11 @@
-import { shortenIfAddress } from "@usedapp/core"
 import Link from "next/link"
 import Wave from "../assets/wave.svg"
+import { useMoralisData } from "./Providers/MoralisDataProvider"
 
-import collections from "../utils/collections"
+
 const LandingPage2 = () => {
+  const { completedLaunchpads } = useMoralisData()
+
   return (
     <div className=''>
       <img src={Wave.src} className='-pt-24' />
@@ -12,13 +14,15 @@ const LandingPage2 = () => {
           Featured collections
         </h1>
 
-        <div className='flex flex-wrap gap-10 justify-center items-center container mx-auto py-5 px-12 '>
-          {collections.map((el) => (
-            <Link href={`/assets/${el.contractAddress}`}>
-              <div className='flex-col bg-primary-100 rounded-xl overflow-hidden cursor-pointer'>
-                <img src={el.image} className='h-60 w-60 object-contain' />
+        <div
+          className='flex flex-wrap gap-10 justify-center
+         items-center container mx-auto py-5 px-12  '>
+          {completedLaunchpads.slice(0, 3).map((el) => (
+            <Link href={`/assets/${el.attributes.contractAddress}`}>
+              <div className='flex-col bg-light rounded-xl w-60 overflow-hidden cursor-pointer shadow-lg border'>
+                <img src={el.attributes.imageUrl} className='h-60 w-60 object-cover' />
                 <div className='p-5 text-center'>
-                  <h1 className='font-bold'>{el.name}</h1>
+                  <h1 className='font-bold truncate'>{el.attributes.collectionName}</h1>
                 </div>
               </div>
             </Link>

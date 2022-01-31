@@ -25,6 +25,8 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
         <SyncLoader size={5} color='white' />
       </div>
     )
+
+    
   return (
     <AnimatePresence>
       <motion.div
@@ -50,24 +52,24 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
             <h4 className='text-xl text-center mb-5 border-b-4 border-secondary w-max mx-auto'>
               Information
             </h4>
-            <div className='flex gap-5'>
-              <p className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden'>
-                <span>Floor Price:</span>
+            <ul className='flex gap-5'>
+              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+                <span>Floor Price</span>
                 <span className='text-xs'>
                   {floorPrice && parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2)}
                 </span>
-              </p>
-              <p className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden'>
-                <span>Total Listed Count:</span>
+              </li>
+              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+                <span>Listed Count</span>
                 <span className='text-base'>{amountListed}</span>
-              </p>
-              <p className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden'>
-                <span>Token Symbol:</span> <span>{data?.symbol}</span>
-              </p>
-              <p className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden'>
-                <span>Contract type:</span> <span>{data?.contract_type}</span>
-              </p>
-            </div>
+              </li>
+              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+                <span>Token Symbol</span> <span>{data?.symbol}</span>
+              </li>
+              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+                <span>Contract type</span> <span>{data?.contract_type}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </motion.div>

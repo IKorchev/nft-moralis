@@ -19,8 +19,10 @@ export default function Dropdown() {
     })
   }
   return (
-    <Menu as='div' className='relative inline-block text-left z-50'>
-      <Menu.Button className='p-0 flex items-center hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+    <Menu as='div' className='relative inline-block text-left '>
+      <Menu.Button
+        className='p-0 flex items-center hover:bg-opacity-30 
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
         <AccountAndBalance />
       </Menu.Button>
       <Menu.Items

@@ -12,6 +12,7 @@ import { MoonLoader } from "react-spinners"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import ListItemModal from "../../../components/tokenId/ListItemModal"
+
 const Token = () => {
   const { chain, account } = useMoralisData()
   const { query } = useRouter()

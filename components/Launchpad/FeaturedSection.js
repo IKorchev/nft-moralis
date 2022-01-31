@@ -52,7 +52,6 @@ const FeaturedSection = ({ featuredCollection }) => {
       getMaxSupplyHandler()
       getTotalSupplyHandler()
     }
-
     //countdown timer
     const interval = setInterval(() => {
       setCurrentTime(moment().utc())
@@ -61,7 +60,6 @@ const FeaturedSection = ({ featuredCollection }) => {
     return () => clearInterval(interval)
   }, [featuredCollection])
 
-  // While data is being fetched from moralis database
   if (!featuredCollection)
     return (
       <Loading
@@ -71,7 +69,10 @@ const FeaturedSection = ({ featuredCollection }) => {
     )
 
   return (
-    <section className='flex flex-col lg:justify-between border border-primary-700 bg-primary-800/30 rounded-md p-8 lg:p-12 xl:flex-row gap-5 min-h-24 text-white w-full mt-12'>
+    <section
+      className='flex flex-col lg:justify-between border border-primary-700 
+    bg-primary-800/30 rounded-md p-8 lg:p-12
+     lg:flex-row gap-5 min-h-24 text-white w-full mt-12'>
       <div className='flex-1 relative'>
         <h1 className='inline text-xl my-2 -ml-3 bg-primary-700 text-center px-4 py-2 uppercase rounded-full '>
           Featured launch
@@ -124,7 +125,7 @@ const FeaturedSection = ({ featuredCollection }) => {
       <div className='flex-1 w-full h-full relative'>
         <Link href={`/assets/${featuredCollection?.contractAddress}`}>
           <img
-            className='object-contain w-full cursor-pointer shadow-2xl shadow-primary-700'
+            className='object-contain w-full max-h-[30rem] cursor-pointer '
             src={featuredCollection?.imageUrl}
             alt=''
           />

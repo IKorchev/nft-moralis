@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify"
 import { useLayoutEffect } from "react"
 import { useMoralis } from "react-moralis"
 const Layout = ({ children }) => {
-  const { enableWeb3 } = useMoralis()
+  const { enableWeb3, isWeb3Enabled } = useMoralis()
   useLayoutEffect(() => {
     enableWeb3()
   }, [])

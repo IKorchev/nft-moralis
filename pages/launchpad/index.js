@@ -2,18 +2,12 @@ import Card from "../../components/Launchpad/Card"
 import { useMoralisQuery } from "react-moralis"
 import Loading from "../../components/Loading"
 import FeaturedSection from "../../components/Launchpad/FeaturedSection"
+import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 const Launchpad = () => {
   // Featured (current) Launchpad
   //prettier-ignore
-  const {data: currentLaunchpad,error,isLoading,} = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", false).equalTo("isUpcoming", false).limit(1),[],{ live: true })
-  // Completed Launchpads
-  //prettier-ignore
-  const { data: completedLaunchpads } = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", true).equalTo("isUpcoming", false),[],{ live: true })
-  // Upcoming Launchpads
-  //prettier-ignore
-  const { data: upcomingLaunchpads } = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", true).equalTo("isUpcoming", true),[],{ live: true })
-
-  if (isLoading)
+  const { currentLaunchpad, isCurrentLaunchpadLoading, completedLaunchpads, upcomingLaunchpads } = useMoralisData()
+  if (isCurrentLaunchpadLoading)
     return (
       <Loading
         containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
@@ -22,9 +16,11 @@ const Launchpad = () => {
     )
 
   return (
-    <div className='container mx-auto px-5 sm:px-24 lg:px-48'>
-      {currentLaunchpad && !isLoading && (
-        <FeaturedSection featuredCollection={currentLaunchpad[0]?.attributes} />
+    <div className='container mx-auto px-6 lg:px-24'>
+      {currentLaunchpad && !isCurrentLaunchpadLoading && (
+        <div className=''>
+          <FeaturedSection featuredCollection={currentLaunchpad[0]?.attributes} />
+        </div>
       )}
       <div className='container py-12 mx-auto'>
         <h1 className='text-3xl text-white border-b border-secondary py-3'>Upcoming</h1>

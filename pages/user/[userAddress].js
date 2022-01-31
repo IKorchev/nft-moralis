@@ -1,26 +1,26 @@
 //UTILS
 import useSWR from "swr"
 import { motion } from "framer-motion"
-import { sortBy, filter, uniq } from "lodash"
+import { sortBy, filter, uniqBy } from "lodash"
 import { shortenIfAddress } from "@usedapp/core"
 import { useRouter } from "next/router"
 import { useNFTTransfers } from "react-moralis"
 import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 import { getNFTsForUser, revalidateOptions } from "../../utils/fetcher"
-import { Fragment, useLayoutEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 //ICONS
-import { FilterIcon, XIcon } from "@heroicons/react/solid"
+import { FilterIcon } from "@heroicons/react/solid"
 import { MdCollectionsBookmark } from "react-icons/md"
-import { FiActivity, FiX } from "react-icons/fi"
+import { FiActivity } from "react-icons/fi"
 import Jazzicon from "../../components/Jazzicon"
 //COMPONENTS
-import { Dialog, Tab, Transition } from "@headlessui/react"
+import { Tab } from "@headlessui/react"
 import PaginatedItems from "../../components/PaginatedItems"
 import TransactionsTable from "../../components/tokenId/TransactionsTable"
 import Loading from "../../components/Loading"
-import NFTItem from "../../components/NFTItem"
-import FilterSection from "../../components/FilterSection"
-import SortSection from "../../components/SortSection"
+import NFTCard from "../../components/NFTCard"
+import SortFilterAndClear from "../../components/SortAndFilter/SortFilterAndClear"
+import Drawer from "../../components/Drawer"
 
 const sortOptions = [
   { name: "ID Ascending", data: "id-asc" },
@@ -39,36 +39,52 @@ const sortFunction = (object, attribute) => {
 function UserAddress() {
   const router = useRouter()
   const { chain } = useMoralisData()
-  const { getNFTTransfers } = useNFTTransfers()
   const [sortOption, setSortOption] = useState()
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [filterOptions, setFilterOptions] = useState([])
   const [filterOption, setFilterOption] = useState(null)
   const [transactions, setTransactions] = useState([])
-
+  const [open, setOpen] = useState(false)
   const options = {
     url: "noNeedForUrl",
     args: { chain: chain?.chainId, address: router.query.userAddress },
   }
   //prettier-ignore
   const { data, error, isValidating } = useSWR(options, getNFTsForUser,revalidateOptions)
-  
+  console.log(data)
   useLayoutEffect(() => {
-    getNFTTransfers({
-      onSuccess: (data) => setTransactions(data),
-      onComplete: (result) => console.log(result),
-      onError: (result) => console.log(result),
-    })
     if (data) {
-      setFilterOptions(uniq(data.result.map((el) => el.name)))
+      const collections = uniqBy(data.result, (token) => token.token_address)
+      //prettier-ignore
+      setFilterOptions(collections.map((el) => ({ data: el.token_address, name: el.name })))
     }
   }, [data])
-  //prettier-ignore
-  if (isValidating) return <Loading containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }} loaderProps={{ size: 200, color: "white" }} />
+
+  if (isValidating) {
+    return (
+      <Loading
+        containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
+        loaderProps={{ size: 200, color: "white" }}
+      />
+    )
+  }
   if (error) return null
 
   return (
     <div className='container mx-auto overflow-hidden min-h-[50rem]'>
+      <Drawer
+        open={open}
+        setOpen={setOpen}
+        ChildElements={
+          <SortFilterAndClear
+            sortOption={sortOption}
+            setSortOption={setSortOption}
+            sortOptions={sortOptions}
+            filterOptions={filterOptions}
+            filterOption={filterOption}
+            setFilterOption={setFilterOption}
+          />
+        }
+      />
       <div className='flex flex-col items-center mt-12'>
         <div className='border-4 rounded-full overflow-hidden border-white'>
           <Jazzicon address={router.query.userAddress} size={150} />
@@ -98,120 +114,50 @@ function UserAddress() {
             <FiActivity className='mr-3 text-xl' /> Activity
           </Tab>
         </Tab.List>
-        <Tab.Panels className='w-full px-4'>
+        <Tab.Panels className='w-full'>
           <Tab.Panel
             as={motion.div}
-            initial={{ opacity: 0, y: -20 }}
+            className='px-6'
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1, x: 0 }}>
-            <div>
-              <Transition.Root show={mobileFiltersOpen} as='div'>
-                <Dialog
-                  as='div'
-                  className='fixed inset-0 flex z-40 lg:hidden'
-                  onClose={setMobileFiltersOpen}>
-                  <Dialog.Overlay className='fixed inset-0 bg-black bg-opacity-90' />
-                  <Transition.Child
-                    as={Fragment}
-                    enter='transition ease-in-out duration-300 transform'
-                    enterFrom='translate-x-full'
-                    enterTo='translate-x-0'
-                    leave='transition ease-in-out duration-300 transform'
-                    leaveFrom='translate-x-0'
-                    leaveTo='translate-x-full'>
-                    <div className='ml-auto relative max-w-xs w-full h-full bg-primary-900  shadow-xl py-4 pb-5 flex flex-col overflow-y-auto'>
-                      <div className='px-4 flex items-center justify-between'>
-                        <h2 className='text-lg font-medium text-gray-100'>Filters</h2>
-                        <button
-                          type='button'
-                          className='-mr-2 w-10 h-10 bg-white p-2 rounded-md flex items-center justify-center text-gray-400'
-                          onClick={() => setMobileFiltersOpen(false)}>
-                          <span className='sr-only'>Close menu</span>
-                          <XIcon className='h-6 w-6' aria-hidden='true' />
-                        </button>
-                      </div>
-                      <div className='mt-10 py-5 space-y-1'>
-                        <SortSection
-                          sortOption={sortOption}
-                          setSortOption={setSortOption}
-                          sortOptions={sortOptions}
-                        />
-                        <FilterSection
-                          variant='mobile'
-                          filterOptions={filterOptions}
-                          filterOption={filterOption}
-                          setFilterOption={setFilterOption}
-                        />
-                        <button
-                          onClick={() => {
-                            setFilterOption(null)
-                            setSortOption(null)
-                          }}
-                          className='bg-pink-700 flex justify-between items-center w-full  ring-white focus:ring-2 py-3  text-white'>
-                          <FiX className='text-xl text-start ml-4' />
-                          <span className='flex-1 ml-14'>Clear all</span>
-                          <div className='flex-1' />
-                        </button>
-                      </div>
-                    </div>
-                  </Transition.Child>
-                </Dialog>
-              </Transition.Root>
-              <div className='relative z-10 flex items-baseline justify-between pt-12 pb-2 mb-6 border-b border-gray-200'>
-                <h1 className='text-4xl font-extrabold  text-white'>NFTs</h1>
-                <div className='flex items-center'>
-                  <button
-                    type='button'
-                    className='p-2 -m-2 ml-4 sm:ml-6 text-white hover:text-secondary lg:hidden'
-                    onClick={() => setMobileFiltersOpen(true)}>
-                    <span className='sr-only'>Filters</span>
-                    <FilterIcon className='w-5 h-5' aria-hidden='true' />
-                  </button>
-                </div>
-              </div>
-              <div className='grid grid-cols-1 lg:grid-cols-4  gap-x-8 gap-y-10'>
-                <div className='hidden lg:block  h-max  space-y-1 '>
-                  <SortSection
+            <div className='relative flex items-baseline justify-between pt-24 pb-2 border-b border-gray-200'>
+              <h1 className='text-4xl font-extrabold  text-white'>NFTs</h1>
+              <button
+                className='lg:hidden inline-flex p-2 rounded-full '
+                onClick={() => setOpen(!open)}>
+                <FilterIcon className='h-6 w-6 text-secondary' />
+              </button>
+            </div>
+            <section aria-labelledby='nfts-heading' className='pt-6 pb-24'>
+              <h2 id='nfts-heading' className='sr-only'>
+                NFTs
+              </h2>
+              <div className='flex flex-col lg:flex-row justify-center lg:justify-start gap-5'>
+                <div className='hidden lg:flex flex-col gap-1'>
+                  <SortFilterAndClear
                     sortOption={sortOption}
                     setSortOption={setSortOption}
                     sortOptions={sortOptions}
-                  />
-                  <FilterSection
                     filterOptions={filterOptions}
                     filterOption={filterOption}
                     setFilterOption={setFilterOption}
                   />
-                  <button
-                    onClick={() => {
-                      setFilterOption(null)
-                      setSortOption(null)
-                    }}
-                    className='hidden relative bg-pink-700 lg:block  items-center w-full text-center hover:bg-rose-900 ring-white
-                     focus:ring-2 py-3 px-4 text-white'>
-                    <FiX className='text-xl mr-5 absolute ' /> Clear all
-                  </button>
                 </div>
-                <div className='lg:col-span-3'>
+                <div className=''>
                   <PaginatedItems
                     items={filter(
                       sortBy(data?.result, (object) => sortFunction(object, sortOption)),
-                      (el) => (filterOption ? el.name === filterOption : el)
+                      (el) =>
+                        filterOption
+                          ? el.token_address.toLowerCase() === filterOption.toLowerCase()
+                          : el
                     )}
                     itemsPerPage={12}
-                    renderItem={(el, i) => (
-                      <NFTItem
-                        index={i}
-                        key={el.token_uri}
-                        tokenUri={el.token_uri}
-                        metadata={el.metadata}
-                        tokenId={el.token_id}
-                        tokenAddress={el.token_address}
-                        contractName={el.name}
-                      />
-                    )}
+                    renderItem={renderItem}
                   />
                 </div>
               </div>
-            </div>
+            </section>
           </Tab.Panel>
           <Tab.Panel
             as={motion.div}
@@ -232,4 +178,17 @@ function UserAddress() {
     </div>
   )
 }
+
+const renderItem = (el, i) => (
+  <NFTCard
+    index={i}
+    key={el.token_uri}
+    tokenUri={el.token_uri}
+    metadata={el.metadata}
+    tokenId={el.token_id}
+    tokenAddress={el.token_address}
+    contractName={el.name}
+  />
+)
+
 export default UserAddress
