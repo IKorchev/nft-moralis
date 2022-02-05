@@ -10,9 +10,11 @@ import { useMoralisData } from "../../Providers/MoralisDataProvider"
 import { customStyles, CustomOption } from "../../../utils/selectCustomStyles"
 import Select from "react-select"
 const Navbar = () => {
-  const { completedLaunchpads } = useMoralisData()
-  const { logout, account, enableWeb3, deactivateWeb3 } = useMoralis()
-  const options = completedLaunchpads?.map((el) => ({
+  const { completedLaunchpads, currentLaunchpad } = useMoralisData()
+
+  const allLaunchpads = [...completedLaunchpads, ...currentLaunchpad]
+  const { account, enableWeb3, deactivateWeb3 } = useMoralis()
+  const options = allLaunchpads?.map((el) => ({
     label: el.attributes.collectionName,
     value: el.attributes.contractAddress,
     image: el.attributes.imageUrl,
@@ -52,12 +54,14 @@ const Navbar = () => {
                 <a className='text-3xl my-4 cursor-pointer'>Launchpad</a>
               </Menu.Item>
               <Menu.Item as={Link} href='/collections'>
-                <Select styles={customStyles} />
+                <a className='text-3xl my-4 cursor-pointer'>Collections</a>
               </Menu.Item>
               {account && (
-                <Menu.Item as='div' className='text-3xl my-4 flex ml-12'>
+                <Menu.Item as='div' className='flex'>
                   <Link href={`/user/${account}`}>
-                    <AccountAndBalance icon={false} />
+                    <a className='text-3xl my-4 flex ml-12' href={`/user/${account}`}>
+                      <AccountAndBalance icon={false} />
+                    </a>
                   </Link>
                   <AiFillCopy
                     className='h-full w-12 cursor-pointer'
@@ -92,7 +96,7 @@ const Navbar = () => {
 
       <div className='hidden lg:flex justify-evenly items-center container py-5 px-24 mx-auto text-white'>
         <Link href='/' passHref>
-          <a className='text-3xl my-4 inline z-10 font-extrabold cursor-pointer'>
+          <a className='text-3xl my-4 inline z-10 font-extrabold cursor-pointer whitespace-nowrap '>
             NE Explorer
           </a>
         </Link>
@@ -121,9 +125,7 @@ const Navbar = () => {
         {account ? (
           <Dropdown />
         ) : (
-          <button
-            onClick={enableWeb3}
-            className='bg-yellow-400 px-3 py-1.5 rounded-md text-black'>
+          <button onClick={enableWeb3} className='bg-yellow-400 px-3 py-1.5 rounded-md text-black'>
             Connect
           </button>
         )}

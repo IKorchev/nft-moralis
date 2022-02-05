@@ -28,6 +28,7 @@ export const customStyles = {
     flexDirection: "column",
     flexShrink: "0",
     gap: "2px",
+    scrollBehavior: "smooth",
     "::-webkit-scrollbar": {
       width: 5,
       background: "#F70C76",
