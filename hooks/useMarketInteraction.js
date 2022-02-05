@@ -27,13 +27,11 @@ const useMarketInteractions = () => {
     const query = new Moralis.Query(MarketItems)
     query.equalTo("itemId", itemId).equalTo("sold", false)
     const result = await query.first()
-    console.log(result)
     result.set("sold", true)
     result.set("owner", account)
     result.save()
   }
   const saveItemInMoralisDatabase = async (nftObject) => {
-    console.log(nftObject)
     const query = new Moralis.Query(ItemImage)
       .equalTo("contractAddress", nftObject.contractAddress)
       .equalTo("tokenId", nftObject.tokenId)

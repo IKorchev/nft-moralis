@@ -50,7 +50,6 @@ function UserAddress() {
   }
   //prettier-ignore
   const { data, error, isValidating } = useSWR(options, getNFTsForUser,revalidateOptions)
-  console.log(data)
   useLayoutEffect(() => {
     if (data) {
       const collections = uniqBy(data.result, (token) => token.token_address)

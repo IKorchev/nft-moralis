@@ -20,7 +20,6 @@ const Navbar = () => {
     image: el.attributes.imageUrl,
     contractAddress: el.attributes.contractAddress,
   }))
-  console.log(options)
   return (
     <>
       {/* MOBILE MENU */}

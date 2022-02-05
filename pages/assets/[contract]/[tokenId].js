@@ -27,7 +27,6 @@ const Token = () => {
     },
   }
   const { data, error, isValidating } = useSWR(options, tokenIdFetcher, revalidateOptions)
-  console.log(data)
   if (error)
     return (
       <div className='h-[35rem] grid place-items-center'>

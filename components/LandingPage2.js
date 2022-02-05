@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Wave from "../assets/wave.svg"
+import Wave from "../public/assets/wave.svg"
 import { useMoralisData } from "./Providers/MoralisDataProvider"
 
 

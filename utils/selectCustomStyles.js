@@ -46,7 +46,6 @@ export const customStyles = {
 }
 
 export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected }) => {
-  console.log(isFocused)
   return (
     <div ref={innerRef} {...innerProps}>
       <Link href={`/assets/${data.contractAddress}`}>

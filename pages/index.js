@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import Head from "next/head"
-import Illustration from "../assets/Illustration"
+import Illustration from "../public/assets/Illustration"
 import LandingPage from "../components/LandingPage"
 import LandingPage2 from "../components/LandingPage2"
 const Metadata = () => {
