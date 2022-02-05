@@ -19,11 +19,18 @@ const Asset = () => {
   const [filterOption, setFilterOption] = useState(null)
   const [open, setOpen] = useState(false)
   //prettier-ignore
-  const {data: items,error2, isLoading2} = useMoralisQuery('MarketItems', q => q.equalTo('nftContract', query?.contract).equalTo('sold', false),[], {live: true})
-  const { data: itemsAvailableForPurchase } = useMoralisQuery("MarketItems", (q) =>
-    q.equalTo("nftContract", query?.contract).equalTo("sold", false).ascending("price")
+  const {data: items,error2, isLoading2} =
+  useMoralisQuery('MarketItems', q => q
+  .equalTo('nftContract', query?.contract)
+  .equalTo('sold', false),[query?.contract], {live: true})
+  const { data: itemsAvailableForPurchase } = useMoralisQuery(
+    "MarketItems",
+    (q) => q.equalTo("nftContract", query?.contract).equalTo("sold", false).ascending("price"),
+    [query?.contract],
+    { live: true }
   )
-
+  console.log("AVAILABLE", itemsAvailableForPurchase)
+  console.log("ALL", items)
   const cheapest = itemsAvailableForPurchase[0]?.attributes?.price
   return (
     <div className='container mx-auto px-6 py-24 text-white'>
