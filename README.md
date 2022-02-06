@@ -2,10 +2,14 @@
 
 This project is built with Next.js and TailwindCSS powered by Moralis.
 
+
 > Note: *this project is not production ready. The smart contract is very simple and not verified.
 > It is built with the purpose of learning Web3 and interacting with smart contracts on the blockchain*
 
-There is still a lot to be build, such as admin SDK where you'd be able to change the Launchpad smart contract ABI, add more Launchpads to the collection (currently it's only possible through the moralis admin sdk)
+
+There is still a lot to be build, such as admin SDK where you'd be able to change the Launchpad smart contract ABI, add more Launchpads (currently it's only possible through the moralis admin sdk) etc.
+
+[Check out the demo](https://nft-moralis.vercel.app/)
 
 ##  Prerequisites 
 
