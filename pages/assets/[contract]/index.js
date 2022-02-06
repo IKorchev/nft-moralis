@@ -2,15 +2,15 @@ import { FilterIcon } from "@heroicons/react/solid"
 import { sortBy } from "lodash"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import Drawer from "../../../components/Drawer"
 import { useMoralisQuery } from "react-moralis"
 import CollectionHeader from "../../../components/CollectionHeader"
+import Drawer from "../../../components/Drawer"
 import MarketItem from "../../../components/Marketplace/MarketItem"
 import PaginatedItems from "../../../components/PaginatedItems"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
-import SortSection from "../../../components/SortAndFilter/SortSection"
-import { sortOptions, sortFunction } from "../../../utils/sort"
 import ClearFiltersButton from "../../../components/SortAndFilter/ClearFiltersButton"
+import SortSection from "../../../components/SortAndFilter/SortSection"
+import { sortFunction, sortOptions } from "../../../utils/sort"
 
 const Asset = () => {
   const { query } = useRouter()

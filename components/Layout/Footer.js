@@ -1,7 +1,7 @@
-import COINBASEIcon from "../../assets/coinbase.svg"
-import BINANCEIcon from "../../assets/binance.svg"
-import BITMEXIcon from "../../assets/bitmex.svg"
-import HUOBIIcon from "../../assets/huobi.svg"
+import COINBASEIcon from "../../public/assets/coinbase.svg"
+import BINANCEIcon from "../../public/assets/binance.svg"
+import BITMEXIcon from "../../public/assets/bitmex.svg"
+import HUOBIIcon from "../../public/assets/huobi.svg"
 import Link from "next/link"
 const Footer = () => {
   return (
@@ -71,10 +71,7 @@ const Footer = () => {
             <a href='https://www.bitmex.com/' target='_blank' rel='noopener noreferrer'>
               <img src={BITMEXIcon.src} className='w-24 mr-5 h-full m-1' alt='' />
             </a>
-            <a
-              href='https://www.huobi.com/en-us/ '
-              target='_blank'
-              rel='noopener noreferrer'>
+            <a href='https://www.huobi.com/en-us/ ' target='_blank' rel='noopener noreferrer'>
               <img src={HUOBIIcon.src} className='w-24 mr-5 h-full m-1' alt='' />
             </a>
             <a href='https://www.coinbase.com/' target='_blank' rel='noopener noreferrer'>
