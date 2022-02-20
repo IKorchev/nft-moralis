@@ -9,7 +9,6 @@ import { sortOptions, sortFunction } from "../../utils/sort"
 import { FilterIcon } from "@heroicons/react/solid"
 import Drawer from "../../components/Drawer"
 import SortFilterAndClear from "../../components/SortAndFilter/SortFilterAndClear"
-
 const Marketplace = () => {
   const { chain, allCollectionsListed, allListings, currentLaunchpad } = useMoralisData()
   const [sortOption, setSortOption] = useState()
@@ -47,9 +46,7 @@ const Marketplace = () => {
       )}
       <div className='relative flex items-baseline justify-between pt-24 pb-2 border-b border-gray-200'>
         <h1 className='text-4xl font-extrabold  text-white'>Marketplace</h1>
-        <button
-          className='lg:hidden inline-flex p-2 rounded-full '
-          onClick={() => setOpen(!open)}>
+        <button className='lg:hidden inline-flex p-2 rounded-full ' onClick={() => setOpen(!open)}>
           <FilterIcon className='h-6 w-6 text-secondary' />
         </button>
       </div>

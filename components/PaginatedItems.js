@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import { useRef } from "react"
+import { motion } from "framer-motion"
 
 function PaginatedItems({ items, itemsPerPage, renderItem }) {
   const [currentItems, setCurrentItems] = useState([])
@@ -24,7 +25,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
   }
 
   return (
-    <div className=' text-white relative'>
+    <motion.div layout className=' text-white relative mx-auto'>
       {currentItems && (
         <div className='flex flex-col items-center justify-center '>
           <div className='absolute -top-24' ref={scrollToRef} />
@@ -56,7 +57,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 export default PaginatedItems

@@ -5,23 +5,22 @@ import { formatIpfs } from "../../utils/common"
 import Loading from "../Loading"
 import Link from "next/link"
 import { shortenIfAddress } from "@usedapp/core"
+import { motion } from "framer-motion"
 
 const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   const { Moralis } = useMoralis()
   const { chain } = useMoralisData()
   const { buyItem } = useMarketInteractions()
-  
+
   const {
     data: itemInfo,
     error,
     isLoading,
   } = useMoralisQuery("ItemImage", (q) =>
-    q
-      .equalTo("tokenId", tokenId.toString())
-      .equalTo("contractAddress", nftContract.toLowerCase())
+    q.equalTo("tokenId", tokenId.toString()).equalTo("contractAddress", nftContract.toLowerCase())
   )
   return (
-    <div className=' w-48 text-black overflow-hidden'>
+    <motion.div layout className='w-48 text-black overflow-hidden'>
       {/* TODO: Create a skeleton instead */}
       {isLoading && !error ? (
         <Loading
@@ -29,7 +28,7 @@ const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
           loaderProps={{ size: 100, color: "white" }}
         />
       ) : (
-        <div className=' bg-rose-50 relative rounded-md overflow-hidden'>
+        <motion.div layout className='h-72 bg-rose-50 relative rounded-md overflow-hidden'>
           <Link href={`/assets/${nftContract}/${tokenId}`}>
             {itemInfo[0]?.attributes.format === "image" ? (
               <img
@@ -59,7 +58,7 @@ const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
             </p>
             <p>
               <Link href={`/assets/${nftContract}/${tokenId}`}>
-                <a>{itemInfo[0]?.attributes.name}</a>
+                <a>{itemInfo[0]?.attributes.name || "Unknown"}</a>
               </Link>
             </p>
           </div>
@@ -86,9 +85,9 @@ const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
               </>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   )
 }
 
