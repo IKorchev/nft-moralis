@@ -7,27 +7,27 @@ const Metadata = () => {
   return (
     <Head>
       <title>NFT Explorer | Launchpad and Marketplace</title>
-      <meta name='title' content='NFT Marketplace' />
-      <meta name='title' content='NFT Marketplace' />
-      <meta property='og:title' content='NFT Marketplace' />
+      <meta name='title' property='og:title' content='Ropsten NFT Marketplace' />
       <meta
-        property='og:description'
-        content='NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
-      ROPSTEN testnet. Trade NFTs'
+        name='image'
+        property='og:image'
+        content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png'
       />
-      <meta name='robots' content='index, follow' />
-      <meta property='og:image' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
       <meta
+        name='description'
+        property='og:description'
+        content="NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
+      ROPSTEN testnet. Trade NFTs'"
+      />
+      <meta
+        name='image'
         property='og:image:secure_url'
         content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png'
       />
-      <meta property='og:url' content='https://nft-moralis.vercel.app/' />
-      <meta
-        name='description'
-        content='NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
-      ROPSTEN testnet. Trade NFTs'
-      />
+      <meta name='url' property='og:url' content='https://nft-moralis.vercel.app/' />
+      <meta name='robots' content='index, follow' />
       <meta name='keywords' content='NFT, Ethereum, Moralis, Launchpad, Marketplace, ropsten' />
+      <meta name='author' content='Ivaylo Korchev' />
     </Head>
   )
 }
