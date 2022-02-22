@@ -19,8 +19,11 @@ const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   } = useMoralisQuery("ItemImage", (q) =>
     q.equalTo("tokenId", tokenId.toString()).equalTo("contractAddress", nftContract.toLowerCase())
   )
+
+
+
   return (
-    <motion.div layout className='w-48 text-black overflow-hidden'>
+    <motion.div layout className='w-48 text-black overflow-hidden '>
       {/* TODO: Create a skeleton instead */}
       {isLoading && !error ? (
         <Loading
@@ -28,7 +31,7 @@ const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
           loaderProps={{ size: 100, color: "white" }}
         />
       ) : (
-        <motion.div layout className='h-72 bg-rose-50 relative rounded-md overflow-hidden'>
+        <motion.div className='h-72 bg-rose-50 relative rounded-md overflow-hidden'>
           <Link href={`/assets/${nftContract}/${tokenId}`}>
             {itemInfo[0]?.attributes.format === "image" ? (
               <img
@@ -67,20 +70,23 @@ const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
               <p className='flex mt-1 text-xs py-0.5'>
                 last
                 <span className='ml-1'>
-                  {Moralis.Units.FromWei(price)} {chain.nativeCurrency.symbol}
+                  {Moralis.Units.FromWei(price)} {chain?.nativeCurrency.symbol || "ROP"}
                 </span>
               </p>
             ) : (
               <>
                 <p className='absolute top-3 right-0 cursor-default rounded-l-md pointer-events-none text-xs text-white bg-emerald-600 py-1.5 pl-2 pr-0.5'>
-                  {Moralis.Units.FromWei(price)} {chain.nativeCurrency.symbol}
+                  {Moralis.Units.FromWei(price)} {chain?.nativeCurrency.symbol || "ROP"}
                 </p>
                 <div className='flex justify-between items-center '>
                   <button
-                    className='bg-emerald-400  flex justify-center items-center   px-3  rounded-lg text-black font-bold transition duration-300 hover:bg-emerald-500 focus:ring-2 ring-black'
+                    className='bg-emerald-400  flex justify-center items-center px-3  rounded-sm text-black font-bold transition duration-300 hover:bg-emerald-500 focus:ring-2 ring-black'
                     onClick={() => buyItem(nftContract, itemId, price)}>
                     Buy now
                   </button>
+                  <span>
+                    {Moralis.Units.FromWei(price)} {chain?.nativeCurrency.symbol || "ROP"}
+                  </span>
                 </div>
               </>
             )}

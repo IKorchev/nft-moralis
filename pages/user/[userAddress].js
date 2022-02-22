@@ -1,6 +1,6 @@
 //UTILS
 import useSWR from "swr"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { sortBy, filter, uniqBy } from "lodash"
 import { shortenIfAddress } from "@usedapp/core"
 import { useRouter } from "next/router"
@@ -70,20 +70,24 @@ function UserAddress() {
 
   return (
     <div className='container mx-auto overflow-hidden min-h-[50rem]'>
-      <Drawer
-        open={open}
-        setOpen={setOpen}
-        ChildElements={
-          <SortFilterAndClear
-            sortOption={sortOption}
-            setSortOption={setSortOption}
-            sortOptions={sortOptions}
-            filterOptions={filterOptions}
-            filterOption={filterOption}
-            setFilterOption={setFilterOption}
+      <AnimatePresence>
+        {open && (
+          <Drawer
+            open={open}
+            setOpen={setOpen}
+            ChildElements={
+              <SortFilterAndClear
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                sortOptions={sortOptions}
+                filterOptions={filterOptions}
+                filterOption={filterOption}
+                setFilterOption={setFilterOption}
+              />
+            }
           />
-        }
-      />
+        )}
+      </AnimatePresence>
       <div className='flex flex-col items-center mt-12'>
         <div className='border-4 rounded-full overflow-hidden border-white'>
           <Jazzicon address={router.query.userAddress} size={150} />
@@ -94,10 +98,7 @@ function UserAddress() {
           </span>
         </h2>
       </div>
-      <Tab.Group
-        defaultChecked={1}
-        as='div'
-        className='container flex flex-col items-center mt-5'>
+      <Tab.Group defaultChecked={1} as='div' className='container flex flex-col items-center mt-5'>
         <Tab.List className='text-white bg-primary-900 flex  justify-evenly rounded-lg  mt-5  '>
           <Tab
             className={({ selected }) =>
@@ -144,6 +145,7 @@ function UserAddress() {
                 </div>
                 <div className=''>
                   <PaginatedItems
+                    isLayoutAnimated={true}
                     items={filter(
                       sortBy(data?.result, (object) => sortFunction(object, sortOption)),
                       (el) =>

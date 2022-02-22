@@ -3,7 +3,8 @@ import Link from "next/link"
 export const customStyles = {
   control: (provided, state) => ({
     ...provided,
-    width: 400,
+    width: 300,
+    cursor: "text",
     background: "#10011F",
     // Overwrittes the different states of border
     borderColor: "#F70C76",

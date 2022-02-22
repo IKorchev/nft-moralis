@@ -9,11 +9,12 @@ import { toast } from "react-toastify"
 import { useMoralisData } from "../../Providers/MoralisDataProvider"
 import { customStyles, CustomOption } from "../../../utils/selectCustomStyles"
 import Select from "react-select"
-const Navbar = () => {
-  const { completedLaunchpads, currentLaunchpad } = useMoralisData()
 
+const Navbar = () => {
+  const { completedLaunchpads, currentLaunchpad, isMetamaskInstalled } = useMoralisData()
   const allLaunchpads = [...completedLaunchpads, ...currentLaunchpad]
   const { account, enableWeb3, deactivateWeb3 } = useMoralis()
+
   const options = allLaunchpads?.map((el) => ({
     label: el.attributes.collectionName,
     value: el.attributes.contractAddress,
@@ -52,9 +53,11 @@ const Navbar = () => {
               <Menu.Item as={Link} href='/launchpad'>
                 <a className='text-3xl my-4 cursor-pointer'>Launchpad</a>
               </Menu.Item>
+
+              {/* TODO: Create a page to view all the collections/launchpads
               <Menu.Item as={Link} href='/collections'>
                 <a className='text-3xl my-4 cursor-pointer'>Collections</a>
-              </Menu.Item>
+              </Menu.Item> */}
               {account && (
                 <Menu.Item as='div' className='flex'>
                   <Link href={`/user/${account}`}>
@@ -93,27 +96,30 @@ const Navbar = () => {
 
       {/* DESKTOP Nav */}
 
-      <div className='hidden lg:flex justify-evenly items-center container py-5 px-24 mx-auto text-white'>
+      <div className='hidden lg:flex justify-between items-center container py-5  mx-auto text-white'>
         <Link href='/' passHref>
           <a className='text-3xl my-4 inline z-10 font-extrabold cursor-pointer whitespace-nowrap '>
-            NE Explorer
+            NFT Explorer
           </a>
         </Link>
-        <ul className='flex justify-evenly items-center'>
-          <li>
-            <Link href='/marketplace' passHref>
-              <a className='text-xl my-4 mx-5  cursor-pointer'>Marketplace</a>
-            </Link>
-          </li>
-          <li>
-            <Link href='/launchpad' passHref>
-              <a className='text-xl my-4 mx-5  cursor-pointer'>Launchpad</a>
-            </Link>
-          </li>
-          <li className='cursor-text'>
+        <ul className='flex justify-start items-center'>
+          <div className='flex flex-grow'>
+            <li>
+              <Link href='/marketplace' passHref>
+                <a className='text-xl my-4 mx-5  cursor-pointer'>Marketplace</a>
+              </Link>
+            </li>
+            <li>
+              <Link href='/launchpad' passHref>
+                <a className='text-xl my-4 mx-5  cursor-pointer'>Launchpad</a>
+              </Link>
+            </li>
+          </div>
+          <li className='cursor-text ml-4 xl:ml-16'>
             <Select
               className='react-select-container'
               classNamePrefix='react-select'
+              placeholder='Search collections'
               components={{ Option: CustomOption }}
               styles={customStyles}
               options={options}
@@ -124,7 +130,9 @@ const Navbar = () => {
         {account ? (
           <Dropdown />
         ) : (
-          <button onClick={enableWeb3} className='bg-yellow-400 px-3 py-1.5 rounded-md text-black'>
+          <button
+            className='bg-yellow-500 text-black font-extrabold inline border-2  px-4 py-1 text-lg mb-5 mt-5 rounded-full '
+            onClick={enableWeb3}>
             Connect
           </button>
         )}

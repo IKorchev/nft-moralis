@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { formatChain, formatIpfs } from "../utils/common"
 import Link from "next/link"
 import useSWR from "swr"
@@ -8,25 +8,22 @@ import { shortenIfAddress } from "@usedapp/core"
 import { useChain } from "react-moralis"
 import ListItemModal from "./tokenId/ListItemModal"
 import { useState } from "react"
+
 const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
   const { chain, account } = useChain()
   const [isOpen, setIsOpen] = useState(false)
   //prettier-ignore
   const { data, error, isValidating } = useSWR({url: chain ? "/api/nft" : null,
-  args: { contract: tokenAddress,
-          tokenId: tokenId,
-          chain: { chainString: formatChain(chain?.networkId), chainId: chain?.chainId },},},
-          tokenIdFetcher,revalidateOptions)
+  args: { contract: tokenAddress,tokenId: tokenId, chain: { chainString: formatChain(chain?.networkId), chainId: chain?.chainId }}},tokenIdFetcher,revalidateOptions)
 
   return (
     <motion.div
       layout
-      className='flex rounded-lg transition duration-300 
-      ease-in-out hover:-translate-y-1 hover:shadow-3xl hover:shadow-primary-100/50
-      text-black overflow-hidden w-48 h-72 flex-col relative bg-light'>
+      className='
+      text-black overflow-hidden w-48 h-72 bg-rose-50 rounded-lg '>
       <Link passHref={true} href={`/assets/${tokenAddress}/${tokenId}`}>
         {isValidating ? (
-          <div className='grid place-items-center h-48 object-scale-down bg-white/90'>
+          <div className='grid place-items-center h-48 w-48  object-scale-down bg-white/90'>
             <FadeLoader size={1} color='black' />
           </div>
         ) : data?.format === "video" ? (
@@ -70,12 +67,16 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
               className='bg-teal-800 text-white px-2 py-1 rounded-sm mt-1'>
               List for sale
             </button>
-            <ListItemModal
-              chain={chain}
-              data={data}
-              isOpen={isOpen}
-              onClose={() => setIsOpen(!isOpen)}
-            />
+            <AnimatePresence>
+              {isOpen && (
+                <ListItemModal
+                  chain={chain}
+                  data={data}
+                  isOpen={isOpen}
+                  onClose={() => setIsOpen(!isOpen)}
+                />
+              )}
+            </AnimatePresence>
           </>
         )}
       </div>

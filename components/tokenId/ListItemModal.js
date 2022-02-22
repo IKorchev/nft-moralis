@@ -1,21 +1,42 @@
 import { Dialog } from "@headlessui/react"
-import {  motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { useState } from "react"
 import useMarketInteractions from "../../hooks/useMarketInteraction"
 import { formatIpfs } from "../../utils/common"
+import ClipLoader from "react-spinners/ClipLoader"
 
 const ListItemModal = ({ onClose, isOpen, data, chain }) => {
   const [price, setPrice] = useState(0)
   const { listItem } = useMarketInteractions()
-  const onSubmit = (e) => {
+  const [status, setStatus] = useState({})
+  const [loading, setLoading] = useState(false)
+
+  const onSubmit = async (e) => {
     e.preventDefault()
-    listItem(data, price)
+    if (price === 0) return
+    setLoading(true)
+    setStatus({
+      status: "waiting",
+      message: "Awaiting transaction approval",
+    })
+    const res = await listItem(data, price)
+    const message =
+      res === "success" ? "Item listed successfully" : res === "error" && "Something went wrong..."
+    setStatus({ status: res, message: message })
+    setLoading(false)
+    if (res === "success") {
+      setTimeout(() => {
+        onClose()
+      }, 2000)
+    }
   }
+
   return (
     <Dialog
       as={motion.div}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       open={isOpen}
       onClose={onClose}
@@ -47,10 +68,23 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
           </div>
           <button
             type='submit'
-            className='py-2 mt-5 text-white font-bold text-lg bg-gradient-to-r from-primary-700 rounded-lg to-primary-900 hover:opacity-90'>
-            List for sale
+            className='py-2 mt-5 text-white font-bold text-lg flex items-center justify-center bg-gradient-to-r from-primary-700 rounded-lg to-primary-900 hover:opacity-90'>
+            <ClipLoader loading={loading} color='white' size={20} />
+            <span className=''> List for sale</span>
           </button>
         </form>
+        <div
+          className={`my-5  py-2 w-3/4 text-center ${
+            status.status === "waiting"
+              ? "bg-yellow-300"
+              : status.status === "error"
+              ? "bg-red-400"
+              : status.status === "success"
+              ? "bg-green-400"
+              : " "
+          } `}>
+          {status.message}
+        </div>
       </div>
     </Dialog>
   )

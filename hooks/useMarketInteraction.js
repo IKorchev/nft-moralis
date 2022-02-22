@@ -32,13 +32,16 @@ const useMarketInteractions = () => {
     result.save()
   }
   const saveItemInMoralisDatabase = async (nftObject) => {
+    // Query the Items Images collection
     const query = new Moralis.Query(ItemImage)
       .equalTo("contractAddress", nftObject.contractAddress)
       .equalTo("tokenId", nftObject.tokenId)
     const result = await query.find()
+    //make sure item doesn't exist
     if (result.length >= 1) {
       return
     }
+    // Continue saving the Item in the database.
     const Item = new ItemImage()
     Item.set(
       "image",
@@ -50,6 +53,7 @@ const useMarketInteractions = () => {
     Item.set("name", nftObject.metadata.name)
     Item.save()
   }
+
   //get cost required for mint
   const getMintCost = async (contractAddress) => {
     let cost
@@ -130,6 +134,7 @@ const useMarketInteractions = () => {
 
   // Place item on sale
   const createMarketItem = async (listingPrice, nftObject, price) => {
+    let status
     await contractProcessor.fetch({
       params: {
         contractAddress: MARKET_ADDRESS,
@@ -143,9 +148,14 @@ const useMarketInteractions = () => {
         },
       },
       onSuccess: (result) => {
+        status = "success"
         saveItemInMoralisDatabase(nftObject)
       },
+      onError: (err) => {
+        status = "error"
+      },
     })
+    return status
   }
 
   //get listing price required for the market
@@ -200,14 +210,15 @@ const useMarketInteractions = () => {
 
   //List item on marketplace
   const listItem = async (nftObject, price) => {
-    saveItemInMoralisDatabase(nftObject)
+    // saveItemInMoralisDatabase(nftObject)
     const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
     const listingPrice = await getMarketListingPrice()
     if (!isMarketApproved) {
       getApprovalForAll(nftObject.contractAddress)
     }
     if (isMarketApproved && listingPrice) {
-      createMarketItem(listingPrice, nftObject, price)
+      const result = await createMarketItem(listingPrice, nftObject, price)
+      return result
     }
   }
   return {

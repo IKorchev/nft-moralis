@@ -55,18 +55,21 @@ const Metadata = () => {
 
 const Home = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className='landing-page relative '>
+    <>
       <Metadata />
-      <div className='absolute top-0 right-24 z-0 '>
-        <Illustration className='opacity-10 lg:opacity-100 h-[700px] w-full lg:h-full' />
-      </div>
-      <LandingPage />
-      <LandingPage2 />
-    </motion.div>
+      
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className='landing-page relative '>
+        <div className='absolute top-0 right-24 z-0 '>
+          <Illustration className='opacity-10 lg:opacity-100 h-[700px] w-full lg:h-full' />
+        </div>
+        <LandingPage />
+        <LandingPage2 />
+      </motion.div>
+    </>
   )
 }
 

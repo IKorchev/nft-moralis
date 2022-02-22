@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext } from "react"
 import { useChain, useMoralis, useMoralisQuery } from "react-moralis"
 const MoralisDataContext = createContext({})
 
@@ -9,6 +9,7 @@ export const useMoralisData = () => {
 const MoralisDataProvider = ({ children }) => {
   const { Moralis, account } = useMoralis()
   const { chain } = useChain()
+
   //prettier-ignore
   const {data: currentLaunchpad,isCurrentLaunchpadLoading,} = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", false).equalTo("isUpcoming", false).limit(1),[],{ live: true })
   //prettier-ignore
@@ -18,7 +19,7 @@ const MoralisDataProvider = ({ children }) => {
   //prettier-ignore
   const { data: allCollectionsListed } = useMoralisQuery("Launchpads",(q) => q.descending("createdAt"),[],{ live: true })
   //prettier-ignore
-  const { data: allListings } = useMoralisQuery("MarketItems",(q) => q.descending("createdAt"),[],{ live: true })
+  const { data: allListings } = useMoralisQuery("MarketItems",(q) => q.equalTo('confirmed', true).equalTo('sold', false).descending("createdAt"),[],{ live: true })
 
   const value = {
     chain,
@@ -31,10 +32,8 @@ const MoralisDataProvider = ({ children }) => {
     completedLaunchpads,
     upcomingLaunchpads,
   }
-  
-  return (
-    <MoralisDataContext.Provider value={value}>{children}</MoralisDataContext.Provider>
-  )
+
+  return <MoralisDataContext.Provider value={value}>{children}</MoralisDataContext.Provider>
 }
 
 export default MoralisDataProvider

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { filter, sortBy } from "lodash"
 import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 import { useChain, useMoralis } from "react-moralis"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { sortOptions, sortFunction } from "../../utils/sort"
 import { FilterIcon } from "@heroicons/react/solid"
 import Drawer from "../../components/Drawer"
@@ -23,34 +23,34 @@ const Marketplace = () => {
     }
   }, [allCollectionsListed])
 
-  if (chain?.chainId !== "0x3") return <ChangeNetwork />
-
   return (
-    <main className='mx-auto px-6 py-24'>
+    <main className='mx-auto container px-4 lg:px-0 py-24'>
       {/* MOBILE FILTERING DRAWER */}
-      {open && (
-        <Drawer
-          open={open}
-          setOpen={setOpen}
-          ChildElements={
-            <SortFilterAndClear
-              sortOption={sortOption}
-              sortOptions={sortOptions}
-              setSortOption={setSortOption}
-              filterOption={filterOption}
-              filterOptions={filterOptions}
-              setFilterOption={setFilterOption}
-            />
-          }
-        />
-      )}
+      <AnimatePresence>
+        {open && (
+          <Drawer
+            open={open}
+            setOpen={setOpen}
+            ChildElements={
+              <SortFilterAndClear
+                sortOption={sortOption}
+                sortOptions={sortOptions}
+                setSortOption={setSortOption}
+                filterOption={filterOption}
+                filterOptions={filterOptions}
+                setFilterOption={setFilterOption}
+              />
+            }
+          />
+        )}
+      </AnimatePresence>
       <div className='relative flex items-baseline justify-between pt-24 pb-2 border-b border-gray-200'>
         <h1 className='text-4xl font-extrabold  text-white'>Marketplace</h1>
         <button className='lg:hidden inline-flex p-2 rounded-full ' onClick={() => setOpen(!open)}>
           <FilterIcon className='h-6 w-6 text-secondary' />
         </button>
       </div>
-      <section aria-labelledby='marketplace-heading' className='pt-6 pb-24'>
+      <section aria-labelledby='marketplace-heading' className='pt-6 pb-12'>
         <h2 id='marketplace-heading' className='sr-only'>
           Marketplace
         </h2>

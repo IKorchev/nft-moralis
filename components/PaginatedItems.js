@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate"
 import { useRef } from "react"
 import { motion } from "framer-motion"
 
-function PaginatedItems({ items, itemsPerPage, renderItem }) {
+function PaginatedItems({ items, itemsPerPage, renderItem, isLayoutAnimated = true }) {
   const [currentItems, setCurrentItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
@@ -25,16 +25,16 @@ function PaginatedItems({ items, itemsPerPage, renderItem }) {
   }
 
   return (
-    <motion.div layout className=' text-white relative mx-auto'>
+    <motion.div layout={isLayoutAnimated} className=' text-white relative mx-auto'>
       {currentItems && (
-        <div className='flex flex-col items-center justify-center '>
-          <div className='absolute -top-24' ref={scrollToRef} />
-          <div className='flex flex-wrap gap-5 w-full justify-start  lg:justify-start  min-h-[40rem]'>
+        <div className=' '>
+          <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
+          <div className='flex flex-wrap gap-5 w-full justify-center min-h-[40rem]'>
             {currentItems.map(renderItem)}
           </div>
           {items?.length > itemsPerPage && (
             <ReactPaginate
-              containerClassName='flex my-5 rounded-lg  items-center overflow-hidden'
+              containerClassName='flex my-5 rounded-lg justify-center items-center overflow-hidden'
               pageLinkClassName='bg-white border-gray-300 text-gray-500  inline-flex items-center px-4 py-2 border'
               nextLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
               previousLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'

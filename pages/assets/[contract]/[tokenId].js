@@ -9,7 +9,7 @@ import { tokenIdFetcher, revalidateOptions } from "../../../utils/fetcher"
 import Link from "next/link"
 import ActivityChart from "../../../components/ActivityChart"
 import { MoonLoader } from "react-spinners"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import ListItemModal from "../../../components/tokenId/ListItemModal"
 
@@ -115,12 +115,11 @@ const Token = () => {
           </Collapse>
         </div>
       </div>
-      <ListItemModal
-        data={data}
-        chain={chain}
-        isOpen={open}
-        onClose={() => setOpen(false)}
-      />
+      <AnimatePresence>
+        {open && (
+          <ListItemModal data={data} chain={chain} isOpen={open} onClose={() => setOpen(false)} />
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }

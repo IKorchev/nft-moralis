@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion"
 import { FilterIcon } from "@heroicons/react/solid"
 import { sortBy } from "lodash"
 import { useRouter } from "next/router"
@@ -29,32 +30,33 @@ const Asset = () => {
     [query?.contract],
     { live: true }
   )
-  console.log("AVAILABLE", itemsAvailableForPurchase)
-  console.log("ALL", items)
+
   const cheapest = itemsAvailableForPurchase[0]?.attributes?.price
   return (
-    <div className='container mx-auto px-6 py-24 text-white'>
+    <div className='container mx-auto px-4 lg:px-0 py-24 text-white'>
       {/* MOBILE DRAWER */}
-      {open && (
-        <Drawer
-          open={open}
-          setOpen={setOpen}
-          ChildElements={
-            <div className='flex flex-col gap-1'>
-              <SortSection
-                defaultOpen={true}
-                sortOption={sortOption}
-                setSortOption={setSortOption}
-                sortOptions={sortOptions}
-              />
-              <ClearFiltersButton
-                setSortOption={setSortOption}
-                setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
-              />
-            </div>
-          }
-        />
-      )}
+      <AnimatePresence>
+        {open && (
+          <Drawer
+            open={open}
+            setOpen={setOpen}
+            ChildElements={
+              <div className='flex flex-col gap-1'>
+                <SortSection
+                  defaultOpen={true}
+                  sortOption={sortOption}
+                  setSortOption={setSortOption}
+                  sortOptions={sortOptions}
+                />
+                <ClearFiltersButton
+                  setSortOption={setSortOption}
+                  setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
+                />
+              </div>
+            }
+          />
+        )}
+      </AnimatePresence>
       <CollectionHeader
         chain={chain}
         address={query.contract}
