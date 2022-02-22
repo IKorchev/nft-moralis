@@ -28,6 +28,27 @@ const Metadata = () => {
       <meta name='robots' content='index, follow' />
       <meta name='keywords' content='NFT, Ethereum, Moralis, Launchpad, Marketplace, ropsten' />
       <meta name='author' content='Ivaylo Korchev' />
+      {/* FACEBOOK */}
+      <meta property='og:url' content='https://nft-moralis.vercel.app/' />
+      <meta property='og:type' content='website' />
+      <meta property='og:title' content='Ropsten NFT Marketplace' />
+      <meta
+        property='og:description'
+        content='NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
+      ROPSTEN testnet. Trade NFTs'
+      />
+      <meta property='og:image' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
+      {/* TWITTER */}
+      <meta name='twitter:card' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
+      <meta property='twitter:domain' content='nft-moralis.vercel.app' />
+      <meta property='twitter:url' content='https://nft-moralis.vercel.app/' />
+      <meta name='twitter:title' content='Ropsten NFT Marketplace' />
+      <meta
+        name='twitter:description'
+        content='NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
+      ROPSTEN testnet. Trade NFTs'
+      />
+      <meta name='twitter:image' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
     </Head>
   )
 }
