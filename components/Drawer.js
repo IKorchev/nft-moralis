@@ -15,29 +15,27 @@ const Drawer = ({ open, setOpen, ChildElements }) => {
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className='absolute inset-0 bg-black/70 '
           />
-          <div className='fixed inset-y-0 right-0 pl-10 max-w-full flex'>
+          <div className='fixed inset-y-0 right-0 flex max-w-full pl-10'>
             <div className='relative w-screen max-w-xs'>
               <motion.div
                 initial={{ x: "100%" }}
                 exit={{ x: "100%" }}
                 animate={{ x: 0 }}
                 transition={{ duration: 0.5 }}
-                className='h-screen flex flex-col py-6 bg-primary-900 shadow-xl overflow-y-scroll '>
-                <div className='px-4 sm:px-6 flex justify-between'>
+                className='flex h-screen flex-col overflow-y-scroll bg-primary-900 py-6 shadow-xl '>
+                <div className='flex justify-between px-4 sm:px-6'>
                   <Dialog.Title className='text-2xl font-medium text-gray-100'>
                     Sort and Filter
                   </Dialog.Title>
                   <button
                     type='button'
-                    className='rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white'
+                    className='rounded-md text-gray-300 focus:outline-none focus:ring-2 focus:ring-white hover:text-white'
                     onClick={() => setOpen(false)}>
                     <span className='sr-only'>Close panel</span>
                     <XIcon className='h-6 w-6' aria-hidden='true' />
                   </button>
                 </div>
-                <div className='mt-12 mx-auto relative flex-1 px-4 sm:px-6'>
-                  {ChildElements}
-                </div>
+                <div className='relative mx-auto mt-12 flex-1 px-4 sm:px-6'>{ChildElements}</div>
               </motion.div>
             </div>
           </div>

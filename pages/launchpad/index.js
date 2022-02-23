@@ -6,7 +6,7 @@ const Launchpad = () => {
   // Featured (current) Launchpad
   //prettier-ignore
   const { currentLaunchpad, isCurrentLaunchpadLoading, completedLaunchpads, upcomingLaunchpads } = useMoralisData()
-  
+
   if (isCurrentLaunchpadLoading)
     return (
       <Loading
@@ -20,9 +20,9 @@ const Launchpad = () => {
       {currentLaunchpad && !isCurrentLaunchpadLoading && (
         <FeaturedSection featuredCollection={currentLaunchpad[0]?.attributes} />
       )}
-      <div className='container py-12 mx-auto'>
-        <h1 className='text-3xl text-white border-b border-secondary py-3'>Upcoming</h1>
-        <div className='flex mt-5 px-2 gap-5 w-full overflow-auto styled-scrollbar py-4 '>
+      <div className='container mx-auto py-12'>
+        <h1 className='border-b border-secondary py-3 text-3xl text-white'>Upcoming</h1>
+        <div className='styled-scrollbar mt-5 flex w-full gap-5 overflow-auto px-2 py-4 '>
           {upcomingLaunchpads.map((el) => (
             <Card
               collectionAddress={el.attributes.contractAddress}
@@ -32,9 +32,9 @@ const Launchpad = () => {
           ))}
         </div>
       </div>
-      <div className='container py-5 mx-auto mt-12'>
-        <h1 className='text-3xl text-white border-b border-secondary-dark py-3'>Completed</h1>
-        <div className='flex mt-5 px-2 gap-5 w-full overflow-auto styled-scrollbar py-4 '>
+      <div className='container mx-auto mt-12 py-5'>
+        <h1 className='border-b border-secondary-dark py-3 text-3xl text-white'>Completed</h1>
+        <div className='styled-scrollbar mt-5 flex w-full gap-5 overflow-auto px-2 py-4 '>
           {completedLaunchpads.map((el) => (
             <Card
               collectionAddress={el.attributes.contractAddress}

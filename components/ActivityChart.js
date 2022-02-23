@@ -11,15 +11,7 @@ import {
 import { Line } from "react-chartjs-2"
 import { useMoralis } from "react-moralis"
 import { chartOptions } from "../utils/chartOptions"
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const ActivityChart = ({ data }) => {
   const { Moralis } = useMoralis()
@@ -28,9 +20,7 @@ const ActivityChart = ({ data }) => {
       return new Date(el.block_timestamp).toLocaleDateString("uk")
     })
     .reverse()
-  const dataArr = data?.transactions?.result
-    ?.map((el) => Moralis.Units.FromWei(el.value))
-    .reverse()
+  const dataArr = data?.transactions?.result?.map((el) => Moralis.Units.FromWei(el.value)).reverse()
   const chartData = {
     labels: labelsArr,
     datasets: [
@@ -45,7 +35,7 @@ const ActivityChart = ({ data }) => {
   }
 
   return (
-    <div className='bg-white text-white h-[300px]'>
+    <div className='h-[300px] bg-white text-white'>
       <Line data={chartData} options={chartOptions} />
     </div>
   )

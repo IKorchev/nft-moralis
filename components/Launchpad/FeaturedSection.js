@@ -70,22 +70,20 @@ const FeaturedSection = ({ featuredCollection }) => {
 
   return (
     <section
-      className='flex flex-col lg:justify-between border border-primary-700 
-    bg-primary-800/30 rounded-md p-8 lg:p-12
-     lg:flex-row gap-5 min-h-24 text-white w-full mt-12'>
-      <div className='flex-1 relative'>
-        <h1 className='inline text-xl my-2 -ml-3 bg-primary-700 text-center px-4 py-2 uppercase rounded-full '>
+      className='min-h-24 mt-12 flex w-full flex-col 
+    gap-5 rounded-md border border-primary-700
+     bg-primary-800/30 p-8 text-white lg:flex-row lg:justify-between lg:p-12'>
+      <div className='relative flex-1'>
+        <h1 className='my-2 -ml-3 inline rounded-full bg-primary-700 px-4 py-2 text-center text-xl uppercase '>
           Featured launch
         </h1>
         <button
           onClick={refreshDataHandler}
-          className='w-max rounded-full absolute text-3xl p-1 text-secondary-light bg-primary-700 right-0'>
+          className='absolute right-0 w-max rounded-full bg-primary-700 p-1 text-3xl text-secondary-light'>
           <BiRefresh />
         </button>
-        <h2 className='text-4xl text-white mt-16'>
-          {featuredCollection?.collectionName}
-        </h2>
-        <p className='text-sm mt-5'>{featuredCollection?.description}</p>
+        <h2 className='mt-16 text-4xl text-white'>{featuredCollection?.collectionName}</h2>
+        <p className='mt-5 text-sm'>{featuredCollection?.description}</p>
 
         {/* IMPORTANT: This is not a safety check!
           The contract owner needs to make sure the mint 
@@ -93,39 +91,37 @@ const FeaturedSection = ({ featuredCollection }) => {
 
         {countdownFinished ? (
           <>
-            <div className='bg-primary-700 rounded-full mt-12 w-max pr-5 border-2 border-primary-600'>
+            <div className='mt-12 w-max rounded-full border-2 border-primary-600 bg-primary-700 pr-5'>
               <button
                 onClick={async () => {
                   mintToken(featuredCollection?.contractAddress, cost, 1)
                 }}
-                className='bg-secondary  py-1 px-3 text-lg rounded-full hover:bg-secondary-dark transition duration-500'>
+                className='rounded-full  bg-secondary py-1 px-3 text-lg transition duration-500 hover:bg-secondary-dark'>
                 Mint now
               </button>
               <span> {cost && Moralis.Units.FromWei(cost)} ETH </span>
             </div>
             <div className='mt-12 w-full xl:pr-16'>
               <p className='text-center'>Minted</p>
-              <div className='w-full flex h-4 bg-primary-700 my-3 rounded-full relative overflow-hidden'>
+              <div className='relative my-3 flex h-4 w-full overflow-hidden rounded-full bg-primary-700'>
                 <div
-                  className='bg-secondary-light rounded-full h-4 grid place-items-center absolute top-0 left-0 '
+                  className='absolute top-0 left-0 grid h-4 place-items-center rounded-full bg-secondary-light '
                   style={{ width: `${(mintedAmount / maxSupply) * 100}%` }}></div>
-                <span className='text-[12px] text-center w-full'>
+                <span className='w-full text-center text-[12px]'>
                   {mintedAmount}/{maxSupply}
                 </span>
               </div>
-              <p className='text-center text-white mt-3'>
-                ({(mintedAmount / maxSupply) * 100}%)
-              </p>
+              <p className='mt-3 text-center text-white'>({(mintedAmount / maxSupply) * 100}%)</p>
             </div>
           </>
         ) : (
           <Countdown timeLeft={timeLeft} />
         )}
       </div>
-      <div className='flex-1 w-full h-full relative'>
+      <div className='relative h-full w-full flex-1'>
         <Link href={`/assets/${featuredCollection?.contractAddress}`}>
           <img
-            className='object-contain w-full max-h-[30rem] cursor-pointer '
+            className='max-h-[30rem] w-full cursor-pointer object-contain '
             src={featuredCollection?.imageUrl}
             alt=''
           />

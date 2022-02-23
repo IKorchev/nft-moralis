@@ -24,7 +24,7 @@ const Marketplace = () => {
   }, [allCollectionsListed])
 
   return (
-    <main className='mx-auto container px-4 lg:px-0 py-24'>
+    <main className='container mx-auto px-4 py-24 lg:px-0'>
       {/* MOBILE FILTERING DRAWER */}
       <AnimatePresence>
         {open && (
@@ -44,9 +44,9 @@ const Marketplace = () => {
           />
         )}
       </AnimatePresence>
-      <div className='relative flex items-baseline justify-between pt-24 pb-2 border-b border-gray-200'>
+      <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
         <h1 className='text-4xl font-extrabold  text-white'>Marketplace</h1>
-        <button className='lg:hidden inline-flex p-2 rounded-full ' onClick={() => setOpen(!open)}>
+        <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
           <FilterIcon className='h-6 w-6 text-secondary' />
         </button>
       </div>
@@ -54,7 +54,7 @@ const Marketplace = () => {
         <h2 id='marketplace-heading' className='sr-only'>
           Marketplace
         </h2>
-        <div className='flex flex-col lg:flex-row justify-center lg:justify-start gap-5'>
+        <div className='flex flex-col justify-center gap-5 lg:flex-row lg:justify-start'>
           {/* Desktop */}
           <div className='hidden lg:flex'>
             <SortFilterAndClear
@@ -90,9 +90,9 @@ const ChangeNetwork = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className='grid place-items-center h-[70vh]'>
+      className='grid h-[70vh] place-items-center'>
       <button
-        className='bg-secondary p-3 text-lg rounded-lg'
+        className='rounded-lg bg-secondary p-3 text-lg'
         onClick={async () => {
           await authenticate()
           switchNetwork("0x3")

@@ -29,13 +29,13 @@ const Token = () => {
   const { data, error, isValidating } = useSWR(options, tokenIdFetcher, revalidateOptions)
   if (error)
     return (
-      <div className='h-[35rem] grid place-items-center'>
-        <h1 className='text-white text-3xl'>{error.message}</h1>
+      <div className='grid h-[35rem] place-items-center'>
+        <h1 className='text-3xl text-white'>{error.message}</h1>
       </div>
     )
   if (isValidating)
     return (
-      <div className='min-h-[40rem] grid place-items-center'>
+      <div className='grid min-h-[40rem] place-items-center'>
         <MoonLoader color='white' width={150} height={150} />
       </div>
     )
@@ -45,22 +45,22 @@ const Token = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delayChildren: 1, ease: "easeInOut" }}
-      className='container xl:px-24 py-12 mx-auto text-white'>
-      <div className='flex flex-col justify-evenly lg:flex-row gap-5 px-5 lg:p-0 w-full'>
+      className='container mx-auto py-12 text-white xl:px-24'>
+      <div className='flex w-full flex-col justify-evenly gap-5 px-5 lg:flex-row lg:p-0'>
         <div className='lg:min-w-[30rem]'>
           <TokenImage
             format={data?.metadata?.format}
             url={formatIpfs(data?.metadata?.image || data?.metadata?.image_url)}
           />
         </div>
-        <div className='bg-primary-900 flex-grow rounded-lg w-full'>
+        <div className='w-full flex-grow rounded-lg bg-primary-900'>
           <Collapse buttonText='Token Information' defaultOpen={true}>
-            <div className='bg-white text-black h-full p-4'>
+            <div className='h-full bg-white p-4 text-black'>
               <h2 className=''>{data?.name || data?.metadata?.name}</h2>
               <p>
                 Owned by:{" "}
                 <Link href={`${data?.owner}`} passHref>
-                  <a className='text-blue-900 font-semibold'>{data?.owner}</a>
+                  <a className='font-semibold text-blue-900'>{data?.owner}</a>
                 </Link>
               </p>
               <hr />
@@ -82,7 +82,7 @@ const Token = () => {
                   onClick={() => {
                     setOpen(true)
                   }}
-                  className='bg-secondary text-white p-2 m-2'>
+                  className='m-2 bg-secondary p-2 text-white'>
                   List item
                 </button>
               )}
@@ -98,7 +98,7 @@ const Token = () => {
           <Collapse buttonText='Attributes'>
             <div className='grid grid-cols-3 gap-3 bg-white p-4'>
               {data?.metadata?.attributes?.map((el) => (
-                <div className='col-span-1 border text-black grid place-items-center bg-primary-200 border-primary-300 text-center p-1 rounded-lg'>
+                <div className='col-span-1 grid place-items-center rounded-lg border border-primary-300 bg-primary-200 p-1 text-center text-black'>
                   <small className='font-bold'>{el.trait_type}</small>
                   <small>{el.value}</small>
                 </div>
@@ -109,7 +109,7 @@ const Token = () => {
             <ActivityChart data={data} />
           </Collapse>
           <Collapse buttonText='Activity'>
-            <div className='text-black max-h-[20rem]  overflow-y-scroll styled-scrollbar '>
+            <div className='styled-scrollbar max-h-[20rem]  overflow-y-scroll text-black '>
               <TransactionsTable transactions={data?.transactions} />
             </div>
           </Collapse>

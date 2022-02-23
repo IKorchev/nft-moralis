@@ -19,7 +19,7 @@ const Layout = ({ isMetamaskInstalled, children }) => {
   return (
     <motion.div
       exit={{ opacity: 0, scale: 0, transition: { duration: 3 } }}
-      className='bg-primary-900 relative w-full'>
+      className='relative w-full bg-primary-900'>
       <Navbar />
       <ToastContainer className='' position='top-right' draggable={false} hideProgressBar={false} />
       {children}

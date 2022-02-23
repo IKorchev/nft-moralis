@@ -10,9 +10,6 @@ const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
 
 //prettier-ignore"
 const MyApp = ({ Component, pageProps }) => {
-
-
-
   return (
     <DAppProvider>
       <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>

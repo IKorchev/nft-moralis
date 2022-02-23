@@ -20,10 +20,10 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
     <motion.div
       layout
       className='
-      text-black overflow-hidden w-48 h-72 bg-rose-50 rounded-lg '>
+      h-72 w-48 overflow-hidden rounded-lg bg-rose-50 text-black '>
       <Link passHref={true} href={`/assets/${tokenAddress}/${tokenId}`}>
         {isValidating ? (
-          <div className='grid place-items-center h-48 w-48  object-scale-down bg-white/90'>
+          <div className='grid h-48 w-48 place-items-center  bg-white/90 object-scale-down'>
             <FadeLoader size={1} color='black' />
           </div>
         ) : data?.format === "video" ? (
@@ -37,7 +37,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
               ) || ""
             }
             alt=''
-            className='rounded-lg object-scale-down cursor-pointer h-48 '
+            className='h-48 cursor-pointer rounded-lg object-scale-down '
           />
         ) : (
           <img
@@ -47,7 +47,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
               ) || ""
             }
             alt=''
-            className='object-scale-down cursor-pointer h-48'
+            className='h-48 cursor-pointer object-scale-down'
           />
         )}
       </Link>
@@ -64,7 +64,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
           <>
             <button
               onClick={() => setIsOpen(true)}
-              className='bg-teal-800 text-white px-2 py-1 rounded-sm mt-1'>
+              className='mt-1 rounded-sm bg-teal-800 px-2 py-1 text-white'>
               List for sale
             </button>
             <AnimatePresence>

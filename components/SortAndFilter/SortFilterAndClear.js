@@ -24,10 +24,7 @@ const SortFilterAndClear = ({
         setFilterOption={setFilterOption}
         variant='desktop'
       />
-      <ClearFiltersButton
-        setFilterOption={setFilterOption}
-        setSortOption={setSortOption}
-      />
+      <ClearFiltersButton setFilterOption={setFilterOption} setSortOption={setSortOption} />
     </div>
   )
 }

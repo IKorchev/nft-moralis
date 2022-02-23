@@ -33,7 +33,7 @@ const Asset = () => {
 
   const cheapest = itemsAvailableForPurchase[0]?.attributes?.price
   return (
-    <div className='container mx-auto px-4 lg:px-0 py-24 text-white'>
+    <div className='container mx-auto px-4 py-24 text-white lg:px-0'>
       {/* MOBILE DRAWER */}
       <AnimatePresence>
         {open && (
@@ -63,10 +63,10 @@ const Asset = () => {
         amountListed={itemsAvailableForPurchase.length || 0}
         floorPrice={cheapest || 0}
       />
-      <div className='relative flex items-baseline justify-between pt-24 pb-2 border-b border-gray-200'>
+      <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
         <h1 className='text-4xl font-extrabold text-white'>NFTs</h1>
         <button
-          className='lg:hidden inline-flex p-2 rounded-full bg-primary-700 border border-secondary'
+          className='inline-flex rounded-full border border-secondary bg-primary-700 p-2 lg:hidden'
           onClick={() => setOpen(!open)}>
           <FilterIcon className='h-6 w-6 text-secondary' />
         </button>
@@ -75,9 +75,9 @@ const Asset = () => {
         <h2 id='section-heading' className='sr-only'>
           Section
         </h2>
-        <div className='flex flex-col lg:flex-row justify-start gap-5 mx-auto container'>
+        <div className='container mx-auto flex flex-col justify-start gap-5 lg:flex-row'>
           {/* Desktop */}
-          <div className='w-60 lg:flex hidden flex-col gap-1'>
+          <div className='hidden w-60 flex-col gap-1 lg:flex'>
             <SortSection
               defaultOpen={true}
               sortOption={sortOption}

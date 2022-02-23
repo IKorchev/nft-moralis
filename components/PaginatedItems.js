@@ -25,11 +25,11 @@ function PaginatedItems({ items, itemsPerPage, renderItem, isLayoutAnimated = tr
   }
 
   return (
-    <motion.div layout={isLayoutAnimated} className=' text-white relative mx-auto'>
+    <motion.div layout={isLayoutAnimated} className=' relative mx-auto text-white'>
       {currentItems && (
         <div className=' '>
           <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
-          <div className='flex flex-wrap gap-5 w-full justify-center min-h-[40rem]'>
+          <div className='flex min-h-[40rem] w-full flex-wrap justify-center gap-5'>
             {currentItems.map(renderItem)}
           </div>
           {items?.length > itemsPerPage && (
@@ -42,7 +42,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem, isLayoutAnimated = tr
               nextClassName=''
               previousClassName=''
               breakLabel={
-                <span className='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'>
+                <span className='inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-gray-500'>
                   ...
                 </span>
               }

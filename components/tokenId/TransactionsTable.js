@@ -20,29 +20,29 @@ const formatAddress = (address) => {
 }
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
   return (
-    <div className='align-middle inline-block min-w-full '>
-      <div className='shadow  border-b border-gray-200 sm:rounded-lg '>
+    <div className='inline-block min-w-full align-middle '>
+      <div className='border-b  border-gray-200 shadow sm:rounded-lg '>
         <table className='min-w-full  divide-y divide-gray-200  '>
-          <thead className='bg-primary-900 text-xs  text-pink-500 font-medium uppercase '>
+          <thead className='bg-primary-900 text-xs  font-medium uppercase text-pink-500 '>
             <tr>
-              <th scope='col' className='lg:px-6 py-3'>
+              <th scope='col' className='py-3 lg:px-6'>
                 Date
               </th>
-              <th scope='col' className='lg:px-6 py-3'>
+              <th scope='col' className='py-3 lg:px-6'>
                 From
               </th>
-              <th scope='col' className='lg:px-6 py-3'>
+              <th scope='col' className='py-3 lg:px-6'>
                 To
               </th>
-              <th scope='col' className='lg:px-6 py-3'>
+              <th scope='col' className='py-3 lg:px-6'>
                 Transaction Hash
               </th>
-              <th scope='col' className='lg:px-6 py-3'>
+              <th scope='col' className='py-3 lg:px-6'>
                 Amount
               </th>
             </tr>
           </thead>
-          <tbody className='bg-white divide-y divide-gray-200 '>
+          <tbody className='divide-y divide-gray-200 bg-white '>
             {transactions.result?.map((el) => (
               <TableRow
                 {...rowProps}
@@ -61,34 +61,27 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
   )
 }
 
-const TableRow = ({
-  blockTimestamp,
-  transactionHash,
-  fromAddress,
-  toAddress,
-  price,
-  ...props
-}) => {
+const TableRow = ({ blockTimestamp, transactionHash, fromAddress, toAddress, price, ...props }) => {
   const { chain } = useChain()
   const date = new Date(blockTimestamp).toLocaleDateString("uk")
   return (
-    <tr className=' text-xs text-center whitespace-nowrap bg-primary-700 text-white'>
-      <td className='lg:px-6 py-2'>{date}</td>
-      <td className='lg:px-6 py-2'>
+    <tr className=' whitespace-nowrap bg-primary-700 text-center text-xs text-white'>
+      <td className='py-2 lg:px-6'>{date}</td>
+      <td className='py-2 lg:px-6'>
         <Link href={`/user/${fromAddress}`}>
           <a className='flex items-center justify-center'>
             {shortenIfAddress(fromAddress)} <ExternalLinkIcon className='h-5 w-5' />
           </a>
         </Link>
       </td>
-      <td className='lg:px-6 py-2'>
+      <td className='py-2 lg:px-6'>
         <Link href={`/user/${toAddress}`}>
           <a className='flex items-center justify-center'>
             {shortenIfAddress(toAddress)} <ExternalLinkIcon className='h-5 w-5' />
           </a>
         </Link>
       </td>
-      <td className='lg:px-6 py-2'>
+      <td className='py-2 lg:px-6'>
         <a
           href={`${chain.blockExplorerUrl}tx/${transactionHash}`}
           target='_blank'
@@ -99,7 +92,7 @@ const TableRow = ({
           <ExternalLinkIcon className='h-5 w-5' />
         </a>
       </td>
-      <td className='lg:px-6 py-2'>{Moralis.Units.FromWei(price)}</td>
+      <td className='py-2 lg:px-6'>{Moralis.Units.FromWei(price)}</td>
     </tr>
   )
 }

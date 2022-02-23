@@ -69,7 +69,7 @@ function UserAddress() {
   if (error) return null
 
   return (
-    <div className='container mx-auto overflow-hidden min-h-[50rem]'>
+    <div className='container mx-auto min-h-[50rem] overflow-hidden'>
       <AnimatePresence>
         {open && (
           <Drawer
@@ -88,23 +88,23 @@ function UserAddress() {
           />
         )}
       </AnimatePresence>
-      <div className='flex flex-col items-center mt-12'>
-        <div className='border-4 rounded-full overflow-hidden border-white'>
+      <div className='mt-12 flex flex-col items-center'>
+        <div className='overflow-hidden rounded-full border-4 border-white'>
           <Jazzicon address={router.query.userAddress} size={150} />
         </div>
-        <h2 className='text-xl cursor-pointer text-center -mt-4 bg-white rounded-full p-2 text-black'>
+        <h2 className='-mt-4 cursor-pointer rounded-full bg-white p-2 text-center text-xl text-black'>
           <span className='relative flex items-center justify-center'>
             {shortenIfAddress(router.query.userAddress)}
           </span>
         </h2>
       </div>
-      <Tab.Group defaultChecked={1} as='div' className='container flex flex-col items-center mt-5'>
-        <Tab.List className='text-white bg-primary-900 flex  justify-evenly rounded-lg  mt-5  '>
+      <Tab.Group defaultChecked={1} as='div' className='container mt-5 flex flex-col items-center'>
+        <Tab.List className='mt-5 flex justify-evenly  rounded-lg bg-primary-900  text-white  '>
           <Tab
             className={({ selected }) =>
               `${
                 selected ? "bg-primary-100 text-black" : ""
-              } flex items-center px-12 py-3 rounded-lg `
+              } flex items-center rounded-lg px-12 py-3 `
             }>
             <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
           </Tab>
@@ -120,10 +120,10 @@ function UserAddress() {
             className='px-6'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, x: 0 }}>
-            <div className='relative flex items-baseline justify-between pt-24 pb-2 border-b border-gray-200'>
+            <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
               <h1 className='text-4xl font-extrabold  text-white'>NFTs</h1>
               <button
-                className='lg:hidden inline-flex p-2 rounded-full '
+                className='inline-flex rounded-full p-2 lg:hidden '
                 onClick={() => setOpen(!open)}>
                 <FilterIcon className='h-6 w-6 text-secondary' />
               </button>
@@ -132,8 +132,8 @@ function UserAddress() {
               <h2 id='nfts-heading' className='sr-only'>
                 NFTs
               </h2>
-              <div className='flex flex-col lg:flex-row justify-center lg:justify-start gap-5'>
-                <div className='hidden lg:flex flex-col gap-1'>
+              <div className='flex flex-col justify-center gap-5 lg:flex-row lg:justify-start'>
+                <div className='hidden flex-col gap-1 lg:flex'>
                   <SortFilterAndClear
                     sortOption={sortOption}
                     setSortOption={setSortOption}
@@ -165,7 +165,7 @@ function UserAddress() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className='h-[40rem] container max-w-[70rem] mx-auto my-12 overflow-y-auto styled-scrollbar'>
+            className='styled-scrollbar container mx-auto my-12 h-[40rem] max-w-[70rem] overflow-y-auto'>
             <TransactionsTable
               rowProps={{
                 className: "bg-primary-50 text-lg ",

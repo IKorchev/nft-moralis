@@ -5,10 +5,10 @@ import HUOBIIcon from "../../public/assets/huobi.svg"
 import Link from "next/link"
 const Footer = () => {
   return (
-    <div className='footer bg-primary-900 text-light border-t border-secondary'>
-      <div className='container px-12 xl:px-32 mx-auto flex flex-col xl:flex-row justify-between pt-12'>
+    <div className='footer border-t border-secondary bg-primary-900 text-light'>
+      <div className='container mx-auto flex flex-col justify-between px-12 pt-12 xl:flex-row xl:px-32'>
         <div>
-          <h1 className='font-semibold text-3xl text-pink-400 text-center xl:text-start'>
+          <h1 className='xl:text-start text-center text-3xl font-semibold text-pink-400'>
             NFT Explorer
           </h1>
         </div>
@@ -60,27 +60,27 @@ const Footer = () => {
           </ul>
         </div>
         <div className='mt-12 text-center xl:text-left'>
-          <h1 className='text-xl font-semibold mb-5'>Buy Crypto</h1>
-          <div className='flex justify-center xl:justify-start flex-wrap xl:w-96 '>
+          <h1 className='mb-5 text-xl font-semibold'>Buy Crypto</h1>
+          <div className='flex flex-wrap justify-center xl:w-96 xl:justify-start '>
             <a
               href='https://accounts.binance.me/en/register?ref=SE9CN8ZU'
               target='_blank'
               rel='noopener noreferrer'>
-              <img src={BINANCEIcon.src} className='w-24 mr-5 h-full m-1' alt='' />
+              <img src={BINANCEIcon.src} className='m-1 mr-5 h-full w-24' alt='' />
             </a>
             <a href='https://www.bitmex.com/' target='_blank' rel='noopener noreferrer'>
-              <img src={BITMEXIcon.src} className='w-24 mr-5 h-full m-1' alt='' />
+              <img src={BITMEXIcon.src} className='m-1 mr-5 h-full w-24' alt='' />
             </a>
             <a href='https://www.huobi.com/en-us/ ' target='_blank' rel='noopener noreferrer'>
-              <img src={HUOBIIcon.src} className='w-24 mr-5 h-full m-1' alt='' />
+              <img src={HUOBIIcon.src} className='m-1 mr-5 h-full w-24' alt='' />
             </a>
             <a href='https://www.coinbase.com/' target='_blank' rel='noopener noreferrer'>
-              <img src={COINBASEIcon.src} className='w-24 mr-5 h-full m-1' alt='' />
+              <img src={COINBASEIcon.src} className='m-1 mr-5 h-full w-24' alt='' />
             </a>
           </div>
         </div>
       </div>
-      <div className='flex container px-32 mx-auto justify-between pt-8 pb-4 text-[rgba(255,255,255,0.5)]'>
+      <div className='container mx-auto flex justify-between px-32 pt-8 pb-4 text-[rgba(255,255,255,0.5)]'>
         <p>Copyright &copy; 2021</p>
         <a href='http://ikorchev.com' target='_blank' rel='noopener noreferrer'>
           ikorchev.com

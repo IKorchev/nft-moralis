@@ -8,18 +8,14 @@ const Collapse = ({ children, buttonText, defaultOpen }) => {
   return (
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
-        <div className=' rounded-lg overflow-hidden bg-white mt-2'>
+        <div className=' mt-2 overflow-hidden rounded-lg bg-white'>
           <Disclosure.Button
-            className={`transition-all  duration-300 flex justify-between text-black w-full px-4 text-lg font-bold  py-5 ${
-              open ? "bg-primary-500 " : "bg-white"
-            }
-           text-left  rounded-lg hover:bg-primary-400  focus:outline-none
-            focus-visible:ring focus-visible:ring-primary-200 focus-visible:ring-opacity-75`}>
+            className={`flex  w-full justify-between rounded-lg px-4 py-5 text-left text-lg font-bold  text-black transition-all  duration-300 
+            ${open ? "bg-primary-500 " : "bg-white"}
+            focus:outline-none  focus-visible:ring focus-visible:ring-primary-200 focus-visible:ring-opacity-75 hover:bg-primary-400`}>
             {buttonText}
             <ChevronIcon
-              className={`h-8 w-8 transition-all duration-500 ${
-                open ? "rotate-180" : ""
-              }`}
+              className={`h-8 w-8 transition-all duration-500 ${open ? "rotate-180" : ""}`}
             />
           </Disclosure.Button>
           <Transition

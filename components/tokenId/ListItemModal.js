@@ -40,9 +40,9 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
       transition={{ duration: 0.5, ease: "easeInOut" }}
       open={isOpen}
       onClose={onClose}
-      className='fixed z-10 inset-0 overflow-y-auto  grid  place-items-center'>
+      className='fixed inset-0 z-10 grid  place-items-center  overflow-y-auto'>
       <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
-      <div className='z-20 p-5 bg-white w-[30rem] grid place-items-center rounded-lg'>
+      <div className='z-20 grid w-[30rem] place-items-center rounded-lg bg-white p-5'>
         <Dialog.Title>List for sale</Dialog.Title>
         <div className='h-60 w-60 bg-gray-100'>
           <img
@@ -53,14 +53,14 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
             className='object-contain'
           />
         </div>
-        <form onSubmit={onSubmit} className='flex flex-col  mt-5'>
+        <form onSubmit={onSubmit} className='mt-5 flex  flex-col'>
           <div className='border px-2'>
             <label htmlFor='listPriceInput'>Price: </label>
             <input
               onChange={(e) => setPrice(e.target.value)}
               type='number'
               id='listPriceInput'
-              className='border text-lg p-2'
+              className='border p-2 text-lg'
               placeholder='amount'
               value={price}
             />
@@ -68,13 +68,13 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
           </div>
           <button
             type='submit'
-            className='py-2 mt-5 text-white font-bold text-lg flex items-center justify-center bg-gradient-to-r from-primary-700 rounded-lg to-primary-900 hover:opacity-90'>
+            className='mt-5 flex items-center justify-center rounded-lg bg-gradient-to-r from-primary-700 to-primary-900 py-2 text-lg font-bold text-white hover:opacity-90'>
             <ClipLoader loading={loading} color='white' size={20} />
             <span className=''> List for sale</span>
           </button>
         </form>
         <div
-          className={`my-5  py-2 w-3/4 text-center ${
+          className={`my-5  w-3/4 py-2 text-center ${
             status.status === "waiting"
               ? "bg-yellow-300"
               : status.status === "error"

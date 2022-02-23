@@ -21,12 +21,11 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
 
   if (!data && !error)
     return (
-      <div className='h-24 grid place-items-center'>
+      <div className='grid h-24 place-items-center'>
         <SyncLoader size={5} color='white' />
       </div>
     )
 
-    
   return (
     <AnimatePresence>
       <motion.div
@@ -38,35 +37,35 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
         className='flex flex-col'>
         <div className='flex flex-col items-center'>
           <h1 className='text-center text-3xl font-black '>{data?.name}</h1>
-          <div className='rounded-full overflow-hidden my-5 border-4 border-white'>
+          <div className='my-5 overflow-hidden rounded-full border-4 border-white'>
             <Jazzicon address={address} size={150} />
           </div>
-          <h3 className=' bg-white text-black font-bold px-3 py-2 rounded-full -mt-12'>
+          <h3 className=' -mt-12 rounded-full bg-white px-3 py-2 font-bold text-black'>
             {shortenIfAddress(address)}
           </h3>
         </div>
-        <div className='container mx-auto my-5 px-5 max-w-[50rem]'>
+        <div className='container mx-auto my-5 max-w-[50rem] px-5'>
           <div
-            className='bg-gradient-to-b 
-            text-white px-5 py-5 rounded-lg '>
-            <h4 className='text-xl text-center mb-5 border-b-4 border-secondary w-max mx-auto'>
+            className='rounded-lg 
+            bg-gradient-to-b px-5 py-5 text-white '>
+            <h4 className='mx-auto mb-5 w-max border-b-4 border-secondary text-center text-xl'>
               Information
             </h4>
             <ul className='flex gap-5'>
-              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
                 <span>Floor Price</span>
                 <span className='text-xs'>
                   {floorPrice && parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2)}
                 </span>
               </li>
-              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
                 <span>Listed Count</span>
                 <span className='text-base'>{amountListed}</span>
               </li>
-              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
                 <span>Token Symbol</span> <span>{data?.symbol}</span>
               </li>
-              <li className='w-full bg-primary-700 rounded-lg flex flex-col justify-between items-center py-2 overflow-hidden border border-secondary-light'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
                 <span>Contract type</span> <span>{data?.contract_type}</span>
               </li>
             </ul>

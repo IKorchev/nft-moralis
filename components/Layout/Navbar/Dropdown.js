@@ -19,10 +19,10 @@ export default function Dropdown() {
     })
   }
   return (
-    <Menu as='div' className='relative inline-block text-left z-50'>
+    <Menu as='div' className='relative z-50 inline-block text-left'>
       <Menu.Button
-        className='p-0 flex items-center hover:bg-opacity-30 
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+        className='flex items-center p-0 focus:outline-none 
+      focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 hover:bg-opacity-30'>
         <AccountAndBalance />
       </Menu.Button>
       <Menu.Items
@@ -41,7 +41,7 @@ export default function Dropdown() {
           clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
         }}
         transition={{ duration: 0.2 }}
-        className='absolute p-2  right-0 w-48 mt-2 transform origin-top bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+        className='absolute right-0  mt-2 w-48 origin-top transform divide-y divide-gray-100 rounded-md bg-white p-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
         <Menu.Item>
           {({ active }) => (
             <button
@@ -51,7 +51,7 @@ export default function Dropdown() {
               }}
               className={`${
                 active ? "bg-primary-500 text-white" : "text-gray-900"
-              } flex rounded-md items-center w-full px-2 py-2 text-md`}>
+              } text-md flex w-full items-center rounded-md px-2 py-2`}>
               <AiOutlineCopy className='mr-2 text-lg ' /> Copy address
             </button>
           )}
@@ -62,7 +62,7 @@ export default function Dropdown() {
               onClick={() => router.push(`/user/${account}`)}
               className={`${
                 active ? "bg-primary-500 text-white" : "text-gray-900"
-              } flex rounded-md items-center w-full px-2 py-2 text-md`}>
+              } text-md flex w-full items-center rounded-md px-2 py-2`}>
               <AiFillAppstore className='mr-2 text-lg' /> NFTs
             </button>
           )}
@@ -72,8 +72,8 @@ export default function Dropdown() {
             <button
               onClick={deactivateWeb3}
               className={`${
-                active ? "bg-red-500 text-white" : "text-gray-900 bg-red-300"
-              }  flex rounded-md items-center w-full px-2 py-2 text-md mt-1`}>
+                active ? "bg-red-500 text-white" : "bg-red-300 text-gray-900"
+              }  text-md mt-1 flex w-full items-center rounded-md px-2 py-2`}>
               <AiOutlineDisconnect className='mr-2 text-lg' /> Disconnect
             </button>
           )}

@@ -35,8 +35,8 @@ const LandingPage = () => {
   }
 
   return (
-    <motion.main exit={{ opacity: 0 }} className='text-center relative mx-auto container'>
-      <div className='px-5 py-48 lg:px-24 text-white text-left'>
+    <motion.main exit={{ opacity: 0 }} className='container relative mx-auto text-center'>
+      <div className='px-5 py-48 text-left text-white lg:px-24'>
         <motion.div
           variants={container}
           initial='hidden'
@@ -48,15 +48,15 @@ const LandingPage = () => {
           <motion.h1 variants={variants} className='text-5xl font-semibold text-white '>
             Explore the NFT space.
           </motion.h1>
-          <motion.p variants={variants} className='text-lg mt-8 font-light'>
+          <motion.p variants={variants} className='mt-8 text-lg font-light'>
             Buy and sell NFTs with minimal fees. New collections listed every week!
           </motion.p>
         </motion.div>
         <div className='mt-12'>
           <Link href='/marketplace'>
             <a
-              className='transition duration-300 bg-secondary  w-max text-xl mt-5 px-5 py-1.5 
-            rounded-lg border-secondary border-2 focus:ring ring-white
+              className='mt-5 w-max rounded-lg  border-2 border-secondary bg-secondary px-5 py-1.5 
+            text-xl ring-white transition duration-300 focus:ring
             hover:bg-pink-900
             '>
               Marketplace
@@ -64,9 +64,9 @@ const LandingPage = () => {
           </Link>
           <Link href='/launchpad'>
             <a
-              className='transition duration-300  text-secondary bg-light w-max ml-5 text-xl mt-5 px-5 py-1.5 rounded-lg border-secondary border-2
-              hover:bg-pink-900 hover:text-white
-              focus:ring ring-white'>
+              className='ml-5 mt-5  w-max rounded-lg border-2 border-secondary bg-light px-5 py-1.5 text-xl text-secondary ring-white transition
+              duration-300 focus:ring
+              hover:bg-pink-900 hover:text-white'>
               Launchpad
             </a>
           </Link>

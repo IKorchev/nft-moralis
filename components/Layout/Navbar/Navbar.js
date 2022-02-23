@@ -24,34 +24,34 @@ const Navbar = () => {
   return (
     <>
       {/* MOBILE MENU */}
-      <Menu as='div' className='lg:hidden  h-20'>
+      <Menu as='div' className='h-20  lg:hidden'>
         {({ open }) => (
           <>
             <Menu.Button as='div'>
-              <button className='bg-secondary rounded-lg fixed top-3 left-3 z-50 p-5 inline-block cursor-pointer'>
+              <button className='fixed top-3 left-3 z-50 inline-block cursor-pointer rounded-lg bg-secondary p-5'>
                 <div
-                  className={` transition ease-in-out transform duration-700 ${
-                    open && "-rotate-45 translate-y-1"
-                  } w-8 h-1 bg-white`}
+                  className={` transform transition duration-700 ease-in-out ${
+                    open && "translate-y-1 -rotate-45"
+                  } h-1 w-8 bg-white`}
                 />
                 <div
-                  className={`transition ease-in-out z-50 transform duration-700 ${
-                    open && "rotate-45 -translate-y-1"
-                  } w-8 h-1 mt-1 bg-white`}
+                  className={`z-50 transform transition duration-700 ease-in-out ${
+                    open && "-translate-y-1 rotate-45"
+                  } mt-1 h-1 w-8 bg-white`}
                 />
               </button>
             </Menu.Button>
             <Menu.Items
               as='nav'
-              className='z-40 text-white fixed h-[35rem] w-screen bg-primary-800 py-24 rounded-b-xl  flex flex-col justify-evenly items-center'>
+              className='fixed z-40 flex h-[35rem] w-screen flex-col items-center justify-evenly  rounded-b-xl bg-primary-800 py-24 text-white'>
               <Menu.Item as={Link} href='/'>
-                <a className='text-3xl my-4 cursor-pointer'>Home</a>
+                <a className='my-4 cursor-pointer text-3xl'>Home</a>
               </Menu.Item>
               <Menu.Item as={Link} href='/marketplace'>
-                <a className='text-3xl py-4 cursor-pointer'>Marketplace</a>
+                <a className='cursor-pointer py-4 text-3xl'>Marketplace</a>
               </Menu.Item>
               <Menu.Item as={Link} href='/launchpad'>
-                <a className='text-3xl my-4 cursor-pointer'>Launchpad</a>
+                <a className='my-4 cursor-pointer text-3xl'>Launchpad</a>
               </Menu.Item>
 
               {/* TODO: Create a page to view all the collections/launchpads
@@ -61,7 +61,7 @@ const Navbar = () => {
               {account && (
                 <Menu.Item as='div' className='flex'>
                   <Link href={`/user/${account}`}>
-                    <a className='text-3xl my-4 flex ml-12' href={`/user/${account}`}>
+                    <a className='my-4 ml-12 flex text-3xl' href={`/user/${account}`}>
                       <AccountAndBalance icon={false} />
                     </a>
                   </Link>
@@ -77,13 +77,13 @@ const Navbar = () => {
               <Menu.Item>
                 {account ? (
                   <button
-                    className='text-red-400 inline border-2 border-red-400 px-4 py-2 text-lg mb-5 mt-5 rounded-full '
+                    className='mb-5 mt-5 inline rounded-full border-2 border-red-400 px-4 py-2 text-lg text-red-400 '
                     onClick={deactivateWeb3}>
                     Disconnect
                   </button>
                 ) : (
                   <button
-                    className='bg-yellow-500 text-black font-extrabold inline border-2  px-4 py-2 text-lg mb-5 mt-5 rounded-full '
+                    className='mb-5 mt-5 inline rounded-full border-2  bg-yellow-500 px-4 py-2 text-lg font-extrabold text-black '
                     onClick={enableWeb3}>
                     Connect
                   </button>
@@ -96,26 +96,26 @@ const Navbar = () => {
 
       {/* DESKTOP Nav */}
 
-      <div className='hidden lg:flex justify-between items-center container py-5  mx-auto text-white'>
+      <div className='container mx-auto hidden items-center justify-between py-5  text-white lg:flex'>
         <Link href='/' passHref>
-          <a className='text-3xl my-4 inline z-10 font-extrabold cursor-pointer whitespace-nowrap '>
+          <a className='z-10 my-4 inline cursor-pointer whitespace-nowrap text-3xl font-extrabold '>
             NFT Explorer
           </a>
         </Link>
-        <ul className='flex justify-start items-center'>
+        <ul className='flex items-center justify-start'>
           <div className='flex flex-grow'>
             <li>
               <Link href='/marketplace' passHref>
-                <a className='text-xl my-4 mx-5  cursor-pointer'>Marketplace</a>
+                <a className='my-4 mx-5 cursor-pointer  text-xl'>Marketplace</a>
               </Link>
             </li>
             <li>
               <Link href='/launchpad' passHref>
-                <a className='text-xl my-4 mx-5  cursor-pointer'>Launchpad</a>
+                <a className='my-4 mx-5 cursor-pointer  text-xl'>Launchpad</a>
               </Link>
             </li>
           </div>
-          <li className='cursor-text ml-4 xl:ml-16'>
+          <li className='ml-4 cursor-text xl:ml-16'>
             <Select
               className='react-select-container'
               classNamePrefix='react-select'
@@ -131,7 +131,7 @@ const Navbar = () => {
           <Dropdown />
         ) : (
           <button
-            className='bg-yellow-500 text-black font-extrabold inline border-2  px-4 py-1 text-lg mb-5 mt-5 rounded-full '
+            className='mb-5 mt-5 inline rounded-full border-2  bg-yellow-500 px-4 py-1 text-lg font-extrabold text-black '
             onClick={enableWeb3}>
             Connect
           </button>
