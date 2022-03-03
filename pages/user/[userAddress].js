@@ -42,14 +42,16 @@ function UserAddress() {
   const [sortOption, setSortOption] = useState()
   const [filterOptions, setFilterOptions] = useState([])
   const [filterOption, setFilterOption] = useState(null)
-  const [transactions, setTransactions] = useState([])
+  const [transactions] = useState([])
   const [open, setOpen] = useState(false)
   const options = {
     url: "noNeedForUrl",
     args: { chain: chain?.chainId, address: router.query.userAddress },
   }
+
   //prettier-ignore
   const { data, error, isValidating } = useSWR(options, getNFTsForUser,revalidateOptions)
+
   useLayoutEffect(() => {
     if (data) {
       const collections = uniqBy(data.result, (token) => token.token_address)
@@ -57,17 +59,8 @@ function UserAddress() {
       setFilterOptions(collections.map((el) => ({ data: el.token_address, name: el.name })))
     }
   }, [data])
-
-  if (isValidating) {
-    return (
-      <Loading
-        containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
-        loaderProps={{ size: 200, color: "white" }}
-      />
-    )
-  }
+  if (isValidating) return <Loading />
   if (error) return null
-
   return (
     <div className='container mx-auto min-h-[50rem] overflow-hidden'>
       <AnimatePresence>

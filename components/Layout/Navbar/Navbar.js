@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <>
       {/* MOBILE MENU */}
-      <Menu as='div' className='h-20  lg:hidden'>
+      <Menu as='div' className='h-20 lg:hidden'>
         {({ open }) => (
           <>
             <Menu.Button as='div'>
@@ -44,14 +44,20 @@ const Navbar = () => {
             <Menu.Items
               as='nav'
               className='fixed z-40 flex h-[35rem] w-screen flex-col items-center justify-evenly  rounded-b-xl bg-primary-800 py-24 text-white'>
-              <Menu.Item as={Link} href='/'>
-                <a className='my-4 cursor-pointer text-3xl'>Home</a>
+              <Menu.Item as='div'>
+                <Link href='/'>
+                  <a className='my-4 cursor-pointer text-3xl'>Home</a>
+                </Link>
               </Menu.Item>
-              <Menu.Item as={Link} href='/marketplace'>
-                <a className='cursor-pointer py-4 text-3xl'>Marketplace</a>
+              <Menu.Item as='div'>
+                <Link href='/marketplace'>
+                  <a className='cursor-pointer py-4 text-3xl'>Marketplace</a>
+                </Link>
               </Menu.Item>
-              <Menu.Item as={Link} href='/launchpad'>
-                <a className='my-4 cursor-pointer text-3xl'>Launchpad</a>
+              <Menu.Item as='div'>
+                <Link href='/launchpad'>
+                  <a className='my-4 cursor-pointer text-3xl'>Launchpad</a>
+                </Link>
               </Menu.Item>
 
               {/* TODO: Create a page to view all the collections/launchpads
@@ -61,7 +67,7 @@ const Navbar = () => {
               {account && (
                 <Menu.Item as='div' className='flex'>
                   <Link href={`/user/${account}`}>
-                    <a className='my-4 ml-12 flex text-3xl' href={`/user/${account}`}>
+                    <a className='my-4 ml-12 flex text-3xl'>
                       <AccountAndBalance icon={false} />
                     </a>
                   </Link>
@@ -69,7 +75,7 @@ const Navbar = () => {
                     className='h-full w-12 cursor-pointer'
                     onClick={() => {
                       copyTextToClipboard(account)
-                      toast.success("Address copied", { autoClose: 1000 })
+                      toast.success("Address copied", { autoClose: 2000 })
                     }}
                   />
                 </Menu.Item>

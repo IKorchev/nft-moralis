@@ -23,7 +23,11 @@ const FeaturedSection = ({ featuredCollection }) => {
   const targetTime = moment(new Date(featuredCollection?.startDate))
   const [currentTime, setCurrentTime] = useState(moment().utc())
   const timeLeft = moment.duration(targetTime.diff(currentTime))
-  const countdownFinished = timeLeft.seconds() <= 0
+  const countdownFinished =
+    timeLeft.days <= 0 &&
+    timeLeft.hours <= 0 &&
+    timeLeft.seconds() <= 0 &&
+    timeLeft.milliseconds <= 0
 
   // Handlers
   const getCostHandler = async () => {
@@ -38,19 +42,20 @@ const FeaturedSection = ({ featuredCollection }) => {
     const tokensMinted = await getTotalSupply(featuredCollection?.contractAddress)
     tokensMinted && setMintedAmount(Number(tokensMinted))
   }
-  const refreshDataHandler = () => {
-    getCostHandler()
-    getMaxSupplyHandler()
-    getTotalSupplyHandler()
+  const refreshData = async () => {
+    await getCostHandler()
+    await getMaxSupplyHandler()
+    await getTotalSupplyHandler()
+  }
+  const refreshDataHandler = async () => {
+    refreshData()
     toast.success("Data refreshed", { autoClose: 1000 })
   }
 
   //get initial data and start countdown timer
   useLayoutEffect(() => {
     if (featuredCollection) {
-      getCostHandler()
-      getMaxSupplyHandler()
-      getTotalSupplyHandler()
+      refreshData()
     }
     //countdown timer
     const interval = setInterval(() => {
@@ -60,14 +65,7 @@ const FeaturedSection = ({ featuredCollection }) => {
     return () => clearInterval(interval)
   }, [featuredCollection])
 
-  if (!featuredCollection)
-    return (
-      <Loading
-        containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
-        loaderProps={{ size: 200, color: "white" }}
-      />
-    )
-
+  if (!featuredCollection) return <Loading />
   return (
     <section
       className='min-h-24 mt-12 flex w-full flex-col 

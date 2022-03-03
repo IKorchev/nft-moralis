@@ -57,14 +57,13 @@ const Home = () => {
   return (
     <>
       <Metadata />
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className='landing-page relative '>
-        <div className='absolute top-0 right-24 z-0 '>
-          <Illustration className='h-[700px] w-full opacity-10 lg:h-full lg:opacity-100' />
+        <div className='absolute top-0 right-24 z-0 overflow-hidden'>
+          <Illustration className='z-0 h-[40rem] w-full opacity-10 lg:h-full lg:opacity-100' />
         </div>
         <LandingPage />
         <LandingPage2 />

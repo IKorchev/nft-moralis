@@ -1,8 +1,4 @@
 import Link from "next/link"
-import BSCLogo from "../public/assets/BSCLogo.svg"
-import AVAXLogo from "../public/assets/AVAXLogo.svg"
-import ETHLogo from "../public/assets/ETHLogo.svg"
-import MATICLogo from "../public/assets/MATICLogo.svg"
 import { motion } from "framer-motion"
 
 const LandingPage = () => {

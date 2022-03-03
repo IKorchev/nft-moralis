@@ -6,15 +6,7 @@ const Launchpad = () => {
   // Featured (current) Launchpad
   //prettier-ignore
   const { currentLaunchpad, isCurrentLaunchpadLoading, completedLaunchpads, upcomingLaunchpads } = useMoralisData()
-
-  if (isCurrentLaunchpadLoading)
-    return (
-      <Loading
-        containerProps={{ className: "h-[70vh] grid place-items-center bg-blue" }}
-        loaderProps={{ size: 200, color: "white" }}
-      />
-    )
-
+  if (isCurrentLaunchpadLoading) return <Loading />
   return (
     <div className='container mx-auto px-6 lg:px-24'>
       {currentLaunchpad && !isCurrentLaunchpadLoading && (
@@ -37,6 +29,7 @@ const Launchpad = () => {
         <div className='styled-scrollbar mt-5 flex w-full gap-5 overflow-auto px-2 py-4 '>
           {completedLaunchpads.map((el) => (
             <Card
+              key={el.attributes.imageUrl}
               collectionAddress={el.attributes.contractAddress}
               imageUrl={el.attributes.imageUrl}
               name={el.attributes.collectionName}

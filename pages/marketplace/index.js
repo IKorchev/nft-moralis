@@ -72,7 +72,7 @@ const Marketplace = () => {
                 sortBy(allListings, (object) => sortFunction(object, sortOption)),
                 (el) => (filterOption ? el.attributes.nftContract === filterOption : el)
               )}
-              itemsPerPage={12}
+              itemsPerPage={15}
               renderItem={renderItem}
             />
           </div>

@@ -25,39 +25,41 @@ function PaginatedItems({ items, itemsPerPage, renderItem, isLayoutAnimated = tr
   }
 
   return (
-    <motion.div layout={isLayoutAnimated} className=' relative mx-auto text-white'>
-      {currentItems && (
-        <div className=' '>
-          <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
-          <div className='flex min-h-[40rem] w-full flex-wrap justify-center gap-5'>
-            {currentItems.map(renderItem)}
+    <div>
+      <motion.div layout={isLayoutAnimated} className=' relative mx-auto text-white'>
+        {currentItems && (
+          <div className=' '>
+            <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
+            <div className='flex min-h-[40rem] w-full flex-wrap justify-center gap-5'>
+              {currentItems.map(renderItem)}
+            </div>
+            {items?.length > itemsPerPage && (
+              <ReactPaginate
+                containerClassName='absolute bottom-0 left-1/2 transform -translate-x-1/2 flex my-5 rounded-lg justify-center items-center overflow-hidden'
+                pageLinkClassName='bg-white border-gray-300 text-gray-500  inline-flex items-center px-4 py-2 border'
+                nextLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
+                previousLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
+                pageClassName=''
+                nextClassName=''
+                previousClassName=''
+                breakLabel={
+                  <span className='inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-gray-500'>
+                    ...
+                  </span>
+                }
+                activeLinkClassName='bg-gray-300 text-gray-900'
+                nextLabel='>'
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={0}
+                pageCount={pageCount}
+                previousLabel='<'
+                renderOnZeroPageCount={null}
+              />
+            )}
           </div>
-          {items?.length > itemsPerPage && (
-            <ReactPaginate
-              containerClassName='flex my-5 rounded-lg justify-center items-center overflow-hidden'
-              pageLinkClassName='bg-white border-gray-300 text-gray-500  inline-flex items-center px-4 py-2 border'
-              nextLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
-              previousLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
-              pageClassName=''
-              nextClassName=''
-              previousClassName=''
-              breakLabel={
-                <span className='inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-gray-500'>
-                  ...
-                </span>
-              }
-              activeLinkClassName='bg-gray-300 text-gray-900'
-              nextLabel='>'
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={0}
-              pageCount={pageCount}
-              previousLabel='<'
-              renderOnZeroPageCount={null}
-            />
-          )}
-        </div>
-      )}
-    </motion.div>
+        )}
+      </motion.div>
+    </div>
   )
 }
 export default PaginatedItems

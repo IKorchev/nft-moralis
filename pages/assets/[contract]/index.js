@@ -20,7 +20,7 @@ const Asset = () => {
   const [filterOption, setFilterOption] = useState(null)
   const [open, setOpen] = useState(false)
   //prettier-ignore
-  const {data: items,error2, isLoading2} =
+  const {data: items, error2, isLoading2} =
   useMoralisQuery('MarketItems', q => q
   .equalTo('nftContract', query?.contract)
   .equalTo('sold', false),[query?.contract], {live: true})

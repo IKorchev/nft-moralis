@@ -3,6 +3,7 @@ import BINANCEIcon from "../../public/assets/binance.svg"
 import BITMEXIcon from "../../public/assets/bitmex.svg"
 import HUOBIIcon from "../../public/assets/huobi.svg"
 import Link from "next/link"
+import Moralis from "moralis"
 const Footer = () => {
   return (
     <div className='footer border-t border-secondary bg-primary-900 text-light'>
@@ -19,13 +20,10 @@ const Footer = () => {
               <Link href='/'>Home</Link>
             </li>
             <li className='mb-1'>
-              <Link href='/explore'>Explore</Link>
+              <Link href='/marketplace'>Marketplace</Link>
             </li>
             <li className='mb-1'>
-              <Link href='/swap'>Swap</Link>
-            </li>
-            <li className='mb-1'>
-              <Link href='/mint'>Mint</Link>
+              <Link href='/launchpad'>Launchpad</Link>
             </li>
           </ul>
         </div>

@@ -1,24 +1,11 @@
 import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
-import { useChain, useMoralis, useWeb3ExecuteFunction } from "react-moralis"
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { toast } from "react-toastify"
+import contractFunctions from "./contractFunctions"
 
 const useMarketInteractions = () => {
-  const contractFunctions = {
-    BUY_ITEM: "createMarketSale",
-    LIST_ITEM: "createMarketItem",
-    GET_LISTING_PRICE: "getListingPrice",
-    IS_APPROVED_FOR_ALL: "isApprovedForAll",
-    SET_APPROVAL_FOR_ALL: "setApprovalForAll",
-    APPROVE: "approve",
-    COST: "cost",
-    MINT: "mint",
-    MAX_SUPPLY: "maxSupply",
-    TOTAL_SUPPLY: "totalSupply",
-    CREATE_MARKET_ITEM: "createMarketItem",
-  }
   const { Moralis, account } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()
-  const { chain } = useChain()
   const MarketItems = Moralis.Object.extend("MarketItems")
   const ItemImage = Moralis.Object.extend("ItemImage")
 
@@ -31,6 +18,7 @@ const useMarketInteractions = () => {
     result.set("owner", account)
     result.save()
   }
+  
   const saveItemInMoralisDatabase = async (nftObject) => {
     // Query the Items Images collection
     const query = new Moralis.Query(ItemImage)
@@ -117,6 +105,10 @@ const useMarketInteractions = () => {
 
   // buy NFT from Market
   const buyItem = async (nftContract, itemId, price) => {
+    //connect web3 if its not already connected
+    await Moralis.enableWeb3()
+
+    //continue
     await contractProcessor.fetch({
       params: {
         contractAddress: MARKET_ADDRESS,
@@ -129,6 +121,10 @@ const useMarketInteractions = () => {
         },
       },
       onSuccess: (data) => updateItemSold(itemId),
+      onError: (err) =>
+        toast.error(err.message.split("(")[0], {
+          autoClose: false,
+        }),
     })
   }
 
@@ -193,6 +189,7 @@ const useMarketInteractions = () => {
   //checks if market is approved to transfer user NFT
   const checkIfApproved = async (contractAddress) => {
     let data
+
     await contractProcessor.fetch({
       params: {
         contractAddress: contractAddress,
@@ -210,7 +207,6 @@ const useMarketInteractions = () => {
 
   //List item on marketplace
   const listItem = async (nftObject, price) => {
-    // saveItemInMoralisDatabase(nftObject)
     const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
     const listingPrice = await getMarketListingPrice()
     if (!isMarketApproved) {
@@ -218,6 +214,7 @@ const useMarketInteractions = () => {
     }
     if (isMarketApproved && listingPrice) {
       const result = await createMarketItem(listingPrice, nftObject, price)
+
       return result
     }
   }
