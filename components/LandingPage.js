@@ -8,7 +8,7 @@ const LandingPage = () => {
       <div className='absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2'>
         <img
           src={Abstract.src}
-          className='clip-img z-20 mx-auto h-48 w-auto transform rounded-lg object-contain lg:h-[30rem]'
+          className='clip-img z-20 mx-auto h-48 w-auto transform rounded-lg object-contain  lg:h-[30rem]'
         />
       </div>
       <motion.main exit={{ opacity: 0 }} className='mx-auto pt-12 text-center'>

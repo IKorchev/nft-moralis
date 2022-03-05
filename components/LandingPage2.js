@@ -17,10 +17,19 @@ const LandingPage2 = () => {
             <Link
               key={el.attributes.collectionName}
               href={`/assets/${el.attributes.contractAddress}`}>
-              <div className='w-60 cursor-pointer flex-col overflow-hidden rounded-xl border bg-light shadow-lg'>
-                <img src={el.attributes.imageUrl} className='h-60 w-60 object-cover' />
-                <div className='p-5 text-center'>
-                  <h1 className='truncate font-bold'>{el.attributes.collectionName}</h1>
+              <div className='w-60 cursor-pointer flex-col overflow-hidden rounded-md border border-primary-500 bg-primary-700 shadow-md shadow-secondary/50  backdrop-blur-xl backdrop-filter'>
+                <div className='relative overflow-hidden p-2'>
+                  <div className='overflow-hidden rounded-lg bg-gradient-to-br from-white via-secondary to-secondary '>
+                    <img
+                      src={el.attributes.imageUrl}
+                      className='h-48 w-60 rounded-lg object-cover p-0.5'
+                    />
+                  </div>
+                </div>
+                <div className='relative p-5 text-center'>
+                  <h1 className=' truncate text-xl font-bold text-white'>
+                    {el.attributes.collectionName}
+                  </h1>
                 </div>
               </div>
             </Link>

@@ -11,7 +11,7 @@ const Metadata = () => {
       <meta
         name='image'
         property='og:image'
-        content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png'
+        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
       />
       <meta
         name='description'
@@ -22,7 +22,7 @@ const Metadata = () => {
       <meta
         name='image'
         property='og:image:secure_url'
-        content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png'
+        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
       />
       <meta name='url' property='og:url' content='https://nft-moralis.vercel.app/' />
       <meta name='robots' content='index, follow' />
@@ -37,9 +37,15 @@ const Metadata = () => {
         content='NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
       ROPSTEN testnet. Trade NFTs'
       />
-      <meta property='og:image' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
+      <meta
+        property='og:image'
+        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+      />
       {/* TWITTER */}
-      <meta name='twitter:card' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
+      <meta
+        name='twitter:card'
+        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+      />
       <meta property='twitter:domain' content='nft-moralis.vercel.app' />
       <meta property='twitter:url' content='https://nft-moralis.vercel.app/' />
       <meta name='twitter:title' content='Ropsten NFT Marketplace' />
@@ -48,7 +54,10 @@ const Metadata = () => {
         content='NFT Marketplace and Launchpad built with Moralis. Uses a smart contract deployed on the 
       ROPSTEN testnet. Trade NFTs'
       />
-      <meta name='twitter:image' content='https://i.ibb.co/frZB8GS/Crypto-Page-Final.png' />
+      <meta
+        name='twitter:image'
+        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+      />
     </Head>
   )
 }
