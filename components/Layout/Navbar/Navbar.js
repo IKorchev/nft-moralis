@@ -55,9 +55,7 @@ const Navbar = () => {
                 }}
                 className='fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl  bg-primary-800 px-5 py-24 text-white'>
                 <Link href='/'>
-                  <a tabIndex={-1} className='my-4 cursor-pointer text-3xl'>
-                    Home
-                  </a>
+                  <a className='my-4 cursor-pointer text-3xl'>Home</a>
                 </Link>
                 <Link href='/marketplace'>
                   <a className='cursor-pointer py-4 text-3xl'>Marketplace</a>
@@ -66,20 +64,20 @@ const Navbar = () => {
                   <a className='my-4 cursor-pointer text-3xl'>Launchpad</a>
                 </Link>
                 {account ? (
-                  <div className='flex flex-col items-center justify-center'>
+                  <div className='flex flex-col '>
                     <div className='flex items-center '>
                       <Link href={`/user/${account}`}>
                         <a className='my-4 flex text-3xl'>
                           <AccountAndBalance icon={false} />
                         </a>
                       </Link>
-                      <AiFillCopy
-                        className='h-full w-12 cursor-pointer'
+                      <button
                         onClick={() => {
                           copyTextToClipboard(account)
                           toast.success("Address copied", { autoClose: 2000 })
-                        }}
-                      />
+                        }}>
+                        <AiFillCopy className='h-full w-12 cursor-pointer' />
+                      </button>
                     </div>
                     <DisconnectButton className='my-6' />
                   </div>
