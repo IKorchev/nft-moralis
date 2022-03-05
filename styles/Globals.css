@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 @import "react-toastify/dist/ReactToastify.css";
 
 @tailwind base;
@@ -6,9 +7,12 @@
 @tailwind utilities;
 
 @layer base {
+  .h1 {
+    @apply font-montserrat text-5xl lg:text-8xl;
+  }
   input[type="text"],
   textarea {
-    @apply focus:ring-1 ring-yellow-400;
+    @apply ring-yellow-400 focus:ring-1;
   }
   .footer a {
     @apply hover:underline;
@@ -23,15 +27,15 @@
   }
 
   button {
-    @apply focus:ring ring-white;
+    @apply ring-white focus:ring;
   }
   h2 {
-    @apply font-semibold text-2xl text-black;
+    @apply text-2xl font-semibold text-black;
   }
   .card {
-    @apply flex flex-col items-center rounded-lg w-72 overflow-hidden 
-    bg-white mt-4 duration-200 transform shadow-3xl hover:-translate-y-1 border-t-4
-     text-black hover:border-secondary backdrop-filter z-0;
+    @apply z-0 mt-4 flex w-72 transform flex-col 
+    items-center overflow-hidden rounded-lg border-t-4 bg-white text-black shadow-3xl
+     backdrop-filter duration-200 hover:-translate-y-1 hover:border-secondary;
   }
 }
 @layer utilities {
@@ -63,4 +67,10 @@ input[type="number"] {
 
 .collapsed {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.landing-page {
+  background-image: url("../public/assets/BlurredBG.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
 }

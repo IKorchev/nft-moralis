@@ -11,7 +11,9 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
       },
+
       colors: {
         "primary-900": "#10011F",
         "primary-800": "#1C0236",

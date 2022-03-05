@@ -2,7 +2,7 @@ import { useMoralis } from "react-moralis"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Dropdown from "./Dropdown"
-import { Disclosure, Menu } from "@headlessui/react"
+import { Disclosure } from "@headlessui/react"
 import AccountAndBalance from "./AccountAndBalance"
 import { AiFillCopy } from "react-icons/ai"
 import { copyTextToClipboard } from "../../../utils/common"
@@ -12,11 +12,14 @@ import { customStyles, CustomOption } from "../../../utils/selectCustomStyles"
 import Select from "react-select"
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import DisconnectButton from "../../Buttons/DisconnectButton"
+import useScrollOffset from "../../../hooks/useScrollOffset"
+import { useEffect, useRef, useState } from "react"
 
 const Navbar = () => {
   const { completedLaunchpads, currentLaunchpad } = useMoralisData()
   const allLaunchpads = [...completedLaunchpads, ...currentLaunchpad]
   const { account } = useMoralis()
+  const { scrolled } = useScrollOffset()
 
   const options = allLaunchpads?.map((el) => ({
     label: el.attributes.collectionName,
@@ -25,7 +28,7 @@ const Navbar = () => {
     contractAddress: el.attributes.contractAddress,
   }))
   return (
-    <>
+    <div>
       {/* MOBILE MENU */}
       <Disclosure as='nav' className='lg:hidden'>
         {({ open }) => (
@@ -91,35 +94,40 @@ const Navbar = () => {
       </Disclosure>
       {/* DESKTOP Nav */}
 
-      <div className='container mx-auto hidden items-center justify-between py-5  text-white lg:flex'>
-        <Link href='/'>
-          <a className='z-10 my-4 inline cursor-pointer whitespace-nowrap text-3xl font-extrabold '>
-            NFT Explorer
-          </a>
-        </Link>
-        <div className='flex items-center justify-start'>
-          <div className='flex flex-grow'>
-            <Link href='/marketplace'>
-              <a className='my-4 mx-5 cursor-pointer  text-xl'>Marketplace</a>
-            </Link>
-            <Link href='/launchpad'>
-              <a className='my-4 mx-5 cursor-pointer  text-xl'>Launchpad</a>
-            </Link>
+      <div
+        className={`fixed top-0 left-0 z-20 mx-auto hidden w-full py-4 text-white ${
+          scrolled ? "bg-primary-900/50 backdrop-blur-md backdrop-filter" : ""
+        } lg:block`}>
+        <div className='container mx-auto flex items-center justify-between'>
+          <Link href='/'>
+            <a className='z-10 my-4 inline cursor-pointer whitespace-nowrap text-3xl font-extrabold '>
+              NFT Explorer
+            </a>
+          </Link>
+          <div className='flex items-center justify-start'>
+            <div className='flex flex-grow'>
+              <Link href='/marketplace'>
+                <a className='my-4 mx-5 cursor-pointer  text-xl'>Marketplace</a>
+              </Link>
+              <Link href='/launchpad'>
+                <a className='my-4 mx-5 cursor-pointer  text-xl'>Launchpad</a>
+              </Link>
+            </div>
+            <div className='ml-4 cursor-text xl:ml-16'>
+              <Select
+                className='react-select-container'
+                classNamePrefix='react-select'
+                placeholder='Search collections'
+                components={{ Option: CustomOption }}
+                styles={customStyles}
+                options={options}
+              />
+            </div>
           </div>
-          <div className='ml-4 cursor-text xl:ml-16'>
-            <Select
-              className='react-select-container'
-              classNamePrefix='react-select'
-              placeholder='Search collections'
-              components={{ Option: CustomOption }}
-              styles={customStyles}
-              options={options}
-            />
-          </div>
+          {account ? <Dropdown /> : <ConnectWalletButton />}
         </div>
-        {account ? <Dropdown /> : <ConnectWalletButton />}
       </div>
-    </>
+    </div>
   )
 }
 

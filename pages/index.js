@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import Head from "next/head"
 import Illustration from "../public/assets/Illustration"
 import LandingPage from "../components/LandingPage"
@@ -57,17 +57,19 @@ const Home = () => {
   return (
     <>
       <Metadata />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className='landing-page relative '>
-        <div className='absolute top-0 right-24 z-0 overflow-hidden'>
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className='relative '>
+          {/* <div className='absolute top-0 right-24 z-0 overflow-hidden '>
           <Illustration className='z-0 h-[40rem] w-full opacity-10 lg:h-full lg:opacity-100' />
-        </div>
-        <LandingPage />
-        <LandingPage2 />
-      </motion.div>
+        </div> */}
+          <LandingPage />
+          <LandingPage2 />
+        </motion.div>
+      </AnimatePresence>
     </>
   )
 }

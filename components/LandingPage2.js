@@ -1,14 +1,12 @@
 import Link from "next/link"
-import Wave from "../public/assets/wave.svg"
 import { useMoralisData } from "./Providers/MoralisDataProvider"
 
 const LandingPage2 = () => {
   const { completedLaunchpads } = useMoralisData()
 
   return (
-    <div>
-      <img src={Wave.src} className='z-20 pt-24' />
-      <div className='bg-light '>
+    <div className='mt-48'>
+      <div>
         <h1 className='pt-24 pb-12 text-center text-5xl font-semibold text-secondary'>
           Featured collections
         </h1>
@@ -29,7 +27,7 @@ const LandingPage2 = () => {
           ))}
         </div>
       </div>
-      <div className='bg-light pb-24'>
+      <div className='pb-24'>
         <h1 className='pt-24 pb-12 text-center text-5xl font-semibold text-secondary'>
           Recently launched
         </h1>

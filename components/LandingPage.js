@@ -1,74 +1,55 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
+import Abstract from "../public/assets/Abstract.svg"
 
 const LandingPage = () => {
-  const container = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-  }
-  const variants = {
-    hidden: {
-      clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)",
-
-      opacity: 0,
-    },
-    visible: {
-      clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-      opacity: 1,
-      transition: {
-        duration: 1,
-        type: "spring",
-        stiffness: 90,
-      },
-    },
-  }
-
   return (
-    <motion.main exit={{ opacity: 0 }} className='container relative mx-auto text-center'>
-      <div className='px-5 py-48 text-left text-white lg:px-24'>
-        <motion.div
-          variants={container}
-          initial='hidden'
-          animate='visible'
-          className='w-full lg:w-1/2'>
-          <motion.p variants={variants} className='mb-2 text-lg text-secondary'>
-            Around the blockchain
-          </motion.p>
-          <motion.h1 variants={variants} className='text-5xl font-semibold text-white '>
-            Explore the NFT space.
-          </motion.h1>
-          <motion.p variants={variants} className='mt-8 text-lg font-light'>
-            Buy and sell NFTs with minimal fees. New collections listed every week!
-          </motion.p>
-        </motion.div>
-        <div className='mt-12'>
-          <Link href='/marketplace'>
-            <a
-              className='mt-5 w-max rounded-lg  border-2 border-secondary bg-secondary px-5 py-1.5 
-            text-xl ring-white transition duration-300 focus:ring
-            hover:bg-pink-900
-            '>
-              Marketplace
-            </a>
-          </Link>
-          <Link href='/launchpad'>
-            <a
-              className='ml-5 mt-5  w-max rounded-lg border-2 border-secondary bg-light px-5 py-1.5 text-xl text-secondary ring-white transition
-              duration-300 focus:ring
-              hover:bg-pink-900 hover:text-white'>
-              Launchpad
-            </a>
-          </Link>
-        </div>
+    <div className='landing-page relative h-screen min-h-[40rem] '>
+      <div className='absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2'>
+        <img
+          src={Abstract.src}
+          className='clip-img z-20 mx-auto h-48 w-auto transform rounded-lg object-contain lg:h-[30rem]'
+        />
       </div>
-    </motion.main>
+      <motion.main exit={{ opacity: 0 }} className='mx-auto pt-12 text-center'>
+        <div className='container mx-auto h-full flex-col items-center py-48  text-center text-white md:flex'>
+          <div className='flex w-full justify-center gap-2 lg:gap-4'>
+            <div className='flex gap-2 lg:gap-5'>
+              <p className='mt-2 w-48 text-right text-xs lg:text-base'>
+                Know what you are selling. Know what you are buying.
+              </p>
+              <div className='my-auto h-3/4 w-1  rounded-lg bg-gradient-to-b from-emerald-300 to-cyan-500 lg:w-1.5' />
+            </div>
+            <h1 className='h1 whitespace-nowrap text-left'>BUY NFTS</h1>
+          </div>
+          <div className='mt-5 flex w-full justify-center gap-2 lg:gap-4'>
+            <h1 className='h1 whitespace-nowrap text-right'>SELL NFTS</h1>
+            <div className='flex gap-2 lg:gap-5'>
+              <div className='my-auto h-3/4 w-1 rounded-lg  bg-gradient-to-t from-emerald-300 to-cyan-500 lg:w-1.5' />
+              <p className='mt-2 w-48 text-left text-xs lg:text-base'>
+                Trade on the largest NFT Marketplace on Ropsten.
+              </p>
+            </div>
+          </div>
+          <div className='mt-12 '>
+            <Link href='/marketplace'>
+              <a
+                className='mx-2 w-max rounded border border-cyan-600 bg-gradient-to-tr from-emerald-200 to-cyan-300 px-5 py-2.5 text-base 
+                text-black ring-white focus:from-emerald-100 focus:to-cyan-100 focus:ring hover:from-emerald-100 hover:to-cyan-100 lg:text-xl'>
+                Marketplace
+              </a>
+            </Link>
+            <Link href='/launchpad'>
+              <a
+                className='mx-2 w-max rounded border border-cyan-400 bg-transparent px-5 py-2.5 
+                text-base ring-white focus:bg-cyan-100 focus:text-black focus:ring hover:bg-cyan-100 hover:text-black lg:text-xl'>
+                Launchpad
+              </a>
+            </Link>
+          </div>
+        </div>
+      </motion.main>
+    </div>
   )
 }
 
