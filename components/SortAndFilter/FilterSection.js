@@ -2,6 +2,7 @@ import { Listbox } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md"
 import { AiFillFilter } from "react-icons/ai"
+
 const FilterSection = ({ filterOptions, setFilterOption, filterOption }) => {
   return (
     <Listbox as='div' className='w-60 text-white ' value={filterOption} onChange={setFilterOption}>

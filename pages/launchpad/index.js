@@ -8,7 +8,7 @@ const Launchpad = () => {
   const { currentLaunchpad, isCurrentLaunchpadLoading, completedLaunchpads, upcomingLaunchpads } = useMoralisData()
   if (isCurrentLaunchpadLoading) return <Loading />
   return (
-    <div className='container mx-auto px-6 lg:px-24'>
+    <div className='container mx-auto px-6 py-12 lg:px-24'>
       {currentLaunchpad && !isCurrentLaunchpadLoading && (
         <FeaturedSection featuredCollection={currentLaunchpad[0]?.attributes} />
       )}

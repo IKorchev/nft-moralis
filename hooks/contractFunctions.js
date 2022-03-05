@@ -1,4 +1,4 @@
-export default {
+export const contractFunctions = {
   BUY_ITEM: "createMarketSale",
   LIST_ITEM: "createMarketItem",
   GET_LISTING_PRICE: "getListingPrice",

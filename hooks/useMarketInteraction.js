@@ -1,7 +1,7 @@
 import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
 import { toast } from "react-toastify"
-import contractFunctions from "./contractFunctions"
+import { contractFunctions } from "./contractFunctions"
 
 const useMarketInteractions = () => {
   const { Moralis, account } = useMoralis()
@@ -18,7 +18,7 @@ const useMarketInteractions = () => {
     result.set("owner", account)
     result.save()
   }
-  
+
   const saveItemInMoralisDatabase = async (nftObject) => {
     // Query the Items Images collection
     const query = new Moralis.Query(ItemImage)

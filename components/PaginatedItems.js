@@ -35,7 +35,7 @@ function PaginatedItems({ items, itemsPerPage, renderItem, isLayoutAnimated = tr
             </div>
             {items?.length > itemsPerPage && (
               <ReactPaginate
-                containerClassName='absolute bottom-0 left-1/2 transform -translate-x-1/2 flex my-5 rounded-lg justify-center items-center overflow-hidden'
+                containerClassName='flex my-5 rounded-lg justify-center items-center overflow-hidden'
                 pageLinkClassName='bg-white border-gray-300 text-gray-500  inline-flex items-center px-4 py-2 border'
                 nextLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'
                 previousLinkClassName='bg-white border-gray-300 text-gray-500 inline-flex items-center px-4 py-2 border'

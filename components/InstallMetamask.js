@@ -1,7 +1,7 @@
-import { AnimatePresence, motion as m } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 
-function InstallMetamask() {
+const InstallMetamask = () => {
   const [isShown, setIsShown] = useState(true)
   const handleClose = () => {
     setIsShown(false)
@@ -9,7 +9,7 @@ function InstallMetamask() {
   return (
     <AnimatePresence>
       {isShown ? (
-        <m.div
+        <motion.div
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           exit={{ y: 100 }}
@@ -35,7 +35,7 @@ function InstallMetamask() {
               </button>
             </div>
           </div>
-        </m.div>
+        </motion.div>
       ) : null}
     </AnimatePresence>
   )

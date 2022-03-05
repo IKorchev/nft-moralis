@@ -1,51 +1,34 @@
 import Link from "next/link"
-import { useLayoutEffect } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { useState } from "react"
 import useMarketInteraction from "../../hooks/useMarketInteraction"
-import { useMoralis } from "react-moralis"
 import { BiRefresh } from "react-icons/bi"
 import { toast } from "react-toastify"
 import Loading from "../Loading"
 import Countdown from "./Countdown"
-import moment from "moment"
-
+import Mint from "./Mint"
+import { useChain } from "react-moralis"
 //
 
 const FeaturedSection = ({ featuredCollection }) => {
-  const { mintToken, getMintCost, getMaxSupply, getTotalSupply } = useMarketInteraction()
-
-  const { Moralis } = useMoralis()
+  const { getMintCost, getMaxSupply, getTotalSupply } = useMarketInteraction()
   const [cost, setCost] = useState()
   const [maxSupply, setMaxSupply] = useState()
   const [mintedAmount, setMintedAmount] = useState()
+  const [countdownFinished, setCountdownFinished] = useState(false)
+  const { chain } = useChain()
 
-  //calculating time left
-  const targetTime = moment(new Date(featuredCollection?.startDate))
-  const [currentTime, setCurrentTime] = useState(moment().utc())
-  const timeLeft = moment.duration(targetTime.diff(currentTime))
-  const countdownFinished =
-    timeLeft.days <= 0 &&
-    timeLeft.hours <= 0 &&
-    timeLeft.seconds() <= 0 &&
-    timeLeft.milliseconds <= 0
+  const countdownHandler = () => {
+    setCountdownFinished(true)
+  }
 
-  // Handlers
-  const getCostHandler = async () => {
-    const mintCost = await getMintCost(featuredCollection?.contractAddress)
-    mintCost && setCost(mintCost)
-  }
-  const getMaxSupplyHandler = async () => {
-    const maxSupply = await getMaxSupply(featuredCollection?.contractAddress)
-    maxSupply && setMaxSupply(Number(maxSupply))
-  }
-  const getTotalSupplyHandler = async () => {
+  const refreshData = async () => {
     const tokensMinted = await getTotalSupply(featuredCollection?.contractAddress)
     tokensMinted && setMintedAmount(Number(tokensMinted))
-  }
-  const refreshData = async () => {
-    await getCostHandler()
-    await getMaxSupplyHandler()
-    await getTotalSupplyHandler()
+    const maxSupply = await getMaxSupply(featuredCollection?.contractAddress)
+    maxSupply && setMaxSupply(Number(maxSupply))
+    const mintCost = await getMintCost(featuredCollection?.contractAddress)
+    mintCost && setCost(mintCost)
   }
   const refreshDataHandler = async () => {
     refreshData()
@@ -54,16 +37,8 @@ const FeaturedSection = ({ featuredCollection }) => {
 
   //get initial data and start countdown timer
   useLayoutEffect(() => {
-    if (featuredCollection) {
-      refreshData()
-    }
-    //countdown timer
-    const interval = setInterval(() => {
-      setCurrentTime(moment().utc())
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [featuredCollection])
+    refreshData()
+  }, [chain])
 
   if (!featuredCollection) return <Loading />
   return (
@@ -88,32 +63,14 @@ const FeaturedSection = ({ featuredCollection }) => {
           function in the smart contract is paused until the counter reaches 0. */}
 
         {countdownFinished ? (
-          <>
-            <div className='mt-12 w-max rounded-full border-2 border-primary-600 bg-primary-700 pr-5'>
-              <button
-                onClick={async () => {
-                  mintToken(featuredCollection?.contractAddress, cost, 1)
-                }}
-                className='rounded-full  bg-secondary py-1 px-3 text-lg transition duration-500 hover:bg-secondary-dark'>
-                Mint now
-              </button>
-              <span> {cost && Moralis.Units.FromWei(cost)} ETH </span>
-            </div>
-            <div className='mt-12 w-full xl:pr-16'>
-              <p className='text-center'>Minted</p>
-              <div className='relative my-3 flex h-4 w-full overflow-hidden rounded-full bg-primary-700'>
-                <div
-                  className='absolute top-0 left-0 grid h-4 place-items-center rounded-full bg-secondary-light '
-                  style={{ width: `${(mintedAmount / maxSupply) * 100}%` }}></div>
-                <span className='w-full text-center text-[12px]'>
-                  {mintedAmount}/{maxSupply}
-                </span>
-              </div>
-              <p className='mt-3 text-center text-white'>({(mintedAmount / maxSupply) * 100}%)</p>
-            </div>
-          </>
+          <Mint
+            mintedAmount={mintedAmount}
+            maxSupply={maxSupply}
+            cost={cost}
+            contractAddress={featuredCollection?.contractAddress}
+          />
         ) : (
-          <Countdown timeLeft={timeLeft} />
+          <Countdown startDate={featuredCollection?.startDate} onFinish={countdownHandler} />
         )}
       </div>
       <div className='relative h-full w-full flex-1'>
