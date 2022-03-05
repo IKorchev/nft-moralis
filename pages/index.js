@@ -11,7 +11,7 @@ const Metadata = () => {
       <meta
         name='image'
         property='og:image'
-        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+        content='https://img001.prntscr.com/file/img001/2NPVnElvSkOTmkZODKueCA.png'
       />
       <meta
         name='description'
@@ -22,7 +22,7 @@ const Metadata = () => {
       <meta
         name='image'
         property='og:image:secure_url'
-        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+        content='https://img001.prntscr.com/file/img001/2NPVnElvSkOTmkZODKueCA.png'
       />
       <meta name='url' property='og:url' content='https://nft-moralis.vercel.app/' />
       <meta name='robots' content='index, follow' />
@@ -39,12 +39,12 @@ const Metadata = () => {
       />
       <meta
         property='og:image'
-        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+        content='https://img001.prntscr.com/file/img001/2NPVnElvSkOTmkZODKueCA.png'
       />
       {/* TWITTER */}
       <meta
         name='twitter:card'
-        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+        content='https://img001.prntscr.com/file/img001/2NPVnElvSkOTmkZODKueCA.png'
       />
       <meta property='twitter:domain' content='nft-moralis.vercel.app' />
       <meta property='twitter:url' content='https://nft-moralis.vercel.app/' />
@@ -56,7 +56,7 @@ const Metadata = () => {
       />
       <meta
         name='twitter:image'
-        content='https://img001.prntscr.com/file/img001/vVQLLggGQ06M76DYBOh5gA.png'
+        content='https://img001.prntscr.com/file/img001/2NPVnElvSkOTmkZODKueCA.png'
       />
     </Head>
   )
