@@ -69,8 +69,8 @@ input[type="number"] {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
-.landing-page {
+/* .landing-page {
   background-image: url("../images/BlurredBG.webp");
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */

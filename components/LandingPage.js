@@ -1,9 +1,14 @@
 import Link from "next/link"
 import Abstract from "../public/assets/Abstract.svg"
-
 const LandingPage = () => {
   return (
-    <div className='landing-page relative h-screen min-h-[35rem] lg:min-h-[45rem] '>
+    <div
+      style={{
+        backgroundImage: 'url("/BlurredBG.webp")',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+      className='landing-page relative h-screen min-h-[35rem] lg:min-h-[45rem] '>
       <div className='absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2'>
         <img
           src={Abstract.src}
