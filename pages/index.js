@@ -72,9 +72,6 @@ const Home = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className='relative '>
-          {/* <div className='absolute top-0 right-24 z-0 overflow-hidden '>
-          <Illustration className='z-0 h-[40rem] w-full opacity-10 lg:h-full lg:opacity-100' />
-        </div> */}
           <LandingPage />
           <LandingPage2 />
         </motion.div>
