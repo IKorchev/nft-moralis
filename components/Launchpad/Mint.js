@@ -6,7 +6,6 @@ import MintButton from "../Buttons/MintButton"
 const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
   const { isWeb3Enabled } = useMoralis()
   const { chain } = useChain()
-  console.log(chain)
   return (
     <>
       {
@@ -16,7 +15,7 @@ const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
         :  (
         <>
            <MintButton contractAddress={contractAddress} cost={cost}  />
-            <div className='mt-12 w-full xl:pr-16'>
+            <div className='mt-12 w-full flex flex-col  bg-secondary-dark/20 p-4 rounded-lg shadow-glass-secondary'>
                 <p className='text-center'>Minted</p>
                 <div className='relative my-3 flex h-4 w-full overflow-hidden rounded-full bg-primary-700'>
                 <div

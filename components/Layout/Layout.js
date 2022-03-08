@@ -2,7 +2,7 @@ import Navbar from "./Navbar/Navbar"
 import Footer from "./Footer"
 import { motion } from "framer-motion"
 import { ToastContainer } from "react-toastify"
-import InstallMetamask from "../InstallMetamask"
+import InstallMetamask from "../Other/InstallMetamask"
 import { useEffect, useState } from "react"
 import Moralis from "moralis"
 

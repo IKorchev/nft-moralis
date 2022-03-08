@@ -9,9 +9,7 @@ import { getTokenMetadata } from "./metadata"
 export default async function handler(req, res) {
   try {
     const { tokenId, chain, contract } = JSON.parse(req.body)
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.NODE_URL + chain?.chainString
-    )
+    const provider = new ethers.providers.JsonRpcProvider(process.env.NODE_URL + chain?.chainString)
     const transactionsUrl = `https://deep-index.moralis.io/api/v2/nft/${contract}/${tokenId}/transfers?chain=${
       chain?.chainId || "eth"
     }&format=decimal`
@@ -22,14 +20,16 @@ export default async function handler(req, res) {
     const tokenURI = await nftContract.tokenURI(tokenId)
     const symbol = await nftContract.symbol()
     const owner = await nftContract.ownerOf(tokenId)
-    const { metadata, error } = await getTokenMetadata(tokenURI)
+    const { metadata } = await getTokenMetadata(tokenURI)
+    const data1 = await Promise.all([transactions, symbol, owner, metadata])
+    
     const data = {
       contractAddress: contract,
       tokenId,
-      owner,
-      symbol,
-      metadata,
-      transactions,
+      transactions: data1[0],
+      symbol: data1[1],
+      owner: data1[2],
+      metadata: data1[3],
     }
     res.json(data)
   } catch (error) {

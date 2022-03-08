@@ -1,7 +1,7 @@
 import { useMoralis } from "react-moralis"
 import { shortenIfAddress } from "@usedapp/core"
 import { ChevronDownIcon } from "@heroicons/react/solid"
-import Jazzicon from "../../Jazzicon"
+import Jazzicon from "../../Other/Jazzicon"
 
 const AccountAndBalance = ({ icon = true }) => {
   const { account } = useMoralis()

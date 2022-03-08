@@ -10,7 +10,7 @@ import {
 } from "chart.js"
 import { Line } from "react-chartjs-2"
 import { useMoralis } from "react-moralis"
-import { chartOptions } from "../utils/chartOptions"
+import { chartOptions } from "../../utils/chartOptions"
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const ActivityChart = ({ data }) => {

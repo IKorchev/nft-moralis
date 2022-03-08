@@ -1,5 +1,6 @@
 import Link from "next/link"
-import Abstract from "../public/assets/Abstract.svg"
+import { Secondary, Primary } from "../Buttons/CTAButton"
+
 const LandingPage = () => {
   return (
     <div
@@ -11,7 +12,7 @@ const LandingPage = () => {
       className='landing-page relative h-screen min-h-[35rem] lg:min-h-[45rem] '>
       <div className='absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2'>
         <img
-          src={Abstract.src}
+          src='/Abstract.svg'
           className='clip-img z-20 mx-auto h-48 w-auto transform rounded-lg object-contain  lg:h-[30rem]'
         />
       </div>
@@ -21,7 +22,7 @@ const LandingPage = () => {
             <p className=' mt-2 w-48 text-right text-xs lg:text-base'>
               Know what you are selling. Know what you are buying.
             </p>
-            <div className='my-auto h-3/4 w-1  rounded-lg bg-gradient-to-b from-emerald-300 to-cyan-500 lg:w-1.5' />
+            <div className='my-auto h-3/4 w-1 rounded-lg bg-gradient-to-b from-emerald-300 to-cyan-500 lg:w-1.5' />
           </div>
           <h1 className='h1 whitespace-nowrap text-left'>BUY NFTS</h1>
         </div>
@@ -36,18 +37,10 @@ const LandingPage = () => {
         </div>
         <div className='mt-12 '>
           <Link href='/marketplace'>
-            <a
-              className='mx-2 w-max rounded border border-cyan-600 bg-gradient-to-tr from-emerald-200 to-cyan-300 px-5 py-2.5 text-base 
-                text-black ring-white focus:from-emerald-100 focus:to-cyan-100 focus:ring hover:from-emerald-100 hover:to-cyan-100 lg:text-xl'>
-              Marketplace
-            </a>
+            <Primary title='Marketplace' />
           </Link>
           <Link href='/launchpad'>
-            <a
-              className='mx-2 w-max rounded border border-cyan-400 bg-transparent px-5 py-2.5 
-                text-base ring-white focus:bg-cyan-100 focus:text-black focus:ring hover:bg-cyan-100 hover:text-black lg:text-xl'>
-              Launchpad
-            </a>
+            <Secondary title='Launchpad' />
           </Link>
         </div>
       </div>

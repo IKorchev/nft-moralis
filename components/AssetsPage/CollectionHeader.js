@@ -1,10 +1,10 @@
 import { shortenIfAddress } from "@usedapp/core"
 import useSWR from "swr"
-import Jazzicon from "../components/Jazzicon"
+import Jazzicon from "../Other/Jazzicon"
 import { SyncLoader } from "react-spinners"
 import { AnimatePresence, motion } from "framer-motion"
-import { formatChain } from "../utils/common"
-import { metadataFetcher, revalidateOptions } from "../utils/fetcher"
+import { formatChain } from "../../utils/common"
+import { metadataFetcher, revalidateOptions } from "../../utils/fetcher"
 import { useMoralis } from "react-moralis"
 
 const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {

@@ -4,23 +4,23 @@ import { sortBy } from "lodash"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useMoralisQuery } from "react-moralis"
-import CollectionHeader from "../../../components/CollectionHeader"
-import Drawer from "../../../components/Drawer"
+import CollectionHeader from "../../../components/AssetsPage/CollectionHeader"
+import Drawer from "../../../components/Other/Drawer"
 import MarketItem from "../../../components/Marketplace/MarketItem"
-import PaginatedItems from "../../../components/PaginatedItems"
+import PaginatedItems from "../../../components/Other/PaginatedItems"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
-import ClearFiltersButton from "../../../components/SortAndFilter/ClearFiltersButton"
-import SortSection from "../../../components/SortAndFilter/SortSection"
+import ClearFiltersButton from "../../../components/Other/SortAndFilter/ClearFiltersButton"
+import SortSection from "../../../components/Other/SortAndFilter/SortSection"
 import { sortFunction, sortOptions } from "../../../utils/sort"
 
 const Asset = () => {
   const { query } = useRouter()
   const { chain } = useMoralisData()
   const [sortOption, setSortOption] = useState(null)
-  const [filterOption, setFilterOption] = useState(null)
+  const [, setFilterOption] = useState(null)
   const [open, setOpen] = useState(false)
   //prettier-ignore
-  const {data: items, error2, isLoading2} =
+  const {data: items} =
   useMoralisQuery('MarketItems', q => q
   .equalTo('nftContract', query?.contract)
   .equalTo('sold', false),[query?.contract], {live: true})
@@ -30,8 +30,8 @@ const Asset = () => {
     [query?.contract],
     { live: true }
   )
-
   const cheapest = itemsAvailableForPurchase[0]?.attributes?.price
+  console.log(query.contract)
   return (
     <div className='container mx-auto px-4 py-24 text-white lg:px-0'>
       {/* MOBILE DRAWER */}
@@ -59,7 +59,7 @@ const Asset = () => {
       </AnimatePresence>
       <CollectionHeader
         chain={chain}
-        address={query.contract}
+        address={query?.contract}
         amountListed={itemsAvailableForPurchase.length || 0}
         floorPrice={cheapest || 0}
       />

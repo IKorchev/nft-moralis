@@ -35,7 +35,8 @@ module.exports = {
       boxShadow: {
         "3xl": "0px 5px 8px ",
         "4xl": "-3px -3px 5px , 3px 3px 5px",
-        glass: "-3px -3px 4px rgba(255, 255, 255,0.1), 3px 3px 4px rgba(0, 0, 0,0.4)",
+        glass: "-1px -3px 4px rgba(255, 255, 255,0.2), 1px 3px 4px rgba(0, 0, 0,0.4)",
+        "glass-secondary": "-1px -4px 4px rgba(255, 38, 136,0.3), 1px 4px 4px rgba(0,0,0,0.5)",
       },
     },
   },
