@@ -32,7 +32,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
             <FadeLoader size={1} color='black' />
           </div>
         ) : (
-          <VideoOrImage format={data.metadata.format} url={image} />
+          <VideoOrImage format={data?.metadata?.format} url={image} />
         )}
       </Link>
       <div className='flex flex-col items-start px-2 py-1'>
