@@ -1,19 +1,19 @@
 import { formatChain, formatIpfs } from "../../../utils/common"
+import { tokenIdFetcher, revalidateOptions } from "../../../utils/fetcher"
 import { useRouter } from "next/router"
-import Collapse from "../../../components/tokenId/Collapse"
-import useSWR from "swr"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
+import ActivityChart from "../../../components/Other/ActivityChart"
+import Collapse from "../../../components/tokenId/Collapse"
+import ListItemModal from "../../../components/tokenId/ListItemModal"
 import TransactionsTable from "../../../components/tokenId/TransactionsTable"
 import TokenImage from "../../../components/tokenId/TokenImage"
-import { tokenIdFetcher, revalidateOptions } from "../../../utils/fetcher"
-import Link from "next/link"
-import ActivityChart from "../../../components/ActivityChart"
-import { MoonLoader } from "react-spinners"
 import { AnimatePresence, motion } from "framer-motion"
+import { MoonLoader } from "react-spinners"
 import { useState } from "react"
-import ListItemModal from "../../../components/tokenId/ListItemModal"
-import Head from "next/head"
-import Metadata from "../../../components/Metadata"
+import useSWR from "swr"
+import Link from "next/link"
+import Metadata from "../../../components/Other/Metadata"
+
 const Token = () => {
   const { chain, account } = useMoralisData()
   const router = useRouter()
