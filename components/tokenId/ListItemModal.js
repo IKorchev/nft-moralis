@@ -34,16 +34,16 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
   return (
     <Dialog
       as={motion.div}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 20 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
       open={isOpen}
       onClose={onClose}
-      className='fixed inset-0 z-10 grid  place-items-center  overflow-y-auto'>
-      <Dialog.Overlay className='fixed inset-0 bg-black opacity-30' />
-      <div className='z-20 grid w-[30rem] place-items-center rounded-lg bg-white p-5'>
-        <Dialog.Title>List for sale</Dialog.Title>
+      className='fixed inset-0 z-10 grid place-items-center overflow-y-auto'>
+      <Dialog.Overlay className='fixed inset-0 bg-black/50' />
+      <motion.div className='z-20 grid place-items-center rounded-lg border border-secondary-darkest bg-primary-900 bg-opacity-90 p-5 px-24  shadow-glass-large backdrop-blur-sm backdrop-filter'>
+        <Dialog.Title className='py-2 text-white'>List for sale</Dialog.Title>
         <div className='h-60 w-60 bg-gray-100'>
           <img
             src={formatIpfs(
@@ -53,22 +53,24 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
             className='object-contain'
           />
         </div>
-        <form onSubmit={onSubmit} className='mt-5 flex  flex-col'>
-          <div className='border px-2'>
-            <label htmlFor='listPriceInput'>Price: </label>
+        <form onSubmit={onSubmit} className='mt-5 flex flex-col text-white'>
+          <div className='flex w-full items-center justify-evenly rounded-md border border-secondary px-2'>
+            <label htmlFor='listPriceInput' className='col-span-1 px-3'>
+              Price
+            </label>
             <input
               onChange={(e) => setPrice(e.target.value)}
               type='number'
               id='listPriceInput'
-              className='border p-2 text-lg'
+              className='cols-span-1 block border p-2 text-lg text-black ring-secondary focus:ring'
               placeholder='amount'
               value={price}
             />
-            <span> {chain?.nativeCurrency.symbol}</span>
+            <span className='col-span-1'> {chain?.nativeCurrency.symbol}</span>
           </div>
           <button
             type='submit'
-            className='mt-5 flex items-center justify-center rounded-lg bg-gradient-to-r from-primary-700 to-primary-900 py-2 text-lg font-bold text-white hover:opacity-90'>
+            className=' mt-5 flex items-center justify-center rounded-lg bg-gradient-to-r from-secondary to-secondary-dark py-2 text-xl font-black text-white hover:opacity-90'>
             <ClipLoader loading={loading} color='white' size={20} />
             <span className=''> List for sale</span>
           </button>
@@ -85,7 +87,7 @@ const ListItemModal = ({ onClose, isOpen, data, chain }) => {
           } `}>
           {status.message}
         </div>
-      </div>
+      </motion.div>
     </Dialog>
   )
 }

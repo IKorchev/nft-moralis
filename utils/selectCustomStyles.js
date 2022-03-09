@@ -52,14 +52,14 @@ export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected
       <Link href={`/assets/${data.contractAddress}`}>
         <div
           className={`
-          cursor-pointer flex-shrink-0 h-12 flex 
-          border items-center mx-3 border-secondary-dark rounded-md
-          overflow-hidden 
-          ${isSelected ? "bg-secondary" : isFocused ? "bg-primary-800" : ""}`}>
+          mx-3 flex h-12 flex-shrink-0 
+          cursor-pointer items-center overflow-hidden rounded-md border
+          border-secondary
+           ${isSelected ? "bg-secondary" : isFocused ? "bg-primary-800" : ""}`}>
           <img
-            className='h-12 w-12 object-cover bg-primary-700 border-r border-secondary-light'
+            className='border- h-12 w-12 border-r bg-primary-700 object-cover'
             src={data.image}
-            alt='Collection '
+            alt='Collection'
           />
           <h1 className='truncate px-4 hover:text-gray-500'>{data.label}</h1>
         </div>

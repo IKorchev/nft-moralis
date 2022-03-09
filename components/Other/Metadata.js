@@ -1,7 +1,6 @@
 import React from "react"
 import Head from "next/head"
 const Metadata = ({ image, title, description, keywords, url }) => {
-  title = "NFT Explorer | Launchpad and Marketplace"
   return (
     <Head>
       <title>{title || "NFT Explorer | Launchpad and Marketplace"}</title>

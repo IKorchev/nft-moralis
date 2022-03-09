@@ -1,14 +1,15 @@
 import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
-import { useMoralis, useWeb3ExecuteFunction } from "react-moralis"
+import { useMoralis, useWeb3ExecuteFunction, useMoralisWeb3Api } from "react-moralis"
 import { toast } from "react-toastify"
 import { contractFunctions } from "./contractFunctions"
-
+import { useEffect } from "react"
 const useMarketInteractions = () => {
   const { Moralis, account } = useMoralis()
+  const Web3Api = useMoralisWeb3Api()
+
   const contractProcessor = useWeb3ExecuteFunction()
   const MarketItems = Moralis.Object.extend("MarketItems")
   const ItemImage = Moralis.Object.extend("ItemImage")
-
   //update in moralis database
   const updateItemSold = async (itemId) => {
     const query = new Moralis.Query(MarketItems)
@@ -214,10 +215,10 @@ const useMarketInteractions = () => {
     }
     if (isMarketApproved && listingPrice) {
       const result = await createMarketItem(listingPrice, nftObject, price)
-
       return result
     }
   }
+
   return {
     buyItem,
     listItem,

@@ -13,7 +13,6 @@ import { useState } from "react"
 import useSWR from "swr"
 import Link from "next/link"
 import Metadata from "../../../components/Other/Metadata"
-
 const Token = () => {
   const { chain, account } = useMoralisData()
   const router = useRouter()
@@ -47,7 +46,6 @@ const Token = () => {
 
   const image = formatIpfs(data?.metadata?.image) || formatIpfs(data?.metadata?.image_url)
 
-  console.log(router)
   return (
     <div>
       <Metadata

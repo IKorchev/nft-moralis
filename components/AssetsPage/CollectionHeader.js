@@ -10,15 +10,11 @@ import { useMoralis } from "react-moralis"
 const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
   const { Moralis } = useMoralis()
   const options = {
-    url: chain ? "/api/collection" : null,
-    args: {
-      address: address,
-      chain: { chainString: formatChain(chain?.networkId), chainId: chain?.chainId },
-    },
+    url: chain && address ? `/api/collection?address=${address}&chain=${chain?.chainId}` : null,
   }
   //prettier-ignore
-  const { data, error, isValidating } = useSWR(options,metadataFetcher,revalidateOptions)
-
+  const { data, error } = useSWR(options, metadataFetcher, revalidateOptions)
+  console.log(data)
   if (!data && !error)
     return (
       <div className='grid h-24 place-items-center'>
@@ -51,21 +47,21 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
             <h4 className='mx-auto mb-5 w-max border-b-4 border-secondary text-center text-xl'>
               Information
             </h4>
-            <ul className='flex gap-5'>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
+            <ul className='grid grid-cols-2 gap-5 lg:grid-cols-4'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
                 <span>Floor Price</span>
-                <span className='text-xs'>
+                <span>
                   {floorPrice && parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2)}
                 </span>
               </li>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
                 <span>Listed Count</span>
                 <span className='text-base'>{amountListed}</span>
               </li>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
                 <span>Token Symbol</span> <span>{data?.symbol}</span>
               </li>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-primary-700 py-2'>
+              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
                 <span>Contract type</span> <span>{data?.contract_type}</span>
               </li>
             </ul>

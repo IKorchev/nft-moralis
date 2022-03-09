@@ -2,7 +2,7 @@ import React from "react"
 
 const VideoOrImage = ({ format, url }) => {
   return (
-    <div>
+    <div className='h-max w-full '>
       {format === "video" ? (
         <video
           autoPlay
@@ -10,10 +10,10 @@ const VideoOrImage = ({ format, url }) => {
           controls
           src={url || null}
           alt=''
-          className='h-48 cursor-pointer rounded-lg object-scale-down '
+          className='h-full w-full cursor-pointer rounded-lg object-contain'
         />
       ) : (
-        <img src={url || null} alt='' className='h-48 cursor-pointer object-scale-down' />
+        <img src={url || null} alt='' className='h-full w-full cursor-pointer object-scale-down' />
       )}
     </div>
   )

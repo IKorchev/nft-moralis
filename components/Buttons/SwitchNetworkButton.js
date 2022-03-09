@@ -10,7 +10,7 @@ const SwitchNetworkButton = ({
 
   return (
     <button
-      className={`bg-primary-100 px-3 py-2 text-lg font-semibold text-black rounded-${rounded} ${className}`}
+      className={`w-max bg-primary-100 px-3 py-2 text-lg font-semibold text-black transition duration-150 active:scale-90 rounded-${rounded} ${className}`}
       onClick={() => switchNetwork(network)}>
       {label}
     </button>

@@ -1,1 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080"><defs><filter id="a" x="480.5" y="218.5" width="375" height="321" filterUnits="userSpaceOnUse"><feOffset dx="8" dy="8" input="SourceAlpha"/><feGaussianBlur stdDeviation="5.5" result="b"/><feFlood flood-opacity="0.302"/><feComposite operator="in" in2="b"/><feComposite in="SourceGraphic"/></filter><filter id="c" x="1145.5" y="289.5" width="358" height="364" filterUnits="userSpaceOnUse"><feOffset dx="2" dy="6" input="SourceAlpha"/><feGaussianBlur stdDeviation="7.5" result="d"/><feFlood flood-opacity="0.302"/><feComposite operator="in" in2="d"/><feComposite in="SourceGraphic"/></filter><linearGradient id="e" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#6ee7b7"/></linearGradient><filter id="f" x="730.939" y="666.857" width="461.905" height="229.753" filterUnits="userSpaceOnUse"><feOffset dx="2" dy="8" input="SourceAlpha"/><feGaussianBlur stdDeviation="6" result="g"/><feFlood flood-opacity="0.161"/><feComposite operator="in" in2="g"/><feComposite in="SourceGraphic"/></filter></defs><g transform="translate(-0.214 -0.039)"><rect width="1920" height="1080" transform="translate(0.214 0.039)" fill="none"/><g transform="matrix(1, 0, 0, 1, 0.21, 0.04)" filter="url(#a)"><path d="M164.121,11.585a8,8,0,0,1,13.758,0l156.946,264.33A8,8,0,0,1,327.946,288H14.054a8,8,0,0,1-6.879-12.084Z" transform="translate(489 227)" fill="#f70c76"/></g><g transform="matrix(1, 0, 0, 1, 0.21, 0.04)" filter="url(#c)"><ellipse cx="156.5" cy="159.5" rx="156.5" ry="159.5" transform="translate(1166 306)" fill="#fe0"/></g><g transform="matrix(1, 0, 0, 1, 0.21, 0.04)" filter="url(#f)"><path d="M13.006.036,397.153,1.1a13.205,13.205,0,0,1,13.042,13.263l.282,103.644a13.031,13.031,0,0,1-12.97,13.191L13.359,130.134A13.2,13.2,0,0,1,.318,116.871L.036,13.227A13.031,13.031,0,0,1,13.006.036Z" transform="translate(767.43 676.82) rotate(9)" fill="url(#e)"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1505.618" height="670.103" viewBox="0 0 1505.618 670.103">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-3 {
+        filter: url(#Path_8);
+      }
+
+      .cls-4 {
+        filter: url(#Path_7);
+      }
+
+      .cls-5 {
+        filter: url(#Path_6);
+      }
+
+      .cls-6 {
+        filter: url(#Path_3);
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="-0.038" cy="0.659" r="0.992" gradientTransform="matrix(-0.548, 0.837, -0.849, -0.556, 1.641, -0.314)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#10011f"/>
+      <stop offset="0" stop-color="#12011f"/>
+      <stop offset="0" stop-color="#310126"/>
+      <stop offset="1" stop-color="#c9025d"/>
+    </radialGradient>
+    <filter id="Path_3" x="0" y="99.896" width="363.52" height="369.414" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_6" x="568.035" y="402.693" width="251.584" height="255.407" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_7" x="897.661" y="0" width="154.958" height="156.993" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-3"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_8" x="1278.601" y="322.511" width="227.017" height="230.385" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="6" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur-4"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_1" transform="translate(-127.5 -251.897)">
+    <g id="Group_1-2" data-name="Group 1" transform="translate(148 255)">
+      <rect id="Rectangle_2" data-name="Rectangle 2" class="cls-1" width="1452" height="610" transform="translate(0 57)"/>
+      <g class="cls-6" transform="matrix(1, 0, 0, 1, -20.5, -3.1)">
+        <path id="Path_3-2" data-name="Path 3" class="cls-2" d="M156.5,0C242.933,0,313,71.411,313,159.5S242.933,319,156.5,319,0,247.589,0,159.5,70.067,0,156.5,0Z" transform="translate(339.02 435.35) rotate(179)"/>
+      </g>
+      <g class="cls-5" transform="matrix(1, 0, 0, 1, -20.5, -3.1)">
+        <path id="Path_6-2" data-name="Path 6" class="cls-2" d="M101.5,0C157.56,0,203,46.315,203,103.448S157.56,206.9,101.5,206.9,0,160.58,0,103.448,45.444,0,101.5,0Z" transform="translate(791.51 629.6) rotate(-179)"/>
+      </g>
+      <g class="cls-4" transform="matrix(1, 0, 0, 1, -20.5, -3.1)">
+        <path id="Path_7-2" data-name="Path 7" class="cls-2" d="M54.026,0c29.838,0,54.026,24.652,54.026,55.062s-24.188,55.062-54.026,55.062S0,85.472,0,55.062,24.188,0,54.026,0Z" transform="translate(1026.2 128.49) rotate(-179)"/>
+      </g>
+      <g class="cls-3" transform="matrix(1, 0, 0, 1, -20.5, -3.1)">
+        <path id="Path_8-2" data-name="Path 8" class="cls-2" d="M89.431,0c49.392,0,89.431,40.807,89.431,91.146s-40.04,91.146-89.431,91.146S0,141.484,0,91.146,40.04,0,89.431,0Z" transform="translate(1477.94 524.4) rotate(-179)"/>
+      </g>
+    </g>
+  </g>
+</svg>

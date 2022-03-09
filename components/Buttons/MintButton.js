@@ -10,7 +10,7 @@ const MintButton = ({ contractAddress, cost }) => {
         onClick={async () => {
           mintToken(contractAddress, cost, 1)
         }}
-        className='rounded-full  bg-secondary py-1 px-3 text-lg transition duration-500 hover:bg-secondary-dark'>
+        className='w-max rounded-full bg-secondary py-1 px-3 text-lg transition duration-500  hover:bg-secondary-dark'>
         Mint now
       </button>
       <span> {cost && Moralis.Units.FromWei(cost)} ETH </span>

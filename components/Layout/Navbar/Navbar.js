@@ -13,20 +13,22 @@ import Select from "react-select"
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import DisconnectButton from "../../Buttons/DisconnectButton"
 import useScrollOffset from "../../../hooks/useScrollOffset"
-import { useEffect, useRef, useState } from "react"
+import { useRouter } from "next/router"
 
 const Navbar = () => {
   const { completedLaunchpads, currentLaunchpad } = useMoralisData()
   const allLaunchpads = [...completedLaunchpads, ...currentLaunchpad]
   const { account } = useMoralis()
   const { scrolled } = useScrollOffset()
-
+  const router = useRouter()
+  const isHomePage = router.asPath === "/"
   const options = allLaunchpads?.map((el) => ({
     label: el.attributes.collectionName,
     value: el.attributes.contractAddress,
     image: el.attributes.imageUrl,
     contractAddress: el.attributes.contractAddress,
   }))
+
   return (
     <div>
       {/* MOBILE MENU */}
@@ -54,9 +56,12 @@ const Navbar = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{
                   easings: "easeInOut",
-                  duration: 0.5,
+                  duration: 0.3,
                 }}
                 className='fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl  bg-primary-800 px-5 py-24 text-white'>
+                <Link href='/'>
+                  <a className='my-4 mb-10 cursor-pointer text-4xl'>NFT Explorer</a>
+                </Link>
                 <Link href='/'>
                   <a className='my-4 cursor-pointer text-3xl'>Home</a>
                 </Link>
@@ -64,7 +69,7 @@ const Navbar = () => {
                   <a className='cursor-pointer py-4 text-3xl'>Marketplace</a>
                 </Link>
                 <Link href='/launchpad'>
-                  <a className='my-4 cursor-pointer text-3xl'>Launchpad</a>
+                  <a className='my-4 mb-6  cursor-pointer text-3xl'>Launchpad</a>
                 </Link>
                 {account ? (
                   <div className='flex flex-col '>
@@ -95,8 +100,12 @@ const Navbar = () => {
       {/* DESKTOP Nav */}
 
       <div
-        className={`fixed top-0 left-0 z-20 mx-auto hidden w-full py-4 text-white ${
-          scrolled ? "bg-primary-900/50 backdrop-blur-md backdrop-filter" : ""
+        className={`fixed top-0 left-0 z-20 mx-auto hidden w-full text-white ${
+          scrolled
+            ? "bg-primary-900/50 backdrop-blur-sm backdrop-filter"
+            : !scrolled && !isHomePage
+            ? "border-b border-secondary bg-primary-900"
+            : ""
         } lg:block`}>
         <div className='container mx-auto flex items-center justify-between'>
           <Link href='/'>
@@ -107,10 +116,14 @@ const Navbar = () => {
           <div className='flex items-center justify-start'>
             <div className='flex flex-grow'>
               <Link href='/marketplace'>
-                <a className='my-4 mx-5 cursor-pointer  text-xl'>Marketplace</a>
+                <a className='my-4 mx-5 cursor-pointer text-xl  transition duration-200 hover:text-gray-300'>
+                  Marketplace
+                </a>
               </Link>
               <Link href='/launchpad'>
-                <a className='my-4 mx-5 cursor-pointer  text-xl'>Launchpad</a>
+                <a className='my-4 mx-5 cursor-pointer text-xl  transition duration-200 hover:text-gray-300'>
+                  Launchpad
+                </a>
               </Link>
             </div>
             <div className='ml-4 cursor-text xl:ml-16'>

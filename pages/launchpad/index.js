@@ -3,7 +3,7 @@ import FeaturedSection from "../../components/Launchpad/FeaturedSection"
 import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
 import Metadata from "../../components/Other/Metadata"
 import CollectionCard from "../../components/Cards/CollectionCard/CollectionCard"
-import { SectionTitle } from "../../components/SectionTitle"
+import  SectionTitle  from "../../components/SectionTitle"
 const Launchpad = () => {
   //prettier-ignore
   const { currentLaunchpad, isCurrentLaunchpadLoading, completedLaunchpads, upcomingLaunchpads } = useMoralisData()

@@ -4,13 +4,13 @@ import SwitchNetworkButton from "../Buttons/SwitchNetworkButton"
 import MintButton from "../Buttons/MintButton"
 
 const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
-  const { isWeb3Enabled } = useMoralis()
+  const { account } = useMoralis()
   const { chain } = useChain()
   return (
     <>
       {
         //prettier-ignore
-        !isWeb3Enabled        ? <ConnectWalletButton  className='my-5'/>
+        !account ? <ConnectWalletButton  className='my-5'/>
         : chain.chainId !== '0x3' ? <SwitchNetworkButton network='0x3' className='my-5'/>
         :  (
         <>

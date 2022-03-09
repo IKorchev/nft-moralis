@@ -34,10 +34,7 @@ export const revalidateOptions = {
 }
 
 export const metadataFetcher = async ({ url, args }) => {
-  const res = await fetch(url, {
-    method: "POST",
-    body: JSON.stringify(args),
-  })
+  const res = await fetch(url)
   if (!res.ok) {
     const error = new Error("An error occurred while fetching the data.")
     // Attach extra info to the error object.

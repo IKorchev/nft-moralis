@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import ReactPaginate from "react-paginate"
 
-function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated = true }) {
+function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated = false }) {
   const [currentItems, setCurrentItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
@@ -25,12 +25,10 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
 
   return (
     <motion.div layout={isLayoutAnimated} className='relative mx-auto text-white'>
-      {currentItems && (
-        <div className=''>
+      {currentItems ? (
+        <div>
           <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
-          <div class='grid grid-cols-1 justify-items-center gap-3 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 '>
-            {currentItems.map(renderItem)}
-          </div>
+          <div class='flex flex-wrap justify-center lg:justify-start gap-2'>{currentItems.map(renderItem)}</div>
           {items?.length > itemsPerPage && (
             <ReactPaginate
               containerClassName='flex my-5 rounded-lg justify-center items-center overflow-hidden'
@@ -55,7 +53,7 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
             />
           )}
         </div>
-      )}
+      ) : <></>}
     </motion.div>
   )
 }

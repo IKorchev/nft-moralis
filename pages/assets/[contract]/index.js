@@ -6,12 +6,14 @@ import { useState } from "react"
 import { useMoralisQuery } from "react-moralis"
 import CollectionHeader from "../../../components/AssetsPage/CollectionHeader"
 import Drawer from "../../../components/Other/Drawer"
-import MarketItem from "../../../components/Marketplace/MarketItem"
+import MarketItem from "../../../components/Cards/MarketItemCard"
 import PaginatedItems from "../../../components/Other/PaginatedItems"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
 import ClearFiltersButton from "../../../components/Other/SortAndFilter/ClearFiltersButton"
 import SortSection from "../../../components/Other/SortAndFilter/SortSection"
 import { sortFunction, sortOptions } from "../../../utils/sort"
+import SectionTitle from "../../../components/SectionTitle"
+import SectionContainer from "../../../components/SectionContainer"
 
 const Asset = () => {
   const { query } = useRouter()
@@ -33,7 +35,7 @@ const Asset = () => {
   const cheapest = itemsAvailableForPurchase[0]?.attributes?.price
   console.log(query.contract)
   return (
-    <div className='container mx-auto px-4 py-24 text-white lg:px-0'>
+    <div className='container mx-auto px-4 py-32 text-white lg:px-0'>
       {/* MOBILE DRAWER */}
       <AnimatePresence>
         {open && (
@@ -64,7 +66,7 @@ const Asset = () => {
         floorPrice={cheapest || 0}
       />
       <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
-        <h1 className='text-4xl font-extrabold text-white'>NFTs</h1>
+        <SectionTitle title='NFTs in collection' />
         <button
           className='inline-flex rounded-full border border-secondary bg-primary-700 p-2 lg:hidden'
           onClick={() => setOpen(!open)}>
@@ -75,9 +77,9 @@ const Asset = () => {
         <h2 id='section-heading' className='sr-only'>
           Section
         </h2>
-        <div className='container mx-auto flex flex-col justify-start gap-5 lg:flex-row'>
+        <SectionContainer>
           {/* Desktop */}
-          <div className='hidden w-60 flex-col gap-1 lg:flex'>
+          <div className='hidden lg:flex'>
             <SortSection
               defaultOpen={true}
               sortOption={sortOption}
@@ -89,15 +91,14 @@ const Asset = () => {
               setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
             />
           </div>
-
-          <div className=''>
+          <div className='flex-grow'>
             <PaginatedItems
               items={sortBy(items, (object) => sortFunction(object, sortOption))}
               itemsPerPage={12}
               renderItem={renderItem}
             />
           </div>
-        </div>
+        </SectionContainer>
       </section>
     </div>
   )

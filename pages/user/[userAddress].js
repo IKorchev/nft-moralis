@@ -17,10 +17,12 @@ import { Tab } from "@headlessui/react"
 import PaginatedItems from "../../components/Other/PaginatedItems"
 import TransactionsTable from "../../components/tokenId/TransactionsTable"
 import Loading from "../../components/Other/Loading"
-import { NFTCard } from "../../components/Cards/NFTCard"
+import NFTCard from "../../components/Cards/NFTCard"
 import SortFilterAndClear from "../../components/Other/SortAndFilter/SortFilterAndClear"
 import Drawer from "../../components/Other/Drawer"
 import Metadata from "../../components/Other/Metadata"
+import SectionTitle from "../../components/SectionTitle"
+import SectionContainer from "../../components/SectionContainer"
 
 const sortOptions = [
   { name: "ID Ascending", data: "id-asc" },
@@ -100,18 +102,17 @@ function UserAddress() {
           defaultChecked={1}
           as='div'
           className='container mt-5 flex flex-col items-center'>
-          <Tab.List className='mt-5 flex justify-evenly  rounded-lg bg-primary-900  text-white  '>
+          <Tab.List className='mt-5 flex justify-evenly  rounded-lg bg-primary-700 p-4  text-white  '>
             <Tab
               className={({ selected }) =>
-                `${
-                  selected ? "bg-primary-100 text-black" : ""
-                } flex items-center rounded-lg px-12 py-3 `
+                `${selected ? "bg-secondary/30 text-white shadow-glass-large" : ""}
+                } flex items-center rounded-lg px-12 py-4 `
               }>
               <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
             </Tab>
             <Tab
               //prettier-ignore
-              className={({ selected }) =>`${selected ? "bg-primary-100 text-black" : ""} flex items-center px-12 py-3 rounded-lg `}>
+              className={({ selected }) =>`${selected ? "bg-secondary/30 text-white shadow-glass-large" : ""} flex items-center px-12 py-3 rounded-lg `}>
               <FiActivity className='mr-3 text-xl' /> Activity
             </Tab>
           </Tab.List>
@@ -122,7 +123,7 @@ function UserAddress() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, x: 0 }}>
               <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
-                <h1 className='text-4xl font-extrabold  text-white'>NFTs</h1>
+                <SectionTitle title='Collected NFTs' />
                 <button
                   className='inline-flex rounded-full p-2 lg:hidden '
                   onClick={() => setOpen(!open)}>
@@ -131,10 +132,10 @@ function UserAddress() {
               </div>
               <section aria-labelledby='nfts-heading' className='pt-6 pb-24'>
                 <h2 id='nfts-heading' className='sr-only'>
-                  NFTs
+                  Collected NFTs
                 </h2>
-                <div className='flex flex-col justify-center gap-5 lg:flex-row lg:justify-start'>
-                  <div className='hidden flex-col gap-1 lg:flex'>
+                <SectionContainer>
+                  <div className='hidden lg:flex'>
                     <SortFilterAndClear
                       sortOption={sortOption}
                       setSortOption={setSortOption}
@@ -144,9 +145,9 @@ function UserAddress() {
                       setFilterOption={setFilterOption}
                     />
                   </div>
-                  <div className=''>
+                  <div className='flex-grow'>
                     <PaginatedItems
-                      isLayoutAnimated={true}
+                      isLayoutAnimated={false}
                       items={filter(
                         sortBy(data?.result, (object) => sortFunction(object, sortOption)),
                         (el) =>
@@ -154,11 +155,11 @@ function UserAddress() {
                             ? el.token_address.toLowerCase() === filterOption.toLowerCase()
                             : el
                       )}
-                      itemsPerPage={12}
+                      itemsPerPage={24}
                       renderItem={renderItem}
                     />
                   </div>
-                </div>
+                </SectionContainer>
               </section>
             </Tab.Panel>
             <Tab.Panel
@@ -169,7 +170,7 @@ function UserAddress() {
               className='styled-scrollbar container mx-auto my-12 h-[40rem] max-w-[70rem] overflow-y-auto'>
               <TransactionsTable
                 rowProps={{
-                  className: "bg-primary-50 text-lg ",
+                  className: "bg-primary-50 text-lg",
                 }}
                 transactions={transactions}
               />

@@ -1,18 +1,19 @@
 import PaginatedItems from "../../components/Other/PaginatedItems"
-import MarketItem from "../../components/Marketplace/MarketItem"
+import MarketItem from "../../components/Cards/MarketItemCard"
 import { useEffect, useState } from "react"
 import { filter, sortBy } from "lodash"
 import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
-import { useChain, useMoralis } from "react-moralis"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import { sortOptions, sortFunction } from "../../utils/sort"
 import { FilterIcon } from "@heroicons/react/solid"
 import Metadata from "../../components/Other/Metadata"
 import Drawer from "../../components/Other/Drawer"
 import SortFilterAndClear from "../../components/Other/SortAndFilter/SortFilterAndClear"
-import { SectionTitle } from "../../components/SectionTitle"
+import SectionTitle from "../../components/SectionTitle"
+import SectionContainer from "../../components/SectionContainer"
+
 const Marketplace = () => {
-  const { chain, allCollectionsListed, allListings, currentLaunchpad } = useMoralisData()
+  const { allCollectionsListed, allListings } = useMoralisData()
   const [sortOption, setSortOption] = useState()
   const [filterOption, setFilterOption] = useState()
   const [filterOptions, setFilterOptions] = useState([])
@@ -63,7 +64,7 @@ const Marketplace = () => {
           <h2 id='marketplace-heading' className='sr-only'>
             Marketplace
           </h2>
-          <div className='flex flex-col justify-center gap-5 lg:flex-row lg:justify-start'>
+          <SectionContainer>
             {/* Desktop */}
             <div className='hidden lg:flex'>
               <SortFilterAndClear
@@ -75,7 +76,7 @@ const Marketplace = () => {
                 setFilterOption={setFilterOption}
               />
             </div>
-            <div>
+            <div className=' w-full '>
               <PaginatedItems
                 items={filter(
                   sortBy(allListings, (object) => sortFunction(object, sortOption)),
@@ -85,31 +86,10 @@ const Marketplace = () => {
                 renderItem={renderItem}
               />
             </div>
-          </div>
+          </SectionContainer>
         </section>
       </main>
     </>
-  )
-}
-
-const ChangeNetwork = () => {
-  const { switchNetwork } = useChain()
-  const { authenticate } = useMoralis()
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className='grid h-[70vh] place-items-center'>
-      <button
-        className='rounded-lg bg-secondary p-3 text-lg'
-        onClick={async () => {
-          await authenticate()
-          switchNetwork("0x3")
-        }}>
-        Switch to ropsten
-      </button>
-    </motion.div>
   )
 }
 

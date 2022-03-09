@@ -6,7 +6,7 @@ import InstallMetamask from "../Other/InstallMetamask"
 import { useEffect, useState } from "react"
 import Moralis from "moralis"
 
-const Layout = ({ isMetamaskInstalled, children }) => {
+const Layout = ({ children }) => {
   const [isInstalled, setIsInstalled] = useState(true)
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Layout = ({ isMetamaskInstalled, children }) => {
   return (
     <motion.div
       exit={{ opacity: 0, scale: 0, transition: { duration: 3 } }}
-      className='relative w-full bg-primary-900'>
+      className='relative w-full bg-primary-900 bg-gradient-to-br '>
       <Navbar />
       <ToastContainer className='' position='top-right' draggable={false} hideProgressBar={false} />
       {children}

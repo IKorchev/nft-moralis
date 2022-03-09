@@ -27,16 +27,19 @@ module.exports = {
         secondary: "#F70C76",
         "secondary-dark": "#AB044F",
         "secondary-light": "#FF2688",
+        "secondary-darkest": "#290c21",
         light: "#faf7fc",
       },
       scale: {
         102: "1.01",
       },
+      // rgba(255, 38, 136,0.3)
       boxShadow: {
         "3xl": "0px 5px 8px ",
         "4xl": "-3px -3px 5px , 3px 3px 5px",
         glass: "-1px -3px 4px rgba(255, 255, 255,0.2), 1px 3px 4px rgba(0, 0, 0,0.4)",
-        "glass-secondary": "-1px -4px 4px rgba(255, 38, 136,0.3), 1px 4px 4px rgba(0,0,0,0.5)",
+        "glass-small": "-1px -2px 4px rgba(255, 255, 255,0.3), 1px 2px 2px rgba(0,0,0,0.5)",
+        "glass-large": "0px -2px 6px rgba(255, 38, 136,0.5), 0px 5px 6px rgba(0, 0, 0,0.6)",
       },
     },
   },

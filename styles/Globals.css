@@ -10,30 +10,20 @@
   .h1 {
     @apply font-montserrat text-5xl lg:text-8xl;
   }
-  input[type="text"],
-  textarea {
-    @apply ring-yellow-400 focus:ring-1;
-  }
+
   .footer a {
     @apply hover:underline;
   }
-  body {
+  body,
+  html {
     @apply font-poppins;
   }
-  input,
-  button,
-  select {
-    @apply focus:outline-none;
-  }
 
-  button {
-    @apply ring-white focus:ring;
-  }
   h2 {
     @apply text-2xl font-semibold text-black;
   }
   .card {
-    @apply z-0 mt-4 flex w-72 transform flex-col 
+    @apply z-0 mt-4 flex w-80 transform flex-col 
     items-center overflow-hidden rounded-lg border-t-4 bg-white text-black shadow-3xl
      backdrop-filter duration-200 hover:-translate-y-1 hover:border-secondary;
   }
@@ -59,8 +49,13 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+  width: 10rem;
+  outline: none;
 }
 
+input[type="number"]:focus:focus-within {
+  outline: none;
+}
 .collapse {
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
@@ -68,9 +63,3 @@ input[type="number"] {
 .collapsed {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
-
-/* .landing-page {
-  background-image: url("../images/BlurredBG.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
-} */
