@@ -3,7 +3,7 @@ import { CollectionCard } from "../Cards/CollectionCard"
 import { gsap } from "gsap/dist/gsap"
 import { useEffect, useRef } from "react"
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
-import  SectionTitle  from "../SectionTitle"
+import SectionTitle from "../SectionTitle"
 gsap.registerPlugin(ScrollTrigger)
 
 const LandingPage2 = () => {
@@ -32,10 +32,10 @@ const LandingPage2 = () => {
           backgroundImage: "url('/Group_1.png')",
           backgroundSize: "contain",
         }}
-        ref={containerRef}
         className='mt-24 bg-cover bg-center bg-no-repeat py-24'>
         <SectionTitle title='Featured collections' justify='center' />
         <div
+          ref={containerRef}
           className=' container mx-auto  mt-12  flex flex-wrap items-center
          justify-center gap-2 lg:gap-10'>
           {completedLaunchpads?.slice(0, 3).map((el, i) => (

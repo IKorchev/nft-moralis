@@ -16,8 +16,8 @@ const SectionTitle = ({ title, size = "lg", justify = "start" }) => {
   return (
     <div className={`flex justify-${justify}`}>
       <h1
-        className={`rounded-lg bg-emerald-400/10 p-3 text-center text-${text} font-semibold text-secondary shadow-glass lg:text-${lgText}`}>
-        <span className='bg-gradient-to-r from-emerald-400 via-white to-secondary bg-clip-text text-transparent'>
+        className={`bg-secondary-300/10  rounded-lg p-3 text-center backdrop-filter text-${text} text-secondary-100 shadow-glass font-semibold backdrop-blur-sm lg:text-${lgText}`}>
+        <span className='to-secondary-100 bg-gradient-to-r from-emerald-400 via-white bg-clip-text text-transparent'>
           {title}
         </span>
       </h1>

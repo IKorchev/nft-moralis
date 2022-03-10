@@ -39,24 +39,20 @@ const Asset = () => {
       {/* MOBILE DRAWER */}
       <AnimatePresence>
         {open && (
-          <Drawer
-            open={open}
-            setOpen={setOpen}
-            ChildElements={
-              <div className='flex flex-col gap-1'>
-                <SortSection
-                  defaultOpen={true}
-                  sortOption={sortOption}
-                  setSortOption={setSortOption}
-                  sortOptions={sortOptions}
-                />
-                <ClearFiltersButton
-                  setSortOption={setSortOption}
-                  setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
-                />
-              </div>
-            }
-          />
+          <Drawer open={open} setOpen={setOpen}>
+            <div className='flex flex-col gap-1'>
+              <SortSection
+                defaultOpen={true}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                sortOptions={sortOptions}
+              />
+              <ClearFiltersButton
+                setSortOption={setSortOption}
+                setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
+              />
+            </div>
+          </Drawer>
         )}
       </AnimatePresence>
       <CollectionHeader
@@ -68,30 +64,32 @@ const Asset = () => {
       <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
         <SectionTitle title='NFTs in collection' />
         <button
-          className='inline-flex rounded-full border border-secondary bg-primary-700 p-2 lg:hidden'
+          className='border-secondary-100 bg-primary-700 inline-flex rounded-full border p-2 lg:hidden'
           onClick={() => setOpen(!open)}>
-          <FilterIcon className='h-6 w-6 text-secondary' />
+          <FilterIcon className='text-secondary-100 h-6 w-6' />
         </button>
       </div>
       <section aria-labelledby='section-heading' className='pt-6 pb-24'>
         <h2 id='section-heading' className='sr-only'>
-          Section
+          'NFTs in collection'
         </h2>
         <SectionContainer>
           {/* Desktop */}
           <div className='hidden lg:flex'>
-            <SortSection
-              defaultOpen={true}
-              sortOption={sortOption}
-              setSortOption={setSortOption}
-              sortOptions={sortOptions}
-            />
-            <ClearFiltersButton
-              setSortOption={setSortOption}
-              setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
-            />
+            <div className='space-y-1'>
+              <SortSection
+                defaultOpen={true}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                sortOptions={sortOptions}
+              />
+              <ClearFiltersButton
+                setSortOption={setSortOption}
+                setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
+              />
+            </div>
           </div>
-          <div className='flex-grow'>
+          <div className=''>
             <PaginatedItems
               items={sortBy(items, (object) => sortFunction(object, sortOption))}
               itemsPerPage={12}

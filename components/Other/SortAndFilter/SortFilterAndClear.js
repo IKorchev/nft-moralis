@@ -11,7 +11,7 @@ const SortFilterAndClear = ({
   setFilterOption,
 }) => {
   return (
-    <div className='flex flex-col gap-1 '>
+    <div className='relative flex flex-col gap-3 '>
       <SortSection
         defaultOpen={true}
         sortOption={sortOption}

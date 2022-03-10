@@ -65,7 +65,7 @@ const Token = () => {
           <div className='lg:min-w-[30rem]'>
             <TokenImage format={data?.metadata?.format} url={image} />
           </div>
-          <div className='w-full flex-grow rounded-lg bg-primary-900'>
+          <div className='bg-primary-900 w-full flex-grow rounded-lg'>
             <Collapse buttonText='Token Information' defaultOpen={true}>
               <div className='h-full bg-white p-4 text-black'>
                 <h2 className=''>{data?.name || data?.metadata?.name}</h2>
@@ -94,7 +94,7 @@ const Token = () => {
                     onClick={() => {
                       setOpen(true)
                     }}
-                    className='m-2 bg-secondary p-2 text-white'>
+                    className='bg-secondary-100 m-2 p-2 text-white'>
                     List item
                   </button>
                 )}
@@ -110,7 +110,7 @@ const Token = () => {
             <Collapse buttonText='Attributes'>
               <div className='grid grid-cols-3 gap-3 bg-white p-4'>
                 {data?.metadata?.attributes?.map((el) => (
-                  <div className='col-span-1 grid place-items-center rounded-lg border border-primary-300 bg-primary-200 p-1 text-center text-black'>
+                  <div className='border-primary-300 bg-primary-200 col-span-1 grid place-items-center rounded-lg border p-1 text-center text-black'>
                     <small className='font-bold'>{el.trait_type}</small>
                     <small>{el.value}</small>
                   </div>

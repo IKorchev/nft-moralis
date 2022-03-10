@@ -23,14 +23,14 @@
     @apply text-2xl font-semibold text-black;
   }
   .card {
-    @apply z-0 mt-4 flex w-80 transform flex-col 
-    items-center overflow-hidden rounded-lg border-t-4 bg-white text-black shadow-3xl
-     backdrop-filter duration-200 hover:-translate-y-1 hover:border-secondary;
+    @apply shadow-3xl hover:border-secondary z-0 mt-4 flex w-80 
+    transform flex-col items-center overflow-hidden rounded-lg border-t-4 bg-white
+     text-black backdrop-filter duration-200 hover:-translate-y-1;
   }
 }
 @layer utilities {
   .styled-scrollbar {
-    @apply scrollbar scrollbar-thin scrollbar-track-white  scrollbar-thumb-secondary;
+    @apply scrollbar scrollbar-thin scrollbar-track-secondary-500  scrollbar-thumb-secondary-200;
   }
   .react-select__menu-list {
     @apply .styled-scrollbar;

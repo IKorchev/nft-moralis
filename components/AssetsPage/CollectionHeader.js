@@ -44,24 +44,24 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
           <div
             className='rounded-lg 
             bg-gradient-to-b px-5 py-5 text-white '>
-            <h4 className='mx-auto mb-5 w-max border-b-4 border-secondary text-center text-xl'>
+            <h4 className='border-secondary-100 mx-auto mb-5 w-max border-b-4 text-center text-xl'>
               Information
             </h4>
             <ul className='grid grid-cols-2 gap-5 lg:grid-cols-4'>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Floor Price</span>
                 <span>
                   {floorPrice && parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2)}
                 </span>
               </li>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Listed Count</span>
                 <span className='text-base'>{amountListed}</span>
               </li>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Token Symbol</span> <span>{data?.symbol}</span>
               </li>
-              <li className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-light bg-secondary/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Contract type</span> <span>{data?.contract_type}</span>
               </li>
             </ul>

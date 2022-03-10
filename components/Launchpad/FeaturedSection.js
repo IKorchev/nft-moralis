@@ -7,16 +7,16 @@ import { toast } from "react-toastify"
 import Loading from "../Other/Loading"
 import Countdown from "./Countdown"
 import Mint from "./Mint"
-import { useChain } from "react-moralis"
+import { useChain, useMoralis } from "react-moralis"
 //
 
 const FeaturedSection = ({ featuredCollection }) => {
+  if (!featuredCollection) return <Loading />
   const { getMintCost, getMaxSupply, getTotalSupply } = useMarketInteraction()
-  const [cost, setCost] = useState()
-  const [maxSupply, setMaxSupply] = useState()
-  const [mintedAmount, setMintedAmount] = useState()
+  const [cost, setCost] = useState("0")
+  const [maxSupply, setMaxSupply] = useState(0)
+  const [mintedAmount, setMintedAmount] = useState(0)
   const [countdownFinished, setCountdownFinished] = useState(false)
-  const { chain } = useChain()
 
   const countdownHandler = () => {
     setCountdownFinished(true)
@@ -24,12 +24,14 @@ const FeaturedSection = ({ featuredCollection }) => {
 
   const refreshData = async () => {
     const tokensMinted = await getTotalSupply(featuredCollection?.contractAddress)
-    tokensMinted && setMintedAmount(Number(tokensMinted))
     const maxSupply = await getMaxSupply(featuredCollection?.contractAddress)
-    maxSupply && setMaxSupply(Number(maxSupply))
     const mintCost = await getMintCost(featuredCollection?.contractAddress)
-    mintCost && setCost(mintCost)
+    const value = await Promise.all([tokensMinted, maxSupply, mintCost])
+    setCost(value[2])
+    setMaxSupply(Number(value[1]))
+    setMintedAmount(Number(value[0]))
   }
+
   const refreshDataHandler = async () => {
     refreshData()
     toast.success("Data refreshed", { autoClose: 1000 })
@@ -38,23 +40,22 @@ const FeaturedSection = ({ featuredCollection }) => {
   //get initial data and start countdown timer
   useLayoutEffect(() => {
     refreshData()
-  }, [chain])
+  }, [])
 
-  if (!featuredCollection) return <Loading />
   return (
     <section
-      className='min-h-24 mt-12 flex w-full flex-col gap-5 
-    rounded-md border border-primary-700 bg-primary-900/20
+      className='min-h-24 border-secondary-700 bg-secondary-900/50 mt-12 flex w-full 
+    flex-col gap-5 rounded-md border
     p-8  text-white backdrop-blur-sm backdrop-filter lg:flex-row lg:justify-between lg:p-12'>
       <div className='relative flex-1'>
-        <h1 className=' my-2 -ml-3 inline cursor-default rounded-full  border border-secondary-dark bg-secondary-dark/30 px-4 py-2 text-center text-xl font-black  uppercase shadow-glass-large backdrop-blur-sm backdrop-filter'>
+        <h1 className=' border-secondary-700 bg-secondary-700/60 shadow-glass-large my-2 -ml-3 inline  cursor-default rounded-full border px-4 py-2 text-center text-xl font-black  uppercase backdrop-blur-sm backdrop-filter'>
           <span className='bg-gradient-to-r from-emerald-300 to-cyan-300 bg-clip-text text-transparent'>
             Featured launch
           </span>
         </h1>
         <button
           onClick={refreshDataHandler}
-          className='absolute right-0 w-max transform rounded-full bg-secondary/20 p-1 text-3xl text-secondary-light shadow-glass ring-secondary backdrop-blur-sm backdrop-filter duration-300 active:translate-y-1 active:scale-95 active:shadow-none active:ring-1'>
+          className='bg-secondary-100/20 text-secondary-100 shadow-glass ring-secondary-100 absolute right-0 w-max transform rounded-full p-1 text-3xl backdrop-blur-sm backdrop-filter duration-300 active:translate-y-1 active:scale-95 active:shadow-none active:ring-1'>
           <BiRefresh />
         </button>
 

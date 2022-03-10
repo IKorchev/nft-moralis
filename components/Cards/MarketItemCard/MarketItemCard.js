@@ -6,6 +6,7 @@ import Link from "next/link"
 import { shortenIfAddress } from "@usedapp/core"
 import { motion } from "framer-motion"
 import VideoOrImage from "../NFTCard/VideoOrImage"
+import SkeletonCard from "../SkeletonCard/SkeletonCard"
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   const { Moralis } = useMoralis()
   const { chain } = useMoralisData()
@@ -15,8 +16,9 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
     q.equalTo("tokenId", tokenId.toString()).equalTo("contractAddress", nftContract.toLowerCase())
   )
   if (error) return null
+  if (!itemInfo) return <SkeletonCard />
   return (
-    <motion.div className='relative flex w-48 flex-col overflow-hidden rounded-md bg-secondary-darkest text-white  shadow-glass xl:w-60'>
+    <motion.div className='bg-secondary-800 min-h-80 shadow-glass relative flex w-48 flex-col overflow-hidden rounded-md  text-white xl:w-60'>
       <div className='h-max w-full'>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
           <VideoOrImage
@@ -49,7 +51,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
           <>
             <div className='flex items-center justify-between '>
               <button
-                className='flex items-center justify-center rounded-sm bg-secondary px-3 font-bold text-black ring-black transition duration-300 focus:ring-2 hover:bg-secondary-dark'
+                className='bg-secondary-100 hover:bg-secondary-700 flex items-center justify-center rounded-sm px-3 font-bold text-black ring-black transition duration-300 focus:ring-2'
                 onClick={() => buyItem(nftContract, itemId, price)}>
                 Buy now
               </button>

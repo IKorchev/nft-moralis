@@ -6,7 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.2",
+    "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.4",
     "@metamask/jazzicon": "^2.0.0",
     "@tailwindcss/forms": "^0.4.0",

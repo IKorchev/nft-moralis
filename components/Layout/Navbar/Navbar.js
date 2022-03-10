@@ -35,7 +35,7 @@ const Navbar = () => {
       <Disclosure as='nav' className='lg:hidden'>
         {({ open }) => (
           <>
-            <Disclosure.Button className='fixed top-3 left-3 z-50 inline-block cursor-pointer rounded-lg bg-secondary p-5 lg:hidden'>
+            <Disclosure.Button className='bg-secondary-100 fixed top-3 left-3 z-50 inline-block cursor-pointer rounded-lg p-5 lg:hidden'>
               <span className='sr-only'>Open main menu</span>
               <div
                 className={` transform transition duration-700 ease-in-out ${
@@ -58,7 +58,7 @@ const Navbar = () => {
                   easings: "easeInOut",
                   duration: 0.3,
                 }}
-                className='fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl  bg-primary-800 px-5 py-24 text-white'>
+                className='bg-primary-800 fixed z-40 flex w-screen flex-col items-start justify-evenly  rounded-b-xl px-5 py-24 text-white'>
                 <Link href='/'>
                   <a className='my-4 mb-10 cursor-pointer text-4xl'>NFT Explorer</a>
                 </Link>
@@ -104,7 +104,7 @@ const Navbar = () => {
           scrolled
             ? "bg-primary-900/50 backdrop-blur-sm backdrop-filter"
             : !scrolled && !isHomePage
-            ? "border-b border-secondary bg-primary-900"
+            ? "border-secondary-100 bg-primary-900 border-b"
             : ""
         } lg:block`}>
         <div className='container mx-auto flex items-center justify-between'>

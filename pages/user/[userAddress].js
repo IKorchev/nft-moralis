@@ -72,20 +72,16 @@ function UserAddress() {
       <div className='container mx-auto min-h-[50rem] overflow-hidden py-24'>
         <AnimatePresence>
           {open && (
-            <Drawer
-              open={open}
-              setOpen={setOpen}
-              ChildElements={
-                <SortFilterAndClear
-                  sortOption={sortOption}
-                  setSortOption={setSortOption}
-                  sortOptions={sortOptions}
-                  filterOptions={filterOptions}
-                  filterOption={filterOption}
-                  setFilterOption={setFilterOption}
-                />
-              }
-            />
+            <Drawer open={open} setOpen={setOpen}>
+              <SortFilterAndClear
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+                sortOptions={sortOptions}
+                filterOptions={filterOptions}
+                filterOption={filterOption}
+                setFilterOption={setFilterOption}
+              />
+            </Drawer>
           )}
         </AnimatePresence>
         <div className='mt-12 flex flex-col items-center'>
@@ -102,17 +98,17 @@ function UserAddress() {
           defaultChecked={1}
           as='div'
           className='container mt-5 flex flex-col items-center'>
-          <Tab.List className='mt-5 flex justify-evenly  rounded-lg bg-primary-700 p-4  text-white  '>
+          <Tab.List className='bg-primary-700 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
             <Tab
               className={({ selected }) =>
-                `${selected ? "bg-secondary/30 text-white shadow-glass-large" : ""}
+                `${selected ? "bg-secondary-100/30 shadow-glass-large text-white" : ""}
                 } flex items-center rounded-lg px-12 py-4 `
               }>
               <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
             </Tab>
             <Tab
               //prettier-ignore
-              className={({ selected }) =>`${selected ? "bg-secondary/30 text-white shadow-glass-large" : ""} flex items-center px-12 py-3 rounded-lg `}>
+              className={({ selected }) =>`${selected ? "bg-secondary-100/30 text-white shadow-glass-large" : ""} flex items-center px-12 py-3 rounded-lg `}>
               <FiActivity className='mr-3 text-xl' /> Activity
             </Tab>
           </Tab.List>
@@ -127,7 +123,7 @@ function UserAddress() {
                 <button
                   className='inline-flex rounded-full p-2 lg:hidden '
                   onClick={() => setOpen(!open)}>
-                  <FilterIcon className='h-6 w-6 text-secondary' />
+                  <FilterIcon className='text-secondary-100 h-6 w-6' />
                 </button>
               </div>
               <section aria-labelledby='nfts-heading' className='pt-6 pb-24'>

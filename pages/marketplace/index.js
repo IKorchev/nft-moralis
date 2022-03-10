@@ -33,20 +33,16 @@ const Marketplace = () => {
         {/* MOBILE FILTERING DRAWER */}
         <AnimatePresence>
           {open && (
-            <Drawer
-              open={open}
-              setOpen={setOpen}
-              ChildElements={
-                <SortFilterAndClear
-                  sortOption={sortOption}
-                  sortOptions={sortOptions}
-                  setSortOption={setSortOption}
-                  filterOption={filterOption}
-                  filterOptions={filterOptions}
-                  setFilterOption={setFilterOption}
-                />
-              }
-            />
+            <Drawer open={open} setOpen={setOpen}>
+              <SortFilterAndClear
+                sortOption={sortOption}
+                sortOptions={sortOptions}
+                setSortOption={setSortOption}
+                filterOption={filterOption}
+                filterOptions={filterOptions}
+                setFilterOption={setFilterOption}
+              />
+            </Drawer>
           )}
         </AnimatePresence>
         <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
@@ -57,7 +53,7 @@ const Marketplace = () => {
           <button
             className='inline-flex rounded-full p-2 lg:hidden '
             onClick={() => setOpen(!open)}>
-            <FilterIcon className='h-6 w-6 text-secondary' />
+            <FilterIcon className='text-secondary-100 h-6 w-6' />
           </button>
         </div>
         <section aria-labelledby='marketplace-heading' className='pt-6 pb-12'>

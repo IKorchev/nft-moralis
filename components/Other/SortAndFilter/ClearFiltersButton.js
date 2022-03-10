@@ -7,12 +7,12 @@ const ClearFiltersButton = ({ setFilterOption, setSortOption }) => {
         setFilterOption(null)
         setSortOption(null)
       }}
-      className='flex w-full  items-center justify-between bg-pink-700 px-5 py-3 text-gray-100 ring-white focus:ring-2  hover:bg-secondary hover:text-gray-200 '>
+      className='hover:bg-secondary-100 bg-secondary-700/50 shadow-glass-large  mt-4 flex  w-full items-center justify-between rounded-lg px-5 py-3 text-gray-100 ring-white transition duration-150 hover:text-gray-200 focus:ring-1 '>
       <span>
         <BiX className='text-xl' />
       </span>
       <span>Clear All</span>
-      <span className='invisible w-5'></span>
+      <span className=''></span>
     </button>
   )
 }

@@ -1,8 +1,7 @@
 import React from "react"
-
 const VideoOrImage = ({ format, url }) => {
   return (
-    <div className='h-max w-full '>
+    <div className=' h-max w-full '>
       {format === "video" ? (
         <video
           autoPlay

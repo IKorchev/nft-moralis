@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import { formatChain, formatIpfs } from "../../../utils/common"
 import Link from "next/link"
 import useSWR from "swr"
@@ -9,7 +9,8 @@ import { useChain } from "react-moralis"
 import ListItemModal from "../../tokenId/ListItemModal"
 import { useState } from "react"
 import VideoOrImage from "./VideoOrImage"
-import SkeletonCard from "../SkeletonCard"
+import Skeleton from "react-loading-skeleton"
+import SkeletonCard from "../SkeletonCard/SkeletonCard"
 
 const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
   const { chain, account } = useChain()
@@ -25,20 +26,19 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
       formatIpfs(data?.metadata?.image_url) ||
       formatIpfs(data?.metadata?.url)
   }
-  if (!data && !error) {
-    return <SkeletonCard />
-  }
+
+  if (!image) return <SkeletonCard />
   return (
-    <div className='relative flex w-48 flex-col overflow-hidden rounded-md  bg-secondary-darkest text-white  shadow-glass lg:w-60'>
+    <div className='bg-secondary-800  shadow-glass relative flex w-48 flex-col  overflow-hidden rounded-md  text-white lg:w-60'>
       <Link href={`/assets/${tokenAddress}/${tokenId}`}>
-        <a>
+        <a className='min-h-60'>
           <VideoOrImage format={data?.metadata?.format} url={image} />
         </a>
       </Link>
       <div className='flex flex-col items-start px-2 py-1'>
         <Link passHref href={`/assets/${tokenAddress}/`}>
           <a>
-            <small className=' text-[0.7rem] text-white hover:text-gray-300'>
+            <small className='text-[0.7rem] text-white hover:text-gray-300'>
               {shortenIfAddress(tokenAddress)}
             </small>
           </a>
@@ -50,7 +50,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
           <>
             <button
               onClick={() => setIsOpen(true)}
-              className='mt-1 rounded-sm  bg-secondary px-2 py-0.5 text-white transition duration-150 active:scale-95'>
+              className='bg-secondary-500 mt-1  rounded-sm px-2 py-0.5 text-white transition duration-150 active:scale-95'>
               List for sale
             </button>
             <AnimatePresence>

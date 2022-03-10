@@ -1,43 +1,42 @@
-import { Listbox } from "@headlessui/react"
-import { ChevronDownIcon } from "@heroicons/react/solid"
-import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md"
-import { AiFillFilter } from "react-icons/ai"
-
+import { RadioGroup } from "@headlessui/react"
+import { BsFillCollectionFill } from "react-icons/bs"
+import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri"
 const FilterSection = ({ filterOptions, setFilterOption, filterOption }) => {
   return (
-    <Listbox as='div' className='w-60 text-white ' value={filterOption} onChange={setFilterOption}>
-      {({ open }) => (
-        <>
-          <Listbox.Button
-            className={`ring-whitefocus:ring-2 flex  w-full items-center justify-between px-5 py-3 text-gray-100 hover:bg-secondary  hover:text-gray-200             
-            ${open ? "bg-pink-900" : "bg-pink-700"} `}>
-            <span>
-              <AiFillFilter />
-            </span>
-            <span>Filter</span>
-            <ChevronDownIcon
-              className={`h-5 w-5 transform transition duration-150 ${open && "rotate-180"}`}
-              aria-hidden={!open}
-            />
-          </Listbox.Button>
-          <Listbox.Options className='styled-scrollbar max-h-60 overflow-auto '>
-            {filterOptions?.map((option) => (
-              <Listbox.Option key={option.data} value={option.data}>
-                {({ selected }) => (
-                  <li
-                    className={`${
-                      selected ? "bg-rose-400 font-bold text-black" : ""
-                    } flex w-full cursor-pointer items-center  bg-pink-800 p-2 text-left text-white ring-white transition duration-200 focus:ring-2 hover:bg-pink-700`}>
-                    {selected ? <MdRadioButtonChecked /> : <MdRadioButtonUnchecked />}
-                    <span className='ml-2 truncate'>{option.name}</span>
-                  </li>
+    <RadioGroup
+      className='shadow-glass-large bg-secondary-700/50 w-60 overflow-hidden rounded-lg text-white'
+      value={filterOption}
+      onChange={setFilterOption}>
+      <RadioGroup.Label className='border-secondary-600 flex w-full items-center justify-between border-b px-5 py-3 text-gray-100'>
+        <BsFillCollectionFill className='h-5 w-5' />
+        <span className=''>Collections</span>
+        <span aria-hidden='true'></span>
+      </RadioGroup.Label>
+      <ul className='styled-scrollbar max-h-60 overflow-auto '>
+        {filterOptions?.map((option) => (
+          <RadioGroup.Option key={option.data} value={option.data}>
+            {({ checked, active }) => (
+              <button
+                className={`flex w-full cursor-pointer items-center   p-2 text-left text-white ring-white transition duration-200 hover:bg-pink-700 focus:ring-2 ${
+                  active ? "bg-secondary-100 text-black" : ""
+                }`}>
+                {checked ? (
+                  <RiCheckboxCircleFill className='h-5 w-5 flex-shrink-0' />
+                ) : (
+                  <RiCheckboxBlankCircleLine className='h-5 w-5 flex-shrink-0' />
                 )}
-              </Listbox.Option>
-            ))}
-          </Listbox.Options>
-        </>
-      )}
-    </Listbox>
+                <span className='ml-2 truncate'>{option.name}</span>
+              </button>
+            )}
+          </RadioGroup.Option>
+        ))}
+      </ul>
+      <button
+        onClick={() => setFilterOption(null)}
+        className=' border-secondary-600 w-full cursor-pointer border-t p-2 text-center  text-white ring-white transition duration-200 hover:bg-pink-700 focus:ring-1'>
+        Clear
+      </button>
+    </RadioGroup>
   )
 }
 

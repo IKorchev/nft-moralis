@@ -15,11 +15,11 @@ const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
         :  (
         <>
            <MintButton contractAddress={contractAddress} cost={cost}  />
-            <div className='mt-12 w-full flex flex-col  bg-secondary-dark/20 p-4 rounded-lg shadow-glass-secondary'>
+            <div className='mt-12 w-full flex flex-col  bg-secondary-800/60 border-secondary-100 p-4 rounded-lg shadow-glass-secondary backdrop-filter backdrop-blur-sm'>
                 <p className='text-center'>Minted</p>
-                <div className='relative my-3 flex h-4 w-full overflow-hidden rounded-full bg-primary-700'>
+                <div className='relative my-3 flex h-4 w-full overflow-hidden rounded-full bg-secondary-500'>
                 <div
-                    className='absolute top-0 left-0 grid h-4 place-items-center rounded-full bg-secondary-light '
+                    className='absolute top-0 left-0 grid h-4 place-items-center rounded-full bg-secondary-100 '
                     style={{ width: `${(mintedAmount / maxSupply) * 100}%` }}></div>
                 <span className='w-full text-center text-[12px]'>
                     {mintedAmount}/{maxSupply}

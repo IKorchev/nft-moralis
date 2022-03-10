@@ -1,10 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { XIcon } from "@heroicons/react/solid"
 import { motion } from "framer-motion"
+import React from "react"
 
-const Drawer = ({ open, setOpen, ChildElements }) => {
+const Drawer = ({ open, setOpen, ...props }) => {
+  console.log(props.children)
   return (
-    <Transition.Root show={open} as={motion.div}>
+    <Transition.Root show={open} className='lg:hidden' as={motion.div}>
       <Dialog as='div' className='fixed inset-0 overflow-hidden' onClose={setOpen}>
         <div className='absolute inset-0 overflow-hidden'>
           <Dialog.Overlay
@@ -21,21 +23,17 @@ const Drawer = ({ open, setOpen, ChildElements }) => {
                 initial={{ x: "100%" }}
                 exit={{ x: "100%" }}
                 animate={{ x: 0 }}
-                transition={{ duration: 0.5 }}
-                className='flex h-screen flex-col overflow-y-scroll bg-primary-900 py-6 shadow-xl '>
-                <div className='flex justify-between px-4 sm:px-6'>
+                transition={{ duration: 0.3 }}
+                className='bg-primary-900/80 shadow-glass-small flex h-screen flex-col overflow-y-scroll py-6 backdrop-blur-sm backdrop-filter '>
+                <Dialog.Description className='flex items-center justify-between px-4 sm:px-6'>
                   <Dialog.Title className='text-2xl font-medium text-gray-100'>
                     Sort and Filter
                   </Dialog.Title>
-                  <button
-                    type='button'
-                    className='rounded-md text-gray-300 focus:outline-none focus:ring-2 focus:ring-white hover:text-white'
-                    onClick={() => setOpen(false)}>
-                    <span className='sr-only'>Close panel</span>
-                    <XIcon className='h-6 w-6' aria-hidden='true' />
+                  <button onClick={() => setOpen(false)} className='text-white'>
+                    <XIcon className='h-6 w-6' />
                   </button>
-                </div>
-                <div className='relative mx-auto mt-12 flex-1 px-4 sm:px-6'>{ChildElements}</div>
+                </Dialog.Description>
+                <div className='relative mx-auto mt-12 flex-1 px-4 sm:px-6'>{props.children}</div>
               </motion.div>
             </div>
           </div>
