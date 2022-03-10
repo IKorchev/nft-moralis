@@ -14,7 +14,6 @@ const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
     Moralis.enableWeb3()
   }, [])
-
   return (
     <DAppProvider>
       <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>

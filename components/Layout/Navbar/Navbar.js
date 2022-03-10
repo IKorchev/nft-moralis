@@ -125,6 +125,9 @@ const Navbar = () => {
                   Launchpad
                 </a>
               </Link>
+              <button className='my-4 mx-5 cursor-pointer text-xl  transition duration-200 hover:text-gray-300'>
+                Add your collection
+              </button>
             </div>
             <div className='ml-4 cursor-text xl:ml-16'>
               <Select

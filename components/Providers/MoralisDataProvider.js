@@ -10,6 +10,7 @@ export const useMoralisData = () => {
 const MoralisDataProvider = ({ children }) => {
   const { Moralis, account } = useMoralis()
   const { chain } = useChain()
+
   //prettier-ignore
   const {data: currentLaunchpad,isCurrentLaunchpadLoading,} = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", false).equalTo("isUpcoming", false).limit(1),[],{ live: true })
   //prettier-ignore
@@ -30,7 +31,7 @@ const MoralisDataProvider = ({ children }) => {
     )
     return result.toFixed(2)
   }, [transactions])
-
+  
   const value = {
     totalVolume,
     chain,

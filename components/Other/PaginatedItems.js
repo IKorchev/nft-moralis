@@ -25,10 +25,12 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
 
   return (
     <motion.div layout={isLayoutAnimated} className='relative mx-auto text-white'>
-      {currentItems ? (
-        <div>
+      {currentItems.length > 0 ? (
+        <>
           <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
-          <div class='flex flex-wrap justify-center lg:justify-start gap-2'>{currentItems.map(renderItem)}</div>
+          <div class='flex flex-wrap justify-center gap-2 lg:justify-start'>
+            {currentItems.map(renderItem)}
+          </div>
           {items?.length > itemsPerPage && (
             <ReactPaginate
               containerClassName='flex my-5 rounded-lg justify-center items-center overflow-hidden'
@@ -52,8 +54,10 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
               renderOnZeroPageCount={null}
             />
           )}
-        </div>
-      ) : <></>}
+        </>
+      ) : (
+        <h1 className='flex-1 px-24 text-center text-2xl lg:text-3xl'>No items to show</h1>
+      )}
     </motion.div>
   )
 }

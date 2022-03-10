@@ -2,7 +2,6 @@
 
 const MARKET_ADDRESS = "0x327aF3B8f180E34681f445bA6b6d47Aaf91D7aE7"
 
-
 const MARKET_ABI = [
   {
     inputs: [],
@@ -337,6 +336,13 @@ const NFT_ABI = [
     inputs: [],
     name: "name",
     outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },

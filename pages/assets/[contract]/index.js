@@ -89,7 +89,7 @@ const Asset = () => {
               />
             </div>
           </div>
-          <div className=''>
+          <div className='flex flex-grow'>
             <PaginatedItems
               items={sortBy(items, (object) => sortFunction(object, sortOption))}
               itemsPerPage={12}

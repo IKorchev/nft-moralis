@@ -12,6 +12,7 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
   const options = {
     url: chain && address ? `/api/collection?address=${address}&chain=${chain?.chainId}` : null,
   }
+
   //prettier-ignore
   const { data, error } = useSWR(options, metadataFetcher, revalidateOptions)
   console.log(data)
@@ -48,20 +49,20 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
               Information
             </h4>
             <ul className='grid grid-cols-2 gap-5 lg:grid-cols-4'>
-              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-200 bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Floor Price</span>
                 <span>
                   {floorPrice && parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2)}
                 </span>
               </li>
-              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-200 bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Listed Count</span>
                 <span className='text-base'>{amountListed}</span>
               </li>
-              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-200 bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Token Symbol</span> <span>{data?.symbol}</span>
               </li>
-              <li className='border-secondary-light bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
+              <li className='border-secondary-200 bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Contract type</span> <span>{data?.contract_type}</span>
               </li>
             </ul>

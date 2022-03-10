@@ -12,6 +12,7 @@ import { useChain, useMoralis } from "react-moralis"
 
 const FeaturedSection = ({ featuredCollection }) => {
   if (!featuredCollection) return <Loading />
+  const { Moralis, authenticate } = useMoralis()
   const { getMintCost, getMaxSupply, getTotalSupply } = useMarketInteraction()
   const [cost, setCost] = useState("0")
   const [maxSupply, setMaxSupply] = useState(0)
