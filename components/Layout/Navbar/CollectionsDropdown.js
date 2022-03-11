@@ -44,7 +44,7 @@ export default function Dropdown() {
         </Menu.Item>
         <Menu.Item as='li'>
           {({ active }) => (
-            <Link href='/collection/add'>
+            <Link href='/collections/add'>
               <a
                 className={`${
                   active ? "bg-secondary-500 text-white" : " "
