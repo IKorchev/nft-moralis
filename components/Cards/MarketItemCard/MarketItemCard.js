@@ -11,20 +11,16 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   const { Moralis } = useMoralis()
   const { chain } = useMoralisData()
   const { buyItem } = useMarketInteractions()
+  const { getMarketItem } = useMoralisData()
 
-  const { data: itemInfo, error } = useMoralisQuery("ItemImage", (q) =>
-    q.equalTo("tokenId", tokenId.toString()).equalTo("contractAddress", nftContract.toLowerCase())
-  )
-  if (error) return null
-  if (!itemInfo) return <SkeletonCard />
+  const { attributes } = getMarketItem(tokenId, nftContract)
+
+  if (!attributes) return null
   return (
     <motion.div className='bg-secondary-800 min-h-80 shadow-glass relative flex w-48 flex-col overflow-hidden rounded-md  text-white xl:w-60'>
       <div className='h-max w-full'>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
-          <VideoOrImage
-            format={itemInfo[0]?.attributes.format}
-            url={formatIpfs(itemInfo[0]?.attributes.image)}
-          />
+          <VideoOrImage format={attributes.format} url={formatIpfs(attributes.image)} />
         </Link>
       </div>
       <div className='flex  flex-col justify-evenly truncate p-2 text-sm font-bold'>
@@ -34,9 +30,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
           </a>
         </Link>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
-          <a className='w-max py-1 pr-5 hover:text-gray-300'>
-            {itemInfo[0]?.attributes.name || "Unknown"}
-          </a>
+          <a className='w-max py-1 pr-5 hover:text-gray-300'>{attributes.name || "Unknown"}</a>
         </Link>
       </div>
       <div className='p-2 '>

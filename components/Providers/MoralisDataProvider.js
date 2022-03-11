@@ -24,6 +24,14 @@ const MoralisDataProvider = ({ children }) => {
   //prettier-ignore
   const {data: transactions} = useMoralisQuery('MarketItems', q => q.equalTo('sold', true).equalTo('confirmed', true).descending('updatedAt'), [],{live: true})
   //total sales volume
+  const { data: images } = useMoralisQuery("ItemImage")
+  const getMarketItem = (tokenId, contractAddress) => {
+    return images.find(
+      (el) =>
+        el.attributes.tokenId == tokenId &&
+        el.attributes.contractAddress.toLowerCase() === contractAddress.toLowerCase()
+    )
+  }
   const totalVolume = useMemo(() => {
     let result = 0
     transactions.forEach(
@@ -31,9 +39,11 @@ const MoralisDataProvider = ({ children }) => {
     )
     return result.toFixed(2)
   }, [transactions])
-  
+
   const value = {
     totalVolume,
+    images,
+    getMarketItem,
     chain,
     account,
     Moralis,
