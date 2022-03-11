@@ -14,7 +14,7 @@ import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import DisconnectButton from "../../Buttons/DisconnectButton"
 import useScrollOffset from "../../../hooks/useScrollOffset"
 import { useRouter } from "next/router"
-
+import  CollectionsDropdown  from "./CollectionsDropdown"
 const Navbar = () => {
   const { completedLaunchpads, currentLaunchpad } = useMoralisData()
   const allLaunchpads = [...completedLaunchpads, ...currentLaunchpad]
@@ -125,9 +125,7 @@ const Navbar = () => {
                   Launchpad
                 </a>
               </Link>
-              <button className='my-4 mx-5 cursor-pointer text-xl  transition duration-200 hover:text-gray-300'>
-                Add your collection
-              </button>
+              <CollectionsDropdown />
             </div>
             <div className='ml-4 cursor-text xl:ml-16'>
               <Select
