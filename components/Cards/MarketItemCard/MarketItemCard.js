@@ -1,26 +1,27 @@
-import { useMoralis, useMoralisQuery } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { useMoralisData } from "../../Providers/MoralisDataProvider"
-import useMarketInteractions from "../../../hooks/useMarketInteraction"
 import { formatIpfs } from "../../../utils/common"
-import Link from "next/link"
 import { shortenIfAddress } from "@usedapp/core"
 import { motion } from "framer-motion"
+import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
+import useMarketInteractions from "../../../hooks/useMarketInteraction"
+import Link from "next/link"
 import VideoOrImage from "../NFTCard/VideoOrImage"
-import SkeletonCard from "../SkeletonCard/SkeletonCard"
+
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   const { Moralis } = useMoralis()
   const { chain } = useMoralisData()
   const { buyItem } = useMarketInteractions()
   const { getMarketItem } = useMoralisData()
-
-  const { attributes } = getMarketItem(tokenId, nftContract)
-
-  if (!attributes) return null
+  const item = getMarketItem(tokenId, nftContract)
   return (
     <motion.div className='bg-secondary-800 min-h-80 shadow-glass relative flex w-48 flex-col overflow-hidden rounded-md  text-white xl:w-60'>
       <div className='h-max w-full'>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
-          <VideoOrImage format={attributes.format} url={formatIpfs(attributes.image)} />
+          <VideoOrImage
+            format={item?.attributes?.format}
+            url={formatIpfs(item?.attributes?.image)}
+          />
         </Link>
       </div>
       <div className='flex  flex-col justify-evenly truncate p-2 text-sm font-bold'>
@@ -30,7 +31,9 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
           </a>
         </Link>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
-          <a className='w-max py-1 pr-5 hover:text-gray-300'>{attributes.name || "Unknown"}</a>
+          <a className='w-max py-1 pr-5 hover:text-gray-300'>
+            {item?.attributes?.name || "Unknown"}
+          </a>
         </Link>
       </div>
       <div className='p-2 '>
@@ -44,14 +47,16 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
         ) : (
           <>
             <div className='flex items-center justify-between '>
-              <button
-                className='bg-secondary-100 hover:bg-secondary-700 flex items-center justify-center rounded-sm px-3 font-bold text-black ring-black transition duration-300 focus:ring-2'
-                onClick={() => buyItem(nftContract, itemId, price)}>
-                Buy now
-              </button>
-              <span>
-                {Moralis.Units.FromWei(price)} {chain?.nativeCurrency.symbol || "ROP"}
-              </span>
+              {chain?.chainId !== "0x3" ? (
+                <SwitchNetworkButton rounded='sm' size='xs' network='0x3' />
+              ) : (
+                <button
+                  className='bg-secondary-100 hover:bg-secondary-700 flex items-center justify-center rounded-sm px-3 font-bold text-black ring-black transition duration-300 focus:ring-2'
+                  onClick={() => buyItem(nftContract, itemId, price)}>
+                  Buy now
+                </button>
+              )}
+              <span>{Moralis.Units.FromWei(price)} ETH</span>
             </div>
           </>
         )}

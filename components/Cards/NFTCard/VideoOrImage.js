@@ -1,18 +1,23 @@
-import React from "react"
-const VideoOrImage = ({ format, url }) => {
+const VideoOrImage = ({ format, url, setLoading }) => {
   return (
-    <div className=' h-max w-full '>
+    <div className='h-48 w-full lg:h-60 '>
       {format === "video" ? (
         <video
+          onLoad={() => setLoading && setLoading("loaded")}
+          onError={() => setLoading && setLoading("error")}
           autoPlay
           muted
           controls
           src={url || null}
-          alt=''
-          className='h-full w-full cursor-pointer rounded-lg object-contain'
+          alt='NFT'
         />
       ) : (
-        <img src={url || null} alt='' className='h-full w-full cursor-pointer object-scale-down' />
+        <img
+          onLoad={() => setLoading && setLoading("loaded")}
+          onError={() => setLoading && setLoading("error")}
+          src={url || null}
+          alt='NFT'
+        />
       )}
     </div>
   )

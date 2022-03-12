@@ -1,41 +1,42 @@
-import { shortenIfAddress } from "@usedapp/core"
 import useSWR from "swr"
 import Jazzicon from "../Other/Jazzicon"
-import { SyncLoader } from "react-spinners"
+import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
-import { formatChain } from "../../utils/common"
 import { metadataFetcher, revalidateOptions } from "../../utils/fetcher"
 import { useMoralis } from "react-moralis"
+import { useMemo } from "react"
 
-const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
+const CollectionHeader = ({ address, itemsAvailableForPurchase }) => {
   const { Moralis } = useMoralis()
   const options = {
-    url: chain && address ? `/api/collection?address=${address}&chain=${chain?.chainId}` : null,
+    url: address ? `/api/collection?address=${address}&chain=0x3` : null,
   }
-
-  //prettier-ignore
+  console.log(itemsAvailableForPurchase)
   const { data, error } = useSWR(options, metadataFetcher, revalidateOptions)
-  console.log(data)
-  if (!data && !error)
-    return (
-      <div className='grid h-24 place-items-center'>
-        <SyncLoader size={5} color='white' />
-      </div>
-    )
-
+  // const floorPrice = 0,
+  // amountListed = 0
+  const { amountListed, floorPrice } = useMemo(() => {
+    return {
+      amountListed: itemsAvailableForPurchase?.length,
+      floorPrice: itemsAvailableForPurchase
+        .map((el) => el.attributes.price)
+        .sort((el1, el2) => el1 > el2)[0],
+    }
+  }, [itemsAvailableForPurchase?.length])
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, y: -20 }}
         animate={{
           opacity: 1,
+          y: 0,
         }}
-        exit={{ opacity: 0 }}
+        exit={{ opacity: 0, y: -20 }}
         className='flex flex-col'>
         <div className='flex flex-col items-center'>
           <h1 className='text-center text-3xl font-black '>{data?.name}</h1>
           <div className='my-5 overflow-hidden rounded-full border-4 border-white'>
-            <Jazzicon address={address} size={150} />
+            {address && <Jazzicon address={address} size={150} />}
           </div>
           <h3 className=' -mt-12 rounded-full bg-white px-3 py-2 font-bold text-black'>
             {shortenIfAddress(address)}
@@ -52,7 +53,7 @@ const CollectionHeader = ({ address, chain, amountListed, floorPrice }) => {
               <li className='border-secondary-200 bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>
                 <span>Floor Price</span>
                 <span>
-                  {floorPrice && parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2)}
+                  {floorPrice ? parseFloat(Moralis.Units.FromWei(floorPrice)).toFixed(2) : 0}
                 </span>
               </li>
               <li className='border-secondary-200 bg-secondary-100/20 shadow-glass-large flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border py-2 backdrop-blur-sm backdrop-filter'>

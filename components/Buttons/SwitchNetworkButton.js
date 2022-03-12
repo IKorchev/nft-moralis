@@ -5,12 +5,16 @@ const SwitchNetworkButton = ({
   className,
   rounded = "full",
   label = "Switch network",
+  size = "lg",
 }) => {
   const { switchNetwork } = useChain()
-
+  const padding = {
+    x: size === "lg" ? "3" : size === "xs" ? "2" : "2",
+    y: size === "lg" ? "2" : size === "xs" ? "1" : "1",
+  }
   return (
     <button
-      className={`w-max bg-primary-100 px-3 py-2 text-lg font-semibold text-black transition duration-150 active:scale-90 rounded-${rounded} ${className}`}
+      className={`bg-primary-100 w-max px-${padding.x} py-${padding.y} text-${size} font-semibold text-white transition duration-150 active:scale-90 rounded-${rounded} ${className}`}
       onClick={() => switchNetwork(network)}>
       {label}
     </button>

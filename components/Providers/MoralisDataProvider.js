@@ -20,17 +20,19 @@ const MoralisDataProvider = ({ children }) => {
   //prettier-ignore
   const { data: allCollectionsListed } = useMoralisQuery("Launchpads",(q) => q.descending("createdAt"),[],{ live: true })
   //prettier-ignore
-  const { data: allListings } = useMoralisQuery("MarketItems", (q) => q.equalTo('sold', false).descending("createdAt"),[],{ live: true })
+  const { data: allListings } = useMoralisQuery("MarketItems", (q) => q.equalTo('sold', false).equalTo('confirmed',true).descending("createdAt"),[],{ live: true })
   //prettier-ignore
   const {data: transactions} = useMoralisQuery('MarketItems', q => q.equalTo('sold', true).equalTo('confirmed', true).descending('updatedAt'), [],{live: true})
   //total sales volume
   const { data: images } = useMoralisQuery("ItemImage")
+
   const getMarketItem = (tokenId, contractAddress) => {
-    return images.find(
+    const found = images.find(
       (el) =>
         el.attributes.tokenId == tokenId &&
         el.attributes.contractAddress.toLowerCase() === contractAddress.toLowerCase()
     )
+    return found
   }
   const totalVolume = useMemo(() => {
     let result = 0

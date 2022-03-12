@@ -1,103 +1,76 @@
 import { AnimatePresence } from "framer-motion"
-import { FilterIcon } from "@heroicons/react/solid"
-import { sortBy } from "lodash"
+import Main from "../../../components/AssetsPage/Main"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { useMoralisQuery } from "react-moralis"
 import CollectionHeader from "../../../components/AssetsPage/CollectionHeader"
 import Drawer from "../../../components/Other/Drawer"
 import MarketItem from "../../../components/Cards/MarketItemCard"
-import PaginatedItems from "../../../components/Other/PaginatedItems"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
 import ClearFiltersButton from "../../../components/Other/SortAndFilter/ClearFiltersButton"
 import SortSection from "../../../components/Other/SortAndFilter/SortSection"
+import PaginatedItems from "../../../components/Other/PaginatedItems"
+import { FilterIcon } from "@heroicons/react/solid"
+import { sortBy } from "lodash"
 import { sortFunction, sortOptions } from "../../../utils/sort"
 import SectionTitle from "../../../components/SectionTitle"
 import SectionContainer from "../../../components/SectionContainer"
+import Loading from "../../../components/Other/Loading"
+import useSWR from "swr"
+import { metadataFetcher, revalidateOptions } from "../../../utils/fetcher"
+import { SyncLoader } from "react-spinners"
 
 const Asset = () => {
   const { query } = useRouter()
-  const { chain } = useMoralisData()
-  const [sortOption, setSortOption] = useState(null)
-  const [, setFilterOption] = useState(null)
-  const [open, setOpen] = useState(false)
-  //prettier-ignore
-  const {data: items} =
-  useMoralisQuery('MarketItems', q => q
-  .equalTo('nftContract', query?.contract)
-  .equalTo('sold', false),[query?.contract], {live: true})
-  const { data: itemsAvailableForPurchase } = useMoralisQuery(
+  const {
+    data: itemsAvailableForPurchase,
+    error,
+    isLoading,
+  } = useMoralisQuery(
     "MarketItems",
-    (q) => q.equalTo("nftContract", query?.contract).equalTo("sold", false).ascending("price"),
+    (q) =>
+      q
+        .equalTo("nftContract", query?.contract)
+        .equalTo("sold", false)
+        .equalTo("confirmed", true)
+        .ascending("price"),
     [query?.contract],
     { live: true }
   )
-  const cheapest = itemsAvailableForPurchase[0]?.attributes?.price
-  console.log(query.contract)
+  let cheapest = 0
+  if (error) return null
+  if (isLoading) {
+    return (
+      <div className='grid h-24 place-items-center'>
+        <SyncLoader size={25} color='white' />
+      </div>
+    )
+  }
   return (
     <div className='container mx-auto px-4 py-32 text-white lg:px-0'>
-      {/* MOBILE DRAWER */}
-      <AnimatePresence>
-        {open && (
-          <Drawer open={open} setOpen={setOpen}>
-            <div className='flex flex-col gap-1'>
-              <SortSection
-                defaultOpen={true}
-                sortOption={sortOption}
-                setSortOption={setSortOption}
-                sortOptions={sortOptions}
-              />
-              <ClearFiltersButton
-                setSortOption={setSortOption}
-                setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
-              />
-            </div>
-          </Drawer>
-        )}
-      </AnimatePresence>
-      <CollectionHeader
-        chain={chain}
-        address={query?.contract}
-        amountListed={itemsAvailableForPurchase.length || 0}
-        floorPrice={cheapest || 0}
-      />
-      <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
-        <SectionTitle title='NFTs in collection' />
-        <button
-          className='border-secondary-100 bg-primary-700 inline-flex rounded-full border p-2 lg:hidden'
-          onClick={() => setOpen(!open)}>
-          <FilterIcon className='text-secondary-100 h-6 w-6' />
-        </button>
-      </div>
-      <section aria-labelledby='section-heading' className='pt-6 pb-24'>
-        <h2 id='section-heading' className='sr-only'>
-          'NFTs in collection'
-        </h2>
-        <SectionContainer>
-          {/* Desktop */}
-          <div className='hidden lg:flex'>
-            <div className='space-y-1'>
-              <SortSection
-                defaultOpen={true}
-                sortOption={sortOption}
-                setSortOption={setSortOption}
-                sortOptions={sortOptions}
-              />
-              <ClearFiltersButton
-                setSortOption={setSortOption}
-                setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
-              />
-            </div>
+      <Suspense
+        fallback={
+          <div className='grid h-24 place-items-center'>
+            <SyncLoader size={5} color='white' />
           </div>
-          <div className='flex flex-grow'>
-            <PaginatedItems
-              items={sortBy(items, (object) => sortFunction(object, sortOption))}
-              itemsPerPage={12}
-              renderItem={renderItem}
-            />
+        }>
+        <CollectionHeader
+          address={query?.contract}
+          itemsAvailableForPurchase={itemsAvailableForPurchase}
+        />
+      </Suspense>
+      <Suspense
+        fallback={
+          <div className='grid h-24 place-items-center'>
+            <SyncLoader size={25} color='white' />
           </div>
-        </SectionContainer>
-      </section>
+        }>
+        <Main
+          itemsAvailableForPurchase={itemsAvailableForPurchase}
+          query={query}
+          address={query.contract}
+        />
+      </Suspense>
     </div>
   )
 }

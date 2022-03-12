@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, Suspense } from "react"
 import ReactPaginate from "react-paginate"
+import Loading from "./Loading"
 
 function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated = false }) {
   const [currentItems, setCurrentItems] = useState([])
@@ -24,8 +25,8 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
   }
 
   return (
-    <motion.div layout={isLayoutAnimated} className='relative mx-auto text-white'>
-      {currentItems.length > 0 ? (
+    <Suspense fallback={<Loading />}>
+      <motion.div layout={isLayoutAnimated} className='relative mx-auto text-white'>
         <>
           <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
           <div class='flex flex-wrap justify-center gap-2 lg:justify-start'>
@@ -55,10 +56,8 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
             />
           )}
         </>
-      ) : (
-        <h1 className='flex-1 px-24 text-center text-2xl lg:text-3xl'>No items to show</h1>
-      )}
-    </motion.div>
+      </motion.div>
+    </Suspense>
   )
 }
 export default PaginatedItems

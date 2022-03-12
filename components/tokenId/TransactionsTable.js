@@ -1,23 +1,9 @@
-import { LinkIcon } from "@heroicons/react/solid"
 import ExternalLinkIcon from "@heroicons/react/solid/ExternalLinkIcon"
 import { shortenIfAddress, shortenTransactionHash } from "@usedapp/core"
 import Moralis from "moralis"
 import Link from "next/link"
-import { FiLink, FiLink2 } from "react-icons/fi"
 import { useChain } from "react-moralis"
-import { MARKET_ADDRESS } from "../../utils/ABIS"
-const formatAddress = (address) => {
-  switch (address) {
-    case "0xe6f1a815c66bac5f1d59f802bb2a73aa77b36621":
-      return "Market Contract"
-    case "0x0000000000000000000000000000000000000000":
-      return "Null"
-    case MARKET_ADDRESS:
-      return "Market Contract"
-    default:
-      return shortenIfAddress(address)
-  }
-}
+
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
   return (
     <div className='inline-block min-w-full align-middle '>
@@ -43,7 +29,7 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
             </tr>
           </thead>
           <tbody className='divide-y divide-gray-200 bg-white '>
-            {transactions.result?.map((el) => (
+            {transactions?.result?.map((el) => (
               <TableRow
                 {...rowProps}
                 key={el.transaction_hash}
@@ -65,7 +51,7 @@ const TableRow = ({ blockTimestamp, transactionHash, fromAddress, toAddress, pri
   const { chain } = useChain()
   const date = new Date(blockTimestamp).toLocaleDateString("uk")
   return (
-    <tr className=' whitespace-nowrap bg-primary-700 text-center text-xs text-white'>
+    <tr className=' bg-primary-700 whitespace-nowrap text-center text-xs text-white'>
       <td className='py-2 lg:px-6'>{date}</td>
       <td className='py-2 lg:px-6'>
         <Link href={`/user/${fromAddress}`}>

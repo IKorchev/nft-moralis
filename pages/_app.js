@@ -6,6 +6,7 @@ import MoralisDataProvider from "../components/Providers/MoralisDataProvider"
 import { AnimatePresence } from "framer-motion"
 import Moralis from "moralis"
 import { useEffect } from "react"
+import { SWRConfig } from "swr"
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
 
@@ -16,6 +17,11 @@ const MyApp = ({ Component, pageProps }) => {
   }, [])
   return (
     <DAppProvider>
+      <SWRConfig
+        value={{
+          suspense: true,
+        }}
+      />
       <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
         <MoralisDataProvider>
           <Layout>

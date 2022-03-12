@@ -48,16 +48,17 @@ export const customStyles = {
 
 export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected }) => {
   return (
-    <div ref={innerRef} {...innerProps}>
+    <div className='bg-secondary-400 border-secondary-100 border' ref={innerRef} {...innerProps}>
       <Link href={`/assets/${data.contractAddress}`}>
         <div
           className={`
-          mx-3 flex h-12 flex-shrink-0 
-          cursor-pointer items-center overflow-hidden rounded-md border
-          border-secondary
-           ${isSelected ? "bg-secondary" : isFocused ? "bg-primary-800" : ""}`}>
+           mx-3 flex h-12 
+          flex-shrink-0 cursor-pointer items-center overflow-hidden rounded-md
+           ${
+             isSelected ? "bg-secondary-100" : isFocused ? "bg-secondary-800" : "bg-secondary-600"
+           }`}>
           <img
-            className='border- h-12 w-12 border-r bg-primary-700 object-cover'
+            className='border-secondary-100 bg-secondary-200 h-12 w-12 border-r object-cover'
             src={data.image}
             alt='Collection'
           />

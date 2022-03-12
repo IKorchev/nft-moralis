@@ -1,89 +1,30 @@
 //UTILS
-import useSWR from "swr"
-import { AnimatePresence, motion } from "framer-motion"
-import { sortBy, filter, uniqBy } from "lodash"
+
 import { shortenIfAddress } from "@usedapp/core"
 import { useRouter } from "next/router"
-import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
-import { getNFTsForUser, revalidateOptions } from "../../utils/fetcher"
-import { useLayoutEffect, useState } from "react"
+
+import { Suspense } from "react"
 //ICONS
-import { FilterIcon } from "@heroicons/react/solid"
 import { MdCollectionsBookmark } from "react-icons/md"
 import { FiActivity } from "react-icons/fi"
+
 import Jazzicon from "../../components/Other/Jazzicon"
 //COMPONENTS
 import { Tab } from "@headlessui/react"
-import PaginatedItems from "../../components/Other/PaginatedItems"
-import TransactionsTable from "../../components/tokenId/TransactionsTable"
+
 import Loading from "../../components/Other/Loading"
-import NFTCard from "../../components/Cards/NFTCard"
-import SortFilterAndClear from "../../components/Other/SortAndFilter/SortFilterAndClear"
-import Drawer from "../../components/Other/Drawer"
 import Metadata from "../../components/Other/Metadata"
-import SectionTitle from "../../components/SectionTitle"
-import SectionContainer from "../../components/SectionContainer"
-
-const sortOptions = [
-  { name: "ID Ascending", data: "id-asc" },
-  { name: "ID Descending", data: "id-desc" },
-]
-
-const sortFunction = (object, attribute) => {
-  switch (attribute) {
-    case "id-asc":
-      return object.token_id
-    case "id-desc":
-      return -object.token_id
-  }
-}
+import NFTsTab from "../../components/UserPage/NFTsTab"
+import ActivityTab from "../../components/UserPage/ActivityTab"
 
 function UserAddress() {
   const router = useRouter()
-  const { chain } = useMoralisData()
-  const [sortOption, setSortOption] = useState()
-  const [filterOptions, setFilterOptions] = useState([])
-  const [filterOption, setFilterOption] = useState(null)
-  const [transactions] = useState([])
-  const [open, setOpen] = useState(false)
-  const options = {
-    url: "noNeedForUrl",
-    args: { chain: chain?.chainId, address: router.query.userAddress },
-  }
 
   //prettier-ignore
-  const { data, error, isValidating } = useSWR(options, getNFTsForUser,revalidateOptions)
-
-  useLayoutEffect(() => {
-    if (data) {
-      const collections = uniqBy(data.result, (token) => token.token_address)
-      //prettier-ignore
-      setFilterOptions(collections.map((el) => ({ data: el.token_address, name: el.name })))
-    }
-  }, [data])
-
-  if (isValidating) return <Loading />
-
-  if (error) return null
-
   return (
     <>
       <Metadata title={`NFT Explorer - Address ${router.query.userAddress}`} />
       <div className='container mx-auto min-h-[50rem] overflow-hidden py-24'>
-        <AnimatePresence>
-          {open && (
-            <Drawer open={open} setOpen={setOpen}>
-              <SortFilterAndClear
-                sortOption={sortOption}
-                setSortOption={setSortOption}
-                sortOptions={sortOptions}
-                filterOptions={filterOptions}
-                filterOption={filterOption}
-                setFilterOption={setFilterOption}
-              />
-            </Drawer>
-          )}
-        </AnimatePresence>
         <div className='mt-12 flex flex-col items-center'>
           <div className='overflow-hidden rounded-full border-4 border-white'>
             <Jazzicon address={router.query.userAddress} size={150} />
@@ -93,102 +34,32 @@ function UserAddress() {
               {shortenIfAddress(router.query.userAddress)}
             </span>
           </h2>
-        </div>
-        <Tab.Group
-          defaultChecked={1}
-          as='div'
-          className='container mt-5 flex flex-col items-center'>
-          <Tab.List className='bg-primary-700 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
-            <Tab
-              className={({ selected }) =>
-                `${selected ? "bg-secondary-100/30 shadow-glass-large text-white" : ""}
+       <Tab.Group defaultChecked={1} as='div' className='container mt-5 flex flex-col items-center'>
+        <Tab.List className='bg-primary-700 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
+          <Tab
+            className={({ selected }) =>
+              `${selected ? "bg-secondary-100/30 shadow-glass-large text-white" : ""}
                 } flex items-center rounded-lg px-12 py-4 `
-              }>
-              <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
-            </Tab>
-            <Tab
-              //prettier-ignore
-              className={({ selected }) =>`${selected ? "bg-secondary-100/30 text-white shadow-glass-large" : ""} flex items-center px-12 py-3 rounded-lg `}>
-              <FiActivity className='mr-3 text-xl' /> Activity
-            </Tab>
-          </Tab.List>
-          <Tab.Panels className='w-full'>
-            <Tab.Panel
-              as={motion.div}
-              className='px-6'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, x: 0 }}>
-              <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
-                <SectionTitle title='Collected NFTs' />
-                <button
-                  className='inline-flex rounded-full p-2 lg:hidden '
-                  onClick={() => setOpen(!open)}>
-                  <FilterIcon className='text-secondary-100 h-6 w-6' />
-                </button>
-              </div>
-              <section aria-labelledby='nfts-heading' className='pt-6 pb-24'>
-                <h2 id='nfts-heading' className='sr-only'>
-                  Collected NFTs
-                </h2>
-                <SectionContainer>
-                  <div className='hidden lg:flex'>
-                    <SortFilterAndClear
-                      sortOption={sortOption}
-                      setSortOption={setSortOption}
-                      sortOptions={sortOptions}
-                      filterOptions={filterOptions}
-                      filterOption={filterOption}
-                      setFilterOption={setFilterOption}
-                    />
-                  </div>
-                  <div className='flex-grow'>
-                    <PaginatedItems
-                      isLayoutAnimated={false}
-                      items={filter(
-                        sortBy(data?.result, (object) => sortFunction(object, sortOption)),
-                        (el) =>
-                          filterOption
-                            ? el.token_address.toLowerCase() === filterOption.toLowerCase()
-                            : el
-                      )}
-                      itemsPerPage={24}
-                      renderItem={renderItem}
-                    />
-                  </div>
-                </SectionContainer>
-              </section>
-            </Tab.Panel>
-            <Tab.Panel
-              as={motion.div}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className='styled-scrollbar container mx-auto my-12 h-[40rem] max-w-[70rem] overflow-y-auto'>
-              <TransactionsTable
-                rowProps={{
-                  className: "bg-primary-50 text-lg",
-                }}
-                transactions={transactions}
-              />
-            </Tab.Panel>
-            <Tab.Panel></Tab.Panel>
-          </Tab.Panels>
+            }>
+            <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
+          </Tab>
+          <Tab
+            //prettier-ignore
+            className={({ selected }) =>`${selected ? "bg-secondary-100/30 text-white shadow-glass-large" : ""} flex items-center px-12 py-3 rounded-lg `}>
+            <FiActivity className='mr-3 text-xl' /> Activity
+          </Tab>
+        </Tab.List>
+        <Tab.Panels className='w-full'>
+          <Suspense fallback={<Loading />}>
+            <NFTsTab query={router.query}/>
+            <ActivityTab query={router.query} />
+          </Suspense>
+        </Tab.Panels>
         </Tab.Group>
+        </div>
       </div>
     </>
   )
 }
-
-const renderItem = (el, i) => (
-  <NFTCard
-    index={i}
-    key={el.token_uri}
-    tokenUri={el.token_uri}
-    metadata={el.metadata}
-    tokenId={el.token_id}
-    tokenAddress={el.token_address}
-    contractName={el.name}
-  />
-)
 
 export default UserAddress
