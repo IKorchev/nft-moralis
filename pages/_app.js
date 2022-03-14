@@ -1,3 +1,4 @@
+import { RecoilRoot } from "recoil"
 import "../styles/Globals.css"
 import { MoralisProvider } from "react-moralis"
 import { DAppProvider } from "@usedapp/core"
@@ -15,23 +16,26 @@ const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
     Moralis.enableWeb3()
   }, [])
+
   return (
-    <DAppProvider>
-      <SWRConfig
-        value={{
-          suspense: true,
-        }}
-      />
-      <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
-        <MoralisDataProvider>
-          <Layout>
-            <AnimatePresence exitBeforeEnter>
-              <Component {...pageProps} />
-            </AnimatePresence>
-          </Layout>
-        </MoralisDataProvider>
-      </MoralisProvider>
-    </DAppProvider>
+    <RecoilRoot>
+      <DAppProvider>
+        <SWRConfig
+          value={{
+            suspense: true,
+          }}
+        />
+        <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
+          <MoralisDataProvider>
+            <Layout>
+              <AnimatePresence exitBeforeEnter>
+                <Component {...pageProps} />
+              </AnimatePresence>
+            </Layout>
+          </MoralisDataProvider>
+        </MoralisProvider>
+      </DAppProvider>
+    </RecoilRoot>
   )
 }
 

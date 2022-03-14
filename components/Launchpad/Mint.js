@@ -6,6 +6,7 @@ import MintButton from "../Buttons/MintButton"
 const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
   const { account } = useMoralis()
   const { chain } = useChain()
+
   return (
     <>
       {

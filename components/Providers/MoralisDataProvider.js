@@ -1,7 +1,10 @@
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext, useEffect } from "react"
 import { useChain, useMoralis, useMoralisQuery } from "react-moralis"
+import { launchpadsState } from "../../store/store"
+import { imagesState } from "../../store/imagesSlice"
+import { listingsState } from "../../store/listingsSlice"
+import { useSetRecoilState } from "recoil"
 
-// Context
 const MoralisDataContext = createContext({})
 export const useMoralisData = () => {
   return useContext(MoralisDataContext)
@@ -10,51 +13,41 @@ export const useMoralisData = () => {
 const MoralisDataProvider = ({ children }) => {
   const { Moralis, account } = useMoralis()
   const { chain } = useChain()
+  const setLaunchpads = useSetRecoilState(launchpadsState)
+  const setListings = useSetRecoilState(listingsState)
+  const setImages = useSetRecoilState(imagesState)
 
-  //prettier-ignore
-  const {data: currentLaunchpad,isCurrentLaunchpadLoading,} = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", false).equalTo("isUpcoming", false).limit(1),[],{ live: true })
-  //prettier-ignore
-  const { data: completedLaunchpads } = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", true).equalTo("isUpcoming", false),[],{ live: true })
-  //prettier-ignore
-  const { data: upcomingLaunchpads } = useMoralisQuery("Launchpads",(query) => query.equalTo("finished", true).equalTo("isUpcoming", true),[],{ live: true })
-  //prettier-ignore
-  const { data: allCollectionsListed } = useMoralisQuery("Launchpads",(q) => q.descending("createdAt"),[],{ live: true })
-  //prettier-ignore
-  const { data: allListings } = useMoralisQuery("MarketItems", (q) => q.equalTo('sold', false).equalTo('confirmed',true).descending("createdAt"),[],{ live: true })
-  //prettier-ignore
-  const {data: transactions} = useMoralisQuery('MarketItems', q => q.equalTo('sold', true).equalTo('confirmed', true).descending('updatedAt'), [],{live: true})
-  //total sales volume
+  const { data: allListings } = useMoralisQuery(
+    "MarketItems",
+    (q) => q.equalTo("sold", false).equalTo("confirmed", true).descending("createdAt"),
+    [],
+    { live: true }
+  )
+  const { data } = useMoralisQuery("Launchpads", (q) => q.descending("createdAt"), [], {
+    live: true,
+  })
   const { data: images } = useMoralisQuery("ItemImage")
 
-  const getMarketItem = (tokenId, contractAddress) => {
-    const found = images.find(
-      (el) =>
-        el.attributes.tokenId == tokenId &&
-        el.attributes.contractAddress.toLowerCase() === contractAddress.toLowerCase()
-    )
-    return found
-  }
-  const totalVolume = useMemo(() => {
-    let result = 0
-    transactions.forEach(
-      (transaction) => (result += parseFloat(Moralis.Units.FromWei(transaction.attributes.price)))
-    )
-    return result.toFixed(2)
-  }, [transactions])
+  useEffect(() => {
+    if (data) {
+      setLaunchpads(data)
+    }
+  }, [data])
+  useEffect(() => {
+    if (images) {
+      setImages(images)
+    }
+  }, [images])
+  useEffect(() => {
+    if (allListings) {
+      setListings(allListings)
+    }
+  }, [allListings])
 
   const value = {
-    totalVolume,
-    images,
-    getMarketItem,
     chain,
     account,
     Moralis,
-    allCollectionsListed,
-    allListings,
-    currentLaunchpad,
-    isCurrentLaunchpadLoading,
-    completedLaunchpads,
-    upcomingLaunchpads,
   }
 
   return <MoralisDataContext.Provider value={value}>{children}</MoralisDataContext.Provider>

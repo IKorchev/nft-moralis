@@ -7,13 +7,13 @@ import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
 import useMarketInteractions from "../../../hooks/useMarketInteraction"
 import Link from "next/link"
 import VideoOrImage from "../NFTCard/VideoOrImage"
-
+import { useRecoilValue } from "recoil"
+import { getItem } from "../../../store/imagesSlice"
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   const { Moralis } = useMoralis()
   const { chain } = useMoralisData()
   const { buyItem } = useMarketInteractions()
-  const { getMarketItem } = useMoralisData()
-  const item = getMarketItem(tokenId, nftContract)
+  const item = useRecoilValue(getItem({ tokenId, nftContract }))
   return (
     <motion.div className='bg-secondary-800 min-h-80 shadow-glass relative flex w-48 flex-col overflow-hidden rounded-md  text-white xl:w-60'>
       <div className='h-max w-full'>

@@ -1,23 +1,24 @@
-import { useMoralis } from "react-moralis"
-import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import Dropdown from "./Dropdown"
-import { Disclosure } from "@headlessui/react"
 import AccountAndBalance from "./AccountAndBalance"
-import { AiFillCopy } from "react-icons/ai"
-import { copyTextToClipboard } from "../../../utils/common"
-import { toast } from "react-toastify"
-import { useMoralisData } from "../../Providers/MoralisDataProvider"
-import { customStyles, CustomOption } from "../../../utils/selectCustomStyles"
+import Dropdown from "./Dropdown"
 import Select from "react-select"
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import DisconnectButton from "../../Buttons/DisconnectButton"
 import useScrollOffset from "../../../hooks/useScrollOffset"
+import CollectionsDropdown from "./CollectionsDropdown"
+import { useMoralis } from "react-moralis"
+import { motion, AnimatePresence } from "framer-motion"
+import { Disclosure } from "@headlessui/react"
+import { AiFillCopy } from "react-icons/ai"
+import { copyTextToClipboard } from "../../../utils/common"
+import { toast } from "react-toastify"
+import { customStyles, CustomOption } from "../../../utils/selectCustomStyles"
 import { useRouter } from "next/router"
-import  CollectionsDropdown  from "./CollectionsDropdown"
+import { useRecoilValue } from "recoil"
+import { launchpadsState } from "../../../store/store"
+
 const Navbar = () => {
-  const { completedLaunchpads, currentLaunchpad } = useMoralisData()
-  const allLaunchpads = [...completedLaunchpads, ...currentLaunchpad]
+  const allLaunchpads = useRecoilValue(launchpadsState)
   const { account } = useMoralis()
   const { scrolled } = useScrollOffset()
   const router = useRouter()

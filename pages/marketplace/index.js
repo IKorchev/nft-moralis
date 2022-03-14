@@ -1,30 +1,27 @@
 import PaginatedItems from "../../components/Other/PaginatedItems"
 import MarketItem from "../../components/Cards/MarketItemCard"
-import { useEffect, useState } from "react"
-import { filter, sortBy } from "lodash"
-import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
+import { Suspense, useState } from "react"
 import { AnimatePresence } from "framer-motion"
-import { sortOptions, sortFunction } from "../../utils/sort"
+import { sortOptions } from "../../utils/sort"
 import { FilterIcon } from "@heroicons/react/solid"
 import Metadata from "../../components/Other/Metadata"
 import Drawer from "../../components/Other/Drawer"
 import SortFilterAndClear from "../../components/Other/SortAndFilter/SortFilterAndClear"
 import SectionTitle from "../../components/SectionTitle"
 import SectionContainer from "../../components/SectionContainer"
+import { useRecoilValue } from "recoil"
+import { launchpadsState } from "../../store/store"
+import { filterListings } from "../../store/listingsSlice"
 
 const Marketplace = () => {
-  const { allCollectionsListed, allListings } = useMoralisData()
   const [sortOption, setSortOption] = useState()
   const [filterOption, setFilterOption] = useState()
-  const [filterOptions, setFilterOptions] = useState([])
+  const listings = useRecoilValue(filterListings)
+  const filterOptions = useRecoilValue(launchpadsState).map((el) => ({
+    data: el.attributes.contractAddress,
+    name: el.attributes.collectionName,
+  }))
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (allCollectionsListed) {
-      //prettier-ignore
-      setFilterOptions(allCollectionsListed.map((el) => ({ data: el.attributes.contractAddress,name: el.attributes.collectionName,})))
-    }
-  }, [allCollectionsListed])
 
   return (
     <>
@@ -73,14 +70,9 @@ const Marketplace = () => {
               />
             </div>
             <div className=' w-full '>
-              <PaginatedItems
-                items={filter(
-                  sortBy(allListings, (object) => sortFunction(object, sortOption)),
-                  (el) => (filterOption ? el.attributes.nftContract === filterOption : el)
-                )}
-                itemsPerPage={15}
-                renderItem={renderItem}
-              />
+              <Suspense fallback={null}>
+                <PaginatedItems items={listings} itemsPerPage={15} renderItem={renderItem} />
+              </Suspense>
             </div>
           </SectionContainer>
         </section>

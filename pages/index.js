@@ -11,7 +11,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className='relative '>
+          className='relative'>
           <Upper />
           <Lower />
         </motion.div>

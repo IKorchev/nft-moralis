@@ -1,18 +1,12 @@
 import Link from "next/link"
-import { useEffect, useLayoutEffect } from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import useMarketInteraction from "../../hooks/useMarketInteraction"
 import { BiRefresh } from "react-icons/bi"
 import { toast } from "react-toastify"
-import Loading from "../Other/Loading"
 import Countdown from "./Countdown"
 import Mint from "./Mint"
-import { useChain, useMoralis } from "react-moralis"
-//
 
 const FeaturedSection = ({ featuredCollection }) => {
-  if (!featuredCollection) return <Loading />
-  const { Moralis, authenticate } = useMoralis()
   const { getMintCost, getMaxSupply, getTotalSupply } = useMarketInteraction()
   const [cost, setCost] = useState("0")
   const [maxSupply, setMaxSupply] = useState(0)
@@ -23,26 +17,25 @@ const FeaturedSection = ({ featuredCollection }) => {
     setCountdownFinished(true)
   }
 
-  const refreshData = async () => {
-    const tokensMinted = await getTotalSupply(featuredCollection?.contractAddress)
-    const maxSupply = await getMaxSupply(featuredCollection?.contractAddress)
-    const mintCost = await getMintCost(featuredCollection?.contractAddress)
-    const value = await Promise.all([tokensMinted, maxSupply, mintCost])
-    setCost(value[2])
-    setMaxSupply(Number(value[1]))
-    setMintedAmount(Number(value[0]))
+  const getData = async () => {
+    const tokensMinted = await getTotalSupply(featuredCollection?.attributes.contractAddress)
+    const maxSupply = await getMaxSupply(featuredCollection?.attributes.contractAddress)
+    const mintCost = await getMintCost(featuredCollection?.attributes.contractAddress)
+    return await Promise.all([tokensMinted, maxSupply, mintCost])
   }
-
+  const _getData = async () => {
+    const [_mintedAmount, _maxSupply, _mintCost] = await getData()
+    setCost(_mintCost)
+    setMintedAmount(Number(_mintedAmount))
+    setMaxSupply(Number(_maxSupply))
+  }
   const refreshDataHandler = async () => {
-    refreshData()
-    toast.success("Data refreshed", { autoClose: 1000 })
+    _getData()
+    toast.success("Data refreshed", { autoClose: 2000 })
   }
-
-  //get initial data and start countdown timer
-  useLayoutEffect(() => {
-    refreshData()
+  useEffect(() => {
+    _getData()
   }, [])
-
   return (
     <section
       className='min-h-24 border-secondary-700 bg-secondary-900/50 mt-12 flex w-full 
@@ -62,8 +55,8 @@ const FeaturedSection = ({ featuredCollection }) => {
 
         <div className='flex h-full flex-col justify-evenly py-5 xl:py-0'>
           <div>
-            <h2 className='text-4xl text-white'>{featuredCollection?.collectionName}</h2>
-            <p className='mt-5 text-sm'>{featuredCollection?.description}</p>
+            <h2 className='text-4xl text-white'>{featuredCollection?.attributes.collectionName}</h2>
+            <p className='mt-5 text-sm'>{featuredCollection?.attributes.description}</p>
           </div>
           {/* IMPORTANT: This is not a safety check!
           The contract owner needs to make sure the mint 
@@ -71,21 +64,25 @@ const FeaturedSection = ({ featuredCollection }) => {
 
           {countdownFinished ? (
             <Mint
+              getData={getData}
               mintedAmount={mintedAmount}
               maxSupply={maxSupply}
               cost={cost}
-              contractAddress={featuredCollection?.contractAddress}
+              contractAddress={featuredCollection?.attributes.contractAddress}
             />
           ) : (
-            <Countdown startDate={featuredCollection?.startDate} onFinish={countdownHandler} />
+            <Countdown
+              startDate={featuredCollection?.attributes.startDate}
+              onFinish={countdownHandler}
+            />
           )}
         </div>
       </div>
       <div className='relative max-h-[35rem] w-full flex-1 overflow-hidden rounded-xl'>
-        <Link href={`/assets/${featuredCollection?.contractAddress}`}>
+        <Link href={`/assets/${featuredCollection?.attributes.contractAddress}`}>
           <img
             className='h-full w-full cursor-pointer object-cover'
-            src={featuredCollection?.imageUrl}
+            src={featuredCollection?.attributes.imageUrl}
             alt=''
           />
         </Link>
