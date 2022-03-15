@@ -21,6 +21,10 @@ export const customStyles = {
     backgroundColor: "#420042",
     padding: "0 2px",
   }),
+  dropdownIndicator: () => ({
+    display: "none",
+  }),
+  indicatorSeparator: () => ({ display: "none" }),
   menuList: (provided, state) => ({
     ...provided,
     display: "flex",
@@ -54,9 +58,7 @@ export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected
           className={`
            mx-3 flex h-12 
           flex-shrink-0 cursor-pointer items-center overflow-hidden rounded-md
-           ${
-             isSelected ? "bg-secondary-100" : isFocused ? "bg-secondary-800" : "bg-secondary-600"
-           }`}>
+           ${isSelected ? "bg-secondary-100" : isFocused ? "bg-secondary-800" : "bg-secondary-600"}`}>
           <img
             className='border-secondary-100 bg-secondary-200 h-12 w-12 border-r object-cover'
             src={data.image}
