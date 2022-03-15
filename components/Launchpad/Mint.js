@@ -2,10 +2,18 @@ import { useMoralis, useChain } from "react-moralis"
 import ConnectWalletButton from "../Buttons/ConnectWalletButton"
 import SwitchNetworkButton from "../Buttons/SwitchNetworkButton"
 import MintButton from "../Buttons/MintButton"
+import useSWR from "swr"
+import { getFetcher } from "../../utils/fetcher"
 
-const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
+const Mint = ({ contractAddress }) => {
   const { account } = useMoralis()
   const { chain } = useChain()
+  const { data, error, isValidating } = useSWR(
+    contractAddress ? `/api/nft/data?contract=${contractAddress}` : null,
+    getFetcher
+  )
+  console.log(data)
+  console.log(error)
   return (
     <>
       {
@@ -14,18 +22,18 @@ const Mint = ({ mintedAmount, maxSupply, contractAddress, cost }) => {
         : chain.chainId !== '0x3' ? <SwitchNetworkButton network='0x3' className='my-5'/>
         :  (
         <>
-           <MintButton contractAddress={contractAddress} cost={cost}  />
+           <MintButton contractAddress={contractAddress} cost={data?.cost}  />
             <div className='mt-12 w-full flex flex-col  bg-secondary-800/60 border-secondary-100 p-4 rounded-lg shadow-glass-secondary backdrop-filter backdrop-blur-sm'>
                 <p className='text-center'>Minted</p>
                 <div className='relative my-3 flex h-4 w-full overflow-hidden rounded-full bg-secondary-500'>
                 <div
                     className='absolute top-0 left-0 grid h-4 place-items-center rounded-full bg-secondary-100 '
-                    style={{ width: `${(mintedAmount / maxSupply) * 100}%` }}></div>
+                    style={{ width: `${(data?.supply / data?.maxSupply) * 100}%` }}></div>
                 <span className='w-full text-center text-[12px]'>
-                    {mintedAmount}/{maxSupply}
+                    {data?.supply} / {data?.maxSupply} 
                 </span>
                 </div>
-                <p className='mt-3 text-center text-white'>({((mintedAmount / maxSupply) * 100).toFixed(2)}%)</p>
+                <p className='mt-3 text-center text-white'>({((data?.supply / data?.maxSupply) * 100).toFixed(2)}%)</p>
             </div>
         </>
       )

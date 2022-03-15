@@ -1,30 +1,22 @@
 import PaginatedItems from "../../components/Other/PaginatedItems"
 import MarketItem from "../../components/Cards/MarketItemCard"
-import { useEffect, useState } from "react"
-import { filter, sortBy } from "lodash"
-import { useMoralisData } from "../../components/Providers/MoralisDataProvider"
+import { Suspense, useState } from "react"
 import { AnimatePresence } from "framer-motion"
-import { sortOptions, sortFunction } from "../../utils/sort"
 import { FilterIcon } from "@heroicons/react/solid"
 import Metadata from "../../components/Other/Metadata"
 import Drawer from "../../components/Other/Drawer"
 import SortFilterAndClear from "../../components/Other/SortAndFilter/SortFilterAndClear"
 import SectionTitle from "../../components/SectionTitle"
 import SectionContainer from "../../components/SectionContainer"
-
+import { useRecoilValue } from "recoil"
+import { sortedListings } from "../../store/listingsSlice"
+import SortSection from "../../components/Other/SortAndFilter/SortSection"
+import { useRouter } from "next/router"
 const Marketplace = () => {
-  const { allCollectionsListed, allListings } = useMoralisData()
-  const [sortOption, setSortOption] = useState()
-  const [filterOption, setFilterOption] = useState()
-  const [filterOptions, setFilterOptions] = useState([])
+  const { query } = useRouter()
+  console.log(query)
+  const listings = query ? useRecoilValue(sortedListings()) : useRecoilValue(sortedListings(query.params))
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (allCollectionsListed) {
-      //prettier-ignore
-      setFilterOptions(allCollectionsListed.map((el) => ({ data: el.attributes.contractAddress,name: el.attributes.collectionName,})))
-    }
-  }, [allCollectionsListed])
 
   return (
     <>
@@ -34,14 +26,7 @@ const Marketplace = () => {
         <AnimatePresence>
           {open && (
             <Drawer open={open} setOpen={setOpen}>
-              <SortFilterAndClear
-                sortOption={sortOption}
-                sortOptions={sortOptions}
-                setSortOption={setSortOption}
-                filterOption={filterOption}
-                filterOptions={filterOptions}
-                setFilterOption={setFilterOption}
-              />
+              <SortSection />
             </Drawer>
           )}
         </AnimatePresence>
@@ -50,9 +35,7 @@ const Marketplace = () => {
           <div className='my-3'>
             <SectionTitle title='Marketplace' />
           </div>
-          <button
-            className='inline-flex rounded-full p-2 lg:hidden '
-            onClick={() => setOpen(!open)}>
+          <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
             <FilterIcon className='text-secondary-100 h-6 w-6' />
           </button>
         </div>
@@ -62,25 +45,29 @@ const Marketplace = () => {
           </h2>
           <SectionContainer>
             {/* Desktop */}
-            <div className='hidden lg:flex'>
-              <SortFilterAndClear
-                sortOption={sortOption}
-                sortOptions={sortOptions}
-                setSortOption={setSortOption}
-                filterOption={filterOption}
-                filterOptions={filterOptions}
-                setFilterOption={setFilterOption}
-              />
+            <div className='hidden max-h-72 lg:flex'>
+              <SortSection />
             </div>
             <div className=' w-full '>
-              <PaginatedItems
-                items={filter(
-                  sortBy(allListings, (object) => sortFunction(object, sortOption)),
-                  (el) => (filterOption ? el.attributes.nftContract === filterOption : el)
-                )}
-                itemsPerPage={15}
-                renderItem={renderItem}
-              />
+              <Suspense fallback={null}>
+                <PaginatedItems
+                  items={listings}
+                  itemsPerPage={25}
+                  renderItem={(el, i) => (
+                    <MarketItem
+                      createdAt={el.createdAt}
+                      price={el.attributes.price}
+                      tokenUri={el.tokenUri}
+                      tokenId={el.attributes.tokenId}
+                      nftContract={el.attributes.nftContract}
+                      index={i}
+                      itemId={el.attributes.itemId}
+                      sold={el.attributes.sold}
+                      key={el.attributes.itemId}
+                    />
+                  )}
+                />
+              </Suspense>
             </div>
           </SectionContainer>
         </section>
@@ -88,19 +75,5 @@ const Marketplace = () => {
     </>
   )
 }
-
-const renderItem = (el, i) => (
-  <MarketItem
-    createdAt={el.createdAt}
-    price={el.attributes.price}
-    tokenUri={el.tokenUri}
-    tokenId={el.attributes.tokenId}
-    nftContract={el.attributes.nftContract}
-    index={i}
-    itemId={el.attributes.itemId}
-    sold={el.attributes.sold}
-    key={el.attributes.itemId}
-  />
-)
 
 export default Marketplace

@@ -1,5 +1,5 @@
 import { formatChain, formatIpfs } from "../../../utils/common"
-import { tokenIdFetcher, revalidateOptions } from "../../../utils/fetcher"
+import { revalidateOptions, getFetcher } from "../../../utils/fetcher"
 import { useRouter } from "next/router"
 import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
 import ActivityChart from "../../../components/Other/ActivityChart"
@@ -8,27 +8,26 @@ import ListItemModal from "../../../components/tokenId/ListItemModal"
 import TransactionsTable from "../../../components/tokenId/TransactionsTable"
 import TokenImage from "../../../components/tokenId/TokenImage"
 import { AnimatePresence, motion } from "framer-motion"
-import { MoonLoader } from "react-spinners"
+import { RotateLoader } from "react-spinners"
 import { useState } from "react"
 import useSWR from "swr"
 import Link from "next/link"
 import Metadata from "../../../components/Other/Metadata"
+
 const Token = () => {
   const { chain, account } = useMoralisData()
   const router = useRouter()
   const { query } = useRouter()
   const [open, setOpen] = useState(false)
-
-  const options = {
-    url: chain ? "/api/nft" : null,
-    args: {
-      contract: query.contract,
-      tokenId: query.tokenId,
-      chain: { chainString: formatChain(chain?.networkId), chainId: chain?.chainId },
-    },
-  }
-  const { data, error, isValidating } = useSWR(options, tokenIdFetcher, revalidateOptions)
-
+  const { data, error, isValidating } = useSWR(
+    chain && query
+      ? `/api/nft?contract=${query.contract}&tokenId=${query.tokenId}&chainId=${
+          chain.chainId
+        }&chainString=${formatChain(chain?.networkId)}`
+      : null,
+    getFetcher,
+    revalidateOptions
+  )
   if (error) {
     return (
       <div className='grid h-[35rem] place-items-center'>
@@ -38,8 +37,8 @@ const Token = () => {
   }
   if (isValidating) {
     return (
-      <div className='grid min-h-[40rem] place-items-center'>
-        <MoonLoader color='white' width={150} height={150} />
+      <div className='grid min-h-[45rem] place-items-center'>
+        <RotateLoader color='white' height={150} />
       </div>
     )
   }
@@ -62,55 +61,53 @@ const Token = () => {
         transition={{ duration: 0.8, delayChildren: 1, ease: "easeInOut" }}
         className='container mx-auto  py-24 text-white xl:px-24'>
         <div className='flex w-full flex-col justify-evenly gap-5 px-5 lg:flex-row lg:p-0'>
-          <div className='lg:min-w-[30rem]'>
+          <div className='lg:max-w-[30rem]'>
             <TokenImage format={data?.metadata?.format} url={image} />
           </div>
-          <div className='bg-primary-900 w-full flex-grow rounded-lg'>
+          <div className='w-full flex-grow rounded-lg'>
             <Collapse buttonText='Token Information' defaultOpen={true}>
-              <div className='h-full bg-white p-4 text-black'>
-                <h2 className=''>{data?.name || data?.metadata?.name}</h2>
-                <p>
-                  Owned by:{" "}
+              <div className='h-full p-4'>
+                <h2 className='text-white'>{data?.name || data?.metadata?.name}</h2>
+                <p className='my-3'>
+                  Owned by:
                   <Link href={`/user/${data?.owner}`} passHref>
-                    <a className='font-semibold text-blue-900'>{data?.owner}</a>
+                    <a className='font-semibold text-blue-200 hover:text-blue-400'>{data?.owner}</a>
                   </Link>
                 </p>
                 <hr />
-                {data?.description && (
+                {data?.metadata.description && (
                   <>
-                    <h2 className='mt-5'>Description</h2>
-                    <p className='mt-2'>
-                      {data?.description || "There is no description for this item.  "}
-                    </p>
-                    <hr />
+                    <h2 className='mt-5 text-white'>Description</h2>
+                    <p className='mt-2'>{data?.metadata.description || "There is no description for this item.  "}</p>
                   </>
                 )}
                 <p className='mt-5'>
                   <span className='font-bold'> Address:</span> {query.contract}
                 </p>
-
-                {data?.owner.toLowerCase() == account.toLowerCase() && (
-                  <button
-                    onClick={() => {
-                      setOpen(true)
-                    }}
-                    className='bg-secondary-100 m-2 p-2 text-white'>
-                    List item
-                  </button>
-                )}
-
                 <p className='mt-2'>
                   <span className='font-bold'> Token ID:</span> {query.tokenId}
                 </p>
                 <p className='mt-2'>
                   <span className='font-bold'> Token Symbol:</span> {data?.symbol}
                 </p>
+                {data?.owner.toLowerCase() == account?.toLowerCase() && (
+                  <button
+                    onClick={() => {
+                      setOpen(true)
+                    }}
+                    className='bg-secondary-100 mt-3 w-48 rounded-md p-2 text-white'>
+                    List for sale
+                  </button>
+                )}
               </div>
+              <AnimatePresence>
+                {open && <ListItemModal data={data} chain={chain} isOpen={open} onClose={() => setOpen(false)} />}
+              </AnimatePresence>
             </Collapse>
             <Collapse buttonText='Attributes'>
-              <div className='grid grid-cols-3 gap-3 bg-white p-4'>
+              <div className='grid grid-cols-3 gap-3 p-4'>
                 {data?.metadata?.attributes?.map((el) => (
-                  <div className='border-primary-300 bg-primary-200 col-span-1 grid place-items-center rounded-lg border p-1 text-center text-black'>
+                  <div className='border-secondary-300  bg-secondary-500 col-span-1 grid place-items-center rounded-lg border-2 p-1 text-center text-white'>
                     <small className='font-bold'>{el.trait_type}</small>
                     <small>{el.value}</small>
                   </div>
@@ -127,11 +124,6 @@ const Token = () => {
             </Collapse>
           </div>
         </div>
-        <AnimatePresence>
-          {open && (
-            <ListItemModal data={data} chain={chain} isOpen={open} onClose={() => setOpen(false)} />
-          )}
-        </AnimatePresence>
       </motion.main>
     </div>
   )

@@ -29,9 +29,7 @@ const Add = () => {
         },
         body: JSON.stringify(formData),
       })
-      console.log(_res)
       const res = await _res.json()
-      console.log(res)
       if (!_res.ok) {
         toast.update(toastId, {
           isLoading: false,

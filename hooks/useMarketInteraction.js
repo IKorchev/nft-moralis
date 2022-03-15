@@ -2,6 +2,7 @@ import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
 import { useMoralis, useWeb3ExecuteFunction, useMoralisWeb3Api } from "react-moralis"
 import { toast } from "react-toastify"
 import { contractFunctions } from "./contractFunctions"
+
 const useMarketInteractions = () => {
   const { Moralis, account } = useMoralis()
   const contractProcessor = useWeb3ExecuteFunction()

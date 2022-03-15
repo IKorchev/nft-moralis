@@ -1,12 +1,19 @@
 import { RadioGroup } from "@headlessui/react"
 import { BsFillCollectionFill } from "react-icons/bs"
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri"
-const FilterSection = ({ filterOptions, setFilterOption, filterOption }) => {
+import { useRecoilValue, useRecoilState } from "recoil"
+import { allLaunchpadsState } from "../../../store/store"
+import { filterState } from "../../../store/listingsSlice"
+
+const FilterSection = () => {
+  const { filterOptions } = useRecoilValue(allLaunchpadsState)
+  const [filter, setFilter] = useRecoilState(filterState)
+  
   return (
     <RadioGroup
       className='shadow-glass-large bg-secondary-700/50 w-60 overflow-hidden rounded-lg text-white'
-      value={filterOption}
-      onChange={setFilterOption}>
+      value={filter}
+      onChange={setFilter}>
       <RadioGroup.Label className='border-secondary-600 flex w-full items-center justify-between border-b px-5 py-3 text-gray-100'>
         <BsFillCollectionFill className='h-5 w-5' />
         <span className=''>Collections</span>
@@ -32,7 +39,7 @@ const FilterSection = ({ filterOptions, setFilterOption, filterOption }) => {
         ))}
       </ul>
       <button
-        onClick={() => setFilterOption(null)}
+        onClick={() => setFilter(null)}
         className=' border-secondary-600 w-full cursor-pointer border-t p-2 text-center  text-white ring-white transition duration-200 hover:bg-pink-700 focus:ring-1'>
         Clear
       </button>

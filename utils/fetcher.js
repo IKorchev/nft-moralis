@@ -13,8 +13,8 @@ const fetcher = async ({ args }) => {
         tokenId: tokenId,
       },
     })
-    if (!data) throw new Error("Unable to get token uri")
   }
+  if (!data) throw new Error("Unable to get token uri")
   return fetch("/api/metadata", {
     method: "POST",
     body: JSON.stringify({
@@ -33,7 +33,7 @@ export const revalidateOptions = {
   revalidateOnReconnect: false,
 }
 
-export const metadataFetcher = async ({ url, args }) => {
+export const getFetcher = async (url) => {
   const res = await fetch(url)
   if (!res.ok) {
     const error = new Error("An error occurred while fetching the data.")
@@ -44,35 +44,19 @@ export const metadataFetcher = async ({ url, args }) => {
   }
   return await res.json()
 }
-export const tokenIdFetcher = async ({ url, args }) => {
-  const res = await fetch(url, {
-    method: "POST",
-    body: JSON.stringify(args),
+
+export const getNFTsForUser = async ({ args }) => {
+  const { chain, address } = args
+  const data = await Moralis.Web3API.account.getNFTs({
+    address: address,
+    chain: chain,
   })
-  if (!res.ok) {
+
+  if (!data) {
     const error = new Error("An error occurred while fetching the data.")
-    // Attach extra info to the error object.
-    error.info = await res.json()
-    error.status = res.status
     throw error
   }
-  return await res.json()
-}
-
-export const getNFTsForUser = ({ args }) => {
-  const { chain, address } = args
-  return Moralis.Web3API.account
-    .getNFTs({
-      address: address,
-      chain: chain,
-    })
-    .then((data) => {
-      if (!data) {
-        const error = new Error("An error occurred while fetching the data.")
-        throw error
-      }
-      return data
-    })
+  return data
 }
 
 export default fetcher
