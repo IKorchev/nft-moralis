@@ -4,12 +4,12 @@ import { gsap } from "gsap/dist/gsap"
 import { useEffect, useRef } from "react"
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import SectionTitle from "../SectionTitle"
+import { allLaunchpadsState } from "../../store/store"
 gsap.registerPlugin(ScrollTrigger)
-
+import { useRecoilValue } from "recoil"
 const LandingPage2 = () => {
-  const { completedLaunchpads } = useMoralisData()
   const containerRef = useRef()
-
+  const { completed } = useRecoilValue(allLaunchpadsState)
   useEffect(() => {
     const childEls = containerRef.current.children
     if (childEls.length > 0) {
@@ -38,7 +38,7 @@ const LandingPage2 = () => {
           ref={containerRef}
           className=' container mx-auto  mt-12  flex flex-wrap items-center
          justify-center gap-2 lg:gap-10'>
-          {completedLaunchpads?.slice(0, 3).map((el, i) => (
+          {completed?.slice(1, 4).map((el, i) => (
             <CollectionCard
               key={el.attributes.contractAddress}
               name={el.attributes.collectionName}

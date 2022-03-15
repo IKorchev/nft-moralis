@@ -24,7 +24,7 @@ const ActivityTab = ({ query }) => {
         rowProps={{
           className: "bg-primary-50 text-lg",
         }}
-        transactions={data?.transactions}
+        transactions={data?.result}
       />
     </Tab.Panel>
   )

@@ -25,17 +25,19 @@ const ActivityChart = ({ data }) => {
     labels: labelsArr,
     datasets: [
       {
+        
         label: "Price",
         borderColor: "white",
         data: dataArr,
-        borderColor: "black",
+        borderColor: "#de0b6a",
         backgroundColor: "white",
+        
       },
     ],
   }
 
   return (
-    <div className='h-[300px] bg-white text-white'>
+    <div className='h-[300px] text-white'>
       <Line data={chartData} options={chartOptions} />
     </div>
   )

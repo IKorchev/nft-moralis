@@ -8,50 +8,50 @@ export const chartOptions = {
     y: {
       title: {
         display: true,
-        text: "ETH",
-        color: "black",
+        text: "Price (ETH)",
+        color: "white",
         font: {
           size: 20,
           style: "bold",
         },
       },
       ticks: {
-        color: "black",
+        color: "white",
         callback: function (value, index, ticks) {
           return value
         },
       },
       grid: {
-        color: "black",
-        borderColor: "black",
-        tickColor: "black",
+        color: "#ad0853",
+        borderColor: "#ad0853",
+        tickColor: "#ad0853",
       },
     },
     x: {
       title: {
         display: true,
         text: "Date",
-        color: "black",
+        color: "white",
         font: {
           size: 20,
           style: "bold",
         },
       },
       ticks: {
-        color: "black",
+        color: "white",
       },
       grid: {
-        color: "black",
-        borderColor: "black",
-        tickColor: "black",
+        color: "#ad0853",
+        borderColor: "#ad0853",
+        tickColor: "#ad0853",
       },
     },
   },
   plugins: {
     legend: {
-      color: "black",
+      color: "white",
       labels: {
-        color: "black",
+        color: "white",
         font: {
           size: 20,
         },

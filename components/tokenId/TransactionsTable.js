@@ -6,10 +6,10 @@ import { useChain } from "react-moralis"
 
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
   return (
-    <div className='inline-block min-w-full align-middle '>
+    <div className='inline-block min-w-full align-middle'>
       <div className='border-b  border-gray-200 shadow sm:rounded-lg '>
-        <table className='min-w-full  divide-y divide-gray-200  '>
-          <thead className='bg-primary-900 text-xs  font-medium uppercase text-pink-500 '>
+        <table className='min-w-full divide-y divide-gray-200  '>
+          <thead className='text-xs font-medium uppercase text-pink-500 '>
             <tr>
               <th scope='col' className='py-3 lg:px-6'>
                 Date
@@ -28,7 +28,7 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
               </th>
             </tr>
           </thead>
-          <tbody className='divide-y divide-gray-200 bg-white '>
+          <tbody className='divide-y divide-gray-200  bg-white '>
             {transactions?.result?.map((el) => (
               <TableRow
                 {...rowProps}
@@ -51,7 +51,7 @@ const TableRow = ({ blockTimestamp, transactionHash, fromAddress, toAddress, pri
   const { chain } = useChain()
   const date = new Date(blockTimestamp).toLocaleDateString("uk")
   return (
-    <tr className=' bg-primary-700 whitespace-nowrap text-center text-xs text-white'>
+    <tr className=' bg-secondary-700 whitespace-nowrap text-center text-xs text-white'>
       <td className='py-2 lg:px-6'>{date}</td>
       <td className='py-2 lg:px-6'>
         <Link href={`/user/${fromAddress}`}>

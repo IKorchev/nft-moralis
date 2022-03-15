@@ -1,9 +1,8 @@
 import React from "react"
+import SectionTitle from "../SectionTitle"
 import { useRecoilValue } from "recoil"
 import { allLaunchpadsState } from "../../store/store"
 import { CollectionCard } from "../Cards/CollectionCard"
-import SectionTitle from "../SectionTitle"
-
 const UpcomingList = () => {
   const { upcoming } = useRecoilValue(allLaunchpadsState)
 

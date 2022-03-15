@@ -1,21 +1,16 @@
 import React, { useState } from "react"
 import PaginatedItems from "../Other/PaginatedItems"
 import { FilterIcon } from "@heroicons/react/solid"
-import { sortBy } from "lodash"
-import { sortFunction, sortOptions } from "../../utils/sort"
 import SectionTitle from "../SectionTitle"
 import SectionContainer from "../SectionContainer"
 import SortSection from "../Other/SortAndFilter/SortSection"
 import ClearFiltersButton from "../Other/SortAndFilter/ClearFiltersButton"
-import { useMoralisQuery } from "react-moralis"
 import MarketItemCard from "../Cards/MarketItemCard"
-import useSWR from "swr"
-import { revalidateOptions } from "../../utils/fetcher"
+import { useRecoilValue } from "recoil"
 
 const Main = ({ itemsAvailableForPurchase }) => {
-  const [sortOption, setSortOption] = useState(null)
-  const [, setFilterOption] = useState(null)
   const [open, setOpen] = useState(false)
+  
 
   return (
     <div className='container w-full'>
@@ -38,49 +33,37 @@ const Main = ({ itemsAvailableForPurchase }) => {
             {/* Desktop */}
             <div className='hidden lg:flex'>
               <div className='space-y-1'>
-                <SortSection
-                  defaultOpen={true}
-                  sortOption={sortOption}
-                  setSortOption={setSortOption}
-                  sortOptions={sortOptions}
-                />
-                <ClearFiltersButton
-                  setSortOption={setSortOption}
-                  setFilterOption={setFilterOption} // just for the button - doesn't do anything, there are no filters here
-                />
+                <SortSection />
+                <ClearFiltersButton />
               </div>
             </div>
 
             <div className='flex flex-grow'>
               <PaginatedItems
-                items={sortBy(itemsAvailableForPurchase, (object) =>
-                  sortFunction(object, sortOption)
+                items={itemsAvailableForPurchase}
+                itemsPerPage={25}
+                renderItem={(el, i) => (
+                  <MarketItemCard
+                    createdAt={el.createdAt}
+                    price={el.attributes.price}
+                    tokenUri={el.tokenUri}
+                    tokenId={el.attributes.tokenId}
+                    nftContract={el.attributes.nftContract}
+                    index={i}
+                    itemId={el.attributes.itemId}
+                    sold={el.attributes.sold}
+                    key={el.attributes.itemId}
+                  />
                 )}
-                itemsPerPage={24}
-                renderItem={renderItem}
               />
             </div>
           </SectionContainer>
         ) : (
-          <h1 className='text-center text-4xl py-12 text-white'>No items found</h1>
+          <h1 className='py-12 text-center text-4xl text-white'>No items found</h1>
         )}
       </section>
     </div>
   )
 }
-
-const renderItem = (el, i) => (
-  <MarketItemCard
-    createdAt={el.createdAt}
-    price={el.attributes.price}
-    tokenUri={el.tokenUri}
-    tokenId={el.attributes.tokenId}
-    nftContract={el.attributes.nftContract}
-    index={i}
-    itemId={el.attributes.itemId}
-    sold={el.attributes.sold}
-    key={el.attributes.itemId}
-  />
-)
 
 export default Main

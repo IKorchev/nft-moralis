@@ -2,14 +2,13 @@ import { RadioGroup } from "@headlessui/react"
 import { BsFillCollectionFill } from "react-icons/bs"
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri"
 import { useRecoilValue, useRecoilState } from "recoil"
-import { launchpadsState } from "../../../store/store"
+import { allLaunchpadsState } from "../../../store/store"
 import { filterState } from "../../../store/listingsSlice"
-const FilterSection = ({ setFilterOption }) => {
-  const filterOptions = useRecoilValue(launchpadsState).map((el) => ({
-    data: el.attributes.contractAddress,
-    name: el.attributes.collectionName,
-  }))
+
+const FilterSection = () => {
+  const { filterOptions } = useRecoilValue(allLaunchpadsState)
   const [filter, setFilter] = useRecoilState(filterState)
+  
   return (
     <RadioGroup
       className='shadow-glass-large bg-secondary-700/50 w-60 overflow-hidden rounded-lg text-white'

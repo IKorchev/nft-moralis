@@ -13,7 +13,7 @@ const MintButton = ({ contractAddress, cost }) => {
         className='bg-secondary-100 hover:bg-secondary-700 w-max rounded-full py-1 px-3 text-lg transition  duration-500'>
         Mint now
       </button>
-      <span> {cost && Moralis.Units.FromWei(cost)} ETH </span>
+      <span> {cost} ETH </span>
     </div>
   )
 }

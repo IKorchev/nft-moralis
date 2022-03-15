@@ -50,10 +50,8 @@ function UserAddress() {
           </Tab>
         </Tab.List>
         <Tab.Panels className='w-full'>
-          <Suspense fallback={<Loading />}>
             <NFTsTab query={router.query}/>
             <ActivityTab query={router.query} />
-          </Suspense>
         </Tab.Panels>
         </Tab.Group>
         </div>

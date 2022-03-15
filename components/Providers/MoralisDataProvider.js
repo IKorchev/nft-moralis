@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect } from "react"
 import { useChain, useMoralis, useMoralisQuery } from "react-moralis"
-import { launchpadsState } from "../../store/store"
+import { launchpadsState, allLaunchpadsState } from "../../store/store"
 import { imagesState } from "../../store/imagesSlice"
 import { listingsState } from "../../store/listingsSlice"
-import { useSetRecoilState } from "recoil"
+import { useSetRecoilState, useRecoilValue } from "recoil"
+
 
 const MoralisDataContext = createContext({})
 export const useMoralisData = () => {
@@ -16,6 +17,8 @@ const MoralisDataProvider = ({ children }) => {
   const setLaunchpads = useSetRecoilState(launchpadsState)
   const setListings = useSetRecoilState(listingsState)
   const setImages = useSetRecoilState(imagesState)
+  const { featured } = useRecoilValue(allLaunchpadsState)
+
 
   const { data: allListings } = useMoralisQuery(
     "MarketItems",

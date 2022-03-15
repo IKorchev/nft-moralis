@@ -12,23 +12,9 @@ import SortFilterAndClear from "../Other/SortAndFilter/SortFilterAndClear"
 import SectionContainer from "../SectionContainer"
 import SectionTitle from "../SectionTitle"
 import Drawer from "../Other/Drawer"
-const sortOptions = [
-  { name: "ID Ascending", data: "id-asc" },
-  { name: "ID Descending", data: "id-desc" },
-]
-
-const sortFunction = (object, attribute) => {
-  switch (attribute) {
-    case "id-asc":
-      return object.token_id
-    case "id-desc":
-      return -object.token_id
-  }
-}
+import Loading from "../Other/Loading"
 
 const NFTsTab = ({ query }) => {
-  const [sortOption, setSortOption] = useState()
-  const [filterOption, setFilterOption] = useState(null)
   const [open, setOpen] = useState(false)
   const { chain } = useChain()
   const options = {
@@ -41,19 +27,13 @@ const NFTsTab = ({ query }) => {
 
   return (
     <div className='container w-full pt-24 '>
-      <Tab.Panel
-        as={motion.div}
-        className='px-6'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, x: 0 }}>
+      <Tab.Panel as={motion.div} className='px-6' initial={{ opacity: 0 }} animate={{ opacity: 1, x: 0 }}>
         <div className='relative flex items-baseline justify-between border-b border-gray-200 pb-2'>
           <div>
             <SectionTitle title='Collected NFTs' />
           </div>
           {data?.total && (
-            <button
-              className='inline-flex rounded-full p-2 lg:hidden '
-              onClick={() => setOpen(!open)}>
+            <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
               <FilterIcon className='text-secondary-100 h-6 w-6' />
             </button>
           )}
@@ -64,40 +44,11 @@ const NFTsTab = ({ query }) => {
           </h2>
           {data?.total > 0 ? (
             <SectionContainer>
-              {/* MOBILE DRAWER */}
-              <AnimatePresence>
-                <Drawer open={open} setOpen={setOpen}>
-                  <SortFilterAndClear
-                    sortOption={sortOption}
-                    setSortOption={setSortOption}
-                    sortOptions={sortOptions}
-                    filterOptions={filterOptions}
-                    filterOption={filterOption}
-                    setFilterOption={setFilterOption}
-                  />
-                </Drawer>
-              </AnimatePresence>
-              <div className='hidden lg:flex'>
-                <SortFilterAndClear
-                  sortOption={sortOption}
-                  setSortOption={setSortOption}
-                  sortOptions={sortOptions}
-                  filterOptions={filterOptions}
-                  filterOption={filterOption}
-                  setFilterOption={setFilterOption}
-                />
-              </div>
               <div className='flex-grow'>
                 <PaginatedItems
                   isLayoutAnimated={false}
-                  items={filter(
-                    sortBy(data?.result, (object) => sortFunction(object, sortOption)),
-                    (el) =>
-                      filterOption
-                        ? el.token_address.toLowerCase() === filterOption.toLowerCase()
-                        : el
-                  )}
-                  itemsPerPage={24}
+                  items={data?.result}
+                  itemsPerPage={18}
                   renderItem={(el, i) => {
                     return (
                       <NFTCard
@@ -115,7 +66,7 @@ const NFTsTab = ({ query }) => {
               </div>
             </SectionContainer>
           ) : (
-            <h2 className='py-12 text-center text-3xl text-gray-100'>No items found</h2>
+            <h2 className='py-12 text-center text-3xl text-gray-100'>No items in this collection</h2>
           )}
         </section>
       </Tab.Panel>
