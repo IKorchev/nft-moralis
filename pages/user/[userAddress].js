@@ -17,9 +17,9 @@ import Metadata from "../../components/Other/Metadata"
 import NFTsTab from "../../components/UserPage/NFTsTab"
 import ActivityTab from "../../components/UserPage/ActivityTab"
 
-function UserAddress() {
+function UserAddress({ nfts, transactions }) {
   const router = useRouter()
-
+  console.log(transactions)
   //prettier-ignore
   return (
     <>
@@ -50,8 +50,8 @@ function UserAddress() {
           </Tab>
         </Tab.List>
         <Tab.Panels className='w-full'>
-            <NFTsTab query={router.query}/>
-            <ActivityTab query={router.query} />
+            <NFTsTab nfts={nfts.result}/>
+            <ActivityTab transcations={transactions.result} />
         </Tab.Panels>
         </Tab.Group>
         </div>
@@ -61,3 +61,25 @@ function UserAddress() {
 }
 
 export default UserAddress
+
+export async function getServerSideProps({ params }) {
+  const _nfts = await fetch(`https://deep-index.moralis.io/api/v2/${params.userAddress}/nft?chain=0x3&format=decimal`, {
+    headers: {
+      "Contenty-Type": "application/json",
+      "X-API-Key": process.env.API_KEY,
+    },
+  }).then((res) => res.json())
+  const _transactions = await fetch(`https://deep-index.moralis.io/api/v2/${params.userAddress}?chain=0x3`, {
+    headers: {
+      "Contenty-Type": "application/json",
+      "X-API-Key": process.env.API_KEY,
+    },
+  }).then((res) => res.json())
+  const [nfts, transactions] = await Promise.all([_nfts, _transactions])
+  return {
+    props: {
+      nfts,
+      transactions,
+    },
+  }
+}

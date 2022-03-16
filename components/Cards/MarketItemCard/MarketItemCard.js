@@ -16,7 +16,13 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
   const { buyItem } = useMarketInteractions()
   const item = useRecoilValue(getItem({ tokenId, nftContract }))
   return (
-    <motion.div className='bg-secondary-800 min-h-80 shadow-glass relative flex w-48 flex-col overflow-hidden rounded-md  text-white xl:w-60'>
+    <motion.div
+      className='min-h-80 relative flex w-48
+       flex-shrink-0 flex-col
+        overflow-hidden rounded-md bg-secondary-800
+         text-white shadow-glass
+    duration-200 
+    focus:-translate-y-1 focus:shadow-lg focus:shadow-secondary-200/60 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary-200/60 lg:w-60'>
       <Link href={`/assets/${nftContract}/${tokenId}`}>
         <div className='h-max w-full cursor-pointer'>
           <VideoOrImage format={item?.attributes?.format} url={formatIpfs(item?.attributes?.image)} />
@@ -47,7 +53,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
                 <SwitchNetworkButton rounded='sm' size='xs' network='0x3' />
               ) : (
                 <button
-                  className='bg-secondary-100 hover:bg-secondary-700 flex items-center justify-center rounded-sm px-3 font-bold text-black ring-black transition duration-300 focus:ring-2'
+                  className='flex items-center justify-center rounded-sm bg-secondary-100 px-3 font-bold text-black ring-black transition duration-300 focus:ring-2 hover:bg-secondary-700'
                   onClick={() => buyItem(nftContract, itemId, price)}>
                   Buy now
                 </button>

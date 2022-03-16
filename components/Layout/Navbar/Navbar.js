@@ -36,7 +36,7 @@ const Navbar = () => {
       <Disclosure as='nav' className='lg:hidden'>
         {({ open }) => (
           <>
-            <Disclosure.Button className='bg-secondary-100 fixed top-3 left-3 z-50 inline-block cursor-pointer rounded-lg p-5 lg:hidden'>
+            <Disclosure.Button className='bg-secondary-100 fixed top-3 left-3 z-40 inline-block cursor-pointer rounded-lg p-5 lg:hidden'>
               <span className='sr-only'>Open main menu</span>
               <div
                 className={` transform transition duration-700 ease-in-out ${
@@ -110,9 +110,7 @@ const Navbar = () => {
         } lg:block`}>
         <div className='container mx-auto flex items-center justify-between'>
           <Link href='/'>
-            <a className='z-10 my-4 inline cursor-pointer whitespace-nowrap text-3xl font-extrabold '>
-              NFT Explorer
-            </a>
+            <a className='z-10 my-4 inline cursor-pointer whitespace-nowrap text-3xl font-extrabold '>NFT Explorer</a>
           </Link>
           <div className='flex items-center justify-start'>
             <div className='flex flex-grow'>

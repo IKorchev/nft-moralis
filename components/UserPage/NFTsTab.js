@@ -1,28 +1,17 @@
 import { Tab } from "@headlessui/react"
 import { FilterIcon } from "@heroicons/react/solid"
-import { AnimatePresence, motion } from "framer-motion"
-import { filter, sortBy, uniqBy } from "lodash"
-import React, { Suspense, useState } from "react"
-import { useChain } from "react-moralis"
-import useSWR from "swr"
-import { getNFTsForUser, revalidateOptions } from "../../utils/fetcher"
+import { motion } from "framer-motion"
+import { uniqBy } from "lodash"
+import React, { useState } from "react"
 import NFTCard from "../Cards/NFTCard"
 import PaginatedItems from "../Other/PaginatedItems"
-import SortFilterAndClear from "../Other/SortAndFilter/SortFilterAndClear"
 import SectionContainer from "../SectionContainer"
 import SectionTitle from "../SectionTitle"
-import Drawer from "../Other/Drawer"
-import Loading from "../Other/Loading"
 
-const NFTsTab = ({ query }) => {
+const NFTsTab = ({ nfts }) => {
   const [open, setOpen] = useState(false)
-  const { chain } = useChain()
-  const options = {
-    url: "noNeedForUrl",
-    args: { chain: chain?.chainId, address: query.userAddress },
-  }
-  const { data, error, isValidating } = useSWR(options, getNFTsForUser, revalidateOptions)
-  const collections = uniqBy(data?.result, (token) => token.token_address)
+
+  const collections = uniqBy(nfts, (token) => token.token_address)
   const filterOptions = collections.map((el) => ({ data: el.token_address, name: el.name }))
 
   return (
@@ -32,7 +21,7 @@ const NFTsTab = ({ query }) => {
           <div>
             <SectionTitle title='Collected NFTs' />
           </div>
-          {data?.total && (
+          {nfts.length > 0 && (
             <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
               <FilterIcon className='text-secondary-100 h-6 w-6' />
             </button>
@@ -42,12 +31,12 @@ const NFTsTab = ({ query }) => {
           <h2 id='nfts-heading' className='sr-only'>
             Collected NFTs
           </h2>
-          {data?.total > 0 ? (
+          {nfts.length > 0 ? (
             <SectionContainer>
               <div className='flex-grow'>
                 <PaginatedItems
                   isLayoutAnimated={false}
-                  items={data?.result}
+                  items={nfts}
                   itemsPerPage={18}
                   renderItem={(el, i) => {
                     return (

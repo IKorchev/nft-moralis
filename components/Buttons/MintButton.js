@@ -5,12 +5,12 @@ const MintButton = ({ contractAddress, cost }) => {
   const { Moralis } = useMoralis()
   const { mintToken } = useMarketInteractions()
   return (
-    <div className='border-primary-600 bg-primary-700 mt-12 w-max rounded-full border-2 pr-5'>
+    <div className='border-secondary-600 bg-secondary-500 mt-12 w-max rounded-full border-2 pr-5'>
       <button
         onClick={async () => {
           mintToken(contractAddress, cost, 1)
         }}
-        className='bg-secondary-100 hover:bg-secondary-700 w-max rounded-full py-1 px-3 text-lg transition  duration-500'>
+        className='bg-secondary-100 hover:bg-secondary-700 focus:bg-secondary-700 w-max rounded-full py-1 px-3 text-lg transition  duration-200'>
         Mint now
       </button>
       <span> {cost} ETH </span>

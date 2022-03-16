@@ -4,7 +4,8 @@ import SwitchNetworkButton from "../Buttons/SwitchNetworkButton"
 import MintButton from "../Buttons/MintButton"
 import useSWR from "swr"
 import { getFetcher } from "../../utils/fetcher"
-
+import Loading from "../Other/Loading"
+import { BeatLoader } from "react-spinners"
 const Mint = ({ contractAddress }) => {
   const { account } = useMoralis()
   const { chain } = useChain()
@@ -14,6 +15,14 @@ const Mint = ({ contractAddress }) => {
   )
   console.log(data)
   console.log(error)
+  if (!data) {
+    return (
+      <div className='flex h-24 w-full items-center justify-center'>
+        <BeatLoader color='white' speedMultiplier={0.5} size={10} />
+      </div>
+    )
+  }
+
   return (
     <>
       {

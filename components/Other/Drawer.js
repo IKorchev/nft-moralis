@@ -8,7 +8,7 @@ const Drawer = ({ open, setOpen, ...props }) => {
   return (
     <Transition.Root show={open} className='lg:hidden' as={motion.div}>
       <Dialog as='div' className='fixed inset-0 overflow-hidden' onClose={setOpen}>
-        <div className='absolute inset-0 overflow-hidden'>
+        <div className='absolute inset-0 overflow-hidden '>
           <Dialog.Overlay
             as={motion.div}
             initial={{ opacity: 0 }}
@@ -25,10 +25,8 @@ const Drawer = ({ open, setOpen, ...props }) => {
                 animate={{ x: 0 }}
                 transition={{ duration: 0.3 }}
                 className='bg-primary-900/80 shadow-glass-small flex h-screen flex-col overflow-y-scroll py-6 backdrop-blur-sm backdrop-filter '>
-                <Dialog.Description className='flex items-center justify-between px-4 sm:px-6'>
-                  <Dialog.Title className='text-2xl font-medium text-gray-100'>
-                    Sort and Filter
-                  </Dialog.Title>
+                <Dialog.Description className='flex items-center justify-between px-4 sm:px-6 '>
+                  <Dialog.Title className='text-2xl font-medium text-gray-100'>Sort and Filter</Dialog.Title>
                   <button onClick={() => setOpen(false)} className='text-white'>
                     <XIcon className='h-6 w-6' />
                   </button>

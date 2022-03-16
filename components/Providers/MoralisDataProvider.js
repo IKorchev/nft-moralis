@@ -5,6 +5,8 @@ import { imagesState } from "../../store/imagesSlice"
 import { listingsState } from "../../store/listingsSlice"
 import { useSetRecoilState, useRecoilValue } from "recoil"
 import { useRouter } from "next/router"
+import { mutate } from "swr"
+import { getFetcher } from "../../utils/fetcher"
 
 const MoralisDataContext = createContext({})
 export const useMoralisData = () => {
@@ -20,7 +22,11 @@ const MoralisDataProvider = ({ children }) => {
   const setListings = useSetRecoilState(listingsState)
   const setImages = useSetRecoilState(imagesState)
   const { featured } = useRecoilValue(allLaunchpadsState)
-
+  useEffect(() => {
+    if (featured !== null) {
+      mutate(`/api/nft/data?contract=${featured?.attributes.contractAddress}`, getFetcher)
+    }
+  }, [featured])
   const { data: allListings } = useMoralisQuery(
     "MarketItems",
     (q) => q.equalTo("sold", false).equalTo("confirmed", true).descending("createdAt"),
@@ -54,7 +60,7 @@ const MoralisDataProvider = ({ children }) => {
     if (account) {
       router.prefetch(`/user/${account}`)
     }
-  }, [account])
+  }, [account, chain])
 
   const value = {
     chain,

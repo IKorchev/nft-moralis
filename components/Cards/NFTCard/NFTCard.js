@@ -2,38 +2,30 @@ import { AnimatePresence } from "framer-motion"
 import { formatChain, formatIpfs } from "../../../utils/common"
 import Link from "next/link"
 import useSWR from "swr"
-import { tokenIdFetcher, revalidateOptions, getFetcher } from "../../../utils/fetcher"
+import { revalidateOptions, getFetcher } from "../../../utils/fetcher"
 import { shortenIfAddress } from "@usedapp/core"
 import { useChain } from "react-moralis"
 import ListItemModal from "../../tokenId/ListItemModal"
-import { Suspense, useState } from "react"
+import { useState } from "react"
 import VideoOrImage from "./VideoOrImage"
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton"
 import SkeletonCard from "../SkeletonCard/SkeletonCard"
 import SkeletonImage from "../SkeletonCard/SkeletonImage"
 
-const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props }) => {
+const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index }) => {
   const { chain, account } = useChain()
   const [isOpen, setIsOpen] = useState(false)
   const chainString = formatChain(chain?.networkId)
   const [loading, setLoading] = useState("loading")
-  const { data, error, isValidating } = useSWR(
+  const { data, isValidating, error } = useSWR(
     chain
       ? `/api/nft?contract=${tokenAddress}&tokenId=${tokenId}&chainId=${chain?.chainId}&chainString=${chainString}`
       : null,
     getFetcher,
-    revalidateOptions
+    { revalidateIfStale: true, revalidateOnFocus: false }
   )
-  let image
-  if (data) {
-    image =
-      formatIpfs(data?.metadata?.image) ||
-      formatIpfs(data?.metadata?.image_url) ||
-      formatIpfs(data?.metadata?.url)
-  }
-  console.log(data)
-  console.log(error)
-  if (isValidating) return <SkeletonCard />
+  //prettier-ignore
+  const image = formatIpfs(data?.metadata?.image || data?.metadata?.image_url || data?.metadata?.url)
+  if (isValidating || !image) return <SkeletonCard />
   return (
     <div className='bg-secondary-800 shadow-glass relative flex h-72 w-48 flex-col  overflow-hidden rounded-md text-white lg:h-[21rem] lg:w-60'>
       <Link href={`/assets/${tokenAddress}/${tokenId}`}>
@@ -49,9 +41,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
       <div className='flex flex-col items-start px-2 py-1'>
         <Link passHref href={`/assets/${tokenAddress}/`}>
           <a>
-            <small className='text-[0.7rem] text-white hover:text-gray-300'>
-              {shortenIfAddress(tokenAddress)}
-            </small>
+            <small className='text-[0.7rem] text-white hover:text-gray-300'>{shortenIfAddress(tokenAddress)}</small>
           </a>
         </Link>
         <Link href={`/assets/${tokenAddress}/${tokenId}`}>
@@ -65,14 +55,7 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index, ...props })
               List for sale
             </button>
             <AnimatePresence>
-              {isOpen && (
-                <ListItemModal
-                  chain={chain}
-                  data={data}
-                  isOpen={isOpen}
-                  onClose={() => setIsOpen(!isOpen)}
-                />
-              )}
+              {isOpen && <ListItemModal chain={chain} data={data} isOpen={isOpen} onClose={() => setIsOpen(!isOpen)} />}
             </AnimatePresence>
           </>
         )}
