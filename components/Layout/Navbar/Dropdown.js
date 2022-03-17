@@ -22,9 +22,9 @@ export default function Dropdown() {
   return (
     <Menu as='div' className='relative z-50 inline-block text-left'>
       <Menu.Button
-        className='flex items-center p-0 hover:bg-opacity-30 
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-white
-        focus-visible:ring-opacity-75'>
+        className='flex items-center p-0 focus:outline-none 
+        focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75
+        hover:bg-opacity-30'>
         <AccountAndBalance />
       </Menu.Button>
       <Menu.Items
@@ -43,8 +43,8 @@ export default function Dropdown() {
           clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
         }}
         transition={{ duration: 0.2 }}
-        className='bg-secondary-300 border-primary-500 absolute right-0 z-50 mt-2  w-48 origin-top transform
-           rounded-md  border p-2 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+        className='absolute right-0 z-50 mt-2 w-48 origin-top  transform rounded-md border
+           border-primary-500  bg-secondary-300 p-2 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
         <Menu.Item>
           {({ active }) => (
             <button
@@ -52,9 +52,7 @@ export default function Dropdown() {
                 copyTextToClipboard(account)
                 notify("Address copied!", "success")
               }}
-              className={`${
-                active ? "bg-secondary-500 text-white" : ""
-              } text-md flex w-full items-center px-2 py-2`}>
+              className={`${active ? "bg-secondary-500 text-white" : ""} text-md flex w-full items-center px-2 py-2`}>
               <AiOutlineCopy className='mr-2 text-lg ' /> Copy address
             </button>
           )}
@@ -63,9 +61,7 @@ export default function Dropdown() {
           {({ active }) => (
             <button
               onClick={() => router.push(`/user/${account}`)}
-              className={`${
-                active ? "bg-secondary-500 text-white" : " "
-              } text-md flex w-full items-center  px-2 py-2`}>
+              className={`${active ? "bg-secondary-500 text-white" : " "} text-md flex w-full items-center  px-2 py-2`}>
               <AiFillAppstore className='mr-2 text-lg' /> NFTs
             </button>
           )}

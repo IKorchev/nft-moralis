@@ -35,7 +35,7 @@ const LandingPage = () => {
             </p>
           </div>
         </div>
-        <div className='mt-12 '>
+        <div className='mt-12 space-x-5'>
           <Link href='/marketplace'>
             <Primary title='Marketplace' />
           </Link>

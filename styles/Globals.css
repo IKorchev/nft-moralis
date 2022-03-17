@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 @import "react-toastify/dist/ReactToastify.css";
-
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,14 +24,14 @@
     @apply text-2xl font-semibold text-black;
   }
   .card {
-    @apply shadow-3xl hover:border-secondary z-0 mt-4 flex w-80 
-    transform flex-col items-center overflow-hidden rounded-lg border-t-4 bg-white
-     text-black backdrop-filter duration-200 hover:-translate-y-1;
+    @apply hover:border-secondary z-0 mt-4 flex w-80 transform 
+    flex-col items-center overflow-hidden rounded-lg border-t-4 bg-white text-black
+     shadow-3xl backdrop-filter duration-200 hover:-translate-y-1;
   }
 }
 @layer utilities {
   .styled-scrollbar {
-    @apply scrollbar scrollbar-thin scrollbar-track-secondary-500  scrollbar-thumb-secondary-200;
+    @apply scrollbar scrollbar-thin scrollbar-thumb-secondary-200  scrollbar-track-secondary-500;
   }
   .react-select__menu-list {
     @apply .styled-scrollbar;

@@ -35,8 +35,6 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold }) => {
         <Link href={`/assets/${nftContract}/${tokenId}`}>
           <a className='w-max py-1 pr-5 hover:text-gray-300'>{item?.attributes?.name || "Unknown"}</a>
         </Link>
-      </div>
-      <div className='p-2 '>
         {sold ? (
           <p className='mt-1 flex py-0.5 text-xs'>
             last

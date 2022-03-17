@@ -9,13 +9,17 @@ import CollectionsDropdown from "./CollectionsDropdown"
 import { useMoralis } from "react-moralis"
 import { motion, AnimatePresence } from "framer-motion"
 import { Disclosure } from "@headlessui/react"
-import { AiFillCopy } from "react-icons/ai"
+import { AiFillCopy, AiOutlineShop, AiOutlineHome, AiOutlinePlusSquare } from "react-icons/ai"
 import { copyTextToClipboard } from "../../../utils/common"
 import { toast } from "react-toastify"
 import { customStyles, CustomOption } from "../../../utils/selectCustomStyles"
 import { useRouter } from "next/router"
 import { useRecoilValue } from "recoil"
 import { launchpadsState } from "../../../store/store"
+import { BiCollection } from "react-icons/bi"
+import { VscRocket } from "react-icons/vsc"
+
+
 
 const Navbar = () => {
   const allLaunchpads = useRecoilValue(launchpadsState)
@@ -36,7 +40,7 @@ const Navbar = () => {
       <Disclosure as='nav' className='lg:hidden'>
         {({ open }) => (
           <>
-            <Disclosure.Button className='bg-secondary-100 fixed top-3 left-3 z-40 inline-block cursor-pointer rounded-lg p-5 lg:hidden'>
+            <Disclosure.Button className='fixed top-3 right-3 z-50 inline-block cursor-pointer rounded-lg bg-secondary-100 p-5 lg:hidden'>
               <span className='sr-only'>Open main menu</span>
               <div
                 className={` transform transition duration-700 ease-in-out ${
@@ -59,24 +63,41 @@ const Navbar = () => {
                   easings: "easeInOut",
                   duration: 0.3,
                 }}
-                className='bg-primary-800 fixed z-40 flex w-screen flex-col items-start justify-evenly  rounded-b-xl px-5 py-24 text-white'>
+                className='fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl bg-primary-800  px-5 py-12 text-2xl text-white md:text-3xl'>
                 <Link href='/'>
-                  <a className='my-4 mb-10 cursor-pointer text-4xl'>NFT Explorer</a>
+                  <a className=' cursor-pointer text-4xl'>NFT Explorer</a>
                 </Link>
+                <hr className='-ml-6 mb-5 mt-2 w-screen border-2 border-secondary-200' />
                 <Link href='/'>
-                  <a className='my-4 cursor-pointer text-3xl'>Home</a>
+                  <a className='my-3 flex  text-white'>
+                    <AiOutlineHome className='mr-3 ' /> Home
+                  </a>
                 </Link>
                 <Link href='/marketplace'>
-                  <a className='cursor-pointer py-4 text-3xl'>Marketplace</a>
+                  <a className='my-3 flex  text-white'>
+                    <AiOutlineShop className='mr-3' /> Marketplace
+                  </a>
                 </Link>
                 <Link href='/launchpad'>
-                  <a className='my-4 mb-6  cursor-pointer text-3xl'>Launchpad</a>
+                  <a className='my-3 flex  text-white'>
+                    <VscRocket className='mr-3' /> Launchpad
+                  </a>
+                </Link>
+                <Link href='/collections'>
+                  <a className='my-3 flex '>
+                    <BiCollection className='mr-3' /> All collections
+                  </a>
+                </Link>
+                <Link href='/collections'>
+                  <a className='my-3 flex '>
+                    <AiOutlinePlusSquare className='mr-3' /> Add a collection
+                  </a>
                 </Link>
                 {account ? (
                   <div className='flex flex-col '>
                     <div className='flex items-center '>
                       <Link href={`/user/${account}`}>
-                        <a className='my-4 flex text-3xl'>
+                        <a className='my-4 flex '>
                           <AccountAndBalance icon={false} />
                         </a>
                       </Link>
@@ -105,39 +126,31 @@ const Navbar = () => {
           scrolled
             ? "bg-primary-900/50 backdrop-blur-sm backdrop-filter"
             : !scrolled && !isHomePage
-            ? "border-secondary-100 bg-primary-900 border-b"
+            ? "border-b border-secondary-100 bg-primary-900"
             : ""
-        } lg:block`}>
-        <div className='container mx-auto flex items-center justify-between'>
+        } lg:flex`}>
+        <div className='container mx-auto flex items-center space-x-10 py-5 lg:text-sm xl:text-lg'>
           <Link href='/'>
-            <a className='z-10 my-4 inline cursor-pointer whitespace-nowrap text-3xl font-extrabold '>NFT Explorer</a>
+            <a className='z-10 inline cursor-pointer whitespace-nowrap text-2xl font-extrabold '>NFT Explorer</a>
           </Link>
-          <div className='flex items-center justify-start'>
-            <div className='flex flex-grow'>
-              <Link href='/marketplace'>
-                <a className='my-4 mx-5 cursor-pointer text-xl  transition duration-200 hover:text-gray-300'>
-                  Marketplace
-                </a>
-              </Link>
-              <Link href='/launchpad'>
-                <a className='my-4 mx-5 cursor-pointer text-xl  transition duration-200 hover:text-gray-300'>
-                  Launchpad
-                </a>
-              </Link>
-              <CollectionsDropdown />
-            </div>
-            <div className='ml-4 cursor-text xl:ml-16'>
-              <Select
-                className='react-select-container'
-                classNamePrefix='react-select'
-                placeholder='Search collections'
-                components={{ Option: CustomOption }}
-                styles={customStyles}
-                options={options}
-              />
-            </div>
+          <div className='flex items-center justify-start space-x-5'>
+            <Link href='/marketplace'>
+              <a className='cursor-pointer transition duration-200 hover:text-secondary-100 '>Marketplace</a>
+            </Link>
+            <Link href='/launchpad'>
+              <a className='cursor-pointer transition duration-200 hover:text-secondary-100 '>Launchpad</a>
+            </Link>
+            <CollectionsDropdown />
+            <Select
+              className='react-select-container'
+              classNamePrefix='react-select'
+              placeholder='Search collections'
+              components={{ Option: CustomOption }}
+              styles={customStyles}
+              options={options}
+            />
           </div>
-          {account ? <Dropdown /> : <ConnectWalletButton />}
+          <div className='flex flex-grow justify-end'>{account ? <Dropdown /> : <ConnectWalletButton />}</div>
         </div>
       </div>
     </div>

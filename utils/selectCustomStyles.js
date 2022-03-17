@@ -5,6 +5,7 @@ export const customStyles = {
     ...provided,
     width: 300,
     cursor: "text",
+    color: "white",
     background: "#10011F",
     // Overwrittes the different states of border
     borderColor: "#F70C76",
@@ -18,11 +19,17 @@ export const customStyles = {
   menu: (provided, state) => ({
     ...provided,
     gap: "5px",
+    color: "white",
+
     backgroundColor: "#420042",
     padding: "0 2px",
   }),
   dropdownIndicator: () => ({
     display: "none",
+  }),
+  input: (provided, state) => ({
+    ...provided,
+    color: "white",
   }),
   indicatorSeparator: () => ({ display: "none" }),
   menuList: (provided, state) => ({
@@ -33,6 +40,7 @@ export const customStyles = {
     flexDirection: "column",
     flexShrink: "0",
     gap: "2px",
+
     scrollBehavior: "smooth",
     "::-webkit-scrollbar": {
       width: 5,
@@ -52,15 +60,15 @@ export const customStyles = {
 
 export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected }) => {
   return (
-    <div className='bg-secondary-400 border-secondary-100 border' ref={innerRef} {...innerProps}>
+    <div className='border border-secondary-100 bg-secondary-400' ref={innerRef} {...innerProps}>
       <Link href={`/assets/${data.contractAddress}`}>
         <div
           className={`
            mx-3 flex h-12 
-          flex-shrink-0 cursor-pointer items-center overflow-hidden rounded-md
+          flex-shrink-0 cursor-pointer items-center 
            ${isSelected ? "bg-secondary-100" : isFocused ? "bg-secondary-800" : "bg-secondary-600"}`}>
           <img
-            className='border-secondary-100 bg-secondary-200 h-12 w-12 border-r object-cover'
+            className='h-12 w-12 border-r border-secondary-100 bg-secondary-200 object-cover'
             src={data.image}
             alt='Collection'
           />
