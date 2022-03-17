@@ -6,34 +6,37 @@ import { revalidateOptions, getFetcher } from "../../../utils/fetcher"
 import { shortenIfAddress } from "@usedapp/core"
 import { useChain } from "react-moralis"
 import ListItemModal from "../../tokenId/ListItemModal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import VideoOrImage from "./VideoOrImage"
 import SkeletonCard from "../SkeletonCard/SkeletonCard"
 import SkeletonImage from "../SkeletonCard/SkeletonImage"
-
-const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index }) => {
+import { useNft } from "use-nft"
+const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, metadata, index }) => {
   const { chain, account } = useChain()
   const [isOpen, setIsOpen] = useState(false)
   const chainString = formatChain(chain?.networkId)
-  const [loading, setLoading] = useState("loading")
-  const { data, isValidating, error } = useSWR(
-    chain
-      ? `/api/nft?contract=${tokenAddress}&tokenId=${tokenId}&chainId=${chain?.chainId}&chainString=${chainString}`
-      : null,
-    getFetcher,
-    { revalidateIfStale: true, revalidateOnFocus: false }
-  )
-  //prettier-ignore
-  const image = formatIpfs(data?.metadata?.image || data?.metadata?.image_url || data?.metadata?.url)
-  if (isValidating || !image) return <SkeletonCard />
+  const [isImageLoading, setIsImageLoading] = useState("loading")
+  const { loading, error, nft } = useNft(tokenAddress, tokenId)
+  console.log(nft)
+  console.log(tokenAddress)
+
+  // description: "This is #46 out of 1000 randomly generated images based on Rick's (Target Hit) Twitch Emote. YouTube: Target Hit - targethit.com"
+  // image: "https://ipfs.io/ipfs/Qmd5LGK9hNtacDEYjByxPW89sNJi2NuCBGv7MaCyKEsb5T/46.png"
+  // imageType: "image"
+  // metadataUrl: "https://ipfs.io/ipfs/QmSYZCbQKmxsMfYkecSsM2AWfzgPgGH2rP75fCYKhNov9f/46.json"
+  // name: "Rick #46"
+  // owner: "0x910111ECD2377662F98d5b8d735539A4157B8a83"
+  if (loading) return <SkeletonCard />
+  if (error) return null
+
   return (
-    <div className='bg-secondary-800 shadow-glass relative flex h-72 w-48 flex-col  overflow-hidden rounded-md text-white lg:h-[21rem] lg:w-60'>
+    <div className='relative flex h-72 w-48 flex-col overflow-hidden rounded-md  bg-secondary-800 text-white shadow-glass lg:h-[21rem] lg:w-60'>
       <Link href={`/assets/${tokenAddress}/${tokenId}`}>
         <div>
-          <a className={`${loading === "loaded" ? "block" : "hidden"}`}>
-            <VideoOrImage setLoading={setLoading} format={data?.metadata?.format} url={image} />
+          <a className={`${isImageLoading === "loaded" ? "block" : "hidden"}`}>
+            <VideoOrImage setLoading={setIsImageLoading} format={nft.imageType} url={nft.image} />
           </a>
-          <a className={`${loading !== "loaded" ? "block" : "hidden"}`}>
+          <a className={`${isImageLoading !== "loaded" ? "block" : "hidden"}`}>
             <SkeletonImage />
           </a>
         </div>
@@ -45,13 +48,13 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, index }) => {
           </a>
         </Link>
         <Link href={`/assets/${tokenAddress}/${tokenId}`}>
-          <a className='font-bold hover:text-gray-300'>{data?.metadata?.name}</a>
+          <a className='font-bold hover:text-gray-300'>{nft.name}</a>
         </Link>
-        {data?.owner.toLowerCase() === account?.toLowerCase() && (
+        {nft.owner.toLowerCase() === account?.toLowerCase() && (
           <>
             <button
               onClick={() => setIsOpen(true)}
-              className='bg-secondary-500 mt-1  rounded-sm px-2 py-0.5 text-white transition duration-150 active:scale-95'>
+              className='mt-1 rounded-sm  bg-secondary-500 px-2 py-0.5 text-white transition duration-150 active:scale-95'>
               List for sale
             </button>
             <AnimatePresence>

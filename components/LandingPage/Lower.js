@@ -4,15 +4,9 @@ import Slider from "react-slick"
 import Link from "next/link"
 import { useRecoilValue } from "recoil"
 import FeaturedSection from "./FeaturedSection"
-import { useEffect, useState } from "react"
 
 const LandingPage2 = () => {
   const { completed, upcoming } = useRecoilValue(allLaunchpadsState)
-  const [showChild, setShowChild] = useState(false)
-  useEffect(() => {
-    setShowChild(true)
-  }, [])
-  if (!showChild) return null
   return (
     <div className='py-24'>
       <div className=' container mx-auto grid grid-cols-1 gap-5 lg:mt-48 lg:grid-cols-2'>
@@ -29,6 +23,7 @@ const LandingPage2 = () => {
             pauseOnHover={true}
             className=' mx-auto w-full overflow-hidden rounded-xl bg-teal-100 shadow-glass-large'
             arrows={false}
+            
             autoPlaySpeed={2000}
             autoplay>
             {upcoming?.map((el) => {

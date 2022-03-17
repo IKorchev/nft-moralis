@@ -19,8 +19,6 @@ import { launchpadsState } from "../../../store/store"
 import { BiCollection } from "react-icons/bi"
 import { VscRocket } from "react-icons/vsc"
 
-
-
 const Navbar = () => {
   const allLaunchpads = useRecoilValue(launchpadsState)
   const { account } = useMoralis()

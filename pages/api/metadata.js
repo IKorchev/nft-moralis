@@ -28,7 +28,7 @@ export async function getTokenMetadata(tokenURI) {
 }
 
 export default async function handler(req, res) {
-  const { tokenURI } = JSON.parse(req.body)
+  const { tokenURI } = req.query
   try {
     const { metadata, error } = await getTokenMetadata(tokenURI)
     if (error && !metadata) {

@@ -11,15 +11,21 @@ import { FiActivity } from "react-icons/fi"
 import Jazzicon from "../../components/Other/Jazzicon"
 //COMPONENTS
 import { Tab } from "@headlessui/react"
-
-import Loading from "../../components/Other/Loading"
 import Metadata from "../../components/Other/Metadata"
 import NFTsTab from "../../components/UserPage/NFTsTab"
 import ActivityTab from "../../components/UserPage/ActivityTab"
+import { useMoralisWeb3Api } from "react-moralis"
+
+import { getDefaultProvider } from "ethers"
+import { NftProvider, useNft } from "use-nft"
+
+const ethersConfig = {
+  provider: getDefaultProvider("https://speedy-nodes-nyc.moralis.io/a66bbe066b91269ffbcb96b7/eth/ropsten"),
+}
 
 function UserAddress({ nfts, transactions }) {
   const router = useRouter()
-  console.log(transactions)
+  const Web3Api = useMoralisWeb3Api()
   //prettier-ignore
   return (
     <>
@@ -50,7 +56,9 @@ function UserAddress({ nfts, transactions }) {
           </Tab>
         </Tab.List>
         <Tab.Panels className='w-full'>
-            <NFTsTab nfts={nfts.result}/>
+            <NftProvider fetcher={["ethers", ethersConfig]}> 
+              <NFTsTab nfts={nfts.result}/>
+            </NftProvider>
             <ActivityTab transcations={transactions.result} />
         </Tab.Panels>
         </Tab.Group>
@@ -75,6 +83,7 @@ export async function getServerSideProps({ params }) {
       "X-API-Key": process.env.API_KEY,
     },
   }).then((res) => res.json())
+
   const [nfts, transactions] = await Promise.all([_nfts, _transactions])
   return {
     props: {
