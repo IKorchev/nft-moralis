@@ -38,7 +38,7 @@ const CollectionHeader = ({ address }) => {
         <motion.div variants={containerVariants} className='flex flex-col items-center'>
           <h1 className='text-center text-3xl font-black '>{collection?.collectionName}</h1>
           <div variants={itemVariant} className='my-5 h-48 w-48 overflow-hidden rounded-full border-4 border-white'>
-            <img src={collection.imageUrl} alt='' className='h-full w-full' />
+            <img src={collection?.imageUrl} alt='' className='h-full w-full' />
           </div>
           <h3 className=' -mt-12 rounded-full bg-white px-3 py-2 font-bold text-black'>{shortenIfAddress(address)}</h3>
         </motion.div>
