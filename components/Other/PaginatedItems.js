@@ -3,7 +3,17 @@ import { useEffect, useRef, useState, Suspense } from "react"
 import ReactPaginate from "react-paginate"
 import Loading from "./Loading"
 
-function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated = false }) {
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.25,
+    },
+  },
+}
+
+function PaginatedItems({ items, itemsPerPage = 20, renderItem }) {
   const [currentItems, setCurrentItems] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
@@ -26,12 +36,17 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
 
   return (
     <Suspense fallback={<Loading />}>
-      <motion.div layout={isLayoutAnimated} className='relative mx-auto text-white'>
+      <div className='relative mx-auto text-white'>
         <>
           <div aria-hidden='true' className='absolute -top-24' ref={scrollToRef} />
-          <div class='flex flex-wrap justify-center gap-2 lg:justify-start'>
+          <motion.div
+            variants={container}
+            layout
+            initial='hidden'
+            whileInView='show'
+            class='flex flex-wrap justify-center gap-2 lg:justify-start'>
             {currentItems.map(renderItem)}
-          </div>
+          </motion.div>
           {items?.length > itemsPerPage && (
             <ReactPaginate
               containerClassName='flex my-5 rounded-lg justify-center items-center overflow-hidden'
@@ -56,7 +71,7 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem, isLayoutAnimated
             />
           )}
         </>
-      </motion.div>
+      </div>
     </Suspense>
   )
 }

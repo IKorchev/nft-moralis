@@ -36,7 +36,7 @@ const Marketplace = () => {
             <SectionTitle title='Marketplace' />
           </div>
           <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
-            <FilterIcon className='text-secondary-100 h-6 w-6' />
+            <FilterIcon className='h-6 w-6 text-secondary-100' />
           </button>
         </div>
         <section aria-labelledby='marketplace-heading' className='pt-6 pb-12'>
@@ -55,6 +55,10 @@ const Marketplace = () => {
                   itemsPerPage={25}
                   renderItem={(el, i) => (
                     <MarketItem
+                      variants={{
+                        hidden: { opacity: 0, y: 50 },
+                        show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                      }}
                       createdAt={el.createdAt}
                       price={el.attributes.price}
                       tokenUri={el.tokenUri}

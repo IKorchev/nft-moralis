@@ -4,9 +4,7 @@ import { FilterIcon } from "@heroicons/react/solid"
 import SectionTitle from "../SectionTitle"
 import SectionContainer from "../SectionContainer"
 import SortSection from "../Other/SortAndFilter/SortSection"
-import ClearFiltersButton from "../Other/SortAndFilter/ClearFiltersButton"
 import MarketItemCard from "../Cards/MarketItemCard"
-import { useRecoilValue } from "recoil"
 
 const Main = ({ itemsAvailableForPurchase }) => {
   const [open, setOpen] = useState(false)
@@ -34,7 +32,7 @@ const Main = ({ itemsAvailableForPurchase }) => {
             <div className='hidden lg:flex'>
               <div className='space-y-1'>
                 <SortSection />
-                <ClearFiltersButton />
+                {/* <ClearFiltersButton /> */}
               </div>
             </div>
 

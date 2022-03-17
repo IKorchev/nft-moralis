@@ -1,35 +1,35 @@
 import { CollectionCard } from "../Cards/CollectionCard"
 import { motion } from "framer-motion"
 import SectionTitle from "../SectionTitle"
-const FeaturedSection = ({ completed }) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        staggerChildren: 0.15,
-      },
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.15,
     },
-  }
+  },
+}
 
-  const item = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
+const item = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+}
 
+const FeaturedSection = ({ completed }) => {
   return (
-    <div
+    <motion.div
       style={{
         backgroundImage: "url('/Group_1.png')",
         backgroundSize: "contain",
       }}
+      variants={container}
+      initial='hidden'
+      whileInView='show'
       className='mt-12 bg-cover bg-center bg-no-repeat py-24'>
       <SectionTitle title='Featured collections' justify='center' />
       <motion.div
-        variants={container}
-        initial='hidden'
-        whileInView='show'
         viewport={{ once: true }}
         className=' container mx-auto  mt-12  flex flex-wrap items-center
    justify-center gap-2 lg:gap-10'>
@@ -43,7 +43,7 @@ const FeaturedSection = ({ completed }) => {
           </motion.div>
         ))}
       </motion.div>
-    </div>
+    </motion.div>
   )
 }
 
