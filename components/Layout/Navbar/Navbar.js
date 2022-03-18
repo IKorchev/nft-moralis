@@ -155,7 +155,7 @@ const Navbar = () => {
             </Link>
             <CollectionsDropdown />
             <Select
-              className='react-select-container'
+              className='react-select-container text-base'
               classNamePrefix='react-select'
               placeholder='Search collections'
               components={{ Option: CustomOption }}

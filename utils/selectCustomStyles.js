@@ -61,7 +61,7 @@ export const customStyles = {
 
 export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected }) => {
   return (
-    <div className='border border-secondary-100 bg-secondary-400' ref={innerRef} {...innerProps}>
+    <div className='border-secondary-100 bg-secondary-400 border' ref={innerRef} {...innerProps}>
       <Link href={`/assets/${data.contractAddress}`}>
         <div
           className={`
@@ -75,7 +75,9 @@ export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected
             src={data.image}
             alt='Collection'
           />
-          <h1 className='flex-grow px-3 hover:text-gray-500'>{truncate(data.label, { length: 29 })}</h1>
+          <h1 className='flex-grow whitespace-nowrap px-3 hover:text-gray-500'>
+            {truncate(data.label, { length: 29 })}
+          </h1>
         </div>
       </Link>
     </div>
