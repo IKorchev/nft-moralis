@@ -15,8 +15,11 @@ import useSWR from "swr"
 import Loading from "../../../components/Other/Loading"
 import SimilarItemsList from "../../../components/tokenId/SimilarItemsList"
 import SectionTitle from "../../../components/SectionTitle"
+import { useRecoilValue } from "recoil"
+import { chainState, currentUserState } from "../../../store/userSlice"
 const Token = () => {
-  const { chain, account } = useMoralisData()
+  const chain = useRecoilValue(chainState)
+  const account = useRecoilValue(currentUserState)
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const url = `/api/nft?contract=${router.query.contract}&tokenId=${router.query.tokenId}&chainId=0x3&chainString=eth/ropsten`
