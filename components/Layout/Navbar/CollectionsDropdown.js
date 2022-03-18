@@ -29,8 +29,9 @@ export default function Dropdown() {
           clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
         }}
         transition={{ duration: 0.2 }}
-        className='absolute right-0 z-50 w-max origin-top transform divide-y divide-secondary-700
-           rounded-md  border border-primary-500 bg-secondary-300 p-2 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+        className='absolute right-0 z-50 mt-2 w-max origin-top transform
+          rounded-md  border border-secondary-100
+         bg-secondary-800 p-2 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
         <Menu.Item as='li'>
           {({ active }) => (
             <Link href='/collections'>

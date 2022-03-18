@@ -30,10 +30,7 @@ const useMarketInteractions = () => {
     }
     // Continue saving the Item in the database.
     const Item = new ItemImage()
-    Item.set(
-      "image",
-      nftObject.metadata.image || nftObject.metadata.image_url || nftObject.metadata.url
-    )
+    Item.set("image", nftObject.metadata.image || nftObject.metadata.image_url || nftObject.metadata.url)
     Item.set("format", nftObject.metadata.format)
     Item.set("contractAddress", nftObject.contractAddress)
     Item.set("tokenId", nftObject.tokenId)
@@ -208,6 +205,7 @@ const useMarketInteractions = () => {
   const listItem = async (nftObject, price) => {
     const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
     const listingPrice = await getMarketListingPrice()
+    console.log(nftObject)
     if (!isMarketApproved) {
       getApprovalForAll(nftObject.contractAddress)
     }

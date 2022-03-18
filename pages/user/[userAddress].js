@@ -19,11 +19,55 @@ import { useMoralisWeb3Api } from "react-moralis"
 import { getDefaultProvider } from "ethers"
 import { NftProvider, useNft } from "use-nft"
 
+import { atom, selector, useRecoilState, useRecoilValue } from "recoil"
+import { uniqBy } from "lodash"
+import { findCollectionByAddress } from "../../store/store"
+
+export const nftsState = atom({
+  key: "nftsState",
+  default: [],
+})
+
+const nftOptions = selector({
+  key: "options",
+  get: ({ get, set }) => {
+    const nftsList = get(nftsState)
+    const collections = uniqBy(nftsList, (el) => el.token_address)
+    const infoList = collections.map((el) => get(findCollectionByAddress(el.token_address)))
+    return infoList
+  },
+})
+
+const filterState = atom({
+  key: "filterState",
+  default: null,
+})
+
+const filteredNftsState = selector({
+  key: "filteredNftsState",
+  default: nftsState,
+  get: ({ get }) => {
+    const filterBy = get(filterState)
+    const list = get(nftsState)
+    console.log(list)
+    if (filterBy !== null) {
+      return list.filter((el) => el.token_address.toLowerCase() === filterBy.toLowerCase())
+    }
+    return list
+  },
+})
+
 const ethersConfig = {
   provider: getDefaultProvider("https://speedy-nodes-nyc.moralis.io/a66bbe066b91269ffbcb96b7/eth/ropsten"),
 }
 
 function UserAddress({ nfts, transactions }) {
+  const [_nfts, setNfts] = useRecoilState(nftsState)
+  const [filter, setFilter] = useRecoilState(filterState)
+  const info = useRecoilValue(nftOptions)
+  const fnfts = useRecoilValue(filteredNftsState)
+  console.log(filter)
+  setNfts(nfts?.result)
   const router = useRouter()
   const Web3Api = useMoralisWeb3Api()
   //prettier-ignore
@@ -41,23 +85,23 @@ function UserAddress({ nfts, transactions }) {
             </span>
           </h2>
        <Tab.Group defaultChecked={1} as='div' className='container mt-5 flex flex-col items-center'>
-        <Tab.List className='bg-primary-700 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
+        <Tab.List className='bg-secondary-800 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
           <Tab
             className={({ selected }) =>
-              `${selected ? "bg-secondary-100/30 shadow-glass-large text-white" : ""}
-                } flex items-center rounded-lg px-12 py-4 `
+              `${selected ? "bg-secondary-600 border border-secondary-500 text-white" : ""}
+                 flex items-center rounded-lg px-12 py-4 `
             }>
             <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
           </Tab>
           <Tab
             //prettier-ignore
-            className={({ selected }) =>`${selected ? "bg-secondary-100/30 text-white shadow-glass-large" : ""} flex items-center px-12 py-3 rounded-lg `}>
+            className={({ selected }) =>`${selected ? "bg-secondary-600 border border-secondary-500 text-white" : ""} flex items-center px-12 py-3 rounded-lg `}>
             <FiActivity className='mr-3 text-xl' /> Activity
           </Tab>
         </Tab.List>
         <Tab.Panels className='w-full'>
             <NftProvider fetcher={["ethers", ethersConfig]}> 
-              <NFTsTab nfts={nfts.result}/>
+              <NFTsTab nfts={fnfts}/>
             </NftProvider>
             <ActivityTab transcations={transactions.result} />
         </Tab.Panels>

@@ -6,7 +6,7 @@ import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import DisconnectButton from "../../Buttons/DisconnectButton"
 import useScrollOffset from "../../../hooks/useScrollOffset"
 import CollectionsDropdown from "./CollectionsDropdown"
-import { useMoralis } from "react-moralis"
+import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
 import { motion, AnimatePresence } from "framer-motion"
 import { Disclosure } from "@headlessui/react"
 import { AiFillCopy, AiOutlineShop, AiOutlineHome, AiOutlinePlusSquare } from "react-icons/ai"
@@ -18,10 +18,11 @@ import { useRecoilValue } from "recoil"
 import { launchpadsState } from "../../../store/store"
 import { BiCollection } from "react-icons/bi"
 import { VscRocket } from "react-icons/vsc"
+import { useMoralisData } from "../../Providers/MoralisDataProvider"
 
 const Navbar = () => {
   const allLaunchpads = useRecoilValue(launchpadsState)
-  const { account } = useMoralis()
+  const { account, chain } = useMoralisData()
   const { scrolled } = useScrollOffset()
   const router = useRouter()
   const isHomePage = router.asPath === "/"
@@ -63,40 +64,50 @@ const Navbar = () => {
                 }}
                 className='fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl bg-primary-800  px-5 py-12 text-2xl text-white md:text-3xl'>
                 <Link href='/'>
-                  <a className=' cursor-pointer text-4xl'>NFT Explorer</a>
+                  <a className=' cursor-pointer text-4xl text-tertiary-100'>NFT Explorer</a>
                 </Link>
                 <hr className='-ml-6 mb-5 mt-2 w-screen border-2 border-secondary-200' />
                 <Link href='/'>
-                  <a className='my-3 flex  text-white'>
+                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
                     <AiOutlineHome className='mr-3 ' /> Home
                   </a>
                 </Link>
                 <Link href='/marketplace'>
-                  <a className='my-3 flex  text-white'>
+                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
                     <AiOutlineShop className='mr-3' /> Marketplace
                   </a>
                 </Link>
                 <Link href='/launchpad'>
-                  <a className='my-3 flex  text-white'>
+                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
                     <VscRocket className='mr-3' /> Launchpad
                   </a>
                 </Link>
                 <Link href='/collections'>
-                  <a className='my-3 flex '>
+                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
                     <BiCollection className='mr-3' /> All collections
                   </a>
                 </Link>
-                <Link href='/collections'>
-                  <a className='my-3 flex '>
+                <Link href='/collections/add'>
+                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
                     <AiOutlinePlusSquare className='mr-3' /> Add a collection
                   </a>
                 </Link>
-                {account ? (
+                <Select
+                  className='react-select-container  my-3 text-base'
+                  classNamePrefix='react-select'
+                  placeholder='Search collections'
+                  components={{ Option: CustomOption }}
+                  styles={customStyles}
+                  options={options}
+                />
+                {chain && chain.chainId !== "0x3" ? (
+                  <SwitchNetworkButton size='lg' rounded='sm' />
+                ) : account ? (
                   <div className='flex flex-col '>
-                    <div className='flex items-center '>
+                    <div className='flex items-center text-base '>
                       <Link href={`/user/${account}`}>
                         <a className='my-4 flex '>
-                          <AccountAndBalance icon={false} />
+                          <AccountAndBalance account={account} icon={false} />
                         </a>
                       </Link>
                       <button
@@ -104,13 +115,15 @@ const Navbar = () => {
                           copyTextToClipboard(account)
                           toast.success("Address copied", { autoClose: 2000 })
                         }}>
-                        <AiFillCopy className='h-full w-12 cursor-pointer' />
+                        <AiFillCopy className='ml-5 cursor-pointer text-xl' />
                       </button>
                     </div>
-                    <DisconnectButton className='my-6' />
+                    <DisconnectButton className='mt-2' />
                   </div>
                 ) : (
-                  <ConnectWalletButton />
+                  <div className='mt-2'>
+                    <ConnectWalletButton size='lg' rounded='sm' />
+                  </div>
                 )}
               </Disclosure.Panel>
             </AnimatePresence>
@@ -148,7 +161,15 @@ const Navbar = () => {
               options={options}
             />
           </div>
-          <div className='flex flex-grow justify-end'>{account ? <Dropdown /> : <ConnectWalletButton />}</div>
+          <div className='flex flex-grow justify-end'>
+            {!account ? (
+              <ConnectWalletButton size='base' rounded='sm' />
+            ) : chain && chain.chainId !== "0x3" ? (
+              <SwitchNetworkButton size='base' rounded='sm' />
+            ) : (
+              <Dropdown />
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,8 +1,6 @@
 import { Dialog } from "@headlessui/react"
 import { motion } from "framer-motion"
-import { useState } from "react"
-import useMarketInteractions from "../../hooks/useMarketInteraction"
-import { formatIpfs } from "../../utils/common"
+
 import ClipLoader from "react-spinners/ClipLoader"
 
 const ListItemModal = ({ onClose, isOpen, data, chain }) => {

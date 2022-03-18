@@ -7,6 +7,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .market-item-card {
+    @apply relative flex w-48 flex-shrink-0 flex-col overflow-hidden rounded-md border border-secondary-600 
+     bg-secondary-900 text-white shadow-glass lg:w-60;
+  }
+  .collection-card {
+    @apply relative w-48 flex-shrink-0 transform cursor-pointer flex-col overflow-hidden rounded-md
+    border border-secondary-600 bg-secondary-800/50 pb-3 shadow-glass backdrop-blur-sm backdrop-filter
+    duration-200 focus:border-secondary-100 hover:border-secondary-100 lg:w-60;
+  }
+  .card-button {
+    @apply flex items-center justify-center rounded-sm 
+    border border-secondary-100 bg-secondary-500 px-3 font-bold text-white ring-black transition duration-150 focus:bg-secondary-300 active:scale-95 hover:bg-secondary-300;
+  }
+
+}
+
 @layer base {
   .h1 {
     @apply font-montserrat text-5xl lg:text-8xl;
@@ -23,11 +40,7 @@
   h2 {
     @apply text-2xl font-semibold text-black;
   }
-  .card {
-    @apply hover:border-secondary z-0 mt-4 flex w-80 transform 
-    flex-col items-center overflow-hidden rounded-lg border-t-4 bg-white text-black
-     shadow-3xl backdrop-filter duration-200 hover:-translate-y-1;
-  }
+  
 }
 @layer utilities {
   .styled-scrollbar {

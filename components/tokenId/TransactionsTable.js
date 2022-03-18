@@ -32,33 +32,45 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
     }
   })
   return (
-    <Paper className='container mx-auto max-w-[70rem] overflow-hidden rounded-lg'>
-      <TableContainer className='styled-scrollbar h-[37rem]  bg-secondary-800'>
-        <Table stickyHeader aria-label='Transactions Table'>
+    <Paper className=' container mx-auto max-w-[70rem] overflow-hidden rounded-md border border-secondary-600 '>
+      <TableContainer className='styled-scrollbar h-[36.5rem]  bg-secondary-900 text-white'>
+        <Table className='text-white' aria-label='Transactions Table'>
           <TableHead>
             <TableRow>
-              <TableCell className='bg-secondary-700 text-white'>Date</TableCell>
-              <TableCell className='bg-secondary-700 text-white'>From</TableCell>
-              <TableCell className='bg-secondary-700 text-white'>To</TableCell>
-              <TableCell className='bg-secondary-700 text-white'>Tx Hash</TableCell>
-              <TableCell className='bg-secondary-700 text-white'>Amount</TableCell>
+              <TableCell sx={{ borderColor: "purple" }} className='text-white'>
+                <span className='text-white'>Date</span>
+              </TableCell>
+              <TableCell sx={{ borderColor: "purple" }}>
+                <span className='text-white'>From</span>
+              </TableCell>
+              <TableCell sx={{ borderColor: "purple" }}>
+                <span className='text-white'>To</span>
+              </TableCell>
+              <TableCell sx={{ borderColor: "purple" }}>
+                <span className='text-white'>Hash</span>
+              </TableCell>
+              <TableCell sx={{ borderColor: "purple" }}>
+                <span className='text-white'>Amount</span>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(({ hash, from, to, value, date }) => (
-              <TableRow key={hash} className='bg-secondary-700 text-white odd:bg-secondary-800'>
-                <TableCell className=' text-white'>{date}</TableCell>
-                <TableCell className='text-white'>
+              <TableRow key={hash} className='bg-secondary-800/40 text-white odd:bg-secondary-900'>
+                <TableCell sx={{ border: 0 }}>
+                  <span className=' text-white'>{date}</span>
+                </TableCell>
+                <TableCell sx={{ border: 0 }} className='text-white'>
                   <Link href={`/user/${from}`}>
-                    <a className='inline-flex hover:text-secondary-100 '>
+                    <a className='inline-flex text-white hover:text-secondary-100 '>
                       {shortenIfAddress(from)} <ExternalLinkIcon className='h-5 w-5' />
                     </a>
                   </Link>
                 </TableCell>
-                <TableCell className=' text-white '>
+                <TableCell sx={{ border: 0 }} className=' text-white '>
                   {to ? (
                     <Link href={`/user/${to}`}>
-                      <a className='inline-flex hover:text-secondary-100'>
+                      <a className='inline-flex text-white hover:text-secondary-100'>
                         {shortenIfAddress(to) || "null"} <ExternalLinkIcon className='h-5 w-5' />
                       </a>
                     </Link>
@@ -66,24 +78,26 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
                     "Null address"
                   )}
                 </TableCell>
-                <TableCell className=' text-white '>
+                <TableCell sx={{ border: 0 }} className=' text-white '>
                   <a
                     href={`${chain?.blockExplorerUrl}tx/${hash}`}
                     target='_blank'
                     rel='noreferrer'
-                    className='inline-flex hover:text-secondary-100'>
+                    className='inline-flex text-white hover:text-secondary-100'>
                     {shortenTransactionHash(hash) || "null"}
                     <ExternalLinkIcon className='h-5 w-5' />
                   </a>
                 </TableCell>
-                <TableCell className=' text-white '>{Moralis.Units.FromWei(value)}</TableCell>
+                <TableCell sx={{ border: 0 }}>
+                  <span className=' text-white '>{parseFloat(Moralis.Units.FromWei(value)).toFixed(3)}</span>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        className='bg-secondary-500 text-white'
+        className='border-t border-secondary-500 bg-secondary-900 text-white'
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={rows.length}

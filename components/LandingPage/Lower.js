@@ -31,7 +31,7 @@ const LandingPage2 = () => {
           whileInView='show'
           viewport={{ once: true }}
           className='self-center p-5 py-12 text-center text-white lg:text-left'>
-          <motion.h2 variants={item} className='h1 font-montserrat text-6xl font-black text-emerald-300 xl:text-8xl'>
+          <motion.h2 variants={item} className='h1 font-montserrat text-6xl font-black text-tertiary-300 xl:text-8xl'>
             Upcoming collections
           </motion.h2>
           <motion.p variants={item} className='my-12 text-2xl'>
@@ -47,7 +47,7 @@ const LandingPage2 = () => {
           <Slider
             pauseOnFocus={false}
             pauseOnHover={true}
-            className=' mx-auto w-full overflow-hidden rounded-xl bg-teal-100 shadow-glass-large'
+            className=' bg-tertiary-50 mx-auto w-full overflow-hidden rounded-xl shadow-glass-large'
             arrows={false}
             autoPlaySpeed={2000}
             autoplay>

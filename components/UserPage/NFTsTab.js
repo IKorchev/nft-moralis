@@ -8,6 +8,9 @@ import PaginatedItems from "../Other/PaginatedItems"
 import SectionContainer from "../SectionContainer"
 import SectionTitle from "../SectionTitle"
 
+
+
+
 const NFTsTab = ({ nfts }) => {
   const [open, setOpen] = useState(false)
 

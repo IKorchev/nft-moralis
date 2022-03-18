@@ -27,7 +27,8 @@ const Token = () => {
   console.log(data)
   const image =
     formatIpfs(data?.metadata?.image) || formatIpfs(data?.metadata?.image_url) || formatIpfs(data?.metadata?.url)
-  if (error)
+  
+    if (error)
     return (
       <h1 className='grid h-screen place-items-center text-center text-4xl text-white'>
         Couldn't fetch data for this token.

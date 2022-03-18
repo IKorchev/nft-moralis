@@ -2,7 +2,7 @@ import { Menu } from "@headlessui/react"
 import { useMoralis } from "react-moralis"
 import { useRouter } from "next/router"
 import AccountAndBalance from "./AccountAndBalance"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { copyTextToClipboard } from "../../../utils/common"
 import { AiOutlineCopy, AiFillAppstore, AiOutlineDisconnect } from "react-icons/ai"
 import { toast } from "react-toastify"
@@ -25,7 +25,7 @@ export default function Dropdown() {
         className='flex items-center p-0 focus:outline-none 
         focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75
         hover:bg-opacity-30'>
-        <AccountAndBalance />
+        <AccountAndBalance account={account} />
       </Menu.Button>
       <Menu.Items
         as={motion.div}
@@ -44,7 +44,7 @@ export default function Dropdown() {
         }}
         transition={{ duration: 0.2 }}
         className='absolute right-0 z-50 mt-2 w-48 origin-top  transform rounded-md border
-           border-primary-500  bg-secondary-300 p-2 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+           border-secondary-100  bg-secondary-800 p-2 text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
         <Menu.Item>
           {({ active }) => (
             <button
@@ -71,8 +71,8 @@ export default function Dropdown() {
             <button
               onClick={deactivateWeb3}
               className={`${
-                active ? "bg-secondary-200 " : "bg-secondary-100"
-              }  text-md mt-1 flex w-full items-center px-2 py-2`}>
+                active ? "bg-secondary-500 text-white" : " "
+              }   text-md mt-1 flex w-full items-center px-2 py-2`}>
               <AiOutlineDisconnect className='mr-2 text-lg' /> Disconnect
             </button>
           )}

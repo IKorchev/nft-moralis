@@ -1,36 +1,25 @@
-import { AnimatePresence } from "framer-motion"
-import { formatChain, formatIpfs } from "../../../utils/common"
+import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
-import useSWR from "swr"
-import { revalidateOptions, getFetcher } from "../../../utils/fetcher"
 import { shortenIfAddress } from "@usedapp/core"
 import { useChain } from "react-moralis"
 import ListItemModal from "../../tokenId/ListItemModal"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import VideoOrImage from "./VideoOrImage"
 import SkeletonCard from "../SkeletonCard/SkeletonCard"
 import SkeletonImage from "../SkeletonCard/SkeletonImage"
 import { useNft } from "use-nft"
-const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, metadata, index }) => {
+const NFTCard = ({ children, tokenId, tokenAddress }) => {
   const { chain, account } = useChain()
   const [isOpen, setIsOpen] = useState(false)
-  const chainString = formatChain(chain?.networkId)
   const [isImageLoading, setIsImageLoading] = useState("loading")
   const { loading, error, nft } = useNft(tokenAddress, tokenId)
-  console.log(nft)
-  console.log(tokenAddress)
 
-  // description: "This is #46 out of 1000 randomly generated images based on Rick's (Target Hit) Twitch Emote. YouTube: Target Hit - targethit.com"
-  // image: "https://ipfs.io/ipfs/Qmd5LGK9hNtacDEYjByxPW89sNJi2NuCBGv7MaCyKEsb5T/46.png"
-  // imageType: "image"
-  // metadataUrl: "https://ipfs.io/ipfs/QmSYZCbQKmxsMfYkecSsM2AWfzgPgGH2rP75fCYKhNov9f/46.json"
-  // name: "Rick #46"
-  // owner: "0x910111ECD2377662F98d5b8d735539A4157B8a83"
-  if (loading) return <SkeletonCard />
   if (error) return null
-
+  if (loading) return <SkeletonCard />
   return (
-    <div className='relative flex h-72 w-48 flex-col overflow-hidden rounded-md  bg-secondary-800 text-white shadow-glass lg:h-[21rem] lg:w-60'>
+    <motion.div
+      layout
+      className='relative flex h-72 w-48 flex-col overflow-hidden rounded-md border border-secondary-600  bg-secondary-900 text-white shadow-glass lg:h-[21rem] lg:w-60'>
       <Link href={`/assets/${tokenAddress}/${tokenId}`}>
         <div>
           <a className={`${isImageLoading === "loaded" ? "block" : "hidden"}`}>
@@ -52,19 +41,24 @@ const NFTCard = ({ children, tokenUri, tokenId, tokenAddress, metadata, index })
         </Link>
         {nft.owner.toLowerCase() === account?.toLowerCase() && (
           <>
-            <button
-              onClick={() => setIsOpen(true)}
-              className='mt-1 rounded-sm  bg-secondary-500 px-2 py-0.5 text-white transition duration-150 active:scale-95'>
+            <button onClick={() => setIsOpen(true)} className='card-button mt-2'>
               List for sale
             </button>
             <AnimatePresence>
-              {isOpen && <ListItemModal chain={chain} data={data} isOpen={isOpen} onClose={() => setIsOpen(!isOpen)} />}
+              {isOpen && (
+                <ListItemModal
+                  chain={chain}
+                  data={{ ...nft, contractAddress: tokenAddress, tokenId: tokenId }}
+                  isOpen={isOpen}
+                  onClose={() => setIsOpen(!isOpen)}
+                />
+              )}
             </AnimatePresence>
           </>
         )}
       </div>
       {children}
-    </div>
+    </motion.div>
   )
 }
 export default NFTCard

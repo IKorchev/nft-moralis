@@ -1,3 +1,4 @@
+import { truncate } from "lodash"
 import Link from "next/link"
 
 export const customStyles = {
@@ -8,12 +9,12 @@ export const customStyles = {
     color: "white",
     background: "#10011F",
     // Overwrittes the different states of border
-    borderColor: "#F70C76",
+    borderColor: "#c429d7",
     // Removes weird border around container
     boxShadow: state.isFocused ? null : null,
     "&:hover": {
       // Overwrittes the different states of border
-      borderColor: "#AB044F",
+      borderColor: "#831c8f",
     },
   }),
   menu: (provided, state) => ({
@@ -44,15 +45,15 @@ export const customStyles = {
     scrollBehavior: "smooth",
     "::-webkit-scrollbar": {
       width: 5,
-      background: "#F70C76",
+      background: "#9920a7",
       borderRadius: "15%",
     },
     "::-webkit-scrollbar-track": {
-      background: "#AB044F",
+      background: "#9920a7",
       borderRadius: "15%",
     },
     "::-webkit-scrollbar-thumb": {
-      background: "#F70C76",
+      background: "#c429d7",
       borderRadius: "25%",
     },
   }),
@@ -65,14 +66,16 @@ export const CustomOption = ({ data, innerRef, innerProps, isFocused, isSelected
         <div
           className={`
            mx-3 flex h-12 
-          flex-shrink-0 cursor-pointer items-center 
+          cursor-pointer items-center 
            ${isSelected ? "bg-secondary-100" : isFocused ? "bg-secondary-800" : "bg-secondary-600"}`}>
           <img
-            className='h-12 w-12 border-r border-secondary-100 bg-secondary-200 object-cover'
+            className='h-12 max-h-12 w-12 max-w-[3rem] bg-gray-100 object-cover'
+            height='50'
+            width='50'
             src={data.image}
             alt='Collection'
           />
-          <h1 className='truncate px-4 hover:text-gray-500'>{data.label}</h1>
+          <h1 className='flex-grow px-3 hover:text-gray-500'>{truncate(data.label, { length: 29 })}</h1>
         </div>
       </Link>
     </div>

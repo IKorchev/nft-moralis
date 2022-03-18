@@ -2,7 +2,8 @@ import Link from "next/link"
 
 const CollectionCard = ({ name, collectionAddress, imageUrl }) => {
   return (
-    <div className='relative w-48 flex-shrink-0 transform cursor-pointer flex-col overflow-hidden rounded-md  bg-primary-700/20 pb-3 shadow-glass backdrop-blur-sm backdrop-filter lg:w-60'>
+    <div
+      className='collection-card'>
       <Link href={`/assets/${collectionAddress}`}>
         <a>
           <div className='relative h-36 p-2 lg:h-48 '>

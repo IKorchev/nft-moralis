@@ -1,7 +1,7 @@
 const VideoOrImage = ({ format, url, setLoading }) => {
   return (
     <div className='h-48 w-full lg:h-60 '>
-      {format === "video" ? (
+      {format !== "image" ? (
         <video
           onLoad={() => setLoading && setLoading("loaded")}
           onError={() => setLoading && setLoading("error")}

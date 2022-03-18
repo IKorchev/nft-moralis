@@ -73,11 +73,12 @@ export const collectionInfo = selectorFamily({
         name: el.attributes.collectionName,
         data: el.attributes.contractAddress,
       }))
-      console.log(cheapest)
+      console.log(listed)
       return {
         listedCount,
         floor,
         filterOptions,
+        name: cheapest?.attributes.collectionName,
       }
     },
 })

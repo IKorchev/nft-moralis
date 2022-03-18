@@ -1,20 +1,15 @@
 import React from "react"
 import { useMoralis } from "react-moralis"
 
-const ConnectWalletButton = ({
-  rounded = "full",
-  className,
-  size = "lg",
-  label = "Connect wallet",
-}) => {
+const ConnectWalletButton = ({ rounded = "full", className, size = "lg", label = "Connect wallet" }) => {
   const { enableWeb3 } = useMoralis()
-  const padding = {
-    x: size === "lg" ? "3" : size === "xs" ? "2" : "2",
-    y: size === "lg" ? "2" : size === "xs" ? "0.5" : "1",
-  }
+
   return (
     <button
-      className={`rounded-${rounded} bg-orange-500 py-${padding.y} px-${padding.x} font-semibold text-gray-900 transition duration-300 hover:bg-orange-600 active:scale-95 ${className}`}
+      className={`rounded-${rounded} bg-orange-600 py-1
+       px-3 text-${size} border-2
+       border-orange-700 text-gray-800
+        transition duration-300 focus:bg-orange-500 active:scale-95 hover:bg-orange-500 ${className}`}
       onClick={enableWeb3}>
       {label}
     </button>

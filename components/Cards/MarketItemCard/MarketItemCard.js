@@ -31,7 +31,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
             delay: index * 0.05,
           },
         }}
-        className='min-h-80 relative flex w-48 flex-shrink-0 flex-col overflow-hidden rounded-md bg-secondary-800 text-white shadow-glass lg:w-60'>
+        className='market-item-card'>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
           <div className='h-max w-full cursor-pointer'>
             <VideoOrImage format={item?.attributes?.format} url={formatIpfs(item?.attributes?.image)} />
@@ -55,13 +55,11 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
             <>
               <div className='flex items-center justify-between '>
                 {!account ? (
-                  <ConnectWalletButton rounded='sm' size='xs' label='Connect' />
-                ) : chain?.chainId !== "0x3" ? (
+                  <ConnectWalletButton rounded='sm' size='xs' label='Connect wallet' />
+                ) : chain && chain.chainId !== "0x3" ? (
                   <SwitchNetworkButton rounded='sm' size='xs' network='0x3' />
                 ) : (
-                  <button
-                    className='flex items-center justify-center rounded-sm bg-secondary-100 px-3 font-bold text-black ring-black transition duration-300  focus:bg-secondary-300 focus:text-white focus:ring-2 hover:bg-secondary-300 hover:text-white'
-                    onClick={() => buyItem(nftContract, itemId, price)}>
+                  <button className='card-button' onClick={() => buyItem(nftContract, itemId, price)}>
                     Buy now
                   </button>
                 )}
