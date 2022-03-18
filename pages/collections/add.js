@@ -2,9 +2,11 @@ import React, { useState } from "react"
 import SectionTitle from "../../components/SectionTitle"
 import { toast } from "react-toastify"
 import { useChain, useMoralis } from "react-moralis"
+import { useRecoilState } from "recoil"
+import { chainState } from "../../store/userSlice"
 const Add = () => {
   const { authenticate, Moralis } = useMoralis()
-  const { chain } = useChain()
+  const chain = useRecoilState(chainState)
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formData = {

@@ -1,9 +1,13 @@
 import { Tab } from "@headlessui/react"
 import { motion } from "framer-motion"
 import React from "react"
+import { useRecoilValue } from "recoil"
+import { userTransactions } from "../../store/userSlice"
 import TransactionsTable from "../tokenId/TransactionsTable"
 
-const ActivityTab = ({ transcations }) => {
+const ActivityTab = ({ address }) => {
+  const transactions = useRecoilValue(userTransactions({ address: address }))
+  console.log(transactions)
   return (
     <Tab.Panel
       as={motion.div}
@@ -15,7 +19,7 @@ const ActivityTab = ({ transcations }) => {
         rowProps={{
           className: "bg-primary-50 text-lg",
         }}
-        transactions={transcations}
+        transactions={transactions}
       />
     </Tab.Panel>
   )

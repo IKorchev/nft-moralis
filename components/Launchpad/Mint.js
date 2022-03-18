@@ -4,11 +4,13 @@ import SwitchNetworkButton from "../Buttons/SwitchNetworkButton"
 import MintButton from "../Buttons/MintButton"
 import useSWR from "swr"
 import { getFetcher } from "../../utils/fetcher"
-import Loading from "../Other/Loading"
-import { BeatLoader } from "react-spinners"
+import { CircleLoader } from "react-spinners"
+import { useRecoilValue } from "recoil"
+import { chainState, currentUserState } from "../../store/userSlice"
+
 const Mint = ({ contractAddress }) => {
-  const { account } = useMoralis()
-  const { chain } = useChain()
+  const account = useRecoilValue(currentUserState)
+  const chain = useRecoilValue(chainState)
   const { data, error, isValidating } = useSWR(
     contractAddress ? `/api/nft/data?contract=${contractAddress}` : null,
     getFetcher
@@ -17,7 +19,7 @@ const Mint = ({ contractAddress }) => {
   if (!data) {
     return (
       <div className='flex h-24 w-full items-center justify-center'>
-        <BeatLoader color='white' speedMultiplier={0.5} size={10} />
+        <CircleLoader color='white' speedMultiplier={0.5} size={10} />
       </div>
     )
   }

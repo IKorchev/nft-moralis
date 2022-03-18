@@ -1,5 +1,4 @@
 //UTILS
-
 import { shortenIfAddress } from "@usedapp/core"
 import { useRouter } from "next/router"
 import { Suspense } from "react"
@@ -10,17 +9,11 @@ import Jazzicon from "../../components/Other/Jazzicon"
 //COMPONENTS
 import Metadata from "../../components/Other/Metadata"
 import NFTsTab from "../../components/UserPage/NFTsTab"
+import ActivityTab from "../../components/UserPage/ActivityTab"
 import { Tab } from "@headlessui/react"
-import { useMoralisWeb3Api } from "react-moralis"
-import { getDefaultProvider } from "ethers"
-import { NftProvider } from "use-nft"
 import Loading from "../../components/Other/Loading"
 import { useRecoilValue } from "recoil"
 import { currentUserState } from "../../store/userSlice"
-
-const ethersConfig = {
-  provider: getDefaultProvider("https://speedy-nodes-nyc.moralis.io/a66bbe066b91269ffbcb96b7/eth/ropsten"),
-}
 
 function UserAddress() {
   const router = useRouter()
@@ -29,8 +22,8 @@ function UserAddress() {
   return (
     <>
       <Metadata title={`NFT Explorer - Address ${router.query.userAddress || account}`} />
-      <div className='container mx-auto min-h-[50rem] overflow-hidden py-24'>
-        <div className='mt-12 flex flex-col items-center'>
+      <div className=' mx-auto min-h-[50rem]  overflow-hidden py-24'>
+        <div className='mt-12 flex flex-col items-center mx-auto container'>
           <div className='overflow-hidden rounded-full border-4 border-white'>
             <Jazzicon address={router?.query?.userAddress !== "me" ? router?.query?.userAddress : account} size={150} />
           </div>
@@ -54,14 +47,14 @@ function UserAddress() {
             <FiActivity className='mr-3 text-xl' /> Activity
           </Tab>
         </Tab.List>
-          <Suspense fallback={<Loading />}>
             <Tab.Panels className='w-full'>
-                <NftProvider fetcher={["ethers", ethersConfig]}> 
-                  <NFTsTab address={router?.query?.userAddress}/>
-                </NftProvider>
-                {/* <ActivityTab transcations={transactions?.result} /> */}
-            </Tab.Panels>
+          <Suspense fallback={<Loading />}>
+                <NFTsTab address={router?.query?.userAddress}/>
             </Suspense>
+            <Suspense fallback={<Loading />}>
+                <ActivityTab address={router?.query?.userAddress}/>
+                </Suspense>
+            </Tab.Panels>
         </Tab.Group>
         </div>
       </div>
@@ -70,26 +63,3 @@ function UserAddress() {
 }
 
 export default UserAddress
-
-// export async function getServerSideProps({ params }) {
-//   const _nfts = await fetch(`https://deep-index.moralis.io/api/v2/${params.userAddress}/nft?chain=0x3&format=decimal`, {
-//     headers: {
-//       "Contenty-Type": "application/json",
-//       "X-API-Key": process.env.API_KEY,
-//     },
-//   }).then((res) => res.json())
-//   const _transactions = await fetch(`https://deep-index.moralis.io/api/v2/${params.userAddress}?chain=0x3`, {
-//     headers: {
-//       "Contenty-Type": "application/json",
-//       "X-API-Key": process.env.API_KEY,
-//     },
-//   }).then((res) => res.json())
-
-//   const [nfts, transactions] = await Promise.all([_nfts, _transactions])
-//   return {
-//     props: {
-//       nfts,
-//       transactions,
-//     },
-//   }
-// }
