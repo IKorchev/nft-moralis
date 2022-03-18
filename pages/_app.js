@@ -16,7 +16,7 @@ const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
     Moralis.enableWeb3()
   }, [])
-
+  
   return (
     <RecoilRoot>
       <DAppProvider>

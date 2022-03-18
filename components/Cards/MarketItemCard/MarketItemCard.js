@@ -1,21 +1,23 @@
 import { useMoralis } from "react-moralis"
-import { useMoralisData } from "../../Providers/MoralisDataProvider"
 import { formatIpfs } from "../../../utils/common"
 import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
+import { useRecoilValue } from "recoil"
+import { getItem } from "../../../store/imagesSlice"
+import { chainState, currentUserState } from "../../../store/userSlice"
+import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
 import useMarketInteractions from "../../../hooks/useMarketInteraction"
 import Link from "next/link"
 import VideoOrImage from "../NFTCard/VideoOrImage"
-import { useRecoilValue } from "recoil"
-import { getItem } from "../../../store/imagesSlice"
-import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index }) => {
   const { Moralis } = useMoralis()
-  const { chain, account } = useMoralisData()
+  const chain = useRecoilValue(chainState)
+  const account = useRecoilValue(currentUserState)
   const { buyItem } = useMarketInteractions()
   const item = useRecoilValue(getItem({ tokenId, nftContract }))
+
   return (
     <AnimatePresence>
       <motion.div

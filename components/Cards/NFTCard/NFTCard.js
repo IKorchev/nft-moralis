@@ -19,7 +19,7 @@ const NFTCard = ({ children, tokenId, tokenAddress }) => {
   return (
     <motion.div
       layout
-      className='relative flex h-72 w-48 flex-col overflow-hidden rounded-md border border-secondary-600  bg-secondary-900 text-white shadow-glass lg:h-[21rem] lg:w-60'>
+      className='border-secondary-600 bg-secondary-900 shadow-glass relative flex h-72 w-48 flex-col overflow-hidden  rounded-md border text-white lg:h-[21rem] lg:w-60'>
       <Link href={`/assets/${tokenAddress}/${tokenId}`}>
         <div>
           <a className={`${isImageLoading === "loaded" ? "block" : "hidden"}`}>

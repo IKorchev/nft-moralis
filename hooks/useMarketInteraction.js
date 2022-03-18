@@ -2,9 +2,12 @@ import { MARKET_ABI, MARKET_ADDRESS, NFT_ABI } from "../utils/ABIS"
 import { useMoralis, useWeb3ExecuteFunction, useMoralisWeb3Api } from "react-moralis"
 import { toast } from "react-toastify"
 import { contractFunctions } from "./contractFunctions"
+import { useRecoilValue } from "recoil"
+import { currentUserState } from "../store/userSlice"
 
 const useMarketInteractions = () => {
-  const { Moralis, account } = useMoralis()
+  const { Moralis } = useMoralis()
+  const account = useRecoilValue(currentUserState)
   const contractProcessor = useWeb3ExecuteFunction()
   const MarketItems = Moralis.Object.extend("MarketItems")
   const ItemImage = Moralis.Object.extend("ItemImage")

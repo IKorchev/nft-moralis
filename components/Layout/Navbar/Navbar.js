@@ -19,10 +19,12 @@ import { launchpadsState } from "../../../store/store"
 import { BiCollection } from "react-icons/bi"
 import { VscRocket } from "react-icons/vsc"
 import { useMoralisData } from "../../Providers/MoralisDataProvider"
+import { chainState, currentUserState } from "../../../store/userSlice"
 
 const Navbar = () => {
   const allLaunchpads = useRecoilValue(launchpadsState)
-  const { account, chain } = useMoralisData()
+  const chain = useRecoilValue(chainState)
+  const account = useRecoilValue(currentUserState)
   const { scrolled } = useScrollOffset()
   const router = useRouter()
   const isHomePage = router.asPath === "/"
@@ -39,7 +41,7 @@ const Navbar = () => {
       <Disclosure as='nav' className='lg:hidden'>
         {({ open }) => (
           <>
-            <Disclosure.Button className='fixed top-3 right-3 z-50 inline-block cursor-pointer rounded-lg bg-secondary-100 p-5 lg:hidden'>
+            <Disclosure.Button className='bg-secondary-100 fixed top-3 right-3 z-50 inline-block cursor-pointer rounded-lg p-5 lg:hidden'>
               <span className='sr-only'>Open main menu</span>
               <div
                 className={` transform transition duration-700 ease-in-out ${
@@ -62,33 +64,33 @@ const Navbar = () => {
                   easings: "easeInOut",
                   duration: 0.3,
                 }}
-                className='fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl bg-primary-800  px-5 py-12 text-2xl text-white md:text-3xl'>
+                className='bg-primary-800 fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl  px-5 py-12 text-2xl text-white md:text-3xl'>
                 <Link href='/'>
-                  <a className=' cursor-pointer text-4xl text-tertiary-100'>NFT Explorer</a>
+                  <a className=' text-tertiary-100 cursor-pointer text-4xl'>NFT Explorer</a>
                 </Link>
-                <hr className='-ml-6 mb-5 mt-2 w-screen border-2 border-secondary-200' />
+                <hr className='border-secondary-200 -ml-6 mb-5 mt-2 w-screen border-2' />
                 <Link href='/'>
-                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
+                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <AiOutlineHome className='mr-3 ' /> Home
                   </a>
                 </Link>
                 <Link href='/marketplace'>
-                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
+                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <AiOutlineShop className='mr-3' /> Marketplace
                   </a>
                 </Link>
                 <Link href='/launchpad'>
-                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
+                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <VscRocket className='mr-3' /> Launchpad
                   </a>
                 </Link>
                 <Link href='/collections'>
-                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
+                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <BiCollection className='mr-3' /> All collections
                   </a>
                 </Link>
                 <Link href='/collections/add'>
-                  <a className='my-3 flex items-center text-white hover:text-secondary-400'>
+                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <AiOutlinePlusSquare className='mr-3' /> Add a collection
                   </a>
                 </Link>
@@ -137,7 +139,7 @@ const Navbar = () => {
           scrolled
             ? "bg-primary-900/50 backdrop-blur-sm backdrop-filter"
             : !scrolled && !isHomePage
-            ? "border-b border-secondary-100 bg-primary-900"
+            ? "border-secondary-100 bg-primary-900 border-b"
             : ""
         } lg:flex`}>
         <div className='container mx-auto flex items-center space-x-10 py-5 lg:text-sm xl:text-lg'>
@@ -146,10 +148,10 @@ const Navbar = () => {
           </Link>
           <div className='flex items-center justify-start space-x-5'>
             <Link href='/marketplace'>
-              <a className='cursor-pointer transition duration-200 hover:text-secondary-100 '>Marketplace</a>
+              <a className='hover:text-secondary-100 cursor-pointer transition duration-200 '>Marketplace</a>
             </Link>
             <Link href='/launchpad'>
-              <a className='cursor-pointer transition duration-200 hover:text-secondary-100 '>Launchpad</a>
+              <a className='hover:text-secondary-100 cursor-pointer transition duration-200 '>Launchpad</a>
             </Link>
             <CollectionsDropdown />
             <Select

@@ -3,7 +3,8 @@ import BINANCEIcon from "../../public/assets/binance.svg"
 import BITMEXIcon from "../../public/assets/bitmex.svg"
 import HUOBIIcon from "../../public/assets/huobi.svg"
 import Link from "next/link"
-import { useMoralis } from "react-moralis"
+import { currentUserState } from "../../store/userSlice"
+import { useRecoilValue } from "recoil"
 
 const links = [
   { title: "Home", href: "/" },
@@ -19,7 +20,7 @@ const resources = [
 ]
 
 const Footer = () => {
-  const { account } = useMoralis()
+  const  account = useRecoilValue(currentUserState)
   return (
     <div className='footer border-t border-secondary-100 bg-primary-900 text-light'>
       <div className='container mx-auto flex flex-col justify-between px-12 pt-12 xl:flex-row xl:px-32'>

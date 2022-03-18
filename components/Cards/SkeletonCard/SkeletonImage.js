@@ -2,7 +2,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton"
 
 const SkeletonImage = () => {
   return (
-    <SkeletonTheme color='#63052f' baseColor='#310218' highlightColor='#4a0423'>
+    <SkeletonTheme color='#410e48' baseColor='#160518' highlightColor='#571260'>
       <div className='hidden lg:block'>
         <Skeleton height={240} />
       </div>
