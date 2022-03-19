@@ -10,12 +10,14 @@ const Launchpad = () => {
   return (
     <>
       <Metadata title='NFT Explorer - Launchpad' />
-      <Suspense fallback={<Loading />}>
-        <FeaturedSection />
-      </Suspense>
-      <Suspense fallback={<Loading />}>
-        <Main />
-      </Suspense>
+      <div className='container mx-auto px-6 py-24 lg:px-24'>
+        <Suspense fallback={<Loading />}>
+          <FeaturedSection />
+        </Suspense>
+        <Suspense fallback={<Loading />}>
+          <Main />
+        </Suspense>
+      </div>
     </>
   )
 }
@@ -24,10 +26,10 @@ const Main = () => {
   const { upcoming, completed } = useRecoilValue(allLaunchpadsState)
 
   return (
-    <div className='container mx-auto px-6 py-24 lg:px-24'>
+    <>
       <ItemsList title='Upcoming' items={upcoming} />
       <ItemsList title='Completed' items={completed} />
-    </div>
+    </>
   )
 }
 
