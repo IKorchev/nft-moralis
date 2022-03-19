@@ -7,7 +7,6 @@ import TransactionsTable from "../tokenId/TransactionsTable"
 
 const ActivityTab = ({ address }) => {
   const transactions = useRecoilValue(userTransactions({ address: address }))
-  console.log(transactions)
   return (
     <Tab.Panel
       as={motion.div}

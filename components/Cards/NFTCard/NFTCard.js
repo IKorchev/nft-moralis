@@ -1,19 +1,19 @@
-import { AnimatePresence, motion } from "framer-motion"
-import Link from "next/link"
 import { shortenIfAddress } from "@usedapp/core"
-import { useChain } from "react-moralis"
-import ListItemModal from "../../tokenId/ListItemModal"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import VideoOrImage from "./VideoOrImage"
+import { useChain } from "react-moralis"
+import { useNft } from "use-nft"
+import Link from "next/link"
+import ListItemModal from "../../tokenId/ListItemModal"
 import SkeletonCard from "../SkeletonCard/SkeletonCard"
 import SkeletonImage from "../SkeletonCard/SkeletonImage"
-import { useNft } from "use-nft"
+import VideoOrImage from "./VideoOrImage"
+
 const NFTCard = ({ children, tokenId, tokenAddress }) => {
   const { chain, account } = useChain()
   const [isOpen, setIsOpen] = useState(false)
   const [isImageLoading, setIsImageLoading] = useState("loading")
   const { loading, error, nft } = useNft(tokenAddress, tokenId)
-
   if (error) return null
   if (loading) return <SkeletonCard />
   return (

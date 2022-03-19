@@ -1,36 +1,30 @@
 import { Dialog } from "@headlessui/react"
 import { motion } from "framer-motion"
 import { useState } from "react"
-import useMarketInteractions from "../../hooks/useMarketInteraction"
-import { formatIpfs } from "../../utils/common"
-import ClipLoader from "react-spinners/ClipLoader"
 import { toast } from "react-toastify"
+import { formatIpfs } from "../../utils/common"
+import useMarketInteractions from "../../hooks/useMarketInteraction"
 
 const ListItemModal = ({ onClose, isOpen, data }) => {
   const [price, setPrice] = useState(0)
   const { listItem } = useMarketInteractions()
-  const [loading, setLoading] = useState(false)
 
   const onSubmit = async (e) => {
     e.preventDefault()
-
     if (price === 0) return
     const id = toast.loading("Awaiting signature ..", {
       position: toast.POSITION.TOP_LEFT,
       closeOnClick: true,
       closeButton: true,
     })
-    setLoading(true)
-
     const res = await listItem(data, price)
-    setLoading(false)
     const toastType = res === "success" ? "success" : "error"
     const toastMessage = res === "success" ? "Item listed successfully!" : "Error: Something went wrong"
     toast.update(id, {
       isLoading: false,
       type: toastType,
       render: toastMessage,
-      autoClose: toastType === "success" && 4000,
+      autoClose: 4000,
     })
     if (res === "success") {
       setTimeout(() => {
@@ -75,7 +69,6 @@ const ListItemModal = ({ onClose, isOpen, data }) => {
             <button
               type='submit'
               className=' from-secondary-500 to-secondary-700 mt-5 flex items-center justify-center rounded-lg bg-gradient-to-r py-2 text-xl font-black text-white hover:opacity-90'>
-              <ClipLoader loading={loading} color='white' size={20} />
               <span className=''> List for sale</span>
             </button>
           </form>

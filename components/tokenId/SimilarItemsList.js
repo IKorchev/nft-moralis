@@ -1,4 +1,3 @@
-import React from "react"
 import { useRecoilValue } from "recoil"
 import { listingsByContract } from "../../store/listingsSlice"
 import MarketItemCard from "../Cards/MarketItemCard"

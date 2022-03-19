@@ -1,12 +1,9 @@
-import useSWR from "swr"
-import Jazzicon from "../Other/Jazzicon"
 import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
-import { getFetcher, revalidateOptions } from "../../utils/fetcher"
-import { useMoralis } from "react-moralis"
 import { findCollectionByAddress } from "../../store/store"
 import { useRecoilValue } from "recoil"
 import { collectionInfo } from "../../store/listingsSlice"
+import InfoBox from "./InfoBox"
 
 const containerVariants = {
   initial: { opacity: 0, y: -20 },
@@ -31,7 +28,23 @@ const itemVariant = {
 const CollectionHeader = ({ address }) => {
   const collection = useRecoilValue(findCollectionByAddress(address))
   const { floor, listedCount } = useRecoilValue(collectionInfo(address))
-
+  const rows = [
+    {
+      title: "Floor Price",
+      subtitle: floor || "N/A",
+      variant: itemVariant,
+    },
+    {
+      title: "Listed Count",
+      subtitle: listedCount || "0",
+      variant: itemVariant,
+    },
+    {
+      title: "Token Symbol",
+      subtitle: collection?.symbol || "N/A",
+      variant: itemVariant,
+    },
+  ]
   return (
     <AnimatePresence>
       <motion.div variants={containerVariants} initial='initial' animate='animate' className='flex flex-col'>
@@ -48,7 +61,7 @@ const CollectionHeader = ({ address }) => {
             bg-gradient-to-b px-5 py-5 text-white '>
             <h4
               variants={itemVariant}
-              className='mx-auto mb-5 w-max border-b-4 border-secondary-100 text-center text-xl'>
+              className='border-secondary-100 mx-auto mb-5 w-max border-b-4 text-center text-xl'>
               Information
             </h4>
             <motion.ul
@@ -56,29 +69,15 @@ const CollectionHeader = ({ address }) => {
               initial='initial'
               animate='animate'
               className='grid  grid-cols-3 gap-5 text-xs sm:text-lg'>
-              <motion.li
-                variants={itemVariant}
-                className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-200 bg-secondary-100/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
-                <span>Floor Price</span>
-                <span>{floor || "N/A"}</span>
-              </motion.li>
-              <motion.li
-                variants={itemVariant}
-                className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-200 bg-secondary-100/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
-                <span>Listed Count</span>
-                <span className='text-base'>{listedCount}</span>
-              </motion.li>
-              <motion.li
-                variants={itemVariant}
-                className='flex w-full flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-200 bg-secondary-100/20 py-2 shadow-glass-large backdrop-blur-sm backdrop-filter'>
-                <span>Token Symbol</span> <span>{collection?.symbol || "N/A"}</span>
-              </motion.li>
+              {rows.map(({ title, subtitle, variant }) => (
+                <InfoBox animationVariants={variant} title={title} subtitle={subtitle} />
+              ))}
             </motion.ul>
             <motion.p
               variants={itemVariant}
-              className='mt-5 flex 
-              w-full  flex-col items-center justify-between overflow-hidden rounded-lg border border-secondary-200 
-              bg-secondary-100/20 p-3 text-sm shadow-glass-large backdrop-blur-sm backdrop-filter lg:text-base'>
+              className='border-secondary-200 bg-secondary-100/20 
+              shadow-glass-large  mt-5 flex w-full flex-col items-center justify-between overflow-hidden 
+              rounded-lg border p-3 text-sm backdrop-blur-sm backdrop-filter lg:text-base'>
               {collection?.description}
             </motion.p>
           </div>

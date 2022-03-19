@@ -3,7 +3,7 @@ import PaginatedItems from "../Other/PaginatedItems"
 import { FilterIcon } from "@heroicons/react/solid"
 import SectionTitle from "../SectionTitle"
 import SectionContainer from "../SectionContainer"
-import SortSection from "../Other/SortAndFilter/SortSection"
+import SortItemsBy from "../Other/SortItemsBy"
 import MarketItemCard from "../Cards/MarketItemCard"
 
 const Main = ({ itemsAvailableForPurchase }) => {
@@ -31,11 +31,10 @@ const Main = ({ itemsAvailableForPurchase }) => {
             {/* Desktop */}
             <div className='hidden lg:flex'>
               <div className='space-y-1'>
-                <SortSection />
+                <SortItemsBy />
                 {/* <ClearFiltersButton /> */}
               </div>
             </div>
-
             <div className='flex flex-grow'>
               <PaginatedItems
                 items={itemsAvailableForPurchase}

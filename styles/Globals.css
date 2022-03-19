@@ -1,27 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
-@import "react-toastify/dist/ReactToastify.css";
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .market-item-card {
-    @apply relative flex w-48 flex-shrink-0 flex-col overflow-hidden rounded-md border border-secondary-600 
-     bg-secondary-900 text-white shadow-glass lg:w-60;
+    @apply border-secondary-600 bg-secondary-900 shadow-glass relative flex w-48 flex-shrink-0 flex-col overflow-hidden 
+     rounded-md border text-white lg:w-60;
   }
   .collection-card {
-    @apply relative w-48 flex-shrink-0 transform cursor-pointer flex-col overflow-hidden rounded-md
-    border border-secondary-600 bg-secondary-800/50 pb-3 shadow-glass backdrop-blur-sm backdrop-filter
-    duration-200 focus:border-secondary-100 hover:border-secondary-100 lg:w-60;
+    @apply border-secondary-600 bg-secondary-800/30 shadow-glass 
+          hover:border-secondary-100 relative w-48 flex-shrink-0
+            transform cursor-pointer flex-col overflow-hidden rounded-md border pb-3
+            backdrop-blur-sm backdrop-filter duration-200 lg:w-60 focus-within:border-secondary-100 ;
   }
   .card-button {
-    @apply flex items-center justify-center rounded-sm 
-    border border-secondary-100 bg-secondary-500 px-3 font-bold text-white ring-black transition duration-150 focus:bg-secondary-300 active:scale-95 hover:bg-secondary-300;
+    @apply border-secondary-100 bg-secondary-500 focus:bg-secondary-300 hover:bg-secondary-300 
+    flex items-center justify-center rounded-sm border px-3 font-bold text-white ring-black transition duration-150 active:scale-95;
   }
-
 }
 
 @layer base {
@@ -40,7 +40,6 @@
   h2 {
     @apply text-2xl font-semibold text-black;
   }
-  
 }
 @layer utilities {
   .styled-scrollbar {
@@ -77,3 +76,5 @@ input[type="number"]:focus:focus-within {
 .collapsed {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
+
+@import "react-toastify/dist/ReactToastify.css";

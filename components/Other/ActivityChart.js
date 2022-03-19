@@ -1,16 +1,16 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js"
 import { Line } from "react-chartjs-2"
 import { useMoralis } from "react-moralis"
 import { chartOptions } from "../../utils/chartOptions"
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js"
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const ActivityChart = ({ data }) => {
@@ -25,13 +25,11 @@ const ActivityChart = ({ data }) => {
     labels: labelsArr,
     datasets: [
       {
-        
         label: "Price",
         borderColor: "white",
         data: dataArr,
         borderColor: "#de0b6a",
         backgroundColor: "white",
-        
       },
     ],
   }

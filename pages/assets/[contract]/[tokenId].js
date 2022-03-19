@@ -1,22 +1,31 @@
-import { formatIpfs } from "../../../utils/common"
-import { useRouter } from "next/router"
-import { useMoralisData } from "../../../components/Providers/MoralisDataProvider"
 import { AnimatePresence, motion } from "framer-motion"
+import { useRouter } from "next/router"
 import { useState } from "react"
-import { getFetcher } from "../../../utils/fetcher"
-import ActivityChart from "../../../components/Other/ActivityChart"
-import Collapse from "../../../components/tokenId/Collapse"
-import ListItemModal from "../../../components/tokenId/ListItemModal"
-import TransactionsTable from "../../../components/tokenId/TransactionsTable"
-import TokenImage from "../../../components/tokenId/TokenImage"
-import Link from "next/link"
-import Metadata from "../../../components/Other/Metadata"
-import useSWR from "swr"
-import Loading from "../../../components/Other/Loading"
-import SimilarItemsList from "../../../components/tokenId/SimilarItemsList"
-import SectionTitle from "../../../components/SectionTitle"
 import { useRecoilValue } from "recoil"
 import { chainState, currentUserState } from "../../../store/userSlice"
+import { formatIpfs } from "../../../utils/common"
+import { getFetcher } from "../../../utils/fetcher"
+import Link from "next/link"
+import useSWR from "swr"
+import ActivityChart from "../../../components/Other/ActivityChart"
+import Loading from "../../../components/Other/Loading"
+import Metadata from "../../../components/Other/Metadata"
+import SectionTitle from "../../../components/SectionTitle"
+import Collapse from "../../../components/tokenId/Collapse"
+import ListItemModal from "../../../components/tokenId/ListItemModal"
+import SimilarItemsList from "../../../components/tokenId/SimilarItemsList"
+import TokenImage from "../../../components/tokenId/TokenImage"
+import TransactionsTable from "../../../components/tokenId/TransactionsTable"
+
+const ErrorComponent = () => {
+  return (
+    <h1 className='grid h-screen place-items-center text-center text-4xl text-white'>
+      Couldn't fetch data for this token.
+      <br /> or this token does not exist
+    </h1>
+  )
+}
+
 const Token = () => {
   const chain = useRecoilValue(chainState)
   const account = useRecoilValue(currentUserState)
@@ -28,17 +37,10 @@ const Token = () => {
     revalidateOnMount: true,
     revalidateIfStale: false,
   })
-  console.log(data)
   const image =
     formatIpfs(data?.metadata?.image) || formatIpfs(data?.metadata?.image_url) || formatIpfs(data?.metadata?.url)
 
-  if (error)
-    return (
-      <h1 className='grid h-screen place-items-center text-center text-4xl text-white'>
-        Couldn't fetch data for this token.
-        <br /> or this token does not exist
-      </h1>
-    )
+  if (error) return <ErrorComponent />
   if (isValidating) return <Loading />
   return (
     <div>

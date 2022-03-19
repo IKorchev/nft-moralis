@@ -18,44 +18,46 @@ import { currentUserState } from "../../store/userSlice"
 function UserAddress() {
   const router = useRouter()
   const account = useRecoilValue(currentUserState)
-  //prettier-ignore
   return (
     <>
       <Metadata title={`NFT Explorer - Address ${router.query.userAddress || account}`} />
       <div className=' mx-auto min-h-[50rem]  overflow-hidden py-24'>
-        <div className='mt-12 flex flex-col items-center mx-auto container'>
+        <div className='container mx-auto mt-12 flex flex-col items-center'>
           <div className='overflow-hidden rounded-full border-4 border-white'>
             <Jazzicon address={router?.query?.userAddress !== "me" ? router?.query?.userAddress : account} size={150} />
           </div>
           <h2 className='-mt-4 cursor-pointer rounded-full bg-white p-2 text-center text-xl text-black'>
             <span className='relative flex items-center justify-center'>
-              {router.query.userAddress === 'me' ? shortenIfAddress(account) : shortenIfAddress(router.query.userAddress) }
+              {router.query.userAddress === "me"
+                ? shortenIfAddress(account)
+                : shortenIfAddress(router.query.userAddress)}
             </span>
           </h2>
-       <Tab.Group defaultChecked={1} as='div' className='container mt-5 flex flex-col items-center'>
-        <Tab.List className='bg-secondary-800 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
-          <Tab
-            className={({ selected }) =>
-              `${selected ? "bg-secondary-600 border border-secondary-500 text-white" : ""}
+          <Tab.Group defaultChecked={1} as='div' className='container mt-5 flex flex-col items-center'>
+            <Tab.List className='bg-secondary-800 mt-5 flex  justify-evenly rounded-lg p-4  text-white  '>
+              <Tab
+                className={({ selected }) =>
+                  `${selected ? "bg-secondary-600 border-secondary-500 border text-white" : ""}
                  flex items-center rounded-lg px-12 py-4 `
-            }>
-            <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
-          </Tab>
-          <Tab
-            //prettier-ignore
-            className={({ selected }) =>`${selected ? "bg-secondary-600 border border-secondary-500 text-white" : ""} flex items-center px-12 py-3 rounded-lg `}>
-            <FiActivity className='mr-3 text-xl' /> Activity
-          </Tab>
-        </Tab.List>
-            <Tab.Panels className='w-full'>
-          <Suspense fallback={<Loading />}>
-                <NFTsTab address={router?.query?.userAddress}/>
-            </Suspense>
+                }>
+                <MdCollectionsBookmark className='mr-3 text-xl' /> Collected
+              </Tab>
+              <Tab
+                className={({ selected }) =>
+                  `${
+                    selected ? "bg-secondary-600 border-secondary-500 border text-white" : ""
+                  } flex items-center rounded-lg px-12 py-3 `
+                }>
+                <FiActivity className='mr-3 text-xl' /> Activity
+              </Tab>
+            </Tab.List>
             <Suspense fallback={<Loading />}>
-                <ActivityTab address={router?.query?.userAddress}/>
-                </Suspense>
-            </Tab.Panels>
-        </Tab.Group>
+              <Tab.Panels className='w-full'>
+                <NFTsTab address={router?.query?.userAddress} />
+                <ActivityTab address={router?.query?.userAddress} />
+              </Tab.Panels>
+            </Suspense>
+          </Tab.Group>
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
-import React from "react"
 import Head from "next/head"
+import React from "react"
+
 const Metadata = ({ image, title, description, keywords, url }) => {
   return (
     <Head>

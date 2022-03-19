@@ -5,23 +5,26 @@ import Link from "next/link"
 import { useRecoilValue } from "recoil"
 import FeaturedSection from "./FeaturedSection"
 import { motion } from "framer-motion"
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 1,
+      staggerChildren: 0.15,
+    },
+  },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+}
+
 const LandingPage2 = () => {
   const { completed, upcoming } = useRecoilValue(allLaunchpadsState)
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        staggerChildren: 0.15,
-      },
-    },
-  }
 
-  const item = {
-    hidden: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
   return (
     <div className='py-24'>
       <div className='container mx-auto grid grid-cols-1 gap-5 lg:mt-48 lg:grid-cols-2'>
@@ -31,7 +34,7 @@ const LandingPage2 = () => {
           whileInView='show'
           viewport={{ once: true }}
           className='self-center p-5 py-12 text-center text-white lg:text-left'>
-          <motion.h2 variants={item} className='h1 font-montserrat text-6xl font-black text-tertiary-300 xl:text-8xl'>
+          <motion.h2 variants={item} className='h1 font-montserrat text-tertiary-300 text-6xl font-black xl:text-8xl'>
             Upcoming collections
           </motion.h2>
           <motion.p variants={item} className='my-12 text-2xl'>
@@ -47,7 +50,7 @@ const LandingPage2 = () => {
           <Slider
             pauseOnFocus={false}
             pauseOnHover={true}
-            className=' bg-tertiary-50 mx-auto w-full overflow-hidden rounded-xl shadow-glass-large'
+            className=' bg-tertiary-50 shadow-glass-large mx-auto w-full overflow-hidden rounded-xl'
             arrows={false}
             autoPlaySpeed={2000}
             autoplay>

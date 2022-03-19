@@ -1,14 +1,15 @@
-import { useChain } from "react-moralis"
-import { useState } from "react"
-import { shortenIfAddress, shortenTransactionHash } from "@usedapp/core"
 import ExternalLinkIcon from "@heroicons/react/solid/ExternalLinkIcon"
+import Paper from "@mui/material/Paper"
 import Moralis from "moralis"
 import Link from "next/link"
-import { Table, TablePagination, TableRow, TableHead, TableContainer, TableCell, TableBody } from "@mui/material"
-import Paper from "@mui/material/Paper"
+import { shortenIfAddress, shortenTransactionHash } from "@usedapp/core"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
+import { useState } from "react"
+import { useRecoilValue } from "recoil"
+import { chainState } from "../../store/userSlice"
 
 const TransactionsTable = ({ transactions, rowProps, ...props }) => {
-  const { chain } = useChain()
+  const { chain } = useRecoilValue(chainState)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 

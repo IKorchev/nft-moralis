@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState, Suspense } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import ReactPaginate from "react-paginate"
 import Loading from "./Loading"
 

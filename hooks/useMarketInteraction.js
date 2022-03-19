@@ -6,11 +6,12 @@ import { useRecoilValue } from "recoil"
 import { currentUserState } from "../store/userSlice"
 
 const useMarketInteractions = () => {
-  const { Moralis } = useMoralis()
+  const { Moralis, isWeb3Enabled } = useMoralis()
   const account = useRecoilValue(currentUserState)
   const contractProcessor = useWeb3ExecuteFunction()
   const MarketItems = Moralis.Object.extend("MarketItems")
   const ItemImage = Moralis.Object.extend("ItemImage")
+
   //update in moralis database
   const updateItemSold = async (itemId) => {
     const query = new Moralis.Query(MarketItems)
@@ -105,8 +106,9 @@ const useMarketInteractions = () => {
   // buy NFT from Market
   const buyItem = async (nftContract, itemId, price) => {
     //connect web3 if its not already connected
-    await Moralis.enableWeb3()
-
+    if (!isWeb3Enabled) {
+      await Moralis.enableWeb3()
+    }
     //continue
     await contractProcessor.fetch({
       params: {
@@ -119,10 +121,17 @@ const useMarketInteractions = () => {
           itemId,
         },
       },
-      onSuccess: (data) => updateItemSold(itemId),
+      onSuccess: (data) => {
+        updateItemSold(itemId)
+        toast.success("Item purchase successful.", {
+          position: toast.POSITION.TOP_LEFT,
+          autoClose: 4000,
+        })
+      },
       onError: (err) =>
         toast.error(err.message.split("(")[0], {
-          autoClose: false,
+          position: toast.POSITION.TOP_LEFT,
+          autoClose: 4000,
         }),
     })
   }
@@ -188,7 +197,6 @@ const useMarketInteractions = () => {
   //checks if market is approved to transfer user NFT
   const checkIfApproved = async (contractAddress) => {
     let data
-
     await contractProcessor.fetch({
       params: {
         contractAddress: contractAddress,
@@ -208,7 +216,6 @@ const useMarketInteractions = () => {
   const listItem = async (nftObject, price) => {
     const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
     const listingPrice = await getMarketListingPrice()
-    console.log(nftObject)
     if (!isMarketApproved) {
       getApprovalForAll(nftObject.contractAddress)
     }

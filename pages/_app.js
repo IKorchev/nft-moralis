@@ -29,16 +29,16 @@ const MyApp = ({ Component, pageProps }) => {
         />
         <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
           <MoralisDataProvider>
-            <ToastContainer
-              toastClassName='bg-primary-200 text-white shadow-md shadow-secondary-200/20 border border-secondary-500'
-              progressClassName='bg-secondary-200'
-              position='top-right'
-              draggable={false}
-              hideProgressBar={false}
-            />
             <Layout>
               <AnimatePresence exitBeforeEnter>
                 <Component {...pageProps} />
+                <ToastContainer
+                  toastClassName='bg-primary-200 text-white shadow-md shadow-secondary-200/20 border border-secondary-500'
+                  progressClassName='bg-gradient-to-r from-secondary-200 to-secondary-600 '
+                  position='top-right'
+                  theme='dark'
+                  draggable={false}
+                />
               </AnimatePresence>
             </Layout>
           </MoralisDataProvider>

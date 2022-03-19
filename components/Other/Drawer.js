@@ -1,10 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { XIcon } from "@heroicons/react/solid"
 import { motion } from "framer-motion"
-import React from "react"
 
 const Drawer = ({ open, setOpen, ...props }) => {
-  console.log(props.children)
   return (
     <Transition.Root show={open} className='lg:hidden' as={motion.div}>
       <Dialog as='div' className='fixed inset-0 overflow-hidden' onClose={setOpen}>

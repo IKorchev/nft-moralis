@@ -68,5 +68,5 @@ module.exports = {
       boxShadow: ["hover", "focus"],
     },
   },
-  plugins: [require("tailwind-scrollbar"), require("@tailwindcss/forms")],
+  plugins: [require("tailwind-scrollbar"), require("@tailwindcss/forms")({ strategy: "class" })],
 }

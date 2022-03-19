@@ -1,20 +1,24 @@
-import SectionTitle from "../../components/SectionTitle"
-import { toast } from "react-toastify"
 import { useMoralis } from "react-moralis"
+import { toast } from "react-toastify"
 import { useRecoilState } from "recoil"
 import { chainState } from "../../store/userSlice"
+import SectionTitle from "../../components/SectionTitle"
+
+const createFormDataObject = (event, chain) => {
+  return {
+    address: event.target.add_address.value,
+    chain: chain.chainId,
+    collectionName: event.target.add_name.value,
+    imageUrl: event.target.add_image_url.value,
+    description: event.target.add_description.value,
+  }
+}
+
 const Add = () => {
   const { authenticate, Moralis } = useMoralis()
   const chain = useRecoilState(chainState)
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (event) => {
     e.preventDefault()
-    const formData = {
-      address: e.target.add_address.value,
-      chain: chain.chainId,
-      collectionName: e.target.add_name.value,
-      imageUrl: e.target.add_image_url.value,
-      description: e.target.add_description.value,
-    }
     const toastId = toast.loading("Awaiting signature", {
       position: toast.POSITION.TOP_LEFT,
       closeButton: true,
@@ -28,7 +32,7 @@ const Add = () => {
         headers: {
           Authorization: "Bearer " + session.attributes.sessionToken,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(createFormDataObject(event, chain)),
       })
       const res = await _res.json()
       if (!_res.ok) {

@@ -1,32 +1,31 @@
-import PaginatedItems from "../../components/Other/PaginatedItems"
-import MarketItem from "../../components/Cards/MarketItemCard"
-import { Suspense, useState } from "react"
+import { MdSort } from "react-icons/md"
 import { AnimatePresence } from "framer-motion"
-import { FilterIcon } from "@heroicons/react/solid"
-import Metadata from "../../components/Other/Metadata"
-import Drawer from "../../components/Other/Drawer"
-import SortFilterAndClear from "../../components/Other/SortAndFilter/SortFilterAndClear"
-import SectionTitle from "../../components/SectionTitle"
-import SectionContainer from "../../components/SectionContainer"
+import { useRouter } from "next/router"
+import { Suspense, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { sortedListings } from "../../store/listingsSlice"
-import SortSection from "../../components/Other/SortAndFilter/SortSection"
-import { useRouter } from "next/router"
+import MarketItem from "../../components/Cards/MarketItemCard"
+import Drawer from "../../components/Other/Drawer"
+import Metadata from "../../components/Other/Metadata"
+import PaginatedItems from "../../components/Other/PaginatedItems"
+import SortItemsBy from "../../components/Other/SortItemsBy"
+import SectionContainer from "../../components/SectionContainer"
+import SectionTitle from "../../components/SectionTitle"
+
 const Marketplace = () => {
   const { query } = useRouter()
-  console.log(query)
   const listings = query ? useRecoilValue(sortedListings()) : useRecoilValue(sortedListings(query.params))
   const [open, setOpen] = useState(false)
 
   return (
     <>
-      <Metadata title='NFT Explorer - Marketplace' />
-      <main className='container mx-auto px-4 py-24 lg:px-0'>
+      <div className='container mx-auto px-4 py-24 lg:px-0'>
+        <Metadata title='NFT Explorer - Marketplace' />
         {/* MOBILE FILTERING DRAWER */}
         <AnimatePresence>
           {open && (
             <Drawer open={open} setOpen={setOpen}>
-              <SortSection />
+              <SortItemsBy />
             </Drawer>
           )}
         </AnimatePresence>
@@ -36,7 +35,7 @@ const Marketplace = () => {
             <SectionTitle title='Marketplace' />
           </div>
           <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
-            <FilterIcon className='h-6 w-6 text-secondary-100' />
+            <MdSort className='text-secondary-100 h-8 w-8' />
           </button>
         </div>
         <section aria-labelledby='marketplace-heading' className='pt-6 pb-12'>
@@ -46,7 +45,7 @@ const Marketplace = () => {
           <SectionContainer>
             {/* Desktop */}
             <div className='hidden max-h-72 lg:flex'>
-              <SortSection />
+              <SortItemsBy />
             </div>
             <div className=' w-full '>
               <Suspense fallback={null}>
@@ -75,7 +74,7 @@ const Marketplace = () => {
             </div>
           </SectionContainer>
         </section>
-      </main>
+      </div>
     </>
   )
 }
