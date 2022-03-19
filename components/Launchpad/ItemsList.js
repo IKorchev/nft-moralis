@@ -1,12 +1,10 @@
 import React from "react"
 import SectionTitle from "../SectionTitle"
 
-
 import { CollectionCard } from "../Cards/CollectionCard"
-const ItemsList = ({items, title}) => {
-
+const ItemsList = ({ items, title }) => {
   return (
-    <section className='divide-secondary container mx-auto divide-y py-6'>
+    <section className='divide-tertiary-200 container mx-auto divide-y py-6'>
       <div className='my-3 text-left'>
         <SectionTitle size='sm' title={title} />
       </div>

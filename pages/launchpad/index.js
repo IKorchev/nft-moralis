@@ -10,7 +10,12 @@ const Launchpad = () => {
   return (
     <>
       <Metadata title='NFT Explorer - Launchpad' />
-      <Main />
+      <Suspense fallback={<Loading />}>
+        <FeaturedSection />
+      </Suspense>
+      <Suspense fallback={<Loading />}>
+        <Main />
+      </Suspense>
     </>
   )
 }
@@ -20,15 +25,8 @@ const Main = () => {
 
   return (
     <div className='container mx-auto px-6 py-24 lg:px-24'>
-      <Suspense fallback={<Loading />}>
-        <FeaturedSection />
-      </Suspense>
-      <Suspense fallback={<Loading />}>
-        <ItemsList title='Upcoming' items={upcoming} />
-      </Suspense>
-      <Suspense fallback={<Loading />}>
-        <ItemsList title='Completed' items={completed} />
-      </Suspense>
+      <ItemsList title='Upcoming' items={upcoming} />
+      <ItemsList title='Completed' items={completed} />
     </div>
   )
 }
