@@ -1,7 +1,6 @@
-import React, { useState } from "react"
 import SectionTitle from "../../components/SectionTitle"
 import { toast } from "react-toastify"
-import { useChain, useMoralis } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { useRecoilState } from "recoil"
 import { chainState } from "../../store/userSlice"
 const Add = () => {

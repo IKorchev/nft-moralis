@@ -26,6 +26,7 @@ const Token = () => {
   const { data, error, isValidating } = useSWR(router ? url : null, getFetcher, {
     revalidateOnFocus: false,
     revalidateOnMount: true,
+    revalidateIfStale: false,
   })
   console.log(data)
   const image =
@@ -88,7 +89,7 @@ const Token = () => {
                     onClick={() => {
                       setOpen(true)
                     }}
-                    className='bg-secondary-100 mt-3 w-48 rounded-md p-2 text-white'>
+                    className='card-button mt-3 w-48 rounded-md p-2 text-white'>
                     List for sale
                   </button>
                 )}
@@ -101,7 +102,7 @@ const Token = () => {
               <div className='grid grid-cols-3 gap-3 p-4'>
                 {data?.metadata?.attributes ? (
                   data?.metadata?.attributes?.map((el) => (
-                    <div className='border-secondary-300  bg-secondary-500 col-span-1 grid place-items-center rounded-lg border-2 p-1 text-center text-white'>
+                    <div className='border-secondary-300  bg-secondary-600 col-span-1 grid place-items-center rounded-lg border-2 p-1 text-center text-white'>
                       <small className='font-bold'>{el.trait_type}</small>
                       <small>{el.value}</small>
                     </div>

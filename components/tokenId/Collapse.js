@@ -4,7 +4,7 @@ const Collapse = ({ children, buttonText, defaultOpen }) => {
   return (
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
-        <div className=' mt-2 overflow-hidden rounded-lg bg-secondary-700 text-white'>
+        <div className=' mt-2 overflow-hidden rounded-lg bg-secondary-800 text-white'>
           <Disclosure.Button
             className={`flex  w-full justify-between rounded-lg px-4 py-5 text-left text-lg font-bold  transition-all  duration-300 
             ${open ? "bg-secondary-500  " : "bg-secondary-300"}

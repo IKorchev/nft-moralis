@@ -1,9 +1,8 @@
+import { Suspense } from "react"
 import FeaturedSection from "../../components/Launchpad/FeaturedSection"
 import Metadata from "../../components/Other/Metadata"
-
 import CompletedList from "../../components/Launchpad/CompletedList"
 import UpcomingList from "../../components/Launchpad/UpcomingList"
-import { Suspense } from "react"
 import Loading from "../../components/Other/Loading"
 
 const Launchpad = () => {

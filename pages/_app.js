@@ -8,6 +8,8 @@ import { AnimatePresence } from "framer-motion"
 import Moralis from "moralis"
 import { useEffect } from "react"
 import { SWRConfig } from "swr"
+import { ToastContainer } from "react-toastify"
+
 const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
   APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
 
@@ -16,7 +18,7 @@ const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
     Moralis.enableWeb3()
   }, [])
-  
+
   return (
     <RecoilRoot>
       <DAppProvider>
@@ -27,6 +29,13 @@ const MyApp = ({ Component, pageProps }) => {
         />
         <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
           <MoralisDataProvider>
+            <ToastContainer
+              toastClassName='bg-primary-200 text-white shadow-md shadow-secondary-200/20 border border-secondary-500'
+              progressClassName='bg-secondary-200'
+              position='top-right'
+              draggable={false}
+              hideProgressBar={false}
+            />
             <Layout>
               <AnimatePresence exitBeforeEnter>
                 <Component {...pageProps} />

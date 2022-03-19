@@ -56,7 +56,6 @@ const postHandler = async (req, res) => {
   }
 }
 
-const putHandler = (req, res) => {}
 
 export default async function handler(req, res) {
   const { method } = req
