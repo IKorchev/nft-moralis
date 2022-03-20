@@ -1,51 +1,42 @@
 import { allLaunchpadsState } from "../../store/store"
 import { Primary as ButtonPrimary } from "../Buttons/CTAButton"
-import Slider from "react-slick"
-import Link from "next/link"
 import { useRecoilValue } from "recoil"
-import FeaturedSection from "./FeaturedSection"
 import { motion } from "framer-motion"
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      duration: 1,
-      staggerChildren: 0.15,
-    },
-  },
-}
-
-const item = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-}
+import Link from "next/link"
+import Slider from "react-slick"
+import FeaturedSection from "./FeaturedSection"
+import StaggerChildren, { createSlideVariant } from "../Other/StaggerChildren"
 
 const LandingPage2 = () => {
   const { completed, upcoming } = useRecoilValue(allLaunchpadsState)
+  const slideFromBottom = createSlideVariant({ from: "bottom", whileInView: true })
 
   return (
     <div className=''>
-      <div className='container mx-auto grid  grid-cols-1 gap-5 pt-24 lg:mt-24 lg:grid-cols-2'>
-        <motion.div
-          variants={container}
-          initial='hidden'
-          whileInView='show'
+      <div className='container mx-auto grid  grid-cols-1 gap-5 pt-12 lg:mt-24 lg:grid-cols-2'>
+        <StaggerChildren
+          whileInView
+          staggerDelay={0.25}
           className='self-center p-5 py-12 text-center text-white lg:text-left'>
-          <motion.h2 variants={item} className='h1 font-montserrat text-tertiary-300 text-6xl font-black xl:text-8xl'>
+          <motion.h2
+            variants={slideFromBottom}
+            transition={{ duration: 0.7, type: "spring", damping: 14 }}
+            className='h1 font-montserrat text-tertiary-300 text-6xl font-black xl:text-8xl'>
             Upcoming collections
           </motion.h2>
-          <motion.p variants={item} className='mt-12 mb-24 text-2xl'>
+          <motion.p
+            variants={slideFromBottom}
+            transition={{ duration: 0.7, type: "spring", damping: 14 }}
+            className='mt-12 mb-24 text-2xl'>
             New collections are being listed weekly. Don't miss out! Check them out.
           </motion.p>
-          <motion.span variants={item}>
+          <motion.span variants={slideFromBottom} transition={{ duration: 0.7, type: "spring", damping: 14 }}>
             <Link passHref href='/collections'>
               <ButtonPrimary title='View all collections' />
             </Link>
           </motion.span>
-        </motion.div>
-        <motion.div variants={container} initial='hidden' whileInView='show' className='p-12'>
+        </StaggerChildren>
+        <StaggerChildren className='p-12'>
           <Slider
             pauseOnFocus={false}
             pauseOnHover={true}
@@ -70,7 +61,7 @@ const LandingPage2 = () => {
               )
             })}
           </Slider>
-        </motion.div>
+        </StaggerChildren>
       </div>
       <FeaturedSection completed={completed} />
     </div>
