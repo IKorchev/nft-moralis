@@ -18,7 +18,6 @@ import { useRecoilValue } from "recoil"
 import { launchpadsState } from "../../../store/store"
 import { BiCollection } from "react-icons/bi"
 import { VscRocket } from "react-icons/vsc"
-import { useMoralisData } from "../../Providers/MoralisDataProvider"
 import { chainState, currentUserState } from "../../../store/userSlice"
 
 const Navbar = () => {
@@ -137,9 +136,9 @@ const Navbar = () => {
       <div
         className={`fixed top-0 left-0 z-20 mx-auto hidden w-full text-white ${
           scrolled
-            ? "bg-primary-900/50 backdrop-blur-sm backdrop-filter"
+            ? "bg-primary-900/70 backdrop-blur-sm backdrop-filter"
             : !scrolled && !isHomePage
-            ? "border-secondary-100 bg-primary-900 border-b"
+            ? "border-secondary-100 bg-primary-900/10 "
             : ""
         } lg:flex`}>
         <div className='container mx-auto flex items-center space-x-10 py-5 lg:text-sm xl:text-lg'>

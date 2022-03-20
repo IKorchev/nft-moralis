@@ -17,8 +17,12 @@ const Layout = ({ children }) => {
 
   return (
     <motion.div
+      style={{
+        backgroundImage: "url('/bg-lights-2.png')",
+        backgroundSize: "cover",
+      }}
       exit={{ opacity: 0, scale: 0, transition: { duration: 3 } }}
-      className='bg-primary-900 relative w-full bg-gradient-to-br '>
+      className='bg-primary-900 relative w-full '>
       <Navbar />
       {children}
       {!isInstalled.current && <InstallMetamask />}

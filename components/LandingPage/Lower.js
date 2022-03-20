@@ -26,18 +26,17 @@ const LandingPage2 = () => {
   const { completed, upcoming } = useRecoilValue(allLaunchpadsState)
 
   return (
-    <div className='py-24'>
-      <div className='container mx-auto grid grid-cols-1 gap-5 lg:mt-48 lg:grid-cols-2'>
+    <div className=''>
+      <div className='container mx-auto grid  grid-cols-1 gap-5 pt-24 lg:mt-48 lg:grid-cols-2'>
         <motion.div
           variants={container}
           initial='hidden'
           whileInView='show'
-          viewport={{ once: true }}
           className='self-center p-5 py-12 text-center text-white lg:text-left'>
           <motion.h2 variants={item} className='h1 font-montserrat text-tertiary-300 text-6xl font-black xl:text-8xl'>
             Upcoming collections
           </motion.h2>
-          <motion.p variants={item} className='my-12 text-2xl'>
+          <motion.p variants={item} className='mt-12 mb-24 text-2xl'>
             New collections are being listed weekly. Don't miss out! Check them out.
           </motion.p>
           <motion.span variants={item}>
@@ -46,7 +45,7 @@ const LandingPage2 = () => {
             </Link>
           </motion.span>
         </motion.div>
-        <div className='p-12'>
+        <motion.div variants={container} initial='hidden' whileInView='show' className='p-12'>
           <Slider
             pauseOnFocus={false}
             pauseOnHover={true}
@@ -71,9 +70,9 @@ const LandingPage2 = () => {
               )
             })}
           </Slider>
-        </div>
+        </motion.div>
       </div>
-      {completed && <FeaturedSection completed={completed} />}
+      <FeaturedSection completed={completed} />
     </div>
   )
 }

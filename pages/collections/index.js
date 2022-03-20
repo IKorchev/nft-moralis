@@ -8,7 +8,7 @@ const Collection = () => {
   const collections = useRecoilValue(launchpadsState)
 
   return (
-    <div className='via-secondary-900 to-primary-900  from-primary-800 bg-gradient-to-br'>
+    <div className=''>
       <Metadata title='NFT Explorer - All Collections' />
       <div className='container mx-auto grid grid-cols-1 place-items-center gap-10 py-48 text-white md:grid-cols-2   xl:grid-cols-3 2xl:grid-cols-4'>
         {collections.map((el, i) => {

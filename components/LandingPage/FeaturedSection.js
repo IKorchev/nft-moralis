@@ -1,6 +1,7 @@
 import { CollectionCard } from "../Cards/CollectionCard"
 import { motion } from "framer-motion"
 import SectionTitle from "../SectionTitle"
+import Image from "next/image"
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -19,31 +20,33 @@ const item = {
 
 const FeaturedSection = ({ completed }) => {
   return (
-    <motion.div
-      style={{
-        backgroundImage: "url('/Group_1.png')",
-        backgroundSize: "contain",
-      }}
-      variants={container}
-      initial='hidden'
-      whileInView='show'
-      className='mt-12 bg-cover bg-center bg-no-repeat py-24'>
-      <SectionTitle title='Featured collections' justify='center' />
+    <div className='landing-page__featured-section mt-36 bg-cover md:bg-contain '>
       <motion.div
-        viewport={{ once: true }}
-        className=' container mx-auto  mt-12  flex flex-wrap items-center
-   justify-center gap-2 lg:gap-10'>
-        {completed?.slice(1, 4).map((el, i) => (
-          <motion.div variants={item} viewport={{ once: true }} whileInView='show' key={el.attributes.contractAddress}>
-            <CollectionCard
-              name={el.attributes.collectionName}
-              collectionAddress={el.attributes.contractAddress}
-              imageUrl={el.attributes.imageUrl}
-            />
-          </motion.div>
-        ))}
+        variants={container}
+        initial='hidden'
+        whileInView='show'
+        className=' mt-12 w-full bg-cover bg-center bg-no-repeat '>
+        <SectionTitle title='Featured collections' justify='center' />
+        <motion.div
+          viewport={{ once: true }}
+          className=' container mx-auto mt-24 flex flex-wrap items-center
+   justify-center gap-5 lg:gap-10'>
+          {completed?.slice(2, 6).map((el, i) => (
+            <motion.div
+              variants={item}
+              viewport={{ once: true }}
+              whileInView='show'
+              key={el.attributes.contractAddress}>
+              <CollectionCard
+                name={el.attributes.collectionName}
+                collectionAddress={el.attributes.contractAddress}
+                imageUrl={el.attributes.imageUrl}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
 
