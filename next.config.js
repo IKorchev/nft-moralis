@@ -1,6 +1,8 @@
 module.exports = {
   webpack5: true,
-
+  images: {
+    domains: ["ipfs.io", "ipfs.pixura.io"],
+  },
   webpack: (config) => {
     config.resolve.fallback = {
       fs: false,

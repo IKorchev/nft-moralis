@@ -1,7 +1,6 @@
 import { CollectionCard } from "../Cards/CollectionCard"
 import { motion } from "framer-motion"
 import SectionTitle from "../SectionTitle"
-import Image from "next/image"
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -20,7 +19,7 @@ const item = {
 
 const FeaturedSection = ({ completed }) => {
   return (
-    <div className='landing-page__featured-section mt-36 bg-cover md:bg-contain '>
+    <div className='landing-page__featured-section mt-36'>
       <motion.div
         variants={container}
         initial='hidden'
@@ -28,9 +27,9 @@ const FeaturedSection = ({ completed }) => {
         className=' mt-12 w-full bg-cover bg-center bg-no-repeat '>
         <SectionTitle title='Featured collections' justify='center' />
         <motion.div
+          variants={container}
           viewport={{ once: true }}
-          className=' container mx-auto mt-24 flex flex-wrap items-center
-   justify-center gap-5 lg:gap-10'>
+          className=' container mx-auto mt-24 flex flex-wrap items-center justify-center gap-5 lg:gap-10'>
           {completed?.slice(2, 6).map((el, i) => (
             <motion.div
               variants={item}

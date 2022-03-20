@@ -18,7 +18,7 @@ const Layout = ({ children }) => {
   return (
     <motion.div
       style={{
-        backgroundImage: "url('/bg-lights-2.png')",
+        backgroundImage: "url('/bg-lights.png')",
         backgroundSize: "cover",
       }}
       exit={{ opacity: 0, scale: 0, transition: { duration: 3 } }}

@@ -59,13 +59,21 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+/*LOWER LANDING PAGE WAVES BACKGROUND */
 .landing-page__featured-section {
   min-height: 50rem;
   background-image: url("/bg-waves-1.svg"); /* image by Hai Anh */
-  background-position: center center;
+  background-position: center top;
   background-repeat: no-repeat;
+  background-size: 120%;
 }
 
+@media only screen and (max-width: 1200px) {
+  .landing-page__featured-section {
+    background-position: 60% -20%;
+    background-size: cover;
+  }
+}
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;

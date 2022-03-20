@@ -27,7 +27,7 @@ const LandingPage2 = () => {
 
   return (
     <div className=''>
-      <div className='container mx-auto grid  grid-cols-1 gap-5 pt-24 lg:mt-48 lg:grid-cols-2'>
+      <div className='container mx-auto grid  grid-cols-1 gap-5 pt-24 lg:mt-24 lg:grid-cols-2'>
         <motion.div
           variants={container}
           initial='hidden'
@@ -49,7 +49,7 @@ const LandingPage2 = () => {
           <Slider
             pauseOnFocus={false}
             pauseOnHover={true}
-            className=' bg-tertiary-50 shadow-glass-large mx-auto w-full overflow-hidden rounded-xl'
+            className=' bg-tertiary-50 shadow-glass-large mx-auto w-full overflow-hidden rounded-xl lg:w-[30rem]'
             arrows={false}
             autoPlaySpeed={2000}
             autoplay>
@@ -60,7 +60,7 @@ const LandingPage2 = () => {
                     <a>
                       <img
                         src={el.attributes.imageUrl}
-                        className='h-[25rem] w-full rounded-xl object-cover xl:h-[35rem]'
+                        className='h-[25rem] w-full rounded-xl object-cover xl:h-[25rem] xl:max-w-[30rem]'
                         alt=''
                       />
                     </a>
