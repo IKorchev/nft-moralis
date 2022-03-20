@@ -2,14 +2,13 @@ import useSWR from "swr"
 import Link from "next/link"
 import Countdown from "./Countdown"
 import Mint from "./Mint"
-import Loading from "../Other/Loading"
 import { ScaleLoader } from "react-spinners"
 import { useState } from "react"
 import { BiRefresh } from "react-icons/bi"
 import { allLaunchpadsState } from "../../store/store"
 import { useRecoilValue } from "recoil"
 import { getFetcher } from "../../utils/fetcher"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 
 const outterContainer = {
   initial: {
@@ -53,6 +52,9 @@ const FeaturedSection = () => {
   const countdownHandler = () => {
     setCountdownFinished(true)
   }
+  const { attributes } = featured || {}
+  const { collectionName, description, imageUrl, startDate, contractAddress } = attributes || {}
+
   return (
     <motion.section
       variants={outterContainer}
@@ -78,19 +80,19 @@ const FeaturedSection = () => {
         </motion.button>
         <motion.div variants={innerContainer} className='flex h-full flex-col justify-evenly py-5 xl:py-0'>
           <motion.h2 variants={item} className='py-5 text-4xl text-white'>
-            {featured?.attributes?.collectionName}
+            {collectionName}
           </motion.h2>
           <motion.p variants={item} className='mt-3 w-3/4 text-sm'>
-            {featured?.attributes?.description}
+            {description}
           </motion.p>
           {!countdownFinished ? (
-            <Countdown startDate={featured?.attributes?.startDate} onFinish={countdownHandler} />
+            <Countdown startDate={startDate} onFinish={countdownHandler} />
           ) : isValidating ? (
             <div className='mx-auto my-12 py-12'>
               <ScaleLoader color='purple' />
             </div>
           ) : (
-            <Mint contractAddress={featured?.attributes?.contractAddress} data={data} />
+            <Mint contractAddress={contractAddress} data={data} />
           )}
         </motion.div>
         {/* IMPORTANT: This is not a safety check!
@@ -98,8 +100,8 @@ const FeaturedSection = () => {
               function in the smart contract is paused until the counter reaches 0. */}
       </motion.div>
       <div className='relative max-h-[35rem] w-full flex-1 overflow-hidden rounded-xl'>
-        <Link href={`/assets/${featured?.attributes?.contractAddress}`}>
-          <img className='h-full w-full cursor-pointer object-cover' src={featured?.attributes?.imageUrl} alt='' />
+        <Link href={`/assets/${contractAddress}`}>
+          <img className='h-full w-full cursor-pointer object-cover' src={imageUrl} alt='' />
         </Link>
       </div>
     </motion.section>
