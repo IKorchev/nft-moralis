@@ -74,12 +74,12 @@ const Add = () => {
           backgroundRepeat: "no-repeat",
         }}
         className='container p-5'>
-        <div className='from-secondary-600/80 to-primary-700/80 shadow-glass-small mx-auto mt-20 max-w-[30rem] bg-gradient-to-br  p-5 backdrop-blur-sm backdrop-filter'>
+        <div className='from-secondary-600/80 to-primary-200/80 shadow-glass mx-auto mt-20 max-w-[30rem] bg-gradient-to-br  p-5 backdrop-blur-sm backdrop-filter'>
           <form onSubmit={handleSubmit} className=' text-white'>
             <div className='flex flex-col'>
               <label htmlFor='add_address'>Contract Address *</label>
               <input
-                className='bg-secondary-800/60 border-secondary-100 shadow-glass-small mt-1 rounded border backdrop-blur-sm backdrop-filter'
+                className='bg-secondary-800/60 border-secondary-100 shadow-glass-small mt-1 rounded border py-2 px-1 backdrop-blur-sm backdrop-filter'
                 type='text'
                 id='add_address'
               />
@@ -87,7 +87,7 @@ const Add = () => {
             <div className='mt-2 flex flex-col'>
               <label htmlFor='add_name'>Name</label>
               <input
-                className='bg-secondary-800/60 border-secondary-100 shadow-glass-small mt-1 rounded border backdrop-blur-sm backdrop-filter'
+                className='bg-secondary-800/60 border-secondary-100 shadow-glass-small  mt-1 rounded border py-2 px-1 backdrop-blur-sm backdrop-filter'
                 type='text'
                 id='add_name'
               />
@@ -96,7 +96,7 @@ const Add = () => {
             <div className='mt-2 flex flex-col'>
               <label htmlFor='add_image'>Image URL</label>
               <input
-                className='bg-secondary-800/60 border-secondary-100 shadow-glass-small mt-1 rounded border backdrop-blur-sm backdrop-filter'
+                className='bg-secondary-800/60 border-secondary-100 shadow-glass-small  mt-1 rounded border py-2 px-1 backdrop-blur-sm backdrop-filter'
                 type='url'
                 id='add_image_url'
               />
@@ -110,7 +110,6 @@ const Add = () => {
                 id='add_description'
               />
             </div>
-
             <div className='mt-2 flex flex-col'>
               <label htmlFor='add_description ' className='sr-only'>
                 Submit
