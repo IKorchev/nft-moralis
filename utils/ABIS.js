@@ -1,7 +1,7 @@
 //TODO: set env variable
 
-const MARKET_ADDRESS = "0x327aF3B8f180E34681f445bA6b6d47Aaf91D7aE7"
-
+// const MARKET_ADDRESS = "0x327aF3B8f180E34681f445bA6b6d47Aaf91D7aE7"
+const MARKET_ADDRESS = process.env.NEXT_PUBLIC_MARKET_ADDRESS
 const MARKET_ABI = [
   {
     inputs: [],

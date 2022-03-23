@@ -3,20 +3,22 @@ import { formatIpfs } from "../../../utils/common"
 import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRecoilValue } from "recoil"
-import { getItem } from "../../../store/imagesSlice"
+import { getItem, imagesState } from "../../../store/imagesSlice"
 import { chainState, currentUserState } from "../../../store/userSlice"
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
 import useMarketInteractions from "../../../hooks/useMarketInteraction"
 import Link from "next/link"
 import VideoOrImage from "../NFTCard/VideoOrImage"
+import { useMemo } from "react"
 
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index }) => {
   const { Moralis } = useMoralis()
   const chain = useRecoilValue(chainState)
   const account = useRecoilValue(currentUserState)
   const { buyItem } = useMarketInteractions()
-  const item = useRecoilValue(getItem({ tokenId, nftContract }))
+  const allImages = useRecoilValue(imagesState)
+  const item = useMemo(() => allImages.get(`${nftContract}_${tokenId}`), [tokenId, nftContract])
 
   return (
     <AnimatePresence>
@@ -36,7 +38,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
         className='market-item-card'>
         <Link href={`/assets/${nftContract}/${tokenId}`}>
           <div className='h-max w-full cursor-pointer'>
-            <VideoOrImage format={item?.attributes?.format} url={formatIpfs(item?.attributes?.image)} />
+            <VideoOrImage format={item?.format} url={formatIpfs(item?.image)} />
           </div>
         </Link>
         <div className='flex  flex-col justify-evenly truncate p-2 text-sm font-bold'>
@@ -44,7 +46,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
             <a className='w-max py-0.5 pr-5 text-[0.66rem] hover:text-gray-300'>{shortenIfAddress(nftContract)}</a>
           </Link>
           <Link href={`/assets/${nftContract}/${tokenId}`}>
-            <a className='w-max py-1 pr-5 hover:text-gray-300'>{item?.attributes?.name || "Unknown"}</a>
+            <a className='w-max py-1 pr-5 hover:text-gray-300'>{item?.name || "Unknown"}</a>
           </Link>
           {sold ? (
             <p className='mt-1 flex py-0.5 text-xs'>

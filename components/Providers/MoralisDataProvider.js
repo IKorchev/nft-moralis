@@ -31,8 +31,14 @@ const MoralisDataProvider = ({ children }) => {
   )
   const { data } = useMoralisQuery("Launchpads", (query) => query.descending("createdAt"), [], { live: true })
   const { data: images } = useMoralisQuery("ItemImage")
+
   useEffect(() => setLaunchpads(data), [data])
-  useEffect(() => setImages(images), [images])
+  useEffect(() => {
+    const imagesMap = new Map()
+    images.map((el) =>
+    imagesMap.set(`${el.attributes.contractAddress}_${el.attributes.tokenId}`, { ...el.attributes })
+    )
+    setImages(imagesMap), [images]})
   useEffect(() => setListings(allListings), [allListings])
   useEffect(() => setChain(chain), [chain])
   useEffect(() => setCurrentUser(account), [account])

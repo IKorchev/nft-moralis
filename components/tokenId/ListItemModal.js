@@ -17,16 +17,16 @@ const ListItemModal = ({ onClose, isOpen, data }) => {
       closeOnClick: true,
       closeButton: true,
     })
-    const res = await listItem(data, price)
-    const toastType = res === "success" ? "success" : "error"
-    const toastMessage = res === "success" ? "Item listed successfully!" : "Error: Something went wrong"
+    const { status } = await listItem(data, price)
+    const toastType = status === "success" ? "success" : "error"
+    const toastMessage = status === "success" ? "Item listed successfully!" : "Error: Something went wrong"
     toast.update(id, {
       isLoading: false,
       type: toastType,
       render: toastMessage,
       autoClose: 4000,
     })
-    if (res === "success") {
+    if (status === "success") {
       setTimeout(() => {
         onClose()
       }, 2000)
@@ -58,6 +58,7 @@ const ListItemModal = ({ onClose, isOpen, data }) => {
               <input
                 onChange={(e) => setPrice(e.target.value)}
                 type='number'
+                step={0.0001}
                 min={0}
                 id='listPriceInput'
                 className='cols-span-1 ring-secondary mr-2 block  bg-black p-2 text-lg text-white focus:ring'

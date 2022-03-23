@@ -1,6 +1,6 @@
 import Moralis from "moralis"
-import { atom, selectorFamily } from "recoil"
-
+import { atom, selector, selectorFamily, useRecoilValue } from "recoil"
+import { getItem } from "./imagesSlice"
 export const filterState = atom({
   key: "filterState",
   default: null,
@@ -8,12 +8,29 @@ export const filterState = atom({
 
 export const sortState = atom({
   key: "sortState",
-  default: "date-asc",
+  default: "price-asc",
 })
 export const listingsState = atom({
   key: "listingsState",
   default: [],
 })
+
+export const sortFn = (a, b, sortBy) => {
+  switch (sortBy) {
+    case "date-asc":
+      return a.createdAt - b.createdAt
+    case "date-desc":
+      return b.createdAt - a.createdAt
+    case "price-asc":
+      return parseFloat(a.attributes.price) - parseFloat(b.attributes.price)
+    case "price-desc":
+      return parseFloat(b.attributes.price) - parseFloat(a.attributes.price)
+    case "id-asc":
+      return parseFloat(a.attributes.tokenId) - parseFloat(b.attributes.tokenId)
+    case "id-desc":
+      return parseFloat(b.attributes.tokenId) - parseFloat(a.attributes.tokenId)
+  }
+}
 
 export const sortOptions = [
   { name: "Newest first", data: "date-desc" },
@@ -23,32 +40,6 @@ export const sortOptions = [
   { name: "ID: Ascending", data: "id-asc" },
   { name: "ID: Descending", data: "id-desc" },
 ]
-
-export const sortedListings = selectorFamily({
-  key: "sortedListings",
-  get:
-    (params) =>
-    ({ get }) => {
-      const listings = params ? get(listingsByContract(params)) : get(listingsState)
-      const sortBy = get(sortState)
-      switch (sortBy) {
-        case "date-asc":
-          return [...listings].sort((a, b) => a.createdAt - b.createdAt)
-        case "date-desc":
-          return [...listings].sort((a, b) => b.createdAt - a.createdAt)
-        case "price-asc":
-          return [...listings].sort((a, b) => parseFloat(a.attributes.price) - parseFloat(b.attributes.price))
-        case "price-desc":
-          return [...listings].sort((a, b) => parseFloat(b.attributes.price) - parseFloat(a.attributes.price))
-        case "id-asc":
-          return [...listings].sort((a, b) => parseFloat(a.attributes.tokenId) - parseFloat(b.attributes.tokenId))
-        case "id-desc":
-          return [...listings].sort((a, b) => parseFloat(b.attributes.tokenId) - parseFloat(a.attributes.tokenId))
-        default:
-          return [...listings]
-      }
-    },
-})
 
 export const listingsByContract = selectorFamily({
   key: "listingsByContract",
@@ -60,6 +51,17 @@ export const listingsByContract = selectorFamily({
       return listings
     },
 })
+
+export const sortedListings = selector({
+  key: "sortedListings",
+  get: ({ get }) => {
+    const listings = get(listingsState)
+    console.log(listings)
+    const sortBy = get(sortState)
+    return [...listings].sort((a, b) => sortFn(a, b, sortBy))
+  },
+})
+
 export const collectionInfo = selectorFamily({
   key: "collectionInfo",
   get:

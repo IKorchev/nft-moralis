@@ -1,6 +1,5 @@
 import { MdSort } from "react-icons/md"
 import { AnimatePresence } from "framer-motion"
-import { useRouter } from "next/router"
 import { Suspense, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { sortedListings } from "../../store/listingsSlice"
@@ -13,15 +12,14 @@ import SectionContainer from "../../components/SectionContainer"
 import SectionTitle from "../../components/SectionTitle"
 
 const Marketplace = () => {
-  const { query } = useRouter()
-  const listings = query ? useRecoilValue(sortedListings()) : useRecoilValue(sortedListings(query.params))
+  const listings = useRecoilValue(sortedListings)
   const [open, setOpen] = useState(false)
 
   return (
     <>
       <div className='container mx-auto px-4 py-24 lg:px-0'>
         <Metadata title='NFT Explorer - Marketplace' />
-        {/* MOBILE FILTERING DRAWER */}
+        {/* MOBILE SORTING DRAWER */}
         <AnimatePresence>
           {open && (
             <Drawer open={open} setOpen={setOpen}>
@@ -66,7 +64,7 @@ const Marketplace = () => {
                       index={i}
                       itemId={el.attributes.itemId}
                       sold={el.attributes.sold}
-                      key={el.attributes.itemId}
+                      key={el.createdAt}
                     />
                   )}
                 />

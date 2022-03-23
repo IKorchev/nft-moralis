@@ -35,7 +35,19 @@ Moralis helps with keeping our contract synced with our app and keeps the data s
 
 [Create server here](https://admin.moralis.io/login)
 
-The server is then configured to listen to our Smart Contract Event whenever an item is added.
+Set up environment variables
+in your .env.local
+```
+MASTER_KEY=<master-key> // Moralis server master key,  *KEEP PRIVATE!*
+NODE_URL=<speedy-node-url> // Moralis speedy node url
+API_KEY=<api-key> // Moralis API Key
+
+NEXT_PUBLIC_SERVER_URL=<your-server-url> 
+NEXT_PUBLIC_APP_ID=<your-app-id>
+NEXT_PUBLIC_MARKET_ADDRESS=<market-contract-address>
+```
+
+Configure your server to listen to your deployed Smart Contract Event whenever an item is added.
 
 [Learn how to do this here](https://docs.moralis.io/moralis-server/automatic-transaction-sync/smart-contract-events)
 

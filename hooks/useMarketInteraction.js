@@ -6,87 +6,34 @@ import { useRecoilValue } from "recoil"
 import { currentUserState } from "../store/userSlice"
 
 const useMarketInteractions = () => {
-  const { Moralis, isWeb3Enabled } = useMoralis()
+  const { Moralis } = useMoralis()
   const account = useRecoilValue(currentUserState)
   const contractProcessor = useWeb3ExecuteFunction()
-  const MarketItems = Moralis.Object.extend("MarketItems")
-  const ItemImage = Moralis.Object.extend("ItemImage")
 
-  //update in moralis database
-  const updateItemSold = async (itemId) => {
-    const query = new Moralis.Query(MarketItems)
-    query.equalTo("itemId", itemId).equalTo("sold", false)
-    const result = await query.first()
-    result.set("sold", true)
-    result.set("owner", account)
-    result.save()
+  // Updates the item to be 'sold' and owner ' moralis database
+  const updateItemSold = async (itemId, buyer) => {
+    await fetch("/api/nft", {
+      method: "PATCH",
+      body: JSON.stringify({ itemId, buyer }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
   }
 
+  // Save item image in database
   const saveItemInMoralisDatabase = async (nftObject) => {
-    // Query the Items Images collection
-    const query = new Moralis.Query(ItemImage)
-      .equalTo("contractAddress", nftObject.contractAddress)
-      .equalTo("tokenId", nftObject.tokenId)
-    const result = await query.find()
-    //make sure item doesn't exist
-    if (result.length >= 1) {
-      return
-    }
-    // Continue saving the Item in the database.
-    const Item = new ItemImage()
-    Item.set("image", nftObject.metadata.image || nftObject.metadata.image_url || nftObject.metadata.url)
-    Item.set("format", nftObject.metadata.format)
-    Item.set("contractAddress", nftObject.contractAddress)
-    Item.set("tokenId", nftObject.tokenId)
-    Item.set("name", nftObject.metadata.name)
-    Item.save()
+    const res = await fetch("/api/nft", {
+      method: "POST",
+      body: JSON.stringify({ nftObject }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    return res
   }
 
-  //get cost required for mint
-  const getMintCost = async (contractAddress) => {
-    let cost
-    await contractProcessor.fetch({
-      params: {
-        abi: NFT_ABI,
-        contractAddress: contractAddress,
-        functionName: contractFunctions.COST,
-      },
-      onError: (err) => console.log(err),
-      onSuccess: (data) => (cost = data),
-    })
-    return cost
-  }
-
-  //gets the amount of tokens that have been minted so far for a given contract
-  const getTotalSupply = async (contractAddress) => {
-    let mintedAmount
-    await contractProcessor.fetch({
-      params: {
-        abi: NFT_ABI,
-        contractAddress: contractAddress,
-        functionName: contractFunctions.TOTAL_SUPPLY,
-      },
-      onError: (err) => console.log(err),
-      onSuccess: (data) => (mintedAmount = data),
-    })
-    return mintedAmount
-  }
-
-  //gets max supply of tokens for given contract
-  const getMaxSupply = async (contractAddress) => {
-    let maxSupply
-    await contractProcessor.fetch({
-      params: {
-        abi: NFT_ABI,
-        contractAddress: contractAddress,
-        functionName: contractFunctions.MAX_SUPPLY,
-      },
-      onError: (err) => console.log(err),
-      onSuccess: (data) => (maxSupply = data),
-    })
-    return maxSupply
-  }
-  //mints token to user address
+  // Mints token to user address
   const mintToken = async (contractAddress, mintCost, mintAmount) => {
     await contractProcessor.fetch({
       params: {
@@ -103,13 +50,8 @@ const useMarketInteractions = () => {
     })
   }
 
-  // buy NFT from Market
+  // Buy NFT from Market
   const buyItem = async (nftContract, itemId, price) => {
-    //connect web3 if its not already connected
-    if (!isWeb3Enabled) {
-      await Moralis.enableWeb3()
-    }
-    //continue
     await contractProcessor.fetch({
       params: {
         contractAddress: MARKET_ADDRESS,
@@ -122,24 +64,25 @@ const useMarketInteractions = () => {
         },
       },
       onSuccess: (data) => {
-        updateItemSold(itemId)
+        updateItemSold(itemId, account)
         toast.success("Item purchase successful.", {
           position: toast.POSITION.TOP_LEFT,
           autoClose: 4000,
         })
       },
-      onError: (err) =>
-        toast.error(err.message.split("(")[0], {
+      onError: (err) => {
+        const splitMessage = err.message.split("(")[0]
+        toast.error(splitMessage, {
           position: toast.POSITION.TOP_LEFT,
           autoClose: 4000,
-        }),
+        })
+      },
     })
   }
 
   // Place item on sale
   const createMarketItem = async (listingPrice, nftObject, price) => {
-    let status
-    await contractProcessor.fetch({
+    const data = await contractProcessor.fetch({
       params: {
         contractAddress: MARKET_ADDRESS,
         abi: MARKET_ABI,
@@ -151,18 +94,18 @@ const useMarketInteractions = () => {
           price: Moralis.Units.ETH(price).toString(),
         },
       },
-      onSuccess: (result) => {
-        status = "success"
-        saveItemInMoralisDatabase(nftObject)
+      onSuccess: async () => {
+        await saveItemInMoralisDatabase(nftObject)
+        return { status: "success" }
       },
-      onError: (err) => {
-        status = "error"
-      },
+      onError: (err) => ({ status: "success" }),
+      onComplete: (data) => console.log(data),
     })
-    return status
+    console.log(data)
+    return data
   }
 
-  //get listing price required for the market
+  // Get listing price required for the market
   const getMarketListingPrice = async () => {
     let listingPrice
     await contractProcessor.fetch({
@@ -180,8 +123,8 @@ const useMarketInteractions = () => {
   }
 
   // Prompt user to sign and approve market to trade his nft
-  const getApprovalForAll = (contractAddress) => {
-    contractProcessor.fetch({
+  const getApprovalForAll = async (contractAddress) => {
+    await contractProcessor.fetch({
       params: {
         contractAddress: contractAddress,
         abi: NFT_ABI,
@@ -191,12 +134,15 @@ const useMarketInteractions = () => {
           approved: true,
         },
       },
+      onSuccess: (e) => console.log(e),
+      onComplete: (e) => console.log(e),
+      onError: (e) => console.log(e),
     })
   }
 
-  //checks if market is approved to transfer user NFT
+  // Checks if market is approved to transfer user NFT
   const checkIfApproved = async (contractAddress) => {
-    let data
+    let isApproved
     await contractProcessor.fetch({
       params: {
         contractAddress: contractAddress,
@@ -207,21 +153,30 @@ const useMarketInteractions = () => {
           owner: account,
         },
       },
-      onSuccess: (result) => (data = result),
+      onSuccess: (result) => (isApproved = result),
+      onError: (err) => {
+        throw new Error(err)
+      },
     })
-    return data
+    return isApproved
   }
 
-  //List item on marketplace
+  // List item on marketplace
   const listItem = async (nftObject, price) => {
     const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
     const listingPrice = await getMarketListingPrice()
-    if (!isMarketApproved) {
-      getApprovalForAll(nftObject.contractAddress)
+    // If listing price was not fetched, send error
+    if (!listingPrice) {
+      return "error"
     }
-    if (isMarketApproved && listingPrice) {
-      const result = await createMarketItem(listingPrice, nftObject, price)
-      return result
+    // If contract is not approved, prompt approval
+    if (!isMarketApproved) {
+      getApprovalForAll(nftObject.contractAddress).then(() => createMarketItem(listingPrice, nftObject, price))
+    }
+    // Create the sale
+    else {
+      const { status } = await createMarketItem(listingPrice, nftObject, price)
+      return status?.error ? "error" : "success"
     }
   }
 
@@ -230,9 +185,6 @@ const useMarketInteractions = () => {
     listItem,
     updateItemSold,
     mintToken,
-    getMintCost,
-    getMaxSupply,
-    getTotalSupply,
   }
 }
 

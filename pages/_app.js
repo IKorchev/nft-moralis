@@ -10,8 +10,8 @@ import { useEffect } from "react"
 import { SWRConfig } from "swr"
 import { ToastContainer } from "react-toastify"
 
-const SERVER_URL = "https://puvi0xctfpov.usemoralis.com:2053/server",
-  APP_ID = "5pxsdN5InAwggSVfnEr8c2ZB7orX8iDJCJ4V8REC"
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL,
+  APP_ID = process.env.NEXT_PUBLIC_APP_ID
 
 //prettier-ignore"
 const MyApp = ({ Component, pageProps }) => {
