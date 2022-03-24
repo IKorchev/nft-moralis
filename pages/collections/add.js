@@ -2,7 +2,7 @@ import { useMoralis } from "react-moralis"
 import { toast } from "react-toastify"
 import { useRecoilState } from "recoil"
 import { chainState } from "../../store/userSlice"
-import SectionTitle from "../../components/SectionTitle"
+import {SectionTitle} from "../../components/Section"
 import Metadata from "../../components/Other/Metadata"
 const createFormDataObject = (event, chain) => {
   return {

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import { formatIpfs } from "../../utils/common"
 import useMarketInteractions from "../../hooks/useMarketInteraction"
+import VideoOrImage from "../Cards/NFTCard/VideoOrImage"
 
 const ListItemModal = ({ onClose, isOpen, data }) => {
   const [price, setPrice] = useState(0)
@@ -17,7 +18,8 @@ const ListItemModal = ({ onClose, isOpen, data }) => {
       closeOnClick: true,
       closeButton: true,
     })
-    const { status } = await listItem(data, price)
+    const status = await listItem(data, price)
+    console.log(status)
     const toastType = status === "success" ? "success" : "error"
     const toastMessage = status === "success" ? "Item listed successfully!" : "Error: Something went wrong"
     toast.update(id, {
@@ -32,7 +34,7 @@ const ListItemModal = ({ onClose, isOpen, data }) => {
       }, 2000)
     }
   }
-
+  console.log(data)
   return (
     <Dialog
       as={motion.div}
@@ -48,7 +50,16 @@ const ListItemModal = ({ onClose, isOpen, data }) => {
         <motion.div className='border-secondary-600 bg-primary-900 shadow-glass-large z-20 grid place-items-center rounded-lg border p-5  px-24 backdrop-blur-sm backdrop-filter'>
           <Dialog.Title className='py-2 text-white'>List for sale</Dialog.Title>
           <div className='h-60 w-60 bg-gray-100'>
-            <img src={formatIpfs(data?.imageUrl || data?.image || data?.url)} alt='' className='object-contain' />
+            <VideoOrImage
+              setLoading={() => true}
+              format={data?.metadata?.format || data?.imageType}
+              url={
+                //Depending on which page the modal was opened the data will be different format
+                //TODO: Use the same data in the future
+                formatIpfs(data?.image || data?.imageUrl || data?.url) ||
+                formatIpfs(data?.metadata?.image || data?.metadata?.imageUrl || data?.metadata?.url)
+              }
+            />
           </div>
           <form onSubmit={onSubmit} className='mt-5 flex flex-col text-white'>
             <div className='border-secondary-100 flex w-full items-center justify-evenly rounded-md border px-2'>

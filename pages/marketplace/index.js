@@ -1,15 +1,14 @@
-import { MdSort } from "react-icons/md"
 import { AnimatePresence } from "framer-motion"
 import { Suspense, useState } from "react"
+import { MdSort } from "react-icons/md"
 import { useRecoilValue } from "recoil"
-import { sortedListings } from "../../store/listingsSlice"
 import MarketItem from "../../components/Cards/MarketItemCard"
 import Drawer from "../../components/Other/Drawer"
 import Metadata from "../../components/Other/Metadata"
 import PaginatedItems from "../../components/Other/PaginatedItems"
 import SortItemsBy from "../../components/Other/SortItemsBy"
-import SectionContainer from "../../components/SectionContainer"
-import SectionTitle from "../../components/SectionTitle"
+import { SectionContainer, SectionTitle } from "../../components/Section"
+import { sortedListings } from "../../store/listingsSlice"
 
 const Marketplace = () => {
   const listings = useRecoilValue(sortedListings)

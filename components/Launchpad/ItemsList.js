@@ -1,5 +1,5 @@
 import React from "react"
-import SectionTitle from "../SectionTitle"
+import { SectionTitle } from "../Section"
 
 import { CollectionCard } from "../Cards/CollectionCard"
 const ItemsList = ({ items, title }) => {

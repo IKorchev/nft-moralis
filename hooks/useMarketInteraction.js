@@ -82,7 +82,8 @@ const useMarketInteractions = () => {
 
   // Place item on sale
   const createMarketItem = async (listingPrice, nftObject, price) => {
-    const data = await contractProcessor.fetch({
+    let response = {}
+    await contractProcessor.fetch({
       params: {
         contractAddress: MARKET_ADDRESS,
         abi: MARKET_ABI,
@@ -94,15 +95,15 @@ const useMarketInteractions = () => {
           price: Moralis.Units.ETH(price).toString(),
         },
       },
-      onSuccess: async () => {
-        await saveItemInMoralisDatabase(nftObject)
-        return { status: "success" }
+      onSuccess: async (data) => {
+        saveItemInMoralisDatabase(nftObject)
+        return (response = { status: "success" })
       },
-      onError: (err) => ({ status: "success" }),
+      onError: (err) => (response = { status: "error" }),
       onComplete: (data) => console.log(data),
     })
-    console.log(data)
-    return data
+    console.log(response)
+    return response
   }
 
   // Get listing price required for the market
@@ -163,20 +164,25 @@ const useMarketInteractions = () => {
 
   // List item on marketplace
   const listItem = async (nftObject, price) => {
-    const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
-    const listingPrice = await getMarketListingPrice()
-    // If listing price was not fetched, send error
-    if (!listingPrice) {
+    try {
+      const isMarketApproved = await checkIfApproved(nftObject.contractAddress)
+      const listingPrice = await getMarketListingPrice()
+      // If listing price was not fetched, send error
+      if (!listingPrice) {
+        return "error"
+      }
+      // If contract is not approved, prompt approval
+      if (!isMarketApproved) {
+        getApprovalForAll(nftObject.contractAddress).then(() => createMarketItem(listingPrice, nftObject, price))
+      }
+      // Create the sale
+      else {
+        const { status } = await createMarketItem(listingPrice, nftObject, price)
+        console.log(status)
+        return status
+      }
+    } catch (error) {
       return "error"
-    }
-    // If contract is not approved, prompt approval
-    if (!isMarketApproved) {
-      getApprovalForAll(nftObject.contractAddress).then(() => createMarketItem(listingPrice, nftObject, price))
-    }
-    // Create the sale
-    else {
-      const { status } = await createMarketItem(listingPrice, nftObject, price)
-      return status?.error ? "error" : "success"
     }
   }
 

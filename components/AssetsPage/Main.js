@@ -1,14 +1,12 @@
 import React, { useState } from "react"
 import PaginatedItems from "../Other/PaginatedItems"
 import { FilterIcon } from "@heroicons/react/solid"
-import SectionTitle from "../SectionTitle"
-import SectionContainer from "../SectionContainer"
+import { SectionContainer, SectionTitle } from "../Section"
 import SortItemsBy from "../Other/SortItemsBy"
 import MarketItemCard from "../Cards/MarketItemCard"
 
 const Main = ({ itemsAvailableForPurchase }) => {
   const [open, setOpen] = useState(false)
-  
 
   return (
     <div className='container w-full'>

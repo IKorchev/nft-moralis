@@ -8,8 +8,8 @@ import { NftProvider } from "use-nft"
 import { userNFTs } from "../../store/userSlice"
 import NFTCard from "../Cards/NFTCard"
 import PaginatedItems from "../Other/PaginatedItems"
-import SectionContainer from "../SectionContainer"
-import SectionTitle from "../SectionTitle"
+import { SectionContainer, SectionTitle } from "../Section"
+
 
 const ethersConfig = {
   provider: getDefaultProvider("https://speedy-nodes-nyc.moralis.io/a66bbe066b91269ffbcb96b7/eth/ropsten"),

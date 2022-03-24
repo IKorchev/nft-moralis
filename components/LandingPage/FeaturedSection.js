@@ -1,6 +1,6 @@
 import { CollectionCard } from "../Cards/CollectionCard"
 import { motion } from "framer-motion"
-import SectionTitle from "../SectionTitle"
+import {SectionTitle} from "../Section"
 import StaggerChildren, { createSlideVariant } from "../Other/StaggerChildren"
 
 const FeaturedSection = ({ completed }) => {
