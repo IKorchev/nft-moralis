@@ -69,7 +69,7 @@ export class Market {
         },
       }
       // If the market is not approved to trade owner's NFT, prompt setApprovalForAll()
-      if (await nft.checkIfApproved()) {
+      if (!(await nft.checkIfApproved())) {
         toast.update(id, {
           render: "Approval: You need to approve the Market to trade this NFT.",
         })
