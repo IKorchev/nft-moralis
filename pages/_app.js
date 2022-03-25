@@ -9,6 +9,8 @@ import Moralis from "moralis"
 import { useEffect } from "react"
 import { SWRConfig } from "swr"
 import { ToastContainer } from "react-toastify"
+import { NftProvider } from "use-nft"
+import { ethersConfig } from "../utils/config"
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL,
   APP_ID = process.env.NEXT_PUBLIC_APP_ID
@@ -31,7 +33,9 @@ const MyApp = ({ Component, pageProps }) => {
           <MoralisDataProvider>
             <Layout>
               <AnimatePresence exitBeforeEnter>
-                <Component {...pageProps} />
+                <NftProvider fetcher={["ethers", ethersConfig]}>
+                  <Component {...pageProps} />
+                </NftProvider>
                 <ToastContainer
                   toastClassName='bg-primary-200 text-white shadow-md shadow-secondary-200/20 border border-secondary-500'
                   progressClassName='bg-gradient-to-r from-secondary-200 to-secondary-600 '

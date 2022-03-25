@@ -11,25 +11,38 @@ import {
   Title,
   Tooltip,
 } from "chart.js"
+import { useMemo } from "react"
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const ActivityChart = ({ data }) => {
   const { Moralis } = useMoralis()
-  const labelsArr = data?.transactions?.result
-    ?.map((el) => {
-      return new Date(el.block_timestamp).toLocaleDateString("uk")
-    })
-    .reverse()
-  const dataArr = data?.transactions?.result?.map((el) => Moralis.Units.FromWei(el.value)).reverse()
+  const _chartData = useMemo(() => {
+    const labels = []
+    const prices = []
+    const transactions = data?.transactions?.result
+    for (const transaction of transactions) {
+      const date = new Date(transaction.block_timestamp).toLocaleDateString("uk")
+      labels.push(date)
+      prices.push(Moralis.Units.FromWei(transaction.value))
+    }
+    return {
+      labels: labels.reverse(),
+      prices: prices.reverse(),
+    }
+  }, [data?.transactions?.result, data])
+
   const chartData = {
-    labels: labelsArr,
+    labels: _chartData.labels,
     datasets: [
       {
         label: "Price",
         borderColor: "white",
-        data: dataArr,
+        data: _chartData.prices,
         borderColor: "#de0b6a",
         backgroundColor: "white",
+        tension: 0.3,
+        
       },
     ],
   }

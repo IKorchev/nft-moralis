@@ -1,19 +1,14 @@
 import { Tab } from "@headlessui/react"
 import { FilterIcon } from "@heroicons/react/solid"
-import { getDefaultProvider } from "ethers"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { useRecoilValue } from "recoil"
-import { NftProvider } from "use-nft"
 import { userNFTs } from "../../store/userSlice"
 import NFTCard from "../Cards/NFTCard"
 import PaginatedItems from "../Other/PaginatedItems"
 import { SectionContainer, SectionTitle } from "../Section"
-
-
-const ethersConfig = {
-  provider: getDefaultProvider("https://speedy-nodes-nyc.moralis.io/a66bbe066b91269ffbcb96b7/eth/ropsten"),
-}
+import { NftProvider } from "use-nft"
+import { ethersConfig } from "../../utils/config"
 
 const NFTsTab = ({ address }) => {
   const [open, setOpen] = useState(false)

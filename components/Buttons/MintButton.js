@@ -1,11 +1,16 @@
 import React, { useState } from "react"
-import { useMoralis } from "react-moralis"
-import useMarketInteractions from "../../hooks/useMarketInteraction"
-const MintButton = ({ contractAddress, cost }) => {
-  const { Moralis } = useMoralis()
-  const { mintToken } = useMarketInteractions()
-  const [mintAmount, setMintAmount] = useState(1)
+import { useRecoilValue } from "recoil"
+import { NFT } from "../../features/NFT"
+import { currentUserState } from "../../store/userSlice"
 
+const MintButton = ({ contractAddress, cost }) => {
+  const [mintAmount, setMintAmount] = useState(1)
+  const account = useRecoilValue(currentUserState)
+
+  const handleMint = () => {
+    const nftInstance = new NFT(contractAddress, null)
+    nftInstance.mintToken(cost, mintAmount, account)
+  }
   return (
     <div
       className=' 
@@ -24,9 +29,7 @@ const MintButton = ({ contractAddress, cost }) => {
         })}
       </select>
       <button
-        onClick={() => {
-          mintToken(contractAddress, Moralis.Units.ETH(cost), mintAmount)
-        }}
+        onClick={handleMint}
         className='card-button
            from-tertiary-100 to-secondary-100  border-tertiary-700 
            hover:bg-tertiary-200 h-full 
