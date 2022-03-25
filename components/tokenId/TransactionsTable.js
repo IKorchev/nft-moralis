@@ -8,21 +8,10 @@ import { useState } from "react"
 import { useRecoilValue } from "recoil"
 import { chainState } from "../../store/userSlice"
 
-const TransactionsTable = ({ transactions, rowProps, ...props }) => {
-  const { chain } = useRecoilValue(chainState)
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
-
-  const rows = transactions.map((el) => {
+const createRows = (arr) => {
+  if (!arr) return arr
+  console.log("CREATEROWS " + arr)
+  return arr.map((el) => {
     const date = new Date(el.block_timestamp).toLocaleDateString("uk")
     return {
       date: date,
@@ -32,9 +21,25 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
       value: el.value,
     }
   })
+}
+
+const TransactionsTable = ({ transactions }) => {
+  const { chain } = useRecoilValue(chainState)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const rows = createRows(transactions)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
+
   return (
-    <Paper className=' container mx-auto max-w-[70rem] overflow-hidden rounded-md border border-secondary-600 '>
-      <TableContainer className='styled-scrollbar h-[36.5rem]  bg-secondary-900 text-white'>
+    <Paper className=' border-secondary-600 container mx-auto max-w-[70rem] overflow-hidden rounded-md border '>
+      <TableContainer className='styled-scrollbar bg-secondary-900  h-[36.5rem] text-white'>
         <Table className='text-white' aria-label='Transactions Table'>
           <TableHead>
             <TableRow>
@@ -57,13 +62,13 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
           </TableHead>
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(({ hash, from, to, value, date }) => (
-              <TableRow key={hash} className='bg-secondary-800/40 text-white odd:bg-secondary-900'>
+              <TableRow key={hash} className='bg-secondary-800/40 odd:bg-secondary-900 text-white'>
                 <TableCell sx={{ border: 0 }}>
                   <span className=' text-white'>{date}</span>
                 </TableCell>
                 <TableCell sx={{ border: 0 }} className='text-white'>
                   <Link href={`/user/${from}`}>
-                    <a className='inline-flex text-white hover:text-secondary-100 '>
+                    <a className='hover:text-secondary-100 inline-flex text-white '>
                       {shortenIfAddress(from)} <ExternalLinkIcon className='h-5 w-5' />
                     </a>
                   </Link>
@@ -71,7 +76,7 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
                 <TableCell sx={{ border: 0 }} className=' text-white '>
                   {to ? (
                     <Link href={`/user/${to}`}>
-                      <a className='inline-flex text-white hover:text-secondary-100'>
+                      <a className='hover:text-secondary-100 inline-flex text-white'>
                         {shortenIfAddress(to) || "null"} <ExternalLinkIcon className='h-5 w-5' />
                       </a>
                     </Link>
@@ -84,7 +89,7 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
                     href={`${chain?.blockExplorerUrl}tx/${hash}`}
                     target='_blank'
                     rel='noreferrer'
-                    className='inline-flex text-white hover:text-secondary-100'>
+                    className='hover:text-secondary-100 inline-flex text-white'>
                     {shortenTransactionHash(hash) || "null"}
                     <ExternalLinkIcon className='h-5 w-5' />
                   </a>
@@ -98,7 +103,7 @@ const TransactionsTable = ({ transactions, rowProps, ...props }) => {
         </Table>
       </TableContainer>
       <TablePagination
-        className='border-t border-secondary-500 bg-secondary-900 text-white'
+        className='border-secondary-500 bg-secondary-900 border-t text-white'
         rowsPerPageOptions={[10, 25, 100]}
         component='div'
         count={rows.length}

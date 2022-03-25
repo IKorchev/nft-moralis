@@ -5,6 +5,8 @@ export const contractFunctions = {
   IS_APPROVED_FOR_ALL: "isApprovedForAll",
   SET_APPROVAL_FOR_ALL: "setApprovalForAll",
   APPROVE: "approve",
+  FETCH_ITEMS: "fetchItemsCreated",
+  FETCH_ACCOUNT_NFTS: "fetchMyNFTs",
   COST: "cost",
   MINT: "mint",
   MAX_SUPPLY: "maxSupply",

@@ -1,6 +1,5 @@
 import Moralis from "moralis"
-import { atom, selector, selectorFamily, useRecoilValue } from "recoil"
-import { getItem } from "./imagesSlice"
+import { atom, selector, selectorFamily } from "recoil"
 export const filterState = atom({
   key: "filterState",
   default: null,
@@ -56,7 +55,6 @@ export const sortedListings = selector({
   key: "sortedListings",
   get: ({ get }) => {
     const listings = get(listingsState)
-    console.log(listings)
     const sortBy = get(sortState)
     return [...listings].sort((a, b) => sortFn(a, b, sortBy))
   },
@@ -75,7 +73,6 @@ export const collectionInfo = selectorFamily({
         name: el.attributes.collectionName,
         data: el.attributes.contractAddress,
       }))
-      console.log(listed)
       return {
         listedCount,
         floor,

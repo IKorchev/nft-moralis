@@ -34,12 +34,11 @@ export const userTransactions = selectorFamily({
     async ({ get }) => {
       const account = get(currentUserState)
       const chain = get(chainState)
-
       const res = await Moralis.Web3API.account.getNFTTransfers({
         chain: chain?.chainId,
         address: address === "me" ? account : address,
       })
       console.log(res)
-      return res.result
+      return res
     },
 })

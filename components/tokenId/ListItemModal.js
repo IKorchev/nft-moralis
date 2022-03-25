@@ -1,40 +1,25 @@
 import { Dialog } from "@headlessui/react"
 import { motion } from "framer-motion"
 import { useState } from "react"
-import { toast } from "react-toastify"
 import { formatIpfs } from "../../utils/common"
-import useMarketInteractions from "../../hooks/useMarketInteraction"
+import { useMarketInstance } from "../../hooks/useMarketInstance"
 import VideoOrImage from "../Cards/NFTCard/VideoOrImage"
 
 const ListItemModal = ({ onClose, isOpen, data }) => {
   const [price, setPrice] = useState(0)
-  const { listItem } = useMarketInteractions()
+  const { market } = useMarketInstance()
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    if (price === 0) return
-    const id = toast.loading("Awaiting signature ..", {
-      position: toast.POSITION.TOP_LEFT,
-      closeOnClick: true,
-      closeButton: true,
-    })
-    const status = await listItem(data, price)
-    console.log(status)
-    const toastType = status === "success" ? "success" : "error"
-    const toastMessage = status === "success" ? "Item listed successfully!" : "Error: Something went wrong"
-    toast.update(id, {
-      isLoading: false,
-      type: toastType,
-      render: toastMessage,
-      autoClose: 4000,
-    })
-    if (status === "success") {
+    if (!price) return
+    if (price <= 0) return
+    const { status } = (await market.listItem(data, price)) || {}
+    if (status === 1) {
       setTimeout(() => {
         onClose()
       }, 2000)
     }
   }
-  console.log(data)
   return (
     <Dialog
       as={motion.div}

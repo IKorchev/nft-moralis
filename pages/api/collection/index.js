@@ -5,9 +5,9 @@ import {
   saveCollectionInDatabase,
 } from "../../../utils/collectionRouteUtils"
 
-const authenticate = async (token, address, chain) => {
+const authenticate = async (authToken, address, chain) => {
   try {
-    const query = new Moralis.Query("_Session").equalTo("sessionToken", token)
+    const query = new Moralis.Query("_Session").equalTo("sessionToken", authToken)
     const sessionMatch = await query.find({ useMasterKey: true })
     if (!sessionMatch) return { error: "You need to sign in first." }
     //Query the user to check his wallet addresses
@@ -32,14 +32,17 @@ const getHandler = async (req, res) => {
 }
 const postHandler = async (req, res) => {
   const { imageUrl, description, collectionName, chain, address } = JSON.parse(req.body)
-  const token = req.headers.authorization.split(" ")[1]
+  // extract the token from the header - <Bearer Token> 
+  const authToken = req.headers.authorization.split(" ")[1]
   try {
     const collectionIsInDatabase = await isCollectionInDatabase(address)
     if (collectionIsInDatabase) {
       return res.status(403).send({ error: "The collection already exists." })
     }
-    const { error } = await authenticate(token, address, chain)
+    const { error } = await authenticate(authToken, address, chain)
+    //if failed to authenticate
     if (error) return res.status(403).send({ error: "You must be the owner of the contract." })
+    //create and save collection in database
     const _metadata = await Moralis.Web3API.token.getNFTMetadata({ chain, address })
     const collectionObject = {
       imageUrl,

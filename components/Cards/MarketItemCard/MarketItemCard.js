@@ -1,24 +1,22 @@
-import { useMoralis } from "react-moralis"
-import { formatIpfs } from "../../../utils/common"
 import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
+import { useMoralis } from "react-moralis"
 import { useRecoilValue } from "recoil"
-import { getItem, imagesState } from "../../../store/imagesSlice"
+import { useMarketInstance } from "../../../hooks/useMarketInstance"
+import { itemImage } from "../../../store/imagesSlice"
 import { chainState, currentUserState } from "../../../store/userSlice"
+import { formatIpfs } from "../../../utils/common"
+import Link from "next/link"
 import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
-import useMarketInteractions from "../../../hooks/useMarketInteraction"
-import Link from "next/link"
 import VideoOrImage from "../NFTCard/VideoOrImage"
-import { useMemo } from "react"
 
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index }) => {
   const { Moralis } = useMoralis()
+  const { market } = useMarketInstance()
   const chain = useRecoilValue(chainState)
   const account = useRecoilValue(currentUserState)
-  const { buyItem } = useMarketInteractions()
-  const allImages = useRecoilValue(imagesState)
-  const item = useMemo(() => allImages.get(`${nftContract}_${tokenId}`), [tokenId, nftContract])
+  const item = useRecoilValue(itemImage({ nftContract, tokenId }))
 
   return (
     <AnimatePresence>
@@ -63,7 +61,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
                 ) : chain && chain.chainId !== "0x3" ? (
                   <SwitchNetworkButton rounded='sm' size='xs' network='0x3' />
                 ) : (
-                  <button className='card-button' onClick={() => buyItem(nftContract, itemId, price)}>
+                  <button className='card-button' onClick={() => market.buyItem(nftContract, itemId, price)}>
                     Buy now
                   </button>
                 )}
