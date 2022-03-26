@@ -1,12 +1,6 @@
 import Moralis from "moralis/node"
 
-
-//for test nft
-
-// fetching data for given nft contract address,
-// ideally it should be split into separate endpoints,
-// but for now it stays like this
-
+// fetching transactions for given nft contract address,
 const getHandler = async (req, res) => {
   try {
     const { tokenId, contract } = req.query

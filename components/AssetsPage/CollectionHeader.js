@@ -70,7 +70,7 @@ const CollectionHeader = ({ address }) => {
               animate='animate'
               className='grid  grid-cols-3 gap-5 text-xs sm:text-lg'>
               {rows.map(({ title, subtitle, variant }) => (
-                <InfoBox animationVariants={variant} title={title} subtitle={subtitle} />
+                <InfoBox key={title} animationVariants={variant} title={title} subtitle={subtitle} />
               ))}
             </motion.ul>
             <motion.p

@@ -10,6 +10,9 @@ import { SectionContainer, SectionTitle } from "../Section"
 import { NftProvider } from "use-nft"
 import { ethersConfig } from "../../utils/config"
 
+
+
+
 const NFTsTab = ({ address }) => {
   const [open, setOpen] = useState(false)
   const nfts = useRecoilValue(userNFTs({ address: address }))
