@@ -29,7 +29,7 @@ const Footer = () => {
           <ul className='mt-4'>
             {links.map(({ href, title }) => {
               return (
-                <li className='mb-1'>
+                <li key={href} className='mb-1'>
                   <Link href={href}>{title}</Link>
                 </li>
               )

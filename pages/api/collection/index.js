@@ -1,9 +1,5 @@
 import Moralis from "moralis/node"
-import {
-  checkIsOwner,
-  isCollectionInDatabase,
-  saveCollectionInDatabase,
-} from "../../../utils/collectionRouteUtils"
+import { checkIsOwner, isCollectionInDatabase, saveCollectionInDatabase } from "../../../utils/collectionRouteUtils"
 
 const authenticate = async (authToken, address, chain) => {
   try {
@@ -32,7 +28,7 @@ const getHandler = async (req, res) => {
 }
 const postHandler = async (req, res) => {
   const { imageUrl, description, collectionName, chain, address } = JSON.parse(req.body)
-  // extract the token from the header - <Bearer Token> 
+  // extract the token from the header - <Bearer Token>
   const authToken = req.headers.authorization.split(" ")[1]
   try {
     const collectionIsInDatabase = await isCollectionInDatabase(address)
@@ -42,6 +38,7 @@ const postHandler = async (req, res) => {
     const { error } = await authenticate(authToken, address, chain)
     //if failed to authenticate
     if (error) return res.status(403).send({ error: "You must be the owner of the contract." })
+
     //create and save collection in database
     const _metadata = await Moralis.Web3API.token.getNFTMetadata({ chain, address })
     const collectionObject = {
@@ -58,7 +55,6 @@ const postHandler = async (req, res) => {
     res.status(500).send({ error })
   }
 }
-
 
 export default async function handler(req, res) {
   const { method } = req

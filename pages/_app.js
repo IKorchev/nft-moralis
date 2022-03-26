@@ -32,7 +32,7 @@ const MyApp = ({ Component, pageProps }) => {
         <MoralisProvider appId={APP_ID || ""} serverUrl={SERVER_URL || ""}>
           <MoralisDataProvider>
             <Layout>
-              <AnimatePresence exitBeforeEnter>
+              <AnimatePresence>
                 <NftProvider fetcher={["ethers", ethersConfig]}>
                   <Component {...pageProps} />
                 </NftProvider>
