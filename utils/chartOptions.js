@@ -6,6 +6,7 @@ export const chartOptions = {
   },
   scales: {
     y: {
+      min: 0,
       title: {
         display: true,
         text: "Price (ETH)",

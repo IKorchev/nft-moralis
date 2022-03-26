@@ -51,12 +51,14 @@ function UserAddress() {
                 <FiActivity className='mr-3 text-xl' /> Activity
               </Tab>
             </Tab.List>
-            <Suspense fallback={<Loading />}>
-              <Tab.Panels className='w-full'>
+            <Tab.Panels className='w-full'>
+              <Suspense fallback={<Loading />}>
                 <NFTsTab address={router?.query?.userAddress} />
+              </Suspense>
+              <Suspense fallback={<Loading />}>
                 <ActivityTab address={router?.query?.userAddress} />
-              </Tab.Panels>
-            </Suspense>
+              </Suspense>
+            </Tab.Panels>
           </Tab.Group>
         </div>
       </div>

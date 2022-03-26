@@ -5,8 +5,11 @@ import { useRecoilValue } from "recoil"
 import { userTransactions } from "../../store/userSlice"
 import TransactionsTable from "../tokenId/TransactionsTable"
 
+
+
+
 const ActivityTab = ({ address }) => {
-  const transactions = useRecoilValue(userTransactions({ address: address }))
+  const transactions = useRecoilValue(userTransactions({ address }))
   return (
     <Tab.Panel
       as={motion.div}
@@ -18,7 +21,7 @@ const ActivityTab = ({ address }) => {
         rowProps={{
           className: "bg-primary-50 text-lg",
         }}
-        transactions={transactions}
+        transactions={transactions?.result}
       />
     </Tab.Panel>
   )

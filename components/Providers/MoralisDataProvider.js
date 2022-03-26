@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import { useChain, useMoralis, useMoralisQuery } from "react-moralis"
+import { useSetRecoilState } from "recoil"
 import { launchpadsState } from "../../store/store"
 import { imagesState } from "../../store/imagesSlice"
 import { chainState, currentUserState } from "../../store/userSlice"
 import { listingsState } from "../../store/listingsSlice"
-import { useSetRecoilState } from "recoil"
 
 const MoralisDataProvider = ({ children }) => {
   const { account } = useMoralis()
@@ -19,7 +19,7 @@ const MoralisDataProvider = ({ children }) => {
     "MarketItems",
     (query) => query
     .equalTo("sold", false)
-    .equalTo("confirmed", true)
+    .equalTo('confirmed', true)
     .descending("createdAt"),
     [],
     { live: true }
@@ -30,10 +30,9 @@ const MoralisDataProvider = ({ children }) => {
   useEffect(() => setLaunchpads(data), [data])
   useEffect(() => {
     const imagesMap = new Map()
-    images.map((el) =>
-    imagesMap.set(`${el.attributes.contractAddress}_${el.attributes.tokenId}`, { ...el.attributes })
-    )
-    setImages(imagesMap), [images]})
+    images.map((el) => imagesMap.set(`${el.attributes.contractAddress}_${el.attributes.tokenId}`, { ...el.attributes }))
+    setImages(imagesMap)
+  }, [images])
   useEffect(() => setListings(allListings), [allListings])
   useEffect(() => setChain(chain), [chain])
   useEffect(() => setCurrentUser(account), [account])

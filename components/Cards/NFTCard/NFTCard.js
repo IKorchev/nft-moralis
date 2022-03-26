@@ -1,16 +1,18 @@
 import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import { useChain } from "react-moralis"
 import { useNft } from "use-nft"
 import Link from "next/link"
 import ListItemModal from "../../tokenId/ListItemModal"
 import SkeletonCard from "../SkeletonCard/SkeletonCard"
 import SkeletonImage from "../SkeletonCard/SkeletonImage"
 import VideoOrImage from "./VideoOrImage"
+import { chainState, currentUserState } from "../../../store/userSlice"
+import { useRecoilValue } from "recoil"
 
 const NFTCard = ({ children, tokenId, tokenAddress }) => {
-  const { chain, account } = useChain()
+  const chain = useRecoilValue(chainState)
+  const account = useRecoilValue(currentUserState)
   const [isOpen, setIsOpen] = useState(false)
   const [isImageLoading, setIsImageLoading] = useState("loading")
   const { loading, error, nft } = useNft(tokenAddress, tokenId)
