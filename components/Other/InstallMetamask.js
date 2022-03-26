@@ -10,9 +10,9 @@ const InstallMetamask = () => {
     <AnimatePresence>
       {isShown ? (
         <motion.div
-          initial={{ y: 100 }}
+          initial={{ y: "10%" }}
           animate={{ y: 0 }}
-          exit={{ y: 100 }}
+          exit={{ y: "100%" }}
           className={"fixed bottom-0 left-0 w-full  bg-yellow-200"}>
           <div className='relative  grid place-items-center px-12 py-2 '>
             <button className='absolute top-3 right-3' onClick={handleClose}>

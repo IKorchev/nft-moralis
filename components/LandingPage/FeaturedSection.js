@@ -1,6 +1,6 @@
 import { CollectionCard } from "../Cards/CollectionCard"
 import { motion } from "framer-motion"
-import {SectionTitle} from "../Section"
+import { SectionTitle } from "../Section"
 import StaggerChildren, { createSlideVariant } from "../Other/StaggerChildren"
 
 const FeaturedSection = ({ completed }) => {
@@ -17,9 +17,9 @@ const FeaturedSection = ({ completed }) => {
           className=' container mx-auto mt-24 flex flex-wrap items-center justify-center gap-5 lg:gap-10'>
           {completed?.slice(2, 6).map((el, i) => (
             <motion.div
+              key={el.attributes.contractAddress}
               variants={slideFromBottom}
-              transition={{ duration: 0.7, type: "spring", damping: 12 }}
-              key={el.attributes.contractAddress}>
+              transition={{ duration: 0.7, type: "spring", damping: 12 }}>
               <CollectionCard
                 name={el.attributes.collectionName}
                 collectionAddress={el.attributes.contractAddress}

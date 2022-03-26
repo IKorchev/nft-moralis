@@ -1,4 +1,3 @@
-
 import Link from "next/link"
 import { currentUserState } from "../../store/userSlice"
 import { useRecoilValue } from "recoil"
@@ -29,13 +28,13 @@ const Footer = () => {
           <ul className='mt-4'>
             {links.map(({ href, title }) => {
               return (
-                <li className='mb-1'>
+                <li key={title} className='mb-1'>
                   <Link href={href}>{title}</Link>
                 </li>
               )
             })}
             {account && (
-              <li className='mb-1'>
+              <li key={title} className='mb-1'>
                 <Link href={`/user/${account}`}>Your NFTs</Link>
               </li>
             )}

@@ -9,6 +9,7 @@ const SimilarItemsList = ({ address }) => {
       {listings.slice(0, 7).map((el) => {
         return (
           <MarketItemCard
+            key={el.itemId}
             itemId={el.attributes.itemId}
             tokenId={el.attributes.tokenId}
             nftContract={el.attributes.nftContract}

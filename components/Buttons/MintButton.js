@@ -17,7 +17,7 @@ const MintButton = ({ contractAddress, cost }) => {
         id='mint_amount'>
         {[1, 2, 3, 4, 5].map((el) => {
           return (
-            <option value={el} className='bg-tertiary-50 text-black'>
+            <option key={el} value={el} className='bg-tertiary-50 text-black'>
               {el} - {(cost * el).toFixed(2)} ETH
             </option>
           )

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react"
+import { useEffect } from "react"
 import { useChain, useMoralis, useMoralisQuery } from "react-moralis"
 import { launchpadsState } from "../../store/store"
 import { imagesState } from "../../store/imagesSlice"
@@ -6,19 +6,14 @@ import { chainState, currentUserState } from "../../store/userSlice"
 import { listingsState } from "../../store/listingsSlice"
 import { useSetRecoilState } from "recoil"
 
-const MoralisDataContext = createContext({})
-export const useMoralisData = () => {
-  return useContext(MoralisDataContext)
-}
-
 const MoralisDataProvider = ({ children }) => {
   const { account } = useMoralis()
   const { chain } = useChain()
   const setLaunchpads = useSetRecoilState(launchpadsState)
-  const setListings = useSetRecoilState(listingsState)
   const setImages = useSetRecoilState(imagesState)
   const setCurrentUser = useSetRecoilState(currentUserState)
   const setChain = useSetRecoilState(chainState)
+  const setListings = useSetRecoilState(listingsState)
   //prettier-ignore
   const { data: allListings } = useMoralisQuery(
     "MarketItems",
@@ -42,8 +37,7 @@ const MoralisDataProvider = ({ children }) => {
   useEffect(() => setListings(allListings), [allListings])
   useEffect(() => setChain(chain), [chain])
   useEffect(() => setCurrentUser(account), [account])
-
-  return <MoralisDataContext.Provider>{children}</MoralisDataContext.Provider>
+  return null
 }
 
 export default MoralisDataProvider
