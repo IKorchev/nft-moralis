@@ -34,7 +34,7 @@ const Footer = () => {
               )
             })}
             {account && (
-              <li key={title} className='mb-1'>
+              <li className='mb-1'>
                 <Link href={`/user/${account}`}>Your NFTs</Link>
               </li>
             )}
@@ -45,7 +45,7 @@ const Footer = () => {
           <ul className='mt-4'>
             {resources.map(({ href, title }) => {
               return (
-                <li className='mb-1'>
+                <li key={title} className='mb-1'>
                   <a href={href} target='_blank' rel='noopener noreferrer'>
                     {title}
                   </a>

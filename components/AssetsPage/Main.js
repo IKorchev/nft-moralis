@@ -7,7 +7,6 @@ import MarketItemCard from "../Cards/MarketItemCard"
 
 const Main = ({ itemsAvailableForPurchase }) => {
   const [open, setOpen] = useState(false)
-
   return (
     <div className='container w-full'>
       <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
@@ -47,7 +46,7 @@ const Main = ({ itemsAvailableForPurchase }) => {
                     index={i}
                     itemId={el.attributes.itemId}
                     sold={el.attributes.sold}
-                    key={el.attributes.itemId}
+                    key={`${el.id}`}
                   />
                 )}
               />

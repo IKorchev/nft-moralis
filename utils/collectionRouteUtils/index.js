@@ -9,7 +9,6 @@ export const checkIsOwner = async (addressesArray, address, chain) => {
     chain: chain || "0x3",
     function_name: "owner",
   })
-  console.log(owner)
   const _owner = owner.toLowerCase()
   const isOwner = addressesArray.includes(_owner)
   return { isOwner }

@@ -7,19 +7,25 @@ import { userNFTs } from "../../store/userSlice"
 import NFTCard from "../Cards/NFTCard"
 import PaginatedItems from "../Other/PaginatedItems"
 import { SectionContainer, SectionTitle } from "../Section"
-import { NftProvider } from "use-nft"
-import { ethersConfig } from "../../utils/config"
-
-
-
 
 const NFTsTab = ({ address }) => {
   const [open, setOpen] = useState(false)
   const nfts = useRecoilValue(userNFTs({ address: address }))
-
+  if (!nfts.length || !address) {
+    return (
+      <div className='grid min-h-[10rem] place-items-center'>
+        <h1 className='h1 text-white'> Connect to a network </h1>
+      </div>
+    )
+  }
   return (
-    <div className='container w-full pt-24 '>
-      <Tab.Panel as={motion.div} className='px-6' initial={{ opacity: 0 }} animate={{ opacity: 1, x: 0 }}>
+    <Tab.Panel
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className='styled-scrollbar container mx-auto my-12 overflow-y-auto'>
+      <div className='container w-full px-6 pt-24'>
         <div className='relative flex items-baseline justify-between border-b border-gray-200 pb-2'>
           <div>
             <SectionTitle title='Collected NFTs' />
@@ -42,25 +48,23 @@ const NFTsTab = ({ address }) => {
                 itemsPerPage={18}
                 renderItem={(el, i) => {
                   return (
-                    <NftProvider fetcher={["ethers", ethersConfig]}>
-                      <NFTCard
-                        index={i}
-                        key={el.token_uri}
-                        tokenUri={el.token_uri}
-                        metadata={el.metadata}
-                        tokenId={el.token_id}
-                        tokenAddress={el.token_address}
-                        contractName={el.name}
-                      />
-                    </NftProvider>
+                    <NFTCard
+                      index={i}
+                      key={`${el.token_uri}#${el.token_address}`}
+                      tokenUri={el.token_uri}
+                      metadata={el.metadata}
+                      tokenId={el.token_id}
+                      tokenAddress={el.token_address}
+                      contractName={el.name}
+                    />
                   )
                 }}
               />
             </div>
           </SectionContainer>
         </section>
-      </Tab.Panel>
-    </div>
+      </div>
+    </Tab.Panel>
   )
 }
 

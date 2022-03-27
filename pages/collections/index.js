@@ -14,6 +14,7 @@ const Collection = () => {
         {collections.map((el, i) => {
           return (
             <motion.div
+              key={el.attributes.contractAddress}
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 100 }}
               exit={{ y: 10, opacity: 0 }}

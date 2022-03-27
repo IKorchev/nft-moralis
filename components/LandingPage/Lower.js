@@ -1,5 +1,5 @@
 import { allLaunchpadsState } from "../../store/store"
-import { Primary as ButtonPrimary } from "../Buttons/CTAButton"
+import { CTAButton } from "../Buttons"
 import { useRecoilValue } from "recoil"
 import { motion } from "framer-motion"
 import Link from "next/link"
@@ -31,9 +31,7 @@ const LandingPage2 = () => {
             New collections are being listed weekly. Don't miss out! Check them out.
           </motion.p>
           <motion.span variants={slideFromBottom} transition={{ duration: 0.7, type: "spring", damping: 14 }}>
-            <Link passHref href='/collections'>
-              <ButtonPrimary title='View all collections' />
-            </Link>
+            <CTAButton href='/collections' title='View all collections' />
           </motion.span>
         </StaggerChildren>
         <StaggerChildren className='p-12'>

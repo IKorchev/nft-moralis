@@ -14,6 +14,7 @@ import { Tab } from "@headlessui/react"
 import Loading from "../../components/Other/Loading"
 import { useRecoilValue } from "recoil"
 import { currentUserState } from "../../store/userSlice"
+import { motion } from "framer-motion"
 
 function UserAddress() {
   const router = useRouter()
@@ -51,7 +52,7 @@ function UserAddress() {
                 <FiActivity className='mr-3 text-xl' /> Activity
               </Tab>
             </Tab.List>
-            <Tab.Panels className='w-full'>
+            <Tab.Panels>
               <Suspense fallback={<Loading />}>
                 <NFTsTab address={router?.query?.userAddress} />
               </Suspense>

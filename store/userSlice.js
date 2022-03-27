@@ -22,7 +22,6 @@ export const userNFTs = selectorFamily({
         chain: chain?.chainId,
         address: address === "me" ? account : address,
       })
-      console.log(res)
       return res.result
     },
 })
@@ -38,7 +37,6 @@ export const userTransactions = selectorFamily({
         chain: chain?.chainId,
         address: address === "me" ? account : address,
       })
-      console.log(res)
       return res
     },
 })

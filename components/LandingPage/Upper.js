@@ -1,5 +1,4 @@
-import Link from "next/link"
-import { Secondary, Primary } from "../Buttons/CTAButton"
+import { CTAButton } from "../Buttons"
 import { motion } from "framer-motion"
 import StaggerChildren, { createSlideVariant } from "../Other/StaggerChildren"
 
@@ -54,18 +53,14 @@ const LandingPage = () => {
               transition={{ type: "spring", damping: 15 }}
               className='my-auto h-3/4 w-1 rounded-lg  bg-gradient-to-t from-emerald-300 to-cyan-500 lg:w-1.5'
             />
-            <motion.p variants={createSlideVariant("right")} className='mt-2 w-48 text-left text-xs lg:text-base'>
+            <motion.p variants={slideFromRight} className='mt-2 w-48 text-left text-xs lg:text-base'>
               Trade on the largest NFT Marketplace on Ropsten.
             </motion.p>
           </div>
         </div>
         <motion.div variants={slideFromBottom} transition={{ type: "spring", damping: 15 }} className='mt-12 space-x-5'>
-          <Link href='/marketplace'>
-            <Primary title='Marketplace' />
-          </Link>
-          <Link href='/launchpad'>
-            <Secondary title='Launchpad' />
-          </Link>
+          <CTAButton variant='primary' href='/marketplace' title='Marketplace' />
+          <CTAButton variant='secondary' href='/launchpad' title='Launchpad' />
         </motion.div>
       </StaggerChildren>
     </div>

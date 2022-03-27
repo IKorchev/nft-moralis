@@ -100,7 +100,6 @@ export class Market {
       this.#saveItemInMoralisDatabase(nftObject)
       return result
     } catch (error) {
-      console.log(error)
       toast.update(id, {
         type: "error",
         render: "Error: Something went wrong. Try again later.",
@@ -136,7 +135,6 @@ export class Market {
       this.#updateItemSold()
       return result
     } catch (error) {
-      console.log(error)
       toast.update(id, {
         isLoading: false,
         type: "error",

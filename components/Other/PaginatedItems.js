@@ -44,7 +44,7 @@ function PaginatedItems({ items, itemsPerPage = 20, renderItem }) {
             layout
             initial='hidden'
             whileInView='show'
-            class='flex flex-wrap justify-center gap-2 lg:justify-start'>
+            className='flex flex-wrap justify-center gap-2 lg:justify-start'>
             {currentItems.map(renderItem)}
           </motion.div>
           {items?.length > itemsPerPage && (

@@ -12,7 +12,6 @@ export default async function handler(req, res) {
       nftContract.totalSupply(),
       nftContract.maxSupply(),
     ])
-    console.log(cost, supply, maxSupply)
     res.json({
       cost: Moralis.Units.FromWei(cost),
       supply: Number(supply),

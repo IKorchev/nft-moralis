@@ -12,6 +12,15 @@
     @apply border-secondary-600 bg-secondary-900 shadow-glass relative flex w-48 flex-shrink-0 flex-col overflow-hidden 
      rounded-md border text-white lg:w-60;
   }
+  .button-primary {
+    @apply border-tertiary-600 from-tertiary-200 to-tertiary-100 focus-within:from-tertiary-100
+     focus-within:to-tertiary-500 hover:from-tertiary-100 hover:to-tertiary-500 w-max cursor-pointer rounded border 
+    bg-gradient-to-tr px-5 py-2.5 text-base text-black ring-white focus-within:ring lg:text-xl;
+  }
+  .button-secondary {
+    @apply focus-within:bg-tertiary-100 w-max cursor-pointer rounded border border-cyan-400 bg-transparent px-5 
+    py-2.5 text-base ring-white focus-within:text-black focus-within:ring hover:bg-cyan-100 hover:text-black lg:text-xl;
+  }
   .collection-card {
     @apply border-secondary-600 bg-secondary-900/60 shadow-glass 
           hover:border-secondary-100 focus-within:border-secondary-100 relative w-48
