@@ -28,7 +28,7 @@ const LandingPage2 = () => {
             variants={slideFromBottom}
             transition={{ duration: 0.7, type: "spring", damping: 14 }}
             className='mt-12 mb-24 text-2xl'>
-            New collections are being listed weekly. Don't miss out! Check them out.
+            New collections are being listed weekly. Don&apos;t miss out! Check them out.
           </motion.p>
           <motion.span variants={slideFromBottom} transition={{ duration: 0.7, type: "spring", damping: 14 }}>
             <CTAButton href='/collections' title='View all collections' />
@@ -46,13 +46,11 @@ const LandingPage2 = () => {
               return (
                 <div key={el.attributes.imageUrl} className='h-max'>
                   <Link href={`/assets/${el.attributes.contractAddress}`}>
-                    <a>
-                      <img
-                        src={el.attributes.imageUrl}
-                        className='h-[25rem] w-full rounded-xl object-cover xl:h-[25rem] xl:max-w-[30rem]'
-                        alt=''
-                      />
-                    </a>
+                    <img
+                      src={el.attributes.imageUrl}
+                      className='h-[25rem] w-full rounded-xl object-cover xl:h-[25rem] xl:max-w-[30rem]'
+                      alt=''
+                    />
                   </Link>
                   <h1 className='py-5 text-center text-3xl font-black text-black'>{el.attributes.collectionName}</h1>
                 </div>

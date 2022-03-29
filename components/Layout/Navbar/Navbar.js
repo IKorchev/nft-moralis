@@ -65,33 +65,33 @@ const Navbar = () => {
                 }}
                 className='bg-primary-800 fixed z-40 flex w-screen flex-col items-start justify-evenly rounded-b-xl  px-5 py-12 text-2xl text-white md:text-3xl'>
                 <Link href='/'>
-                  <a className=' text-tertiary-100 cursor-pointer text-4xl'>NFT Explorer</a>
+                  <button className=' text-tertiary-100 cursor-pointer text-4xl'>NFT Explorer</button>
                 </Link>
                 <hr className='border-secondary-200 -ml-6 mb-5 mt-2 w-screen border-2' />
                 <Link href='/'>
-                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
+                  <button className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <AiOutlineHome className='mr-3 ' /> Home
-                  </a>
+                  </button>
                 </Link>
                 <Link href='/marketplace'>
-                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
+                  <button className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <AiOutlineShop className='mr-3' /> Marketplace
-                  </a>
+                  </button>
                 </Link>
                 <Link href='/launchpad'>
-                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
+                  <button className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <VscRocket className='mr-3' /> Launchpad
-                  </a>
+                  </button>
                 </Link>
                 <Link href='/collections'>
-                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
+                  <button className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <BiCollection className='mr-3' /> All collections
-                  </a>
+                  </button>
                 </Link>
                 <Link href='/collections/add'>
-                  <a className='hover:text-secondary-400 my-3 flex items-center text-white'>
+                  <button className='hover:text-secondary-400 my-3 flex items-center text-white'>
                     <AiOutlinePlusSquare className='mr-3' /> Add a collection
-                  </a>
+                  </button>
                 </Link>
                 <Select
                   className='react-select-container  my-3 text-base'
@@ -107,9 +107,9 @@ const Navbar = () => {
                   <div className='flex flex-col '>
                     <div className='flex items-center text-base '>
                       <Link href={`/user/${account}`}>
-                        <a className='my-4 flex '>
+                        <button className='my-4 flex '>
                           <AccountAndBalance account={account} icon={false} />
-                        </a>
+                        </button>
                       </Link>
                       <button
                         onClick={() => {
@@ -143,14 +143,16 @@ const Navbar = () => {
         } lg:flex`}>
         <div className='container mx-auto flex items-center space-x-10 py-5 lg:text-sm xl:text-lg'>
           <Link href='/'>
-            <a className='z-10 inline cursor-pointer whitespace-nowrap text-2xl font-extrabold '>NFT Explorer</a>
+            <button className='z-10 inline cursor-pointer whitespace-nowrap text-2xl font-extrabold '>
+              NFT Explorer
+            </button>
           </Link>
           <div className='flex items-center justify-start space-x-5'>
             <Link href='/marketplace'>
-              <a className='hover:text-secondary-100 cursor-pointer transition duration-200 '>Marketplace</a>
+              <button className='hover:text-secondary-100 cursor-pointer transition duration-200 '>Marketplace</button>
             </Link>
             <Link href='/launchpad'>
-              <a className='hover:text-secondary-100 cursor-pointer transition duration-200 '>Launchpad</a>
+              <button className='hover:text-secondary-100 cursor-pointer transition duration-200 '>Launchpad</button>
             </Link>
             <CollectionsDropdown />
             <Select

@@ -7,7 +7,7 @@ const TokenInformation = ({ account, nft, contract, tokenId, openModal }) => {
       <p className='my-3'>
         Owned by:
         <Link href={`/user/${nft?.owner}`} passHref>
-          <a className='font-semibold text-blue-200 hover:text-blue-400'>{nft?.owner}</a>
+          <button className='font-semibold text-blue-200 hover:text-blue-400'>{nft?.owner}</button>
         </Link>
       </p>
       <hr />

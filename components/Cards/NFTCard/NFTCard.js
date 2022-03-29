@@ -24,22 +24,22 @@ const NFTCard = ({ children, tokenId, tokenAddress }) => {
       className='border-secondary-600 bg-secondary-900 shadow-glass relative flex h-72 w-48 flex-col overflow-hidden  rounded-md border text-white lg:h-[21rem] lg:w-60'>
       <Link href={`/assets/${tokenAddress}/${tokenId}`}>
         <div>
-          <a className={`${isImageLoading === "loaded" ? "block" : "hidden"}`}>
+          <button className={`${isImageLoading === "loaded" ? "block" : "hidden"}`}>
             <VideoOrImage setLoading={setIsImageLoading} format={nft.imageType} url={nft.image} />
-          </a>
-          <a className={`${isImageLoading !== "loaded" ? "block" : "hidden"}`}>
+          </button>
+          <button className={`${isImageLoading !== "loaded" ? "block" : "hidden"}`}>
             <SkeletonImage />
-          </a>
+          </button>
         </div>
       </Link>
       <div className='flex flex-col items-start px-2 py-1'>
         <Link passHref href={`/assets/${tokenAddress}/`}>
-          <a>
+          <button>
             <small className='text-[0.7rem] text-white hover:text-gray-300'>{shortenIfAddress(tokenAddress)}</small>
-          </a>
+          </button>
         </Link>
         <Link href={`/assets/${tokenAddress}/${tokenId}`}>
-          <a className='font-bold hover:text-gray-300'>{nft.name}</a>
+          <button className='font-bold hover:text-gray-300'>{nft.name}</button>
         </Link>
         {nft.owner.toLowerCase() === account?.toLowerCase() && (
           <>

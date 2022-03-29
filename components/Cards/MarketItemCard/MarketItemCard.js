@@ -41,10 +41,12 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
         </Link>
         <div className='flex  flex-col justify-evenly truncate p-2 text-sm font-bold'>
           <Link href={`/assets/${nftContract}`}>
-            <a className='w-max py-0.5 pr-5 text-[0.66rem] hover:text-gray-300'>{shortenIfAddress(nftContract)}</a>
+            <button className='w-max py-0.5 pr-5 text-[0.66rem] hover:text-gray-300'>
+              {shortenIfAddress(nftContract)}
+            </button>
           </Link>
           <Link href={`/assets/${nftContract}/${tokenId}`}>
-            <a className='w-max py-1 pr-5 hover:text-gray-300'>{item?.name || "Unknown"}</a>
+            <button className='w-max py-1 pr-5 hover:text-gray-300'>{item?.name || "Unknown"}</button>
           </Link>
           {sold ? (
             <p className='mt-1 flex py-0.5 text-xs'>

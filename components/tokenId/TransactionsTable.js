@@ -70,17 +70,17 @@ const TransactionsTable = ({ transactions }) => {
                   </TableCell>
                   <TableCell sx={{ border: 0 }} className='text-white'>
                     <Link href={`/user/${from}`}>
-                      <a className='hover:text-secondary-100 inline-flex text-white '>
+                      <button className='hover:text-secondary-100 inline-flex text-white '>
                         {shortenIfAddress(from)} <ExternalLinkIcon className='h-5 w-5' />
-                      </a>
+                      </button>
                     </Link>
                   </TableCell>
                   <TableCell sx={{ border: 0 }} className=' text-white '>
                     {to ? (
                       <Link href={`/user/${to}`}>
-                        <a className='hover:text-secondary-100 inline-flex text-white'>
+                        <button className='hover:text-secondary-100 inline-flex text-white'>
                           {shortenIfAddress(to) || "null"} <ExternalLinkIcon className='h-5 w-5' />
-                        </a>
+                        </button>
                       </Link>
                     ) : (
                       "Null address"

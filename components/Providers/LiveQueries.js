@@ -37,6 +37,7 @@ const LiveQueries = () => {
   useEffect(() => setListings(allListings), [allListings])
   useEffect(() => setChain(chain), [chain])
   useEffect(() => setCurrentUser(account), [account])
+  
   return null
 }
 
