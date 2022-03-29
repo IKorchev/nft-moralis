@@ -12,7 +12,7 @@ const TokenImage = ({ format, url }) => {
         <div className='relative grid h-full  w-full place-items-center'>
           <div className='bg-secondary-100 absolute top-3 left-3 z-10 h-full w-full rounded-lg' />
           <div className='z-10 h-full w-full overflow-hidden rounded-lg'>
-            <img src={url} className='object-scale-down' />
+            <img alt='Token' src={url} className='object-scale-down' />
           </div>
         </div>
       )}
