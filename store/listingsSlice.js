@@ -46,8 +46,10 @@ export const listingsByContract = selectorFamily({
     (contract) =>
     ({ get }) => {
       const listed = get(listingsState)
-      const listings = listed.filter((el) => el.attributes.nftContract.toLowerCase() === contract.toLowerCase())
-      return listings
+      const sortBy = get(sortState)
+      return [...listed]
+        .filter((el) => el.attributes.nftContract.toLowerCase() === contract.toLowerCase())
+        .sort((a, b) => sortFn(a, b, sortBy))
     },
 })
 

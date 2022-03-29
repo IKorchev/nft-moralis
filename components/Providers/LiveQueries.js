@@ -6,7 +6,7 @@ import { imagesState } from "../../store/imagesSlice"
 import { chainState, currentUserState } from "../../store/userSlice"
 import { listingsState } from "../../store/listingsSlice"
 
-const MoralisDataProvider = ({ children }) => {
+const LiveQueries = () => {
   const { account } = useMoralis()
   const { chain } = useChain()
   const setLaunchpads = useSetRecoilState(launchpadsState)
@@ -24,13 +24,14 @@ const MoralisDataProvider = ({ children }) => {
     [],
     { live: true }
   )
-  const { data } = useMoralisQuery("Launchpads", (query) => query.descending("createdAt"), [], { live: true })
-  const { data: images } = useMoralisQuery("ItemImage")
+  const { data } = useMoralisQuery("Launchpads", (q) => q.descending("createdAt"), [], { live: true })
+  const { data: images } = useMoralisQuery("ItemImage", (q) => q.descending("createdAt"), [], { live: true })
 
   useEffect(() => setLaunchpads(data), [data])
   useEffect(() => {
-    const imagesMap = new Map()
-    images.map((el) => imagesMap.set(`${el.attributes.contractAddress}_${el.attributes.tokenId}`, { ...el.attributes }))
+    const imagesMap = images.reduce((acc, curr) => {
+      return acc.set(`${curr.attributes.contractAddress}_${curr.attributes.tokenId}`, { ...curr.attributes })
+    }, new Map())
     setImages(imagesMap)
   }, [images])
   useEffect(() => setListings(allListings), [allListings])
@@ -39,4 +40,4 @@ const MoralisDataProvider = ({ children }) => {
   return null
 }
 
-export default MoralisDataProvider
+export default LiveQueries

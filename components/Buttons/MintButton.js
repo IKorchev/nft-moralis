@@ -17,7 +17,7 @@ const MintButton = ({ contractAddress, cost }) => {
      grid h-full grid-cols-2  items-center justify-center space-x-4  py-3 px-2 '>
       <select
         onChange={(e) => setMintAmount(e.target.value)}
-        className='form-select bg-tertiary-50 block h-full cursor-pointer rounded-lg bg-transparent py-2  text-sm font-black text-black lg:text-lg'
+        className='form-select block  h-full cursor-pointer rounded-lg py-2 text-sm font-black text-black lg:text-lg'
         name='mint_amount'
         id='mint_amount'>
         {[1, 2, 3, 4, 5].map((el) => {

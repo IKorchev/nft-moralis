@@ -30,7 +30,7 @@ const ActivityChart = ({ data }) => {
       labels: labels.reverse(),
       prices: prices.reverse(),
     }
-  }, [data?.transactions?.result, data])
+  }, [data])
 
   const chartData = {
     labels: _chartData.labels,
@@ -42,7 +42,6 @@ const ActivityChart = ({ data }) => {
         borderColor: "#de0b6a",
         backgroundColor: "white",
         tension: 0.3,
-        
       },
     ],
   }

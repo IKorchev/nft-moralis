@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 const useScrollOffset = () => {
   const [scrolled, setScrolled] = useState(false)

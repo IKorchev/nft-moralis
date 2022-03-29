@@ -7,6 +7,7 @@ import { allLaunchpadsState } from "../../store/store"
 import FeaturedSection from "../../components/Launchpad/FeaturedSection"
 
 const Launchpad = () => {
+
   return (
     <>
       <Metadata title='NFT Explorer - Launchpad' />

@@ -14,7 +14,6 @@ import { Tab } from "@headlessui/react"
 import Loading from "../../components/Other/Loading"
 import { useRecoilValue } from "recoil"
 import { currentUserState } from "../../store/userSlice"
-import { motion } from "framer-motion"
 
 function UserAddress() {
   const router = useRouter()

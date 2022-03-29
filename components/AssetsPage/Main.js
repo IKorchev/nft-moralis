@@ -1,9 +1,11 @@
-import React, { useState } from "react"
-import PaginatedItems from "../Other/PaginatedItems"
-import { FilterIcon } from "@heroicons/react/solid"
+import { AnimatePresence } from "framer-motion"
+import { useState } from "react"
+import { MdSort } from "react-icons/md"
 import { SectionContainer, SectionTitle } from "../Section"
-import SortItemsBy from "../Other/SortItemsBy"
 import MarketItemCard from "../Cards/MarketItemCard"
+import PaginatedItems from "../Other/PaginatedItems"
+import SortItemsBy from "../Other/SortItemsBy"
+import Drawer from "../Other/Drawer"
 
 const Main = ({ itemsAvailableForPurchase }) => {
   const [open, setOpen] = useState(false)
@@ -11,13 +13,11 @@ const Main = ({ itemsAvailableForPurchase }) => {
     <div className='container w-full'>
       <div className='relative flex items-baseline justify-between border-b border-gray-200 pt-24 pb-2'>
         <SectionTitle title='NFTs in collection' />
-        {itemsAvailableForPurchase.length > 0 && (
-          <button
-            className='border-secondary-100 bg-primary-700 inline-flex rounded-full border p-2 lg:hidden'
-            onClick={() => setOpen(!open)}>
-            <FilterIcon className='text-secondary-100 h-6 w-6' />
+        {itemsAvailableForPurchase.length > 0 ? (
+          <button className='inline-flex rounded-full p-2 lg:hidden ' onClick={() => setOpen(!open)}>
+            <MdSort className='text-secondary-100 h-8 w-8' />
           </button>
-        )}
+        ) : null}
       </div>
       <section aria-labelledby='section-heading' className='pt-6 pb-24'>
         <h2 id='section-heading' className='sr-only'>
@@ -25,11 +25,19 @@ const Main = ({ itemsAvailableForPurchase }) => {
         </h2>
         {itemsAvailableForPurchase.length > 0 ? (
           <SectionContainer>
-            {/* Desktop */}
+            {/* Mobile sort drawer*/}
+            <AnimatePresence>
+              {open && (
+                <Drawer open={open} setOpen={setOpen}>
+                  <SortItemsBy />
+                </Drawer>
+              )}
+            </AnimatePresence>
+
+            {/* Desktop sort  */}
             <div className='hidden lg:flex'>
               <div className='space-y-1'>
                 <SortItemsBy />
-                {/* <ClearFiltersButton /> */}
               </div>
             </div>
             <div className='flex flex-grow'>

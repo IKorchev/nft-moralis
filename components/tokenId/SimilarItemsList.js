@@ -2,22 +2,25 @@ import { useRecoilValue } from "recoil"
 import { listingsByContract } from "../../store/listingsSlice"
 import MarketItemCard from "../Cards/MarketItemCard"
 
-const SimilarItemsList = ({ address }) => {
+const SimilarItemsList = ({ address, selectedId }) => {
   const listings = useRecoilValue(listingsByContract(address))
   return (
-    <div className='styled-scrollbar flex  w-full gap-5 overflow-y-auto py-5'>
-      {listings.slice(0, 7).map((el) => {
-        return (
-          <MarketItemCard
-            key={el.itemId}
-            itemId={el.attributes.itemId}
-            tokenId={el.attributes.tokenId}
-            nftContract={el.attributes.nftContract}
-            price={el.attributes.price}
-            sold={el.attributes.sold}
-          />
-        )
-      })}
+    <div className=' flex w-full flex-wrap justify-center gap-5 overflow-y-auto py-12'>
+      {listings
+        .slice(0, 5)
+        .filter((el) => el.attributes.tokenId !== selectedId)
+        .map((el) => {
+          return (
+            <MarketItemCard
+              key={el.itemId}
+              itemId={el.attributes.itemId}
+              tokenId={el.attributes.tokenId}
+              nftContract={el.attributes.nftContract}
+              price={el.attributes.price}
+              sold={el.attributes.sold}
+            />
+          )
+        })}
     </div>
   )
 }

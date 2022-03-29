@@ -1,11 +1,20 @@
 import { RadioGroup } from "@headlessui/react"
+import { useEffect } from "react"
 import { MdSort } from "react-icons/md"
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from "react-icons/ri"
-import { sortOptions } from "../../store/listingsSlice"
 import { useRecoilState } from "recoil"
-import { sortState } from "../../store/listingsSlice"
+import { sortOptions, sortState } from "../../store/listingsSlice"
+
 const SortSection = () => {
   const [sort, setSort] = useRecoilState(sortState)
+
+
+
+  //clean up
+  useEffect(() => {
+    return () => setSort("")
+  }, [])
+
   return (
     <div className='bg-secondary-700/60 h-max rounded-md'>
       <RadioGroup className=' h-full w-60 rounded-lg text-white' value={sort} onChange={setSort}>

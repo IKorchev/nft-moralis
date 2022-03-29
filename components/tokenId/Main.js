@@ -29,7 +29,7 @@ const Main = ({ contract, tokenId }) => {
   )
 
   if (loading || isValidating) return <Loading />
-  if (error || swrError) return <ErrorComponent />
+  if (error || swrError) return <h1 className='py-24 text-4xl text-white'>There was an error fetching the data</h1>
 
   return (
     <motion.main
@@ -64,17 +64,16 @@ const Main = ({ contract, tokenId }) => {
             </Suspense>
           </Collapse>
           <Collapse buttonText='Activity'>
-            <div className='styled-scrollbar max-h-[20rem]  overflow-y-scroll text-black '>
+            <div className='styled-scrollbar max-h-[20rem]  overflow-y-scroll text-white '>
               <TransactionsTable transactions={data?.transactions.result} />
             </div>
           </Collapse>
         </div>
       </div>
-      <hr className='border-secondary-100 my-12' />
-      <section className='px-5 lg:px-0'>
-        <SectionTitle title='Similar items' size='sm' />
+      <section className='px-5 pt-32 lg:px-0'>
+        <SectionTitle title='Similar items' size='lg' justify='center' />
         <div>
-          <SimilarItemsList address={contract} />
+          <SimilarItemsList address={contract} selectedId={tokenId} />
         </div>
       </section>
       <AnimatePresence>

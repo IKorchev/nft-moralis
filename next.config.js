@@ -3,6 +3,7 @@ module.exports = {
   images: {
     domains: ["ipfs.io", "ipfs.pixura.io"],
   },
+  reactStrictMode: true,
   webpack: (config) => {
     config.resolve.fallback = {
       fs: false,

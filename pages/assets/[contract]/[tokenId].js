@@ -4,15 +4,6 @@ import Main from "../../../components/tokenId/Main"
 import { useRouter } from "next/router"
 import { Suspense } from "react"
 
-const ErrorComponent = () => {
-  return (
-    <h1 className='grid h-screen place-items-center text-center text-4xl text-white'>
-      Couldn't fetch data for this token.
-      <br /> or this token does not exist
-    </h1>
-  )
-}
-
 const Token = () => {
   const router = useRouter()
   return (
