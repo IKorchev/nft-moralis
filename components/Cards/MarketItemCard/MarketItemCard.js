@@ -1,6 +1,6 @@
 import { shortenIfAddress } from "@usedapp/core"
 import { AnimatePresence, motion } from "framer-motion"
-import { useMoralis } from "react-moralis"
+import { Moralis } from "moralis"
 import { useRecoilValue } from "recoil"
 import { useMarketInstance } from "../../../hooks/useMarketInstance"
 import { itemImage } from "../../../store/imagesSlice"
@@ -11,12 +11,23 @@ import ConnectWalletButton from "../../Buttons/ConnectWalletButton"
 import SwitchNetworkButton from "../../Buttons/SwitchNetworkButton"
 import VideoOrImage from "../NFTCard/VideoOrImage"
 
+// eslint-disable-next-line react/display-name
 export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index }) => {
-  const { Moralis } = useMoralis()
   const { market } = useMarketInstance()
   const chain = useRecoilValue(chainState)
   const account = useRecoilValue(currentUserState)
   const item = useRecoilValue(itemImage({ nftContract, tokenId }))
+  
+  const handleBuy = () => {
+    const itemObject = {
+      buyer: account,
+      address: nftContract,
+      itemId,
+      price,
+      name: item?.name || "Unknown",
+    }
+    market.buyItem(itemObject)
+  }
 
   return (
     <AnimatePresence>
@@ -63,7 +74,7 @@ export const MarketItem = ({ price, nftContract, tokenId, itemId, sold, index })
                 ) : chain && chain.chainId !== "0x3" ? (
                   <SwitchNetworkButton rounded='sm' size='xs' network='0x3' />
                 ) : (
-                  <button className='card-button' onClick={() => market.buyItem(nftContract, itemId, price)}>
+                  <button className='card-button' onClick={handleBuy}>
                     Buy now
                   </button>
                 )}

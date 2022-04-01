@@ -1,5 +1,5 @@
 import { Line } from "react-chartjs-2"
-import { useMoralis } from "react-moralis"
+import { Moralis } from "moralis"
 import { chartOptions } from "../../utils/chartOptions"
 import {
   CategoryScale,
@@ -11,34 +11,34 @@ import {
   Title,
   Tooltip,
 } from "chart.js"
-import { useMemo } from "react"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
-const ActivityChart = ({ data }) => {
-  const { Moralis } = useMoralis()
-  const _chartData = useMemo(() => {
-    const labels = []
-    const prices = []
-    const transactions = data?.transactions?.result
-    for (const transaction of transactions) {
-      const date = new Date(transaction.block_timestamp).toLocaleDateString("uk")
-      labels.push(date)
-      prices.push(Moralis.Units.FromWei(transaction.value))
-    }
-    return {
-      labels: labels.reverse(),
-      prices: prices.reverse(),
-    }
-  }, [data])
+const createLabelsAndPricesArray = (transactions) => {
+  const labels = []
+  const prices = []
+  for (const transaction of transactions) {
+    const date = new Date(transaction.block_timestamp).toLocaleDateString("uk")
+    labels.push(date)
+    prices.push(Moralis.Units.FromWei(transaction.value))
+  }
+  return {
+    labels: labels.reverse(),
+    prices: prices.reverse(),
+  }
+}
 
+
+const ActivityChart = ({ data }) => {
+  const { labels, prices } = createLabelsAndPricesArray(data.transactions.result)
+  console.log(labels, prices)
   const chartData = {
-    labels: _chartData.labels,
+    labels: labels,
     datasets: [
       {
         label: "Price",
         borderColor: "white",
-        data: _chartData.prices,
+        data: prices,
         borderColor: "#de0b6a",
         backgroundColor: "white",
         tension: 0.3,

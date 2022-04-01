@@ -6,15 +6,17 @@ import { Suspense } from "react"
 
 const Token = () => {
   const router = useRouter()
+  const { contract, tokenId } = router.query
+  
   return (
     <div>
       <Metadata
-        title={`NFT Explorer |  - #${router.query?.tokenId}`}
-        description={`NFT Explorer | NFT Token - - #${router.query?.tokenId}`}
+        title={`NFT Explorer |  - #${tokenId}`}
+        description={`NFT Explorer | NFT Token - - #${tokenId}`}
         url={`https://nft-moralis.vercel.app${router.asPath}`}
       />
       <Suspense fallback={<Loading />}>
-        <Main contract={router.query?.contract} tokenId={router.query?.tokenId} />
+        <Main contract={contract} tokenId={tokenId} />
       </Suspense>
     </div>
   )

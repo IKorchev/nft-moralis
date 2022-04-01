@@ -21,16 +21,15 @@ import { getFetcher, revalidateOptions } from "../../utils/fetcher"
 const Main = ({ contract, tokenId }) => {
   const account = useRecoilValue(currentUserState)
   const [open, setOpen] = useState(false)
-  const { nft, loading, error } = useNft(contract, tokenId)
   const { data, swrError, isValidating } = useSWR(
     contract && tokenId ? `/api/nft?contract=${contract}&tokenId=${tokenId}` : null,
     getFetcher,
     revalidateOptions
   )
-
-  if (loading || isValidating) return <Loading />
+  const { nft, error, loading } = useNft(contract, tokenId)
+  const { rawData } = nft || {}
+  if (loading || isValidating || !nft) return <Loading />
   if (error || swrError) return <h1 className='py-24 text-4xl text-white'>There was an error fetching the data</h1>
-
   return (
     <motion.main
       initial={{ opacity: 0 }}
@@ -52,8 +51,8 @@ const Main = ({ contract, tokenId }) => {
             />
           </Collapse>
           <Collapse buttonText='Attributes'>
-            {nft.rawData.attributes ? (
-              <TokenAttributes attributes={nft?.rawData.attributes} />
+            {rawData.attributes ? (
+              <TokenAttributes attributes={rawData.attributes} />
             ) : (
               <h1>No attributes found for this NFT.</h1>
             )}
@@ -65,7 +64,7 @@ const Main = ({ contract, tokenId }) => {
           </Collapse>
           <Collapse buttonText='Activity'>
             <div className='styled-scrollbar max-h-[20rem]  overflow-y-scroll text-white '>
-              <TransactionsTable transactions={data?.transactions.result} />
+              <TransactionsTable tokenId={tokenId} contract={contract} transactions={data?.transactions.result} />
             </div>
           </Collapse>
         </div>

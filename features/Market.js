@@ -68,47 +68,35 @@ export class Market {
           price: Moralis.Units.ETH(price).toString(),
         },
       }
+
       // If the market is not approved to trade owner's NFT, prompt setApprovalForAll()
       if (!(await nft.checkIfApproved())) {
-        toast.update(id, {
-          render: "Approval: You need to approve the Market to trade this NFT.",
-        })
+        toast.update(id, { render: "Approval: You need to approve the Market to trade this NFT." })
         const res = await nft.setApprovalForAll()
         if (!res) {
-          toast.update(id, {
-            type: "error",
-            isLoading: false,
-            autoClose: 5000,
-            render: "Error: Failed to approve contract.",
-          })
+          //prettier-ignore
+          toast.update(id, { type: "error",isLoading: false, autoClose: 5000,render: "Error: Failed to approve contract.",})
           return
         }
       }
-      toast.update(id, {
-        render: "Listing: Awaiting signature ...",
-      })
+
+      toast.update(id, { render: "Listing: Awaiting signature ..." })
+
       const transaction = await Moralis.executeFunction(writeOptions)
-      toast.update(id, {
-        render: "Listing: Transaction is being processed ...",
-      })
+      toast.update(id, { render: "Listing: Transaction is being processed ..." })
+
       const result = await transaction.wait()
-      toast.update(id, {
-        isLoading: false,
-        type: "default",
-        render: `Listing: ${nftObject.name} listed successfully!`,
-      })
+      toast.update(id, { isLoading: false, render: `Listing: ${nftObject.name} listed successfully!` })
+
       this.#saveItemInMoralisDatabase(nftObject)
       return result
     } catch (error) {
-      toast.update(id, {
-        type: "error",
-        render: "Error: Something went wrong. Try again later.",
-      })
+      toast.update(id, { type: "error", render: "Error: Something went wrong. Try again later." })
     }
   }
 
   // Buy NFT from Market
-  async buyItem(nftContract, itemId, price) {
+  async buyItem({ buyer, itemId, address, price, name }) {
     const id = toast.loading("Buy item: Awaiting signature...", {
       position: toast.POSITION.TOP_LEFT,
       closeButton: true,
@@ -120,25 +108,27 @@ export class Market {
         functionName: contractFunctions.BUY_ITEM,
         msgValue: price,
         params: {
-          nftContract,
-          itemId,
+          nftContract: address,
+          itemId: itemId,
         },
       }
       const transaction = await Moralis.executeFunction(writeOptions)
+      toast.update(id, { render: `Buy item: ${name} is being processed...` })
       const result = await transaction.wait()
       toast.update(id, {
         isLoading: false,
         type: "success",
-        render: `Buy Item: ${nftObject.name} purchased successfully`,
+        render: `Buy Item: ${name} purchased successfully`,
         autoClose: 5000,
       })
-      this.#updateItemSold()
+      this.#updateItemSold(itemId, buyer)
       return result
     } catch (error) {
+      const msg = error?.message?.split("(")[0] || error.message
       toast.update(id, {
         isLoading: false,
         type: "error",
-        render: `Error: ${error.message.split("(")[0]}`,
+        render: `Error: ${msg || "Something went wrong. Try again later."}`,
         autoClose: 5000,
       })
       return error
