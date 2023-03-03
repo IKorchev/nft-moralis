@@ -1,3 +1,7 @@
+
+> EDIT: No longer maintained. Moralis' API has completely changed and it's no longer working with this project.
+> [visit their docs](https://docs.moralis.io/) to find out more about their changes
+
 # NFT Marketplace
 
 This project is built with Next.js and TailwindCSS powered by Moralis.
